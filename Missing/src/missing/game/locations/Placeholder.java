@@ -1,5 +1,5 @@
 package missing.game.locations;
 
-public class WorldLocation {
+public class Placeholder {
 
 }
