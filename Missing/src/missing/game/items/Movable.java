@@ -8,8 +8,6 @@
  */
 package missing.game.items;
 
-import java.awt.Point;
-
 /**
  * Represents an item that can be moved/carried in the game. Movable items 
  * can have their location changed.
@@ -17,11 +15,8 @@ import java.awt.Point;
  */
 public abstract class Movable extends Item {
 	
-	public void setWorldLocation(Point destination){
-		super.worldLocation = destination;
+	public Movable(String name, String description) {
+		super(name, description);
 	}
-	
-	public void setRenderLocation(Point destination){
-		super.renderLocation = destination;
-	}
+
 }
