@@ -14,7 +14,6 @@ package missing.game.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import missing.game.items.Item;
 
 //TODO: add methods to the player.
@@ -121,6 +120,20 @@ public class Player {
 	 */
 	public String getName(){
 		return this.name;
+	}
+	
+	/*ACTIONS A PLAYER CAN PERFORM */
+	
+	/**
+	 * Allows a player to go to sleep, which replenishes their health and changes their state to "Asleep"
+	 */
+	public void goSleep(){
+		this.setPlayerState("Asleep");
+		this.increaseHealth(5);
+	}
+	
+	public void awaken(){
+		
 	}
 	
 	
