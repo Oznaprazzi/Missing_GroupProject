@@ -2,13 +2,9 @@
  * 
  * Authors			ID
  * Edward Kelly 	300334192
- * Chris Rabe		300334207
  * 
  * Date				Author			Modification
- * 5 Sep 16			Edward Kelly	create item class
- * 5 Sep 16			Chris Rabe		improved javadocs and changed worldLocation to Point object
- * 5 Sep 16			Chris Rabe		added constructor for the item class
- * 6 Sep 16			Linus Go		added brief javadoc for the constructors.
+ * 7 Sep 16			Edward Kelly	created item class
  */
 package missing.game.items;
 import java.awt.Point;
@@ -25,32 +21,36 @@ public abstract class Item {
 	protected String description;
 	/** represents the portion of the world which the item is located in */
 	protected Point worldLocation;
-	/** represents the rendering origin of this item */
-	protected Point renderLocation;
+	/** represents the tile this item is located on inside the worldLocation */
+	protected Point tileLocation;
 	
 	/**
-	 * Create an Instance of an Item with a simple name and description.
-	 * @param name
-	 * @param description
+	 * Create an Instance of an Item, given its location.
+	 * @param name name of the item
+	 * @param description describes what the item is
+	 * @param worldLocation the section of the world this item is located in
+	 * @param tileLocation the tile in the worldLocation in which the item is located
 	 */
-	public Item(String name, String description) {
+	public Item(String name, String description, Point worldLocation, Point tileLocation) {
 		this.name = name;
 		this.description = description;
-	}
-	/**
-	 * Create an Instance of an Item, given its location.
-	 * @param name
-	 * @param description
-	 * @param worldLocation
-	 * @param renderLocation
-	 */
-	public Item(String name, String description, Point worldLocation, Point renderLocation) {
-		this(name, description);
 		this.worldLocation = worldLocation;
-		this.renderLocation = renderLocation;
+		this.tileLocation = tileLocation;
+	}
+	
+	// would it be better to pass a worldLocation and tileLocation as parameters here?
+	/**
+	 * Checks if this item is on the tile at the given x, y location
+	 * @param x x coordinate of tile
+	 * @param y y coordinate of tile
+	 * @return returns true if item on tile, false if not
+	 */
+	public boolean on(int x, int y){
+		if (x == tileLocation.x && y == tileLocation.y)return true;
+		return false;
 	}
 
-	// Getters and Setters...
+	// Getters and Setters
 
 	public String getName() {
 		return name;
@@ -60,12 +60,12 @@ public abstract class Item {
 		return description;
 	}
 
-	public Point getRenderLocation() {
-		return renderLocation;
+	public Point getTileLocation() {
+		return tileLocation;
 	}
 
-	public void setRenderLocation(Point renderLocation) {
-		this.renderLocation = renderLocation;
+	public void setTileLocation(Point tileLocation) {
+		this.tileLocation = tileLocation;
 	}
 
 	public Point getWorldLocation() {
@@ -76,7 +76,7 @@ public abstract class Item {
 		this.worldLocation = worldLocation;
 	}
 
-	// Overrided Object methods
+	// Overridden Object methods
 
 	@Override
 	public int hashCode() {
@@ -89,6 +89,8 @@ public abstract class Item {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
@@ -106,9 +108,9 @@ public abstract class Item {
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
-		return name + " " + description;
+		return name + ", " + description;
 	}
 }

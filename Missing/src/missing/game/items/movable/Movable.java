@@ -4,10 +4,13 @@
  * Edward Kelly 300334192
  * 
  * Date			Author			Modification
- * 5 Sep 16		Edward Kelly	created Movable class
- * 6 Sep 16		Edward Kelly	added weight
+ * 7 Sep 16		Edward Kelly	created Movable class
  */
-package missing.game.items;
+package missing.game.items.movable;
+
+import java.awt.Point;
+
+import missing.game.items.Item;
 
 /**
  * Represents an item that can be moved/carried in the game. Movable items 
@@ -15,11 +18,21 @@ package missing.game.items;
  *
  */
 public abstract class Movable extends Item {
+
 	/** Represents the weight of the item which affects bag 
 	 * capacity and player movement speed */
 	protected double weight;
-	public Movable(String name, String description, double weight) {
-		super(name, description);
+	
+	/**
+	 * Creates a new instance of a Movable item
+	 * @param name name of Movable
+	 * @param description description of the Movable item
+	 * @param worldLocation the section of the world the Movable item is located
+	 * @param tileLocation the tile inside a worldLocation the Movable item is located
+	 * @param weight weight of the Movable item
+	 */
+	public Movable(String name, String description, Point worldLocation, Point tileLocation, int weight) {
+		super(name, description, worldLocation, tileLocation);
 		this.weight = weight;
 	}
 	
@@ -52,6 +65,7 @@ public abstract class Movable extends Item {
 		return true;
 	}
 	
+	@Override
 	public String toString(){
 		return super.toString() + " weight: " +weight;
 	}
