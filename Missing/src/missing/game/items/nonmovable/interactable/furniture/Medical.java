@@ -7,7 +7,10 @@
  *	6 Sep 2016		Casey Huang		Created Medical abstract class
  *	6 Sep 2016		Casey Huang		Added javadoc comments and descriptions.
  */
-package missing.game.items.nonmovable;
+package missing.game.items.nonmovable.interactable.furniture;
+
+import missing.game.items.nonmovable.interactable.Furniture;
+
 /**
  * Represents an Object that helps health and extends Furniture.
  * @author Casey Huang

@@ -1,13 +1,13 @@
-/* File: Fireplace.java
+/* File: Tree.java
  * 
  * Authors			ID
  * Casey Huang		300316284
  * 
  * Date				Author			Modification
- *	6 Sep 2016		Casey Huang		Created Fireplace class
+ *	6 Sep 2016		Casey Huang		Created Tree class
  *	6 Sep 2016		Casey Huang		Added javadoc comments and descriptions.
  */
-package missing.game.items.nonmovable;
+package missing.game.items.nonmovable.interactable.source;
 
 import java.awt.Graphics;
 import java.io.File;
@@ -15,28 +15,30 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import missing.game.items.nonmovable.interactable.Source;
+
 /**
- * Represents a Fireplace for cooking.
+ * Represents a Tree item that a player can cut down to collect wood.
  * @author Casey Huang
  *
  */
-public class Fireplace extends Cooking{
+public class Tree extends Source{
 	private int width;
 	private int height;
 	
 	/**
-	 * Creates an instance of a Fireplace item.
+	 * Creates an instance of a Tree item.
 	 * @param name
 	 * @param description
 	 */
-	public Fireplace(String name, String description) {
+	public Tree(String name, String description){
 		super(name, description);
 	}
 
 	@Override
 	public void display(Graphics g, int x, int y) {
 		try {
-			g.drawImage(ImageIO.read(new File("fireplace.png")) , x, y, width, height, null);
+			g.drawImage(ImageIO.read(new File("tree.png")) , x, y, width, height, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

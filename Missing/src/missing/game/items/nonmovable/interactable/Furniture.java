@@ -7,7 +7,9 @@
  *	6 Sep 2016		Casey Huang		Created Furniture abstract class
  *	6 Sep 2016		Casey Huang		Added javadoc comments and descriptions.
  */
-package missing.game.items.nonmovable;
+package missing.game.items.nonmovable.interactable;
+
+import missing.game.items.nonmovable.Interactable;
 
 /**
  * Represents all furniture items

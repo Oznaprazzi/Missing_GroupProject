@@ -1,13 +1,13 @@
-/* File: Tree.java
+/* File: Chair.java
  * 
  * Authors			ID
  * Casey Huang		300316284
  * 
  * Date				Author			Modification
- *	6 Sep 2016		Casey Huang		Created Tree class
+ *	6 Sep 2016		Casey Huang		Created Chair class
  *	6 Sep 2016		Casey Huang		Added javadoc comments and descriptions.
  */
-package missing.game.items.nonmovable;
+package missing.game.items.nonmovable.interactable.furniture;
 
 import java.awt.Graphics;
 import java.io.File;
@@ -16,29 +16,30 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * Represents a Tree item that a player can cut down to collect wood.
+ * Represents a Chair object that a player can sit on.
  * @author Casey Huang
  *
  */
-public class Tree extends Source{
+public class Chair extends Medical{
 	private int width;
 	private int height;
 	
 	/**
-	 * Creates an instance of a Tree item.
+	 * Creates a new instance of a Chair item.
 	 * @param name
 	 * @param description
 	 */
-	public Tree(String name, String description){
+	public Chair(String name, String description) {
 		super(name, description);
 	}
 
 	@Override
 	public void display(Graphics g, int x, int y) {
 		try {
-			g.drawImage(ImageIO.read(new File("tree.png")) , x, y, width, height, null);
+			g.drawImage(ImageIO.read(new File("chair.png")) , x, y, width, height, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
 }

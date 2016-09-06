@@ -7,7 +7,7 @@
  *	6 Sep 2016		Casey Huang		Created Bed class
  *	6 Sep 2016		Casey Huang		Added javadoc comments and descriptions.
  */
-package missing.game.items.nonmovable;
+package missing.game.items.nonmovable.interactable.furniture;
 
 import java.awt.Graphics;
 import java.io.File;
