@@ -7,7 +7,7 @@
  * 	6 Sep 16					Chris Rabe					create player class
  *  6 Sep 16					Linus Go					added basic methods to the player class.
  *	6 Sep 16					Linus Go					Added a health field and state field to the player.
- *	6 Sep 16					Linus Go					added a players bag and methods to add/remove/find items in bag.
+ *	6 Sep 16					Linus Go					added a players pocket and methods to add/remove/find items in pocket.
  */
 
 package missing.game.entities;
@@ -29,8 +29,12 @@ public class Player {
 	/**The state the player is in. Can be "Normal" or "Hungry" */
 	private String playerState = "Normal";
 	
-	/** The players bag. Given an Initial Capacity of 20. */
-	private List<Item> playerBag;
+	/** The players pocket. Every player has one. Can hold up to POCKET_SIZE items. */
+	private List<Item> playerPocket;
+	
+	/** The fixed size of the player's pocket. */
+	private static final int POCKET_SIZE = 10;
+	
 	
 	/**
 	 * Create a new instance of a player.
@@ -38,7 +42,7 @@ public class Player {
 	 */
 	public Player(String name){
 		this.name = name;
-		playerBag = new ArrayList<Item>(20); //strict capacity of 20
+		playerPocket = new ArrayList<Item>(POCKET_SIZE);
 	}
 	
 	/*Getter and Setter Methods for Player */
@@ -52,29 +56,31 @@ public class Player {
 	}
 	
 	/**
-	 * Adds an Item to the Players bag.
+	 * Adds an Item to the Players Pocket.
+	 * This will fail if the player's pocket is too big.
+	 * @See POCKET_SIZE
 	 * @param i - item to be added.
 	 * @returns boolean (if successful)
 	 */
-	public boolean addToBag(Item i){
-		return playerBag.add(i);
+	public boolean addToPocket(Item i){
+		return playerPocket.size() >= POCKET_SIZE ? false : playerPocket.add(i);
 	}
 	
 	/**
-	 * Removes an Item from the Players Bag.
+	 * Removes an Item from the Players Pocket.
 	 * @param i - item to be added.
 	 * @return boolean (if successful)
 	 */
-	public boolean removeFromBag(Item i){
-		return playerBag.remove(i);
+	public boolean removeFromPocket(Item i){
+		return playerPocket.remove(i);
 	}
 	/**
-	 * Returns if an Item is contained in the Players Bag.
+	 * Returns if an Item is contained in the Players Pocket.
 	 * @param i - item to be added.
 	 * @return boolean (if contained in bag)
 	 */
-	public boolean containedInBag(Item i){
-		return playerBag.contains(i);
+	public boolean containedInPocket(Item i){
+		return playerPocket.contains(i);
 	}
 	
 	/**
@@ -91,6 +97,7 @@ public class Player {
 	public void decreaseHealth(int amt){
 		health-=amt;
 	}
+	
 	
 	/**
 	 * Returns the state the player is in.
