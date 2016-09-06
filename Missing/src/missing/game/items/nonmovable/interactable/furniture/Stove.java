@@ -9,7 +9,7 @@
  *	6 Sep 2016		Casey Huang		Added javadoc comments and descriptions.
  *	6 Sep 2016		Chris Rabe		made loading image compatible with executable jars
  */
-package missing.game.items.nonmovable.interactable.source;
+package missing.game.items.nonmovable.interactable.furniture;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -18,7 +18,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import missing.game.entities.Player;
-import missing.game.items.nonmovable.interactable.furniture.Cooking;
+import missing.game.items.nonmovable.interactable.Cooking;
 
 /**
  * Represents a Stove item used for cooking

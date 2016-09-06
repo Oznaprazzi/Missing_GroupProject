@@ -18,6 +18,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import missing.game.entities.Player;
+import missing.game.items.nonmovable.interactable.Cooking;
 
 /**
  * Represents a Fireplace for cooking.
