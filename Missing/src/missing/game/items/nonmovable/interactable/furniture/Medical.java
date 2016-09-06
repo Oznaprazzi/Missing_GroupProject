@@ -13,12 +13,14 @@ import missing.game.items.nonmovable.interactable.Furniture;
 
 /**
  * Represents an Object that helps health and extends Furniture.
- * @author Casey Huang
  *
  */
-public abstract class Medical extends Furniture{
+public abstract class Medical extends Furniture {
+	// TODO add fields which represent amount it can heal player for
+
 	/**
 	 * Creates an instance of a Medical item.
+	 * 
 	 * @param name
 	 * @param description
 	 */

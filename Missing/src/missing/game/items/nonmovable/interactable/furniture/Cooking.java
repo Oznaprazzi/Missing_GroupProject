@@ -13,12 +13,16 @@ import missing.game.items.nonmovable.interactable.Furniture;
 
 /**
  * Represents an Object used for cooking and extends Furniture
- * @author Casey Huang
  *
  */
-public abstract class Cooking extends Furniture{
+public abstract class Cooking extends Furniture {
+	// TODO add a field which represents duration of the cooking object
+
+	// TODO add methods which enables player to cook food items
+
 	/**
 	 * Creates an instance of a Cooking item.
+	 * 
 	 * @param name
 	 * @param description
 	 */
