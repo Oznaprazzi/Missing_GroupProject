@@ -31,6 +31,6 @@ public abstract class NonMovable extends Item {
 	/**
 	 * Draws the current Non-movable item onto the screen.
 	 */
-	public abstract void display(Graphics g);
+	public abstract void display(Graphics g, int x, int y);
 
 }

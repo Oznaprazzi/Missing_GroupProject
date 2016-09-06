@@ -8,6 +8,8 @@
  *	6 Sep 2016		Linus Go		Added javadoc comments and descriptions.
  */
 package missing.game.items.nonmovable;
+import java.awt.Graphics;
+
 import missing.game.items.NonMovable;
 
 /**
@@ -27,6 +29,9 @@ public abstract class Interactable extends NonMovable{
 		super(name, description);
 	}
 
-
-	
+	/**
+	 * Draws the current Non-movable item onto the screen.
+	 */
+	@Override
+	public abstract void display(Graphics g, int x, int y);
 }

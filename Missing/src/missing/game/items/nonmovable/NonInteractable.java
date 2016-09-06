@@ -35,7 +35,7 @@ public class NonInteractable extends NonMovable{
 	 * Draws the current NonInteractable object.
 	 */
 	@Override
-	public void display(Graphics g) {
+	public void display(Graphics g, int x, int y) {
 		// TODO Auto-generated method stub
 	}
 	
