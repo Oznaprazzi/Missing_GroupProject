@@ -8,13 +8,12 @@
  *	6 Sep 2016		Linus Go		Added javadoc comments and descriptions.
  */
 package missing.game.items.nonmovable;
+
 import missing.game.items.NonMovable;
 
 /**
  * Class that represents an Interactable item. A user can Interact with these type of items,
  * such as a door, a light switch or any type of non-movable toggle.
- * @author linus
- *
  */
 public abstract class Interactable extends NonMovable{
 	
