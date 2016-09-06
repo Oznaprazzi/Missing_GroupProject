@@ -1,7 +1,7 @@
 /* File: Furniture.java
  * 
  * Authors			ID
- * Casey Huang			300316284
+ * Casey Huang		300316284
  * 
  * Date				Author			Modification
  *	6 Sep 2016		Casey Huang		Created Furniture abstract class
