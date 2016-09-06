@@ -8,9 +8,9 @@
  * 5 Sep 16			Edward Kelly	create item class
  * 5 Sep 16			Chris Rabe		improved javadocs and changed worldLocation to Point object
  * 5 Sep 16			Chris Rabe		added constructor for the item class
+ * 6 Sep 16			Linus Go		added brief javadoc for the constructors.
  */
 package missing.game.items;
-
 import java.awt.Point;
 
 /**
@@ -27,12 +27,23 @@ public abstract class Item {
 	protected Point worldLocation;
 	/** represents the rendering origin of this item */
 	protected Point renderLocation;
-
+	
+	/**
+	 * Create an Instance of an Item with a simple name and description.
+	 * @param name
+	 * @param description
+	 */
 	public Item(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}
-
+	/**
+	 * Create an Instance of an Item, given its location.
+	 * @param name
+	 * @param description
+	 * @param worldLocation
+	 * @param renderLocation
+	 */
 	public Item(String name, String description, Point worldLocation, Point renderLocation) {
 		this(name, description);
 		this.worldLocation = worldLocation;
