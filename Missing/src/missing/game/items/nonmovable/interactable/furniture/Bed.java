@@ -17,6 +17,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import missing.game.entities.Player;
+
 /**
  * Represents a Bed that a player can sleep on to gain energy.
  *
@@ -45,5 +47,11 @@ public class Bed extends Medical {
 		}
 		// TODO add image observer once we get User Interface added
 		g.drawImage(img, x, y, width, height, null);
+	}
+
+	@Override
+	public void performAction(Player p) {
+		// TODO Auto-generated method stub
+		
 	}
 }

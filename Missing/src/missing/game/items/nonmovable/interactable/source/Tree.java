@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import missing.game.entities.Player;
 import missing.game.items.nonmovable.interactable.Source;
 
 /**
@@ -47,5 +48,11 @@ public class Tree extends Source {
 		}
 		// TODO add image observer once we get User Interface added
 		g.drawImage(img, x, y, width, height, null);
+	}
+
+	@Override
+	public void performAction(Player p) {
+		// TODO Auto-generated method stub
+		
 	}
 }

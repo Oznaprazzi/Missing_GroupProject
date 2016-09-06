@@ -11,11 +11,13 @@
  *	6 Sep 2016 		Casey Huang		Added x and y coordinates to display image
  *	6 Sep 2016		Chris Rabe		added width and height fields since its a recurring field in subclasses
  *	6 Sep 2016		Chris Rabe		create new constructor 
+ *	7 Sep 2016		Chris Rabe		added performAction method
  */
 package missing.game.items.nonmovable;
 
 import java.awt.Graphics;
 
+import missing.game.entities.Player;
 import missing.game.items.NonMovable;
 
 /**
@@ -65,4 +67,9 @@ public abstract class Interactable extends NonMovable {
 	 */
 	@Override
 	public abstract void display(Graphics g, int x, int y);
+	
+	/**
+	 *  Modifies some data within the player being passed.
+	 */
+	public abstract void performAction(Player p);
 }
