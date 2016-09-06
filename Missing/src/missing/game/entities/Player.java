@@ -15,6 +15,7 @@ package missing.game.entities;
 import java.util.ArrayList;
 import java.util.List;
 import missing.game.items.Item;
+import missing.game.items.Movable;
 
 //TODO: add methods to the player.
 public class Player {
@@ -28,8 +29,8 @@ public class Player {
 	/**The state the player is in. Can be "Normal" or "Hungry" */
 	private String playerState = "Normal";
 	
-	/** The players pocket. Every player has one. Can hold up to POCKET_SIZE items. */
-	private List<Item> playerPocket;
+	/** The players pocket. Contains a list of "Movable" items, which holds up to POCKET_SIZE items. */
+	private List<Movable> playerPocket;
 	
 	/** The fixed size of the player's pocket. */
 	private static final int POCKET_SIZE = 10;
@@ -41,7 +42,7 @@ public class Player {
 	 */
 	public Player(String name){
 		this.name = name;
-		playerPocket = new ArrayList<Item>(POCKET_SIZE);
+		playerPocket = new ArrayList<Movable>(POCKET_SIZE);
 	}
 	
 	/*Getter and Setter Methods for Player */
@@ -61,7 +62,7 @@ public class Player {
 	 * @param i - item to be added.
 	 * @returns boolean (if successful)
 	 */
-	public boolean addToPocket(Item i){
+	public boolean addToPocket(Movable i){
 		return playerPocket.size() >= POCKET_SIZE ? false : playerPocket.add(i);
 	}
 	
@@ -70,7 +71,7 @@ public class Player {
 	 * @param i - item to be added.
 	 * @return boolean (if successful)
 	 */
-	public boolean removeFromPocket(Item i){
+	public boolean removeFromPocket(Movable i){
 		return playerPocket.remove(i);
 	}
 	/**
@@ -78,7 +79,7 @@ public class Player {
 	 * @param i - item to be added.
 	 * @return boolean (if contained in bag)
 	 */
-	public boolean containedInPocket(Item i){
+	public boolean containedInPocket(Movable i){
 		return playerPocket.contains(i);
 	}
 	
@@ -96,7 +97,6 @@ public class Player {
 	public void decreaseHealth(int amt){
 		health-=amt;
 	}
-	
 	
 	/**
 	 * Returns the state the player is in.
@@ -129,12 +129,45 @@ public class Player {
 	 */
 	public void goSleep(){
 		this.setPlayerState("Asleep");
-		this.increaseHealth(5);
+		this.increaseHealth(30);
 	}
 	
-	public void awaken(){
-		
+	/**
+	 * Allows a player to rest. Their health increases, but not as much as going to sleep.
+	 */
+	public void goRest(){
+		this.setPlayerState("Resting");
+		this.increaseHealth(20);
 	}
 	
+	/**
+	 * Wakes up a player.
+	 */
+	public void awakePlayer(){
+		this.setPlayerState("Normal");
+	}
+	
+	/**
+	 * Allows a player to eat a specified item from their pocket, which will increase their health.
+	 *  Returns true if the item is in pocket and eaten, returns false if food is not in pocket.
+	 */
+	public boolean eatItem(Movable item){
+		if(this.containedInPocket(item)){
+			this.increaseHealth(10); //TODO: don't use an arbitrary value. Use a value from item.
+			this.removeFromPocket(item);
+			return true;
+		}
+	return false;
+	}
+	
+	/**
+	 * Allows a player to cook a food item from their pocket.
+	 */
+	public void cookItem(Movable item){
+		//TODO: need to implement
+	}
+	
+	
+
 	
 }
