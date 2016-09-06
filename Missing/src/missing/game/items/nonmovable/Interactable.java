@@ -25,7 +25,4 @@ public abstract class Interactable extends NonMovable{
 	public Interactable(String name, String description) {
 		super(name, description);
 	}
-
-
-	
 }
