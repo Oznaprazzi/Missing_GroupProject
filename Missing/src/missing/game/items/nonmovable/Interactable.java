@@ -6,12 +6,10 @@
  * Date				Author			Modification
  *	6 Sep 2016		Linus Go		Created Interactable class
  *	6 Sep 2016		Linus Go		Added javadoc comments and descriptions.
+ *	6 Sep 2016 		Casey Huang		Added x and y coordinates to display image
  */
 package missing.game.items.nonmovable;
-<<<<<<< HEAD
 import java.awt.Graphics;
-=======
->>>>>>> branch 'master' of https://gitlab.ecs.vuw.ac.nz/rabechri/Missing.git
 
 import missing.game.items.NonMovable;
 
@@ -29,13 +27,10 @@ public abstract class Interactable extends NonMovable{
 	public Interactable(String name, String description) {
 		super(name, description);
 	}
-<<<<<<< HEAD
 
 	/**
 	 * Draws the current Non-movable item onto the screen.
 	 */
 	@Override
 	public abstract void display(Graphics g, int x, int y);
-=======
->>>>>>> branch 'master' of https://gitlab.ecs.vuw.ac.nz/rabechri/Missing.git
 }
