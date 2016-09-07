@@ -4,12 +4,15 @@
  *	Casey Huang			300316284
  * 	Date				Author					Changes
  *	7 Sep 16 			Casey Huang				Created Fireplace class and added javaDoc comments
+ *	7 Sep 16			Casey Huang				Updated the performAction method
  */
 package missing.game.items.nonmovable;
 
 import java.awt.Point;
 
 import missing.game.characters.Player;
+import missing.game.items.movable.Apple;
+import missing.helper.GameException;
 
 /**
  * Represents a Fireplace item that a player can use to cook food.
@@ -29,8 +32,11 @@ public class Fireplace extends Cooking{
 
 	@Override
 	public void performAction(Player p) {
-		// TODO Auto-generated method stub
-		
+		try {
+			p.addToPocket(new Apple(worldLocation, tileLocation, 5, 1));
+		} catch (GameException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
