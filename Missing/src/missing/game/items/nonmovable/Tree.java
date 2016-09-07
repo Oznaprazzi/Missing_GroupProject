@@ -4,6 +4,7 @@
  *	Casey Huang			300316284
  * 	Date				Author					Changes
  *	7 Sep 16 			Casey Huang				Created Tree class and added javaDoc comments
+ *	7 Sep 16			Casey Huang				Updated the performAction method.
  */
 package missing.game.items.nonmovable;
 
