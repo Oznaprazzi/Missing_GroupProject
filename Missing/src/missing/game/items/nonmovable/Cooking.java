@@ -1,9 +1,9 @@
-/*	File: NonMovable.java
+/*	File: Cooking.java
  * 	
  * 	Authors:			ID
  *	Casey Huang			300316284
  * 	Date				Author					Changes
- *	7 Sep 16 			Casey Huang				Created Interactable class and added javaDoc comments
+ *	7 Sep 16 			Casey Huang				Created Cooking class and added javaDoc comments
  *	7 Sep 16  			Casey Huang				Created performAction method
  *	7 Sep 16			Casey Huang				Added Player parameter to performAction method.
  */
@@ -14,19 +14,17 @@ import java.awt.Point;
 import missing.game.characters.Player;
 
 /**
- * Represents an interactable item in the game.
- *
+ * Represents a Cooking item that a player can interact with in order to produce food.
  */
-public abstract class Interactable extends NonMovable{
-
+public abstract class Cooking extends Furniture{
 	/**
-	 * Creates an instance of an Interactable item.
+	 * Creates an instance of a Cooking item.
 	 * @param name
 	 * @param description
 	 * @param worldLocation
 	 * @param tileLocation
 	 */
-	public Interactable(String name, String description, Point worldLocation, Point tileLocation) {
+	public Cooking(String name, String description, Point worldLocation, Point tileLocation) {
 		super(name, description, worldLocation, tileLocation);
 	}
 	
