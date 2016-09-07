@@ -96,7 +96,7 @@ public class Food extends Health {
 	/**
 	 * This method fills in the important constructor fields in the parent
 	 * classes. It adds the name, description, as well as the value collected
-	 * and the regeneration amount.
+	 * and the regeneration amount. It takes the foodType into consideration.
 	 */
 	private void setInfo() {
 		switch (foodType) {
