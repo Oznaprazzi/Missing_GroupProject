@@ -9,6 +9,7 @@
  * 7 Sep 16		Edward Kelly	created Movable class
  * 7 Sep 16		Linus Go		Added size field and getters and setters.
  * 7 Sep 16		Casey Huang		Added stored field
+ * 7 Sep 16		Chris Rabe		added getters and setters for stored field
  */
 package missing.game.items.movable;
 
@@ -27,7 +28,7 @@ public abstract class Movable extends Item {
 	protected int size;
 	/** Number of movable items */
 	private int amount;
-	
+
 	private boolean stored;
 
 	/**
@@ -60,6 +61,14 @@ public abstract class Movable extends Item {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+
+	public boolean isStored() {
+		return stored;
+	}
+
+	public void setStored(boolean stored) {
+		this.stored = stored;
 	}
 
 	// Overridden Object methods
