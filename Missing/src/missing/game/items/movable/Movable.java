@@ -1,8 +1,9 @@
 /* File: Movable.java
  * 
- * Authors:
- * Edward Kelly 300334192
- * Linus Go		300345571
+ * Authors:			ID:
+ * Edward Kelly 	300334192
+ * Linus Go			300345571
+ * Chris Rabe		300334207
  * 
  * Date			Author			Modification
  * 7 Sep 16		Edward Kelly	created Movable class
