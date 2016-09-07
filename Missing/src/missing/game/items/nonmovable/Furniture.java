@@ -4,10 +4,13 @@
  *	Casey Huang			300316284
  * 	Date				Author					Changes
  *	7 Sep 16 			Casey Huang				Created Furniture class and added javaDoc comments
+ *	7 Sep 16			Casey Huang				Added Player parameter to performAction method.
  */
 package missing.game.items.nonmovable;
 
 import java.awt.Point;
+
+import missing.game.characters.Player;
 
 /**
  * Represents a furniture item that a player can interact with.
@@ -27,5 +30,5 @@ public abstract class Furniture extends Interactable{
 	/**
 	 * For player to perform an action on this Interactable item.
 	 */
-	public abstract void performAction();
+	public abstract void performAction(Player p);
 }
