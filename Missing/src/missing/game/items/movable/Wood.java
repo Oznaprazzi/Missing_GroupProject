@@ -1,21 +1,21 @@
-/* File: Resource.java
+/* File: Wood.java
  * 
  * Authors:
  * Linus Go		300345571
  * Edward Kelly	300334192
  * 
  * Date			Author			Modification
- * 7 Sep 16		Linus Go		created resource class.
- * 7 Sep 16		Edward Kelly	added javadoc, removed weight, added amount
+ * 7 Sep 16		Edward Kelly	created Wood class
  */
 package missing.game.items.movable;
 
 import java.awt.Point;
+
 /**
- * This class represents a Movable item that can be used to create Craftable items
+ * Represents a Wood item in the game. Wood is a movable resource
  *
  */
-public abstract class Resource extends Movable {
+public class Wood extends Resource {
 	/**
 	 * Construct a new Instance of a Resource.
 	 * @param name name of the item
@@ -23,10 +23,14 @@ public abstract class Resource extends Movable {
 	 * @param worldLocation the section of the world this item is located in
 	 * @param tileLocation the tile in the worldLocation in which the item is located
 	 * @param size represents size of item
-	 * @param amount amount of Resource items
+	 * @param amount amount of Wood items
 	*/
-	public Resource(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
+	public Wood(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
 		super(name, description, worldLocation, tileLocation, amount, size);
 	}
-
+	
+	@Override
+	public String toString(){
+		return "Resource: Wood, " + super.toString();
+	}
 }
