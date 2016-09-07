@@ -25,7 +25,6 @@ public abstract class Consumable extends Usable {
 	 */
 	public Consumable(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
 		super(name, description, worldLocation, tileLocation, amount, size);
-		// TODO Auto-generated constructor stub
 	}
 
 }
