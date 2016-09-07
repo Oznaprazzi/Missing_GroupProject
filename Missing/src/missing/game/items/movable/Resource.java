@@ -2,31 +2,31 @@
  * 
  * Authors:
  * Linus Go		300345571
+ * Edward Kelly	300334192
  * 
  * Date			Author			Modification
  * 7 Sep 16		Linus Go		created resource class.
+ * 7 Sep 16		Edward Kelly	added javadoc, removed weight, added amount
  */
 package missing.game.items.movable;
 
 import java.awt.Point;
 /**
- * This class represents a Resource object in the Game world.
- * This acts as a subclass of
- * @author linus
+ * This class represents a Movable item that can be used to create Craftable items
  *
  */
 public abstract class Resource extends Movable {
 	/**
 	 * Construct a new Instance of a Resource.
-	 * @param name
-	 * @param description
-	 * @param worldLocation
-	 * @param tileLocation
-	 * @param weight
-	 * @param size
-	 */
-	public Resource(String name, String description, Point worldLocation, Point tileLocation, int weight, int size) {
-		super(name, description, worldLocation, tileLocation, weight, size);
+	 * @param name name of the item
+	 * @param description describes what the item is
+	 * @param worldLocation the section of the world this item is located in
+	 * @param tileLocation the tile in the worldLocation in which the item is located
+	 * @param size represents size of item
+	 * @param amount amount of Resource items
+	*/
+	public Resource(String name, String description, Point worldLocation, Point tileLocation, int size, int amount) {
+		super(name, description, worldLocation, tileLocation, size, amount);
 	}
 
 }
