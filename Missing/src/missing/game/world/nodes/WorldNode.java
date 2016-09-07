@@ -19,13 +19,17 @@ import missing.game.items.nonmovable.NonMovable;
  * needed when managing server.
  */
 public class WorldNode {
-	
+	/** Represents the amount of Tiles a worldNode object should have. **/  
+	private static final int TILE_SIZE = 0x19;
 	/**The list of non-movable items. */
 	protected List<NonMovable> nonMovableItems;
 	/**The list of movable items */
 	protected List<Movable> movableItems;
 	/**The location of this World Node on the world. */
 	protected Point gameLocation;
+	/** The World Tile 2D array. Each world node has these.*/
+	protected WorldTile[][] worldTiles = new WorldTile[TILE_SIZE][TILE_SIZE];
+	
 	
 	/**
 	 * Create an instance of a WorldNode.
