@@ -11,7 +11,6 @@ import java.awt.Point;
 
 /**
  * Represents a NonInteractable item in the game.
- * @author Casey Huang
  *
  */
 public class NonInteractable extends NonMovable{
