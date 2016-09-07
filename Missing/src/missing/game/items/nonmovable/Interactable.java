@@ -12,6 +12,7 @@ package missing.game.items.nonmovable;
 import java.awt.Point;
 
 import missing.game.characters.Player;
+import missing.helper.GameException;
 
 /**
  * Represents an interactable item in the game.
@@ -32,6 +33,7 @@ public abstract class Interactable extends NonMovable{
 	
 	/**
 	 * For player to perform an action on this Interactable item.
+	 * @throws GameException 
 	 */
-	public abstract void performAction(Player p);
+	public abstract void performAction(Player p) throws GameException;
 }

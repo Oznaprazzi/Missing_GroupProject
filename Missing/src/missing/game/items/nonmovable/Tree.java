@@ -2,9 +2,12 @@
  * 	
  * 	Authors:			ID
  *	Casey Huang			300316284
+ *	Chris Rabe			300334207
+ *
  * 	Date				Author					Changes
  *	7 Sep 16 			Casey Huang				Created Tree class and added javaDoc comments
  *	7 Sep 16			Casey Huang				Updated the performAction method.
+ *	7 Sep 16			Chris Rabe				updated constructor
  */
 package missing.game.items.nonmovable;
 
@@ -18,18 +21,10 @@ import missing.helper.GameException;
 /**
  * Represents a Tree item that a player can cut down to get the wood resource
  */
-public class Tree extends Source{
+public class Tree extends Source {
 
-	/**
-	 * Creates an instance of a Tree item.
-	 * @param name
-	 * @param description
-	 * @param worldLocation
-	 * @param tileLocation
-	 * @param resource
-	 */
-	public Tree(String name, String description, Point worldLocation, Point tileLocation, Resource resource) {
-		super(name, description, worldLocation, tileLocation, resource);
+	public Tree(Point worldLocation, Point tileLocation, Resource resource) {
+		super("Tree", "A tall majestic tree.", worldLocation, tileLocation, resource);
 	}
 
 	@Override

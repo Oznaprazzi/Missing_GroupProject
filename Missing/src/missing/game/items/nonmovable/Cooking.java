@@ -12,6 +12,7 @@ package missing.game.items.nonmovable;
 import java.awt.Point;
 
 import missing.game.characters.Player;
+import missing.helper.GameException;
 
 /**
  * Represents a Cooking item that a player can interact with in order to produce food.
@@ -30,6 +31,7 @@ public abstract class Cooking extends Furniture{
 	
 	/**
 	 * For player to perform an action on this Interactable item.
+	 * @throws GameException 
 	 */
-	public abstract void performAction(Player p);
+	public abstract void performAction(Player p) throws GameException;
 }

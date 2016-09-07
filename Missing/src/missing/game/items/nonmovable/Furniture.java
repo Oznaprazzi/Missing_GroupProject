@@ -11,13 +11,15 @@ package missing.game.items.nonmovable;
 import java.awt.Point;
 
 import missing.game.characters.Player;
+import missing.helper.GameException;
 
 /**
  * Represents a furniture item that a player can interact with.
  */
-public abstract class Furniture extends Interactable{
+public abstract class Furniture extends Interactable {
 	/**
 	 * Creates an instance of a Funiture item.
+	 * 
 	 * @param name
 	 * @param description
 	 * @param worldLocation
@@ -26,9 +28,11 @@ public abstract class Furniture extends Interactable{
 	public Furniture(String name, String description, Point worldLocation, Point tileLocation) {
 		super(name, description, worldLocation, tileLocation);
 	}
-	
+
 	/**
 	 * For player to perform an action on this Interactable item.
+	 * 
+	 * @throws GameException
 	 */
-	public abstract void performAction(Player p);
+	public abstract void performAction(Player p) throws GameException;
 }
