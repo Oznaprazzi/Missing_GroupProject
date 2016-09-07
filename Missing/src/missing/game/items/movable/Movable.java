@@ -28,7 +28,7 @@ public abstract class Movable extends Item {
 	protected int size;
 	/** Number of movable items */
 	private int amount;
-
+	/** represents whether the item is stored inside the player. */
 	private boolean stored;
 
 	/**
