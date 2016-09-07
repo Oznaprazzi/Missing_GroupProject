@@ -11,9 +11,9 @@
 package missing.game.items.movable;
 
 import java.awt.Point;
+
 /**
  * This class represents a Movable item that can be used to create Craftable items
- * @author linus
  *
  */
 public abstract class Resource extends Movable {

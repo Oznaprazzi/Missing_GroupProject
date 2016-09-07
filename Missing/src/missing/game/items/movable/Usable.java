@@ -5,31 +5,31 @@
  * 
  * Date			Author			Modification
  * 7 Sep 16		Linus Go		created Usable class
+ * 7 Sep 16		Linus Go		Added amount field.		
  */
 package missing.game.items.movable;
+
 import java.awt.Point;
+
 /**
- * This class represents a Usable item in the Game. It extends the Movable subclass and the Item subclass.
+ * This class represents a Usable item in the Game. It extends the Movable
+ * subclass and the Item subclass.
+ * 
  * @author linus
  */
-public abstract class Usable extends Movable{
-	
-	private int amount;
-	
-	
+public abstract class Usable extends Movable {
+
 	/**
-	 * Create a new Usable object.
+	 * Creates instance of Usable class.
+	 * 
 	 * @param name
 	 * @param description
 	 * @param worldLocation
 	 * @param tileLocation
-	 * @param weight
-	 * @param size
 	 * @param amount
+	 * @param size
 	 */
-	public Usable (String name, String description, Point worldLocation, Point tileLocation, int weight, int size, int amount) {
-		super(name, description, worldLocation, tileLocation, weight, size);
-		this.amount = amount;
+	public Usable(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
+		super(name, description, worldLocation, tileLocation, amount, size);
 	}
-	
 }
