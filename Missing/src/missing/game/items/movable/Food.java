@@ -29,8 +29,8 @@ public class Food extends Health {
 	 * @param size
 	 * @param REGAMOUNT
 	 */
-	public Food(String name, String description, Point worldLocation, Point tileLocation, int amount, int size, int REGAMOUNT) {
-		super(name, description, worldLocation, tileLocation, amount, size, REGAMOUNT);
+	public Food(String name, String description, Point worldLocation, Point tileLocation, int amount, int size, int REGEN_AMOUNT) {
+		super(name, description, worldLocation, tileLocation, amount, size, REGEN_AMOUNT);
 	}
 
 	/**
@@ -59,14 +59,20 @@ public class Food extends Health {
 		case Fruit:
 			name = "Fruit";
 			description = "A tasty piece of fruit";
+			super.setAmount(5);
+			REGEN_AMOUNT = 15;
 			break;
 		case Chicken:
 			name = "Chicken";
 			description = "A tasty piece of chicken";
+			super.setAmount(5);
+			REGEN_AMOUNT = 20;
 			break;
 		case Beef:
 			name = "Beef";
 			description = "A delicious beef meal";
+			super.setAmount(5);
+			REGEN_AMOUNT = 25;
 			break;
 		}
 	}
