@@ -1,29 +1,26 @@
-/*	File: NonMovable.java
+/*	File: Furniture.java
  * 	
  * 	Authors:			ID
  *	Casey Huang			300316284
  * 	Date				Author					Changes
- *	7 Sep 16 			Casey Huang				Created Interactable class and added javaDoc comments
- *	7 Sep 16  			Casey Huang				Created performAction method
+ *	7 Sep 16 			Casey Huang				Created Furniture class and added javaDoc comments
  */
 package missing.game.items.nonmovable;
 
 import java.awt.Point;
 
 /**
- * Represents an interactable item in the game.
- *
+ * Represents a furniture item that a player can interact with.
  */
-public abstract class Interactable extends NonMovable{
-
+public abstract class Furniture extends Interactable{
 	/**
-	 * Creates an instance of an Interactable item.
+	 * Creates an instance of a Funiture item.
 	 * @param name
 	 * @param description
 	 * @param worldLocation
 	 * @param tileLocation
 	 */
-	public Interactable(String name, String description, Point worldLocation, Point tileLocation) {
+	public Furniture(String name, String description, Point worldLocation, Point tileLocation) {
 		super(name, description, worldLocation, tileLocation);
 	}
 	
