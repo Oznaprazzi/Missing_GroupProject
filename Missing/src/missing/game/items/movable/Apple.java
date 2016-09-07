@@ -5,6 +5,7 @@
  * 
  * Date			Author			Modification
  * 7 Sep 16		Linus Go		created Apple.java
+ * 7 Sep 16		Linus Go		updated the constructor for the Apple.
  */
 package missing.game.items.movable;
 
@@ -27,8 +28,8 @@ public class Apple extends Food {
 	 * @param amount
 	 * @param size
 	 */
-	public Apple(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
-		super(name, description, worldLocation, tileLocation, amount, size, REGEN_AMOUNT);
+	public Apple(Point worldLocation, Point tileLocation, int amount, int size) {
+		super("Apple", "A tasty piece of fruit.", worldLocation, tileLocation, amount, size, REGEN_AMOUNT);
 	}
-
+	
 }
