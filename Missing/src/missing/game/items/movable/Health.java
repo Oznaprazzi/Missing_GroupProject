@@ -13,17 +13,32 @@ import java.awt.Point;
  *
  */
 public class Health extends Consumable {
+	
+	/** Dictates how much this Health item regenerates the player by.*/
+	protected int REGEN_AMOUNT; 
+	
 	/**
 	 * Construct a new Instance of a Health class.
-	 * @param name
-	 * @param description
+	 * @param name of item
+	 * @param description of Item
 	 * @param worldLocation
 	 * @param tileLocation
 	 * @param amount
 	 * @param size
 	 */
-	public Health(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
+	public Health(String name, String description, Point worldLocation, Point tileLocation, int amount, int size, int REGAMOUNT) {
 		super(name, description, worldLocation, tileLocation, amount, size);
+		this.REGEN_AMOUNT = REGAMOUNT;
 	}
-
+	
+	/**
+	 * Returns the REGEN_AMOUNT for this health object.
+	 * @return
+	 */
+	protected int getRegenAmount(){
+		return this.REGEN_AMOUNT;
+	}
+	
+	
+	
 }
