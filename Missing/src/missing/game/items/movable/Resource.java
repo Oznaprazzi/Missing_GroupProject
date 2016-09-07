@@ -10,7 +10,8 @@ package missing.game.items.movable;
 
 import java.awt.Point;
 /**
- * This class represents a 
+ * This class represents a Resource object in the Game world.
+ * This acts as a subclass of
  * @author linus
  *
  */
@@ -26,7 +27,6 @@ public abstract class Resource extends Movable {
 	 */
 	public Resource(String name, String description, Point worldLocation, Point tileLocation, int weight, int size) {
 		super(name, description, worldLocation, tileLocation, weight, size);
-		// TODO Auto-generated constructor stub
 	}
 
 }
