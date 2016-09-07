@@ -11,6 +11,8 @@ import java.awt.Point;
 
 import missing.game.characters.Player;
 import missing.game.items.movable.Resource;
+import missing.game.items.movable.Wood;
+import missing.helper.GameException;
 
 /**
  * Represents a Tree item that a player can cut down to get the wood resource
@@ -31,8 +33,11 @@ public class Tree extends Source{
 
 	@Override
 	public void performAction(Player p) {
-		// TODO Auto-generated method stub
-		
+		try {
+			p.addToPocket(new Wood(worldLocation, tileLocation, 5, 1));
+		} catch (GameException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

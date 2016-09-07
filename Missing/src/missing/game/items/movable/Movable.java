@@ -8,6 +8,7 @@
  * Date			Author			Modification
  * 7 Sep 16		Edward Kelly	created Movable class
  * 7 Sep 16		Linus Go		Added size field and getters and setters.
+ * 7 Sep 16		Casey Huang		Added stored field
  */
 package missing.game.items.movable;
 
@@ -26,6 +27,8 @@ public abstract class Movable extends Item {
 	protected int size;
 	/** Number of movable items */
 	private int amount;
+	
+	private boolean stored;
 
 	/**
 	 * Creates a new instance of a Movable item
