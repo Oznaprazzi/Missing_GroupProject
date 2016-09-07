@@ -4,6 +4,7 @@
  *	Edward Kelly		300334192
  * 	Date				Author					Changes
 	7 Sep 16			Edward Kelly			Created NonMovable class
+	7 Sep 16 			Casey Huang				Created width and height fields and generated getters and setters for them.
  */
 package missing.game.items.nonmovable;
 
@@ -18,7 +19,9 @@ import missing.game.items.Item;
  * player.
  */
 public abstract class NonMovable extends Item {
-
+	private int width;
+	private int height;
+	
 	/**
 	 * Creates a new instance of a NonMovable item
 	 * @param name name of Movable
@@ -29,5 +32,63 @@ public abstract class NonMovable extends Item {
 	public NonMovable(String name, String description, Point worldLocation, Point tileLocation) {
 		super(name, description, worldLocation, tileLocation);
 	}
+	
+	/**
+	 * Returns the width of this item.
+	 * @return
+	 */
+	public int getWidth() {
+		return width;
+	}
+	
+	/**
+	 * Sets the width of this item.
+	 * @param width
+	 */
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	
+	/**
+	 * Returns the height of this item.
+	 * @return
+	 */
+	public int getHeight() {
+		return height;
+	}
+	
+	/**
+	 * Sets the height of this item.
+	 * @param height
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + height;
+		result = prime * result + width;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		NonMovable other = (NonMovable) obj;
+		if(!name.equals(other.name)){
+			return false;
+		}
+		if(!description.equals(other.description)){
+			return false;
+		}
+		if(!worldLocation.equals(other.worldLocation)){
+			return false;
+		}
+		if(!tileLocation.equals(other.tileLocation)){
+			return false;
+		}
+		return true;
+	}
 }
