@@ -11,9 +11,6 @@
 package missing.game.world.nodes;
 
 import java.awt.Point;
-import java.util.List;
-import missing.game.items.movable.Movable;
-import missing.game.items.nonmovable.NonMovable;
 
 /**
  * World node contains various types of world tiles. It should also contain a
