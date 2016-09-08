@@ -42,6 +42,13 @@ public class WorldNode {
 		this.movableItems = m;
 		this.gameLocation = gl;
 	}
+	/**
+	 * Construct an instance of a WorldNode with just a Point.
+	 * @param p
+	 */
+	public WorldNode(Point p){
+		this.gameLocation = p;
+	}
 	
 	/*Getters and Setters. */
 	
