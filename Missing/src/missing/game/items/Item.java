@@ -5,16 +5,19 @@
  * 
  * Date				Author			Modification
  * 7 Sep 16			Edward Kelly	created item class
+ * 8 Sep 16			Edward Kelly	made Item implement TileObject
  */
 package missing.game.items;
 import java.awt.Point;
+
+import missing.game.world.nodes.WorldTile.TileObject;
 
 /**
  * Represents all the interactable and non-interactable objects inside the game
  * world. This should be extended to a more specialised subclass.
  *
  */
-public abstract class Item {
+public abstract class Item implements TileObject{
 	/** name of item, used when displaying details of item */
 	protected String name;
 	/** description of item, used when displaying details of item */
