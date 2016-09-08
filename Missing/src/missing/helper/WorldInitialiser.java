@@ -34,7 +34,7 @@ public class WorldInitialiser {
 	 * @return
 	 */
 	public static WorldNode[][] loadWorldNodes(){
-		String filePath = "/missing/datastorage.world.node"; //TODO: decide on filepath to load from
+		String filePath = "src/missing.gdatastorage.world.node/";
 		WorldNode[][] worldNodes = new WorldNode[World.WORLD_WIDTH][World.WORLD_HEIGHT];
 		for (int x=0; x < World.WORLD_WIDTH; x++){
 			for (int y=0; y < World.WORLD_HEIGHT; y++){
