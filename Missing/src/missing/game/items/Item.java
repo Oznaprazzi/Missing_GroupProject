@@ -2,19 +2,24 @@
  * 
  * Authors			ID
  * Edward Kelly 	300334192
+ * Chris Rabe		300334207
  * 
  * Date				Author			Modification
  * 7 Sep 16			Edward Kelly	created item class
+ * 8 Sep 16			Chris Rabe		made item implement TileObject
  */
 package missing.game.items;
+
 import java.awt.Point;
+
+import missing.game.world.nodes.WorldTile.TileObject;
 
 /**
  * Represents all the interactable and non-interactable objects inside the game
  * world. This should be extended to a more specialised subclass.
  *
  */
-public abstract class Item {
+public abstract class Item implements TileObject {
 	/** name of item, used when displaying details of item */
 	protected String name;
 	/** description of item, used when displaying details of item */
@@ -23,13 +28,18 @@ public abstract class Item {
 	protected Point worldLocation;
 	/** represents the tile this item is located on inside the worldLocation */
 	protected Point tileLocation;
-	
+
 	/**
 	 * Create an Instance of an Item, given its location.
-	 * @param name name of the item
-	 * @param description describes what the item is
-	 * @param worldLocation the section of the world this item is located in
-	 * @param tileLocation the tile in the worldLocation in which the item is located
+	 * 
+	 * @param name
+	 *            name of the item
+	 * @param description
+	 *            describes what the item is
+	 * @param worldLocation
+	 *            the section of the world this item is located in
+	 * @param tileLocation
+	 *            the tile in the worldLocation in which the item is located
 	 */
 	public Item(String name, String description, Point worldLocation, Point tileLocation) {
 		this.name = name;
@@ -37,16 +47,21 @@ public abstract class Item {
 		this.worldLocation = worldLocation;
 		this.tileLocation = tileLocation;
 	}
-	
-	// would it be better to pass a worldLocation and tileLocation as parameters here?
+
+	// would it be better to pass a worldLocation and tileLocation as parameters
+	// here?
 	/**
 	 * Checks if this item is on the tile at the given x, y location
-	 * @param x x coordinate of tile
-	 * @param y y coordinate of tile
+	 * 
+	 * @param x
+	 *            x coordinate of tile
+	 * @param y
+	 *            y coordinate of tile
 	 * @return returns true if item on tile, false if not
 	 */
-	public boolean on(int x, int y){
-		if (x == tileLocation.x && y == tileLocation.y)return true;
+	public boolean on(int x, int y) {
+		if (x == tileLocation.x && y == tileLocation.y)
+			return true;
 		return false;
 	}
 
@@ -108,7 +123,7 @@ public abstract class Item {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name + ", " + description;

@@ -4,6 +4,7 @@
  * 
  * 	Date				Author				Changes
  * 	7 Sep 16			Chris Rabe			created player class
+ * 	8 Sep 16			Chris Rabe			implemented TileObject
  */
 
 package missing.game.characters;
@@ -12,12 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import missing.game.items.movable.Movable;
+import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 
 /**
  * This class represents individual players within the game world.
  */
-public class Player {
+public class Player implements TileObject {
 	/** Represents the maximum number of items which the player could have. */
 	private final int MAX_ITEM_SIZE = 10;
 
