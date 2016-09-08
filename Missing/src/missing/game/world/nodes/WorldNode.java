@@ -22,7 +22,7 @@ import missing.game.items.Item;
  */
 public class WorldNode {
 	/** Represents the width and height of the world */
-	private final int TILE_SIZE = 25;
+	public static final int TILE_SIZE = 25;
 	/** Represents the maximum number of neighbours of this node */
 	private final int NEIGHBOURS = 4;
 
@@ -65,6 +65,12 @@ public class WorldNode {
 			WorldNode west) {
 		this(location, north, south, east, west);
 		this.items = items;
+	}
+	
+	public WorldNode(Point location, WorldTile[][] worldTiles) {
+		this.gameLocation = location;
+		this.worldTiles = worldTiles;
+		this.neighbours = new WorldNode[NEIGHBOURS];
 	}
 
 	/* Getters and Setters. */

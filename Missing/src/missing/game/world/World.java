@@ -24,8 +24,8 @@ import missing.helper.WorldInitialiser;
  * collide.
  */
 public class World {
-	public static final int WORLD_WIDTH = 25;
-	public static final int WORLD_HEIGHT = 25;
+	public static final int WORLD_WIDTH = 4;
+	public static final int WORLD_HEIGHT = 4;
 	
 	/** The WorldNodes that make up the World */
 	private WorldNode[][] worldNodes;

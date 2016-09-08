@@ -6,6 +6,7 @@
  * 	Date			Author				changes
  * 	8 Sep 16		Linus Go			created WorldTile class.
  * 	8 Sep 16		Chris Rabe			removed some methods and fields
+ *  8 Sep 16		Edward Kelly		added new constructor
  */
 package missing.game.world.nodes;
 
