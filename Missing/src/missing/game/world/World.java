@@ -34,7 +34,6 @@ public class World {
 	
 	public World(List<Player> players){
 		this.players = players;
-		worldNodes = new WorldNode[WORLD_WIDTH][WORLD_HEIGHT];
 		setupWorld();
 	}
 	
@@ -42,24 +41,20 @@ public class World {
 	 * Creates the world, places items and players
 	 */
 	private void setupWorld(){
-		for (int x=0; x < WORLD_WIDTH; x++){
-			for (int y=0; y < WORLD_HEIGHT; y++){
-				worldNodes[x][y] = new WorldNode(new Point(x,y));
-			}
+		// Create worldNodes (loaded from .txt file)
+		worldNodes = WorldInitialiser.loadWorldNodes();
+		
+		
+		// add items to world (loaded from .xml file)
+		List<Item> items = WorldInitialiser.loadItems();
+		for (Item item : items){
+			setLocation(item, item.getWorldLocation(), item.getTileLocation());
 		}
-		// TODO: add tiles to world, will need to parse tile info. may not be done in this class
 		
 		// add players to world
 		for (Player p : players){
 			setLocation(p, p.getWorldLocation(), p.getTileLocation());
 		}
-		
-		// add items to world
-		List<Item> items = WorldInitialiser.initItems();
-		for (Item item : items){
-			setLocation(item, item.getWorldLocation(), item.getTileLocation());
-		}
-		
 		
 	}
 	
