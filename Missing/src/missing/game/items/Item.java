@@ -7,6 +7,7 @@
  * Date				Author			Modification
  * 7 Sep 16			Edward Kelly	created item class
  * 8 Sep 16			Chris Rabe		made item implement TileObject
+ * 8 Sep 16			Edward Kelly	made Item implement TileObject
  */
 package missing.game.items;
 
