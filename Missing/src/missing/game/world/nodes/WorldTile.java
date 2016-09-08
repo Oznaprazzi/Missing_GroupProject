@@ -8,6 +8,7 @@
 package missing.game.world.nodes;
 
 import java.awt.Point;
+import java.util.List;
 
 /**
  * This class represents a WorldTile within the Game. It is the internal data structure used within a WorldNode.
@@ -15,7 +16,6 @@ import java.awt.Point;
  *
  */
 public class WorldTile {
-	
 	
 	/**
 	 * An enumeration type for different types of Tiles. Can add or remove from this list when necessary.
@@ -32,9 +32,8 @@ public class WorldTile {
 	/** Flag for determining if a Tile is being occupied. */
 	private boolean isOccupied = false;
 	
-	/**Points to the the other WorldNode, if this is an entrance node.*/
-	//TODO: Eddy/Chris? May have to review this. How about other worldnodes.
-	private WorldNode other = null;
+	/**List that Points to the the other WorldNode, if this is an entrance node.*/
+	private List<WorldNode> other;
 	/**
 	 * Create a new Instance of WorldTile.
 	 * @param type - of Tile.
@@ -49,12 +48,52 @@ public class WorldTile {
 	 * Create a new instance of a WorldTile that points to another WorldNode.
 	 * @param type - of Tile.
 	 * @param nodeLocation - location of the tile within a point.
-	 * @param other - the Other WorldNode.
+	 * @param otherWorlds - the list of other WorldNode(s).
 	 */
-	public WorldTile(TileType type, Point nodeLocation, WorldNode other){
+	public WorldTile(TileType type, Point nodeLocation, List<WorldNode> otherWorlds){
 		this(type, nodeLocation);
-		this.other = other;
+		this.other = otherWorlds;
 	}
+	
+	/**
+	 * Sets the flag whether a tile is occupied.
+	 * @param v - boolean value.
+	 */
+	public void setIsOccupied(boolean v){
+		this.isOccupied = v;
+	}
+	
+	/**
+	 * Returns whether if a tile is Occupied.
+	 */
+	public boolean isOccupied(){
+		return this.isOccupied;
+	}
+	
+	/**
+	 * Returns the other world node list.
+	 * @return
+	 */
+	public List<WorldNode> geOtherWorldNodeList(){
+		return this.other;
+	}
+	/**
+	 * Returns the type of a Tile.
+	 * @return
+	 */
+	public TileType getType(){
+		return this.type;
+	}
+	
+	/**
+	 * Returns the location of a Tile within a WorldNode.
+	 * 
+	 */
+	public Point getTileLocation(){
+		return this.nodeLocation;
+	}
+	
+	
 	
 	
 /**
@@ -63,6 +102,52 @@ public class WorldTile {
  */
 public interface TileObject{
 	
+}
+
+
+
+
+@Override
+public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + (isOccupied ? 1231 : 1237);
+	result = prime * result + ((nodeLocation == null) ? 0 : nodeLocation.hashCode());
+	result = prime * result + ((other == null) ? 0 : other.hashCode());
+	result = prime * result + ((type == null) ? 0 : type.hashCode());
+	return result;
+}
+
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	WorldTile other = (WorldTile) obj;
+	if (isOccupied != other.isOccupied)
+		return false;
+	if (nodeLocation == null) {
+		if (other.nodeLocation != null)
+			return false;
+	} else if (!nodeLocation.equals(other.nodeLocation))
+		return false;
+	if (this.other == null) {
+		if (other.other != null)
+			return false;
+	} else if (!this.other.equals(other.other))
+		return false;
+	if (type != other.type)
+		return false;
+	return true;
+}
+
+@Override
+public String toString() {
+	return "WorldTile [type=" + type + ", nodeLocation=" + nodeLocation + ", isOccupied=" + isOccupied + ", other="
+			+ other + "]";
 }
 	
 	
