@@ -5,13 +5,12 @@
  * 	Date			Author				Changes
  * 	8 Sep 16		Chris Rabe			create worldNode class
  * 	8 Sep 16		Linus Go			filled the class and added fields.
+ * 	8 Sep 16		Chris Rabe			removed some fields
  */
 
 package missing.game.world.nodes;
+
 import java.awt.Point;
-import java.util.List;
-import missing.game.items.movable.Movable;
-import missing.game.items.nonmovable.NonMovable;
 
 /**
  * World node contains various types of world tiles. It should also contain a
@@ -19,60 +18,25 @@ import missing.game.items.nonmovable.NonMovable;
  * needed when managing server.
  */
 public class WorldNode {
-	/** Represents the amount of Tiles a worldNode object should have. **/  
-	private static final int TILE_SIZE = 0x19;
-	/**The list of non-movable items. */
-	protected List<NonMovable> nonMovableItems;
-	/**The list of movable items */
-	protected List<Movable> movableItems;
-	/**The location of this World Node on the world. */
+	/** Represents the amount of Tiles a worldNode object should have. **/
+	private static final int TILE_SIZE = 25;
+	/** The location of this World Node on the world. */
 	protected Point gameLocation;
-	/** The World Tile 2D array. Each world node has these.*/
+	/** The World Tile 2D array. Each world node has these. */
 	protected WorldTile[][] worldTiles = new WorldTile[TILE_SIZE][TILE_SIZE];
-	
-	
-	/**
-	 * Create an instance of a WorldNode.
-	 * @param nm - List of NonMovable items.
-	 * @param m - List of Movable items.
-	 * @param gl - Location of the WorldNode within the World.
-	 */
-	public WorldNode(List<NonMovable> nm, List<Movable> m, Point gl){
-		this.nonMovableItems = nm;
-		this.movableItems = m;
-		this.gameLocation = gl;
-	}
-	/**
-	 * Construct an instance of a WorldNode with just a Point.
-	 * @param p
-	 */
-	public WorldNode(Point p){
+
+	public WorldNode(Point p) {
 		this.gameLocation = p;
 	}
-	
-	/*Getters and Setters. */
-	
-	/**
-	 * Returns the list of non-movable items.
-	 * @return List<NonMovable>
-	 */
-	public List<NonMovable> getNonMovableItems(){
-		return this.nonMovableItems;
-	}
-	
-	/**
-	 * Returns the list of Movable items.
-	 * @return List<Movable>
-	 */
-	public List<Movable> getMovableItems(){
-		return this.movableItems;
-	}
-	/**
-	 * Returns the location of the board.
-	 * @return
-	 */
-	public Point getGameLocation(){
+
+	/* Getters and Setters. */
+
+	public Point getGameLocation() {
 		return this.gameLocation;
 	}
-	
+
+	public void setGameLocation(Point gameLocation) {
+		this.gameLocation = gameLocation;
+	}
+
 }
