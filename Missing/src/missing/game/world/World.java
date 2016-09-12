@@ -48,17 +48,6 @@ public class World {
 		//Create worldNodes
 		worldNodes = WorldInitialiser.createWorldNodes();
 		
-		// add items to world (loaded from .xml file)
-		List<Item> items = WorldInitialiser.loadItems();
-		for (Item item : items){
-			setLocation(item, item.getWorldLocation(), item.getTileLocation());
-		}
-		
-		// add players to world
-		for (Player p : players){
-			setLocation(p, p.getWorldLocation(), p.getTileLocation());
-		}
-		
 	}
 	
 	/**
