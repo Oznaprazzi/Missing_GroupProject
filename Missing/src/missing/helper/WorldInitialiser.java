@@ -34,11 +34,11 @@ public class WorldInitialiser {
 		WorldNode[][] worldNodes = new WorldNode[World.WORLD_WIDTH][World.WORLD_HEIGHT];
 		// Create worldNodes (loaded from .txt file)
 		InputStream input;
-		// implemented for only one file atm
-		for (int y = 0; y < 1; y++) {
-			for (int x = 0; x < 1; x++) {
+		for (int y = 0; y < World.WORLD_HEIGHT; y++) {
+			for (int x = 0; x < World.WORLD_WIDTH; x++) {
+				System.out.println("Loading "+x+","+y+".txt");
 				input = WorldInitialiser.class
-						.getResourceAsStream("/missing/datastorage/world/node/" + x + "," + y + ".txt");
+						.getResourceAsStream(World.worldNodeFilePath + x + "," + y + ".txt");
 				WorldNode worldNode = parseWorldNode(input, x, y);
 				worldNodes[y][x] = worldNode;
 			}

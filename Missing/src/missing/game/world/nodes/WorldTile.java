@@ -111,4 +111,9 @@ public class WorldTile {
 			}
 		}
 	}
+	
+	@Override
+	public String toString(){
+		return type.toString().substring(0,1);
+	}
 }

@@ -26,9 +26,9 @@ import missing.helper.WorldInitialiser;
  * collide.
  */
 public class World {
-	public static final int WORLD_WIDTH = 4;
-	public static final int WORLD_HEIGHT = 4;
-	public static final String worldNodeFilePath = "src/missing/datastorage/world/node/";
+	public static final int WORLD_WIDTH = 5;
+	public static final int WORLD_HEIGHT = 5;
+	public static final String worldNodeFilePath = "/missing/datastorage/world/node/";
 	
 	/** The WorldNodes that make up the World */
 	private WorldNode[][] worldNodes;
@@ -49,10 +49,10 @@ public class World {
 		worldNodes = WorldInitialiser.createWorldNodes();
 		
 		// add items to world (loaded from .xml file)
-		List<Item> items = WorldInitialiser.loadItems();
-		for (Item item : items){
-			setLocation(item, item.getWorldLocation(), item.getTileLocation());
-		}
+//		List<Item> items = WorldInitialiser.loadItems(); //implement
+//		for (Item item : items){
+//			setLocation(item, item.getWorldLocation(), item.getTileLocation());
+//		}
 		
 		// add players to world
 		for (Player p : players){
