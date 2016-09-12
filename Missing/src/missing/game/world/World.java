@@ -10,12 +10,14 @@
 
 package missing.game.world;
 import java.awt.Point;
+import java.io.InputStream;
 import java.util.List;
 
 import missing.game.characters.Player;
 import missing.game.items.Item;
 import missing.game.world.nodes.WorldNode;
 import missing.game.world.nodes.WorldTile.TileObject;
+import missing.helper.GameException;
 import missing.helper.WorldInitialiser;
 
 /**
@@ -26,24 +28,25 @@ import missing.helper.WorldInitialiser;
 public class World {
 	public static final int WORLD_WIDTH = 4;
 	public static final int WORLD_HEIGHT = 4;
+	public static final String worldNodeFilePath = "src/missing/datastorage/world/node/";
 	
 	/** The WorldNodes that make up the World */
 	private WorldNode[][] worldNodes;
 	/** Reference to the players in the world */
 	private List<Player> players;
 	
-	public World(List<Player> players){
+	public World(List<Player> players) throws GameException{
 		this.players = players;
 		setupWorld();
 	}
-	
+
 	/**
 	 * Creates the world, places items and players
+	 * @throws GameException 
 	 */
-	private void setupWorld(){
-		// Create worldNodes (loaded from .txt file)
-		worldNodes = WorldInitialiser.loadWorldNodes();
-		
+	private void setupWorld() throws GameException{		
+		//Create worldNodes
+		worldNodes = WorldInitialiser.createWorldNodes();
 		
 		// add items to world (loaded from .xml file)
 		List<Item> items = WorldInitialiser.loadItems();
@@ -68,8 +71,6 @@ public class World {
 	public void setLocation(TileObject object, Point destWorldNode, Point destTile){
 		//TODO: need to implement setTileObject method in WorldNode
 		//worldNodes[destWorldNode.x][destWorldNode.y].setTileObject(object, destTile);
-	}
-	
-	
+	}	
 	
 }

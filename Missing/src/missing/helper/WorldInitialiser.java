@@ -12,8 +12,11 @@ package missing.helper;
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,35 +31,32 @@ import missing.game.world.nodes.WorldTile;
  */
 public class WorldInitialiser {
 	/* Loading World */
-	/**
-	 * Creates all worldNode objects and returns as 2D array
-	 * Reads data from .txt file
-	 * @return
-	 */
-	public static WorldNode[][] loadWorldNodes(){
-		String filePath = "src/missing.gdatastorage.world.node/";
+	public static WorldNode[][] createWorldNodes() throws GameException{
 		WorldNode[][] worldNodes = new WorldNode[World.WORLD_WIDTH][World.WORLD_HEIGHT];
-		for (int x=0; x < World.WORLD_WIDTH; x++){
-			for (int y=0; y < World.WORLD_HEIGHT; y++){
-				WorldNode worldNode = parseWorldNode(new File(filePath + x+","+y+".txt"), x, y);
+		// Create worldNodes (loaded from .txt file)
+		InputStream input;
+		//implemented for only one file atm
+		for (int x=0; x < 1; x++){
+			for (int y=0; y < 1; y++){
+				input = WorldInitialiser.class.getResourceAsStream("/missing/datastorage/world/node/"+0+","+0+".txt");
+				WorldNode worldNode = parseWorldNode(input, 0, 0);
 				worldNodes[x][y] = worldNode;
 			}
 		}
 		return worldNodes;
 	}
-	
 	/**
 	 * Reads data for one worldNode from a file and returns a new WorldNode
-	 * @param file file containing data for WorldNode
+	 * @param input InputStream to read data from
 	 * @param x x position of WorldNode in World
 	 * @param y y position of WorldNode in World
 	 * @return
 	 */
-	private static WorldNode parseWorldNode(File file, int x, int y){
+	public static WorldNode parseWorldNode(InputStream input, int x, int y) throws GameException{
 		WorldTile[][] worldTiles = new WorldTile[WorldNode.TILE_SIZE][WorldNode.TILE_SIZE];
 		BufferedReader reader = null;
 		try{
-			reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(new InputStreamReader(input));
 			reader.readLine(); // read header
 			String line;
 			WorldTile currentTile;
@@ -78,7 +78,8 @@ public class WorldInitialiser {
 	 * @param line line to be read, line holds data for one tile
 	 * @return
 	 */
-	private static WorldTile parseWorldTile(String line){
+	private static WorldTile parseWorldTile(String line) throws GameException{
+		System.out.println(line);
 		String[] data = line.split("\\t"); // split at tab
 		WorldTile.TileType tileType = null;	
 		// get tile type
@@ -88,7 +89,7 @@ public class WorldInitialiser {
 			}
 		}
 		if (tileType == null){
-			System.out.println("Invalid file, invalid tile type in file "); // for testing
+			throw new GameException("Invalid file, invalid tile type in file "); // for testing
 		}
 		// get tile x and y
 		int tileX = Integer.parseInt(data[1]);

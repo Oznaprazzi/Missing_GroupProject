@@ -74,7 +74,9 @@ public class WorldNode {
 	}
 
 	/* Getters and Setters. */
-
+	public WorldTile[][] getWorldTiles(){
+		return worldTiles;
+	}
 	public WorldNode getNorth() {
 		return neighbours[0];
 	}
