@@ -21,8 +21,8 @@ import missing.game.items.Item;
  * needed when managing server.
  */
 public class WorldNode {
-	/** Represents the width and height of the world */
-	public static final int TILE_SIZE = 25;
+	/** Represents the width and height of the node */
+	public static final int TILE_SIZE = 5;
 	/** Represents the maximum number of neighbours of this node */
 	private final int NEIGHBOURS = 4;
 

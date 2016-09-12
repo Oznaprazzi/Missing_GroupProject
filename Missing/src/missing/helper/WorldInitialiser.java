@@ -1,11 +1,13 @@
 /*	File: WorldInitialiser.java
  * 	Author:
  * 	Edward Kelly		300334192
+ *  Chris Rabe			300334207
  * 
  * 	Date			Author				changes
  * 	8 Sep 16		Edward Kelly		created class
  *  8 Sep 16		Edward Kelly		created unimplemented Loading World and Loading Items methods
  *  8 Sep 16		Edward Kelly		implemented Loading World methods
+ *  12 Sep 16		Chris Rabe			fixed initialiser
  */
 package missing.helper;
 
