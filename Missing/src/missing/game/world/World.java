@@ -8,6 +8,7 @@
  *  8 Sep 16		Edward Kelly		created constructor, setupWorld, setLocation
  *  13 Sep 16		Chris Rabe			removed some non-related fields to the world node
  *  13 Sep 16		Chris Rabe			implemented the toString() method
+ *  13 Sep 16		Chris Rabe			added a getter for the worldNodes field
  */
 
 package missing.game.world;
@@ -37,6 +38,12 @@ public class World {
 	public World(List<Player> players) throws GameException {
 		this.players = players;
 		setupWorld();
+	}
+
+	// Getters
+
+	public WorldNode[][] getWorldNodes() {
+		return worldNodes;
 	}
 
 	// Helper Methods...

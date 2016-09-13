@@ -11,8 +11,7 @@
 
 package missing.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.awt.Point;
 
@@ -45,7 +44,7 @@ public class FurnitureTests {
 			player.addToPocket(food);
 			fireplace.performAction(player); // player takes wood from tree
 		} catch (GameException e) {
-			e.printStackTrace();
+			fail(e.getMessage());
 		}
 		assertEquals(player.getPocket().size(), 1); // checks that player has 1
 													// item in pocket
@@ -66,13 +65,33 @@ public class FurnitureTests {
 
 		try {
 			player.addToPocket(food);
-			fireplace.performAction(player); // player takes wood from tree
+			fireplace.performAction(player); // player places food in fireplace
 		} catch (GameException e) {
-			e.printStackTrace();
+			fail(e.getMessage());
 		}
 		boolean foodIsCooked = food.isCooked();
 		assertTrue("Food is cooked", foodIsCooked); // checks that player has 1
 													// item in pocket
 	}
 
+	/**
+	 * Checks if there is no food inside the fireplace
+	 */
+	@Test
+	public void fireplaceTest_3() {
+		Player player = new Player("Chris");
+		Point worldLocation = new Point(1, 1);
+		Point tileLocation = new Point(1, 1);
+		Food food = new Food(worldLocation, tileLocation, FoodType.APPLE);
+		Fireplace fireplace = new Fireplace(worldLocation, tileLocation);
+		fireplace.setFood(food);
+
+		try {
+			player.addToPocket(food);
+			fireplace.performAction(player); // player places food in fireplace
+		} catch (GameException e) {
+			fail(e.getMessage());
+		}
+		assertEquals(fireplace.getFood(), null); // fireplace empty
+	}
 }

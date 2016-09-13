@@ -1,10 +1,11 @@
-/*
- * AUTHORS 
- * Linus Go	300345571
+/* File: VControl.java
+ * Authors:
+ * Linus Go			300345571
+ * Chris Rabe		300334207
  * 
- * Updates : 
- * 13/9 - Created VControl.java
- * 
+ * Date				Author				Changes 
+ * 13 Sep 16		Linus Go			Created VControl.java
+ * 13 Sep 16		Chris Rabe			implemented View abstract class
  */
 package missing.ui.controller;
 
@@ -51,8 +52,7 @@ public class VControl extends JFrame {
 
 	/** Size of each view */
 	public static final Dimension VIEW_SIZE = new Dimension(600, 600);
-	
-	
+
 	public VControl() {
 
 	}
