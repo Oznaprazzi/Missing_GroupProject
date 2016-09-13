@@ -60,52 +60,53 @@ public class WorldInitialiser {
 		return worldNodes;
 	}
 
-	public static WorldNode[][] linkNodes(WorldNode[][] worldNodes) {
-		WorldNode[][] tmp = worldNodes;
-		for (int i = 0; i < tmp.length; i++) {
-			for (int j = 0; j < tmp[i].length; j++) {
-				tmp[j][i] = linkNode(tmp[j][i], tmp);
+	/**
+	 * Links the nodes to the neighbours.
+	 * 
+	 * @param nodes
+	 * @return
+	 */
+	public static WorldNode[][] linkNodes(WorldNode[][] nodes) {
+		for (int y = 0; y < nodes.length; y++) {
+			for (int x = 0; x < nodes[y].length; x++) {
+				linkNode(nodes, nodes[y][x], new Point(x, y - 1), 'N');
+				linkNode(nodes, nodes[y][x], new Point(x, y + 1), 'S');
+				linkNode(nodes, nodes[y][x], new Point(x, y + 1), 'E');
+				linkNode(nodes, nodes[y][x], new Point(x, y - 1), 'W');
 			}
 		}
-		return tmp;
+		return nodes;
 	}
 
 	// Helper methods
 
-	private static WorldNode linkNode(WorldNode node, WorldNode[][] nodes) {
-		WorldNode tmp = node;
-		
-		return tmp;
+	/**
+	 * Links the node to a single neighbour. The position of the neighbour is
+	 * indicated by the char character.
+	 * 
+	 * @param nodes
+	 * @param node
+	 * @param point
+	 * @param c
+	 */
+	private static void linkNode(WorldNode[][] nodes, WorldNode node, Point point, char c) {
+		if (-1 < point.x && point.x < World.WORLD_WIDTH && -1 < point.y && point.y < World.WORLD_HEIGHT) {
+			switch (c) {
+			case 'N':
+				node.setNorth(nodes[point.y][point.x]);
+				break;
+			case 'S':
+				node.setSouth(nodes[point.y][point.x]);
+				break;
+			case 'E':
+				node.setEast(nodes[point.y][point.x]);
+				break;
+			case 'W':
+				node.setWest(nodes[point.y][point.x]);
+				break;
+			}
+		}
 	}
-	
-//	/**
-//	 * Maps each node of the board to its neighbour as long as it's within the
-//	 * boundaries of the board.
-//	 * 
-//	 * @param temp
-//	 * @return
-//	 */
-//	public static Node[][] mapNodesToNeighbours(Node[][] temp) {
-//		for (int i = 0; i < temp.length; i++) {
-//			for (int j = 0; j < temp[i].length; j++) {
-//				addNeighbour(temp, temp[i][j], new Point(i, j - 1));
-//				addNeighbour(temp, temp[i][j], new Point(i, j + 1));
-//				addNeighbour(temp, temp[i][j], new Point(i - 1, j));
-//				addNeighbour(temp, temp[i][j], new Point(i + 1, j));
-//			}
-//		}
-//		return temp;
-//	}
-//
-//	/**
-//	 * Adds neighbour to the given node if the point is within the boundaries of
-//	 * the board
-//	 */
-//	private static void addNeighbour(Node[][] temp, Node node, Point point) {
-//		if ((-1 < point.x && point.x < 25) && (-1 < point.y && point.y < 25)) {
-//			node.addNeighbour(temp[point.x][point.y]);
-//		}
-//	}
 
 	/**
 	 * Reads data for one worldNode from a file and returns a new WorldNode

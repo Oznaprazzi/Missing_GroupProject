@@ -44,7 +44,8 @@ public class WorldNode {
 		this.neighbours = new WorldNode[NEIGHBOURS];
 	}
 
-	/* Getters and Setters. */
+	// Getters and Setters
+
 	public WorldTile[][] getWorldTiles() {
 		return worldTiles;
 	}
@@ -65,6 +66,10 @@ public class WorldNode {
 		return neighbours[3];
 	}
 
+	public Point getGameLocation() {
+		return this.gameLocation;
+	}
+
 	public void setNorth(WorldNode node) {
 		neighbours[0] = node;
 	}
@@ -81,11 +86,19 @@ public class WorldNode {
 		neighbours[3] = node;
 	}
 
-	public Point getGameLocation() {
-		return this.gameLocation;
-	}
-
 	public void setGameLocation(Point gameLocation) {
 		this.gameLocation = gameLocation;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < worldTiles.length; i++) {
+			for (int j = 0; j < worldTiles[i].length; j++) {
+				sb.append(worldTiles[i][j].toString());
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 }
