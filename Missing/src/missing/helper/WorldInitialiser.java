@@ -10,14 +10,6 @@
  *  12 Sep 16		Chris Rabe			fixed initialiser
  */
 package missing.helper;
-/*	File: WorldInitialiser.java
- * 	Author:
- * 	Chris Rabe		300334207
- * 
- * 	Date			Author				Changes
- * 	12 Sep 16		Chris Rabe			fixed initialiser
- * 	13 Sep 16		Chris Rabe			expanded node size to 10
- */
 
 import java.awt.Point;
 import java.io.BufferedReader;
