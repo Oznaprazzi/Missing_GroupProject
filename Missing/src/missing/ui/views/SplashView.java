@@ -9,6 +9,10 @@
  */
 package missing.ui.views;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 
@@ -26,7 +30,31 @@ public class SplashView extends View{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+	
+	}
+	
+	/**
+	 * When called, this method will draw the splash screen message onto the screen.
+	 * @param g
+	 */
+	private void drawSplashScreen(Graphics g){
+		int width = super.getPreferredSize().width;
+		int height = super.getPreferredSize().height;
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0,width, height);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("ComicSans", Font.BOLD, 32));
+		g.drawString("Team 3 Presents: Missing - The Game", width/2, height/2);
+	}
+	
+	
+	
+	
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
