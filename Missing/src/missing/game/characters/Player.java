@@ -51,7 +51,7 @@ public class Player implements TileObject {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public int getHealth() {
 		return health;
 	}
@@ -75,21 +75,28 @@ public class Player implements TileObject {
 	public void setPocket(List<Movable> pocket) {
 		this.pocket = pocket;
 	}
-	
-	public Point getWorldLocation(){
+
+	public Point getWorldLocation() {
 		return worldLocation;
 	}
-	
-	public void setWorldLocation(Point worldLocation){
+
+	public void setWorldLocation(Point worldLocation) {
 		this.worldLocation = worldLocation;
 	}
-	public Point getTileLocation(){
+
+	public Point getTileLocation() {
 		return tileLocation;
 	}
-	
-	public void setTileLocation(Point tileLocation){
+
+	public void setTileLocation(Point tileLocation) {
 		this.tileLocation = tileLocation;
 	}
+
+	@Override
+	public String getDescription() {
+		return name;
+	}
+
 	// Methods for use
 
 	/**

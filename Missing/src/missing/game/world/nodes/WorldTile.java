@@ -7,6 +7,7 @@
  * 	8 Sep 16		Linus Go			created WorldTile class.
  * 	8 Sep 16		Chris Rabe			removed some methods and fields
  *  8 Sep 16		Edward Kelly		added new constructor
+ *  8 Sep 16		Chris Rabe			added methods inside the TileObject interface
  */
 package missing.game.world.nodes;
 
@@ -28,7 +29,17 @@ public class WorldTile {
 	 * WorldTile.
 	 */
 	public interface TileObject {
+		public String getName();
 
+		public String getDescription();
+
+		public Point getTileLocation();
+
+		public void setTileLocation(Point tileLocation);
+
+		public Point getWorldLocation();
+
+		public void setWorldLocation(Point worldLocation);
 	}
 
 	/**
@@ -110,5 +121,10 @@ public class WorldTile {
 				return true;
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return type.toString().substring(0, 1);
 	}
 }

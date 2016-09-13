@@ -6,17 +6,14 @@
  * 	Date			Author				changes
  * 	8 Sep 16		Chris Rabe			created world class
  *  8 Sep 16		Edward Kelly		created constructor, setupWorld, setLocation
+ *  13 Sep 16		Chris Rabe			removed some non-related fields to the world node
  */
 
 package missing.game.world;
-import java.awt.Point;
-import java.io.InputStream;
 import java.util.List;
 
 import missing.game.characters.Player;
-import missing.game.items.Item;
 import missing.game.world.nodes.WorldNode;
-import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 import missing.helper.WorldInitialiser;
 
@@ -28,7 +25,6 @@ import missing.helper.WorldInitialiser;
 public class World {
 	public static final int WORLD_WIDTH = 4;
 	public static final int WORLD_HEIGHT = 4;
-	public static final String worldNodeFilePath = "src/missing/datastorage/world/node/";
 	
 	/** The WorldNodes that make up the World */
 	private WorldNode[][] worldNodes;
@@ -47,19 +43,6 @@ public class World {
 	private void setupWorld() throws GameException{		
 		//Create worldNodes
 		worldNodes = WorldInitialiser.createWorldNodes();
-		
+		worldNodes = WorldInitialiser.linkNodes(worldNodes);
 	}
-	
-	/**
-	 * Places an object at a given location. Used for placing items and placing/moving players
-	 * Can also pass a null object to set a square to blank
-	 * @param object object to be placed
-	 * @param destWorldNode WorldNode destination
-	 * @param destTile WorldTile destination
-	 */
-	public void setLocation(TileObject object, Point destWorldNode, Point destTile){
-		//TODO: need to implement setTileObject method in WorldNode
-		//worldNodes[destWorldNode.x][destWorldNode.y].setTileObject(object, destTile);
-	}	
-	
 }

@@ -5,7 +5,7 @@
  * 	Date			Author				Changes
  * 	8 Sep 16		Chris Rabe			create worldNode class
  * 	8 Sep 16		Linus Go			filled the class and added fields.
- * 	8 Sep 16		Chris Rabe			removed some fields
+ * 	8 Sep 16		Chris Rabe			removed some fields and constructor
  */
 
 package missing.game.world.nodes;
@@ -21,16 +21,8 @@ import missing.game.items.Item;
  * needed when managing server.
  */
 public class WorldNode {
-	/** Represents the width and height of the world */
-	public static final int TILE_SIZE = 25;
 	/** Represents the maximum number of neighbours of this node */
 	private final int NEIGHBOURS = 4;
-
-	/** The location of this World Node on the world. */
-	private Point gameLocation;
-	/** The World Tile 2D array. Each world node has these. */
-	private WorldTile[][] worldTiles;
-
 	/**
 	 * Represents the neighbouring nodes.
 	 * 
@@ -39,34 +31,13 @@ public class WorldNode {
 	 * </pre>
 	 */
 	private WorldNode[] neighbours;
+	/** The location of this World Node on the world. */
+	private Point gameLocation;
+	/** The World Tile 2D array. Each world node has these. */
+	private WorldTile[][] worldTiles;
 
 	private List<Item> items; // TODO Use these to initialise world
 
-	public WorldNode(Point location) {
-		this.gameLocation = location;
-		worldTiles = new WorldTile[TILE_SIZE][TILE_SIZE];
-		this.neighbours = new WorldNode[NEIGHBOURS];
-	}
-
-	public WorldNode(Point location, WorldNode north, WorldNode south, WorldNode east, WorldNode west) {
-		this(location);
-		neighbours[0] = north;
-		neighbours[1] = south;
-		neighbours[2] = east;
-		neighbours[3] = west;
-	}
-
-	public WorldNode(Point location, List<Item> items) {
-		this(location);
-		this.items = items;
-	}
-
-	public WorldNode(Point location, List<Item> items, WorldNode north, WorldNode south, WorldNode east,
-			WorldNode west) {
-		this(location, north, south, east, west);
-		this.items = items;
-	}
-	
 	public WorldNode(Point location, WorldTile[][] worldTiles) {
 		this.gameLocation = location;
 		this.worldTiles = worldTiles;
@@ -74,9 +45,10 @@ public class WorldNode {
 	}
 
 	/* Getters and Setters. */
-	public WorldTile[][] getWorldTiles(){
+	public WorldTile[][] getWorldTiles() {
 		return worldTiles;
 	}
+
 	public WorldNode getNorth() {
 		return neighbours[0];
 	}
@@ -91,6 +63,22 @@ public class WorldNode {
 
 	public WorldNode getWest() {
 		return neighbours[3];
+	}
+
+	public void setNorth(WorldNode node) {
+		neighbours[0] = node;
+	}
+
+	public void setSouth(WorldNode node) {
+		neighbours[1] = node;
+	}
+
+	public void setEast(WorldNode node) {
+		neighbours[2] = node;
+	}
+
+	public void setWest(WorldNode node) {
+		neighbours[3] = node;
 	}
 
 	public Point getGameLocation() {
