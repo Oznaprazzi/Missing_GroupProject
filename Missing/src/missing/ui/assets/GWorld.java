@@ -30,6 +30,7 @@ public class GWorld {
 	}
 
 	public void draw(Graphics g) {
-
+		
+		
 	}
 }
