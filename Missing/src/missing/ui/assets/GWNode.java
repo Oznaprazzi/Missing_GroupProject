@@ -3,10 +3,12 @@
  * 	Author:
  * 	Jian Wei Chong	300352789
  * 	Chris Rabe		300334207
+ * 	Linus Go		300345571
  * 
  * 	Date			Author				Changes
  * 	13 Sep 16		Jian Wei			created GWNode.java
  * 	13 Sep 16		Chris Rabe			added comments and draw method
+ * 	13 Sep 16		Linus Go			defined draw method
  */
 
 package missing.ui.assets;
@@ -17,6 +19,10 @@ import missing.game.world.nodes.WorldNode;
 import missing.helper.GUIInitialiser;
 import missing.helper.GameException;
 
+/**
+ * This class is a wrapper class to the WorldNode objects which contains methods
+ * which are purely used for graphics and rendering.
+ */
 public class GWNode {
 	/** Indicates the number of tiles inside the node */
 	private final int TILE_SIZE = 10;
@@ -25,7 +31,7 @@ public class GWNode {
 	private GWTile[][] tiles;
 	private int nodeSize;
 
-	public GWNode(WorldNode node, int nodeSize) {
+	public GWNode(WorldNode node, int nodeSize) throws GameException {
 		this.node = node;
 		this.nodeSize = nodeSize;
 		int size = nodeSize / TILE_SIZE;
@@ -51,22 +57,29 @@ public class GWNode {
 	}
 
 	// Methods
-	
+
 	/**
 	 * Draws the array of tiles that are contained in this Node object.
+	 * 
 	 * @param g
-	 * @throws GameException 
+	 * 
+	 * @param y
+	 * 
+	 * @param x
+	 * 
+	 * @throws GameException
 	 */
-	public void draw(Graphics g) throws GameException {
-	int x = 0, y = 0;
-	for(int i = 0; i < tiles.length; i++){
-		for(int j = 0; j < tiles.length; j++){
-			//TODO: i need to come back and ensure that it wraps around.
-			tiles[i][j].draw(g, x, y);
-			x+=TILE_SIZE;
+	public void draw(Graphics g, int x, int y) throws GameException {
+		// calculate size of each tile relative to the node
+		int tileSize = nodeSize / TILE_SIZE;
+		// draw each tile in the appropriate coordinates
+		for (int i = 0; i < tiles.length; i++) {
+			int tileY = (i * tileSize);
+			for (int j = 0; j < tiles.length; j++) {
+				int tileX = (j * tileSize);
+				tiles[i][j].draw(g, tileX, tileY);
+			}
 		}
-	}
-		
-		
+
 	}
 }
