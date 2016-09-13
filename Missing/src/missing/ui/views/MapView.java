@@ -11,7 +11,7 @@ public class MapView extends View {
 
 	public MapView(VControl controller, World w) {
 		super(controller);
-		gWorld = new GWorld(w);
+		// TODO Fill this in
 	}
 
 	@Override

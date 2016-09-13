@@ -51,7 +51,8 @@ public class VControl extends JFrame {
 
 	/** Size of each view */
 	public static final Dimension VIEW_SIZE = new Dimension(600, 600);
-
+	
+	
 	public VControl() {
 
 	}
