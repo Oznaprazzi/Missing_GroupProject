@@ -33,24 +33,23 @@ public class SplashView extends View{
 	}
 	
 	
+	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-	
 	}
-	
 	/**
 	 * When called, this method will draw the splash screen message onto the screen.
 	 * @param g
 	 */
-	private void drawSplashScreen(Graphics g){
-		int width = super.getPreferredSize().width;
-		int height = super.getPreferredSize().height;
+	public void draw(Graphics g){
+		int xPos = super.getPreferredSize().width;
+		int yPos = super.getPreferredSize().height;
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0,width, height);
+		g.fillRect(0, 0,xPos, yPos);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("ComicSans", Font.BOLD, 32));
-		g.drawString("Team 3 Presents: Missing - The Game", width/2, height/2);
+		g.drawString("Team 3 Presents: Missing - The Game", (int) (xPos*0.02), yPos/2);
 	}
 	
 	

@@ -9,10 +9,15 @@
  */
 package missing.ui.controller;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import missing.ui.views.MapView;
+import missing.ui.views.SplashView;
 
 /**
  * 
@@ -24,8 +29,15 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class VControl extends JFrame {
 	
-	
-	
+	/**Holds an instance of splashView */
+	private View splashView = new SplashView(this);
+	/**Holds an instance of mapView */
+	//TODO: placeholder null value. Need to pass in an instance of the map soon. Plz fix me.
+	private View mapView = new MapView(this, null);
+	/**Holds an array of Views */
+	private View[] viewArray = {splashView, mapView};
+	/**The current View that is being displayed. */
+	private View currentView = viewArray[0];
 	
 	/**
 	 * Views are essentially JPanels with different content. This abstract class
@@ -33,12 +45,13 @@ public class VControl extends JFrame {
 	 */
 	public static abstract class View extends JPanel {
 		protected VControl controller;
-
 		public View(VControl controller) {
 			this.controller = controller;
 			this.setFocusable(false);
 		}
-
+		
+		/**Draws on the current View. */
+		public abstract void draw(Graphics g);
 		/** Initialises the view */
 		public abstract void initialise();
 
@@ -59,10 +72,30 @@ public class VControl extends JFrame {
 
 	public VControl() {
 		super("Missing: The Game");
+		setLayout(new BorderLayout());
+		add(currentView, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setResizable(false);
 		setVisible(true);
 	}
-
+	
+	/**
+	 * This draws the current view.
+	 */
+	public void drawView(Graphics g){
+		currentView.draw(g);
+	}
+	
+	@Override
+	public void paint(Graphics g){
+		drawView(g);
+	}
+	
+	public static void main(String[] args){
+		VControl v = new VControl();
+	}
+	
+	
+	
 }
