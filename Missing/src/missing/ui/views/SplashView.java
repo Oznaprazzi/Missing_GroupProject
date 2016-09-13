@@ -19,8 +19,6 @@ import missing.ui.controller.VControl.View;
 
 public class SplashView extends View{
 	 
-	
-	
 	public SplashView(VControl controller) {
 		super(controller);
 		// TODO Auto-generated constructor stub
@@ -32,12 +30,11 @@ public class SplashView extends View{
 		
 	}
 	
-	
-	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 	}
+	
 	/**
 	 * When called, this method will draw the splash screen message onto the screen.
 	 * @param g
@@ -51,9 +48,6 @@ public class SplashView extends View{
 		g.setFont(new Font("ComicSans", Font.BOLD, 32));
 		g.drawString("Team 3 Presents: Missing - The Game", (int) (xPos*0.02), yPos/2);
 	}
-	
-	
-	
 	
 	@Override
 	public void setFocus() {
