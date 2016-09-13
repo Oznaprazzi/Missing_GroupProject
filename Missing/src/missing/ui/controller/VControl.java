@@ -34,10 +34,8 @@ public class VControl extends JFrame {
 	/**Holds an instance of mapView */
 	//TODO: placeholder null value. Need to pass in an instance of the map soon. Plz fix me.
 	private View mapView = new MapView(this, null);
-	/**Holds an array of Views */
-	private View[] viewArray = {splashView, mapView};
 	/**The current View that is being displayed. */
-	private View currentView = viewArray[0];
+	private View currentView = splashView;
 	
 	/**
 	 * Views are essentially JPanels with different content. This abstract class
@@ -86,6 +84,21 @@ public class VControl extends JFrame {
 	public void drawView(Graphics g){
 		currentView.draw(g);
 	}
+	/**
+	 * Sets the current Map View
+	 * @param m
+	 */
+	public void setMapView(MapView m){
+		this.mapView = m;
+	}
+	
+	/**
+	 * Sets the current View to whatever is being passed in.
+	 */
+	public void setCurrentView(View v){
+		this.currentView = v;
+	}
+	
 	
 	@Override
 	public void paint(Graphics g){

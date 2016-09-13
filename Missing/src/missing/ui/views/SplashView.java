@@ -48,7 +48,6 @@ public class SplashView extends View{
 		g.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
 		g.drawString("Team 3 Presents: Missing - The Game", (int) (xPos*0.02), yPos/2);
 	}
-	
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
