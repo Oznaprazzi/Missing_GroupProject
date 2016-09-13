@@ -15,6 +15,7 @@ import java.awt.Graphics;
 
 import missing.game.world.nodes.WorldNode;
 import missing.helper.GUIInitialiser;
+import missing.helper.GameException;
 
 public class GWNode {
 	/** Indicates the number of tiles inside the node */
@@ -50,8 +51,22 @@ public class GWNode {
 	}
 
 	// Methods
-
-	public void draw(Graphics g) {
-
+	
+	/**
+	 * Draws the array of tiles that are contained in this Node object.
+	 * @param g
+	 * @throws GameException 
+	 */
+	public void draw(Graphics g) throws GameException {
+	int x = 0, y = 0;
+	for(int i = 0; i < tiles.length; i++){
+		for(int j = 0; j < tiles.length; j++){
+			//TODO: i need to come back and ensure that it wraps around.
+			tiles[i][j].draw(g, x, y);
+			x+=TILE_SIZE;
+		}
+	}
+		
+		
 	}
 }
