@@ -9,6 +9,8 @@
 
 package missing.ui.assets;
 
+import java.awt.Graphics;
+
 import missing.game.world.nodes.WorldNode;
 
 public class GWNode {
@@ -21,4 +23,10 @@ public class GWNode {
 		this.node = node;
 		tiles = new GWTile[TILE_SIZE][TILE_SIZE];
 	}
+	
+	public void draw(Graphics g, int scale){
+		
+	}
+	
+	
 }
