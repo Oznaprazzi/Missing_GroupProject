@@ -45,7 +45,7 @@ public class SplashView extends View{
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0,xPos, yPos);
 		g.setColor(Color.WHITE);
-		g.setFont(new Font("ComicSans", Font.BOLD, 32));
+		g.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
 		g.drawString("Team 3 Presents: Missing - The Game", (int) (xPos*0.02), yPos/2);
 	}
 	
