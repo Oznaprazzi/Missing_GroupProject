@@ -33,7 +33,7 @@ public class VControl extends JFrame {
 	private View splashView = new SplashView(this);
 	/**Holds an instance of mapView */
 	//TODO: placeholder null value. Need to pass in an instance of the map soon. Plz fix me.
-	private View mapView = new MapView(this, null);
+	private View mapView;
 	/**The current View that is being displayed. */
 	private View currentView = splashView;
 	
