@@ -31,6 +31,26 @@ public class GWNode {
 		this.tiles = GUIInitialiser.initialiseGTiles(node, size);
 	}
 
+	// Getters and Setters...
+
+	public WorldNode getNode() {
+		return node;
+	}
+
+	public void setNode(WorldNode node) {
+		this.node = node;
+	}
+
+	public int getNodeSize() {
+		return nodeSize;
+	}
+
+	public void setNodeSize(int nodeSize) {
+		this.nodeSize = nodeSize;
+	}
+
+	// Methods
+
 	public void draw(Graphics g) {
 
 	}
