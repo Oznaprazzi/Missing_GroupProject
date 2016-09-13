@@ -6,6 +6,7 @@
  * 	Date:					Author					Changes
  * 	13 Sep 16				Jian Wei 				created SplashView
  * 	13 Sep 16				Linus Go				added implementation of SplashView.
+ 	14 Sep 16				Linus Go				added code to draw SplashScreen.
  */
 package missing.ui.views;
 

@@ -23,6 +23,10 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public class VControl extends JFrame {
+	
+	
+	
+	
 	/**
 	 * Views are essentially JPanels with different content. This abstract class
 	 * should be extended by other classes.
@@ -54,7 +58,11 @@ public class VControl extends JFrame {
 	public static final Dimension VIEW_SIZE = new Dimension(600, 600);
 
 	public VControl() {
-
+		super("Missing: The Game");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pack();
+		setResizable(false);
+		setVisible(true);
 	}
 
 }
