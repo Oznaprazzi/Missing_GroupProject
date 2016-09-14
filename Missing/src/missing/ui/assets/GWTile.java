@@ -13,6 +13,7 @@
 
 package missing.ui.assets;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class GWTile {
 
 	public GWTile(WorldTile tile, int size) throws GameException {
 		/* Initialize the images. */
-		try {
+		/*try {
 			sandImage = ImageIO.read(getClass().getResource("/img/sand.jpg"));
 			waterImage = ImageIO.read(getClass().getResource("/img/water.jpg"));
 			grassImage = ImageIO.read(getClass().getResource("/img/grass.jpg"));
@@ -50,7 +51,8 @@ public class GWTile {
 		} catch (IOException e) {
 			// convert IOException to GameException
 			throw new GameException(e.getMessage());
-		}
+		}*/
+		
 
 		this.tile = tile;
 		this.size = size;
@@ -68,19 +70,30 @@ public class GWTile {
 	 *            - y position
 	 */
 	public void draw(Graphics g, int x, int y) throws GameException {
+	
 
 		switch (tile.getType()) {
 		case SAND:
-			g.drawImage(sandImage, x, y, size, size, null);
+			Color brown = new Color(165,42,42);
+			g.setColor(brown);
+			g.drawRect(x, y, size, size);
+			//g.drawImage(sandImage, x, y, size, size, null);
 			break;
 		case WATER:
-			g.drawImage(waterImage, x, y, size, size, null);
+			//Color brown = new Color(165,42,42);
+			g.setColor(Color.blue);
+			g.drawRect(x, y, size, size);
+			//g.drawImage(waterImage, x, y, size, size, null);
 			break;
 		case GRASS:
-			g.drawImage(grassImage, x, y, size, size, null);
+			//g.drawImage(grassImage, x, y, size, size, null);
+			g.setColor(Color.green);
+			g.drawRect(x, y, size, size);
 			break;
 		case ROAD:
-			g.drawImage(roadImage, x, y, size, size, null);
+			//g.drawImage(roadImage, x, y, size, size, null);
+			g.setColor(Color.black);
+			g.drawRect(x, y, size, size);
 			break;
 		default:
 			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");

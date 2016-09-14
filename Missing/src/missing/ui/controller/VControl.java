@@ -97,6 +97,8 @@ public class VControl extends JFrame {
 	 */
 	public void setCurrentView(View v){
 		this.currentView = v;
+		System.out.println("Current View = " + currentView.toString());
+		this.revalidate();
 	}
 	
 	

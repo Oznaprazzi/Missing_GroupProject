@@ -17,6 +17,7 @@ public class MapView extends View {
 		super(controller);
 		try{
 			gWorld = new GWorld(w,this, new Point(0,0));
+			System.out.println("Created map view");
 		}catch(GameException e){
 			e.printStackTrace();
 		}
@@ -34,6 +35,7 @@ public class MapView extends View {
 	 * Draws the map*/
 	@Override
 	public void draw(Graphics g){
+		System.out.println("Drawing map");
 		try{
 			gWorld.draw(g);
 		}catch(GameException e){

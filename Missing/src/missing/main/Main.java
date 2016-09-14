@@ -19,6 +19,7 @@ public class Main {
 			World world = new World(players);
 			VControl control = new VControl();
 			MapView mapView = new MapView(control, world);
+			System.out.println("Creating map view, sleeping now");
 			Thread.sleep(1000);
 			control.setCurrentView(mapView);
 		}catch(GameException e){

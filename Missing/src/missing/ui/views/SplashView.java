@@ -40,6 +40,7 @@ public class SplashView extends View{
 	 * @param g
 	 */
 	public void draw(Graphics g){
+		System.out.println("Drawing splash");
 		int xPos = super.getPreferredSize().width;
 		int yPos = super.getPreferredSize().height;
 		g.setColor(Color.BLACK);
