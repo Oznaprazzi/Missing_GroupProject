@@ -52,7 +52,6 @@ public class GWorld {
 			int y = (i * nodeSize) + padding.y;
 			for (int j = 0; j < gwNodes[i].length; j++) {
 				int x = (j * nodeSize) + padding.x;
-				System.out.println(String.format("%d : (%d, %d)", nodeSize, x, y));
 				gwNodes[i][j].setNodeSize(nodeSize);
 				gwNodes[i][j].draw(g, x, y);
 			}

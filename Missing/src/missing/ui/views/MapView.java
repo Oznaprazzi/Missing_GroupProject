@@ -22,7 +22,6 @@ public class MapView extends View {
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Done");
 	}
 
 	@Override

@@ -68,7 +68,6 @@ public class VControl extends JFrame {
 	public VControl() {
 		super("Missing: The Game");
 		this.views = GUIInitialiser.createViews(this);
-		System.out.println("TEST");
 		initialiseGUI();
 		views[cur].initialise();
 	}
@@ -90,7 +89,6 @@ public class VControl extends JFrame {
 	 * @param index
 	 */
 	public void changeView(int index) {
-		System.out.println("GOT HERE");
 		if (index < 0 || index >= views.length) {
 			return;
 		}
