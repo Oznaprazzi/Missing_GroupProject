@@ -48,9 +48,10 @@ public class GUIInitialiser {
 	}
 
 	public static View[] createViews(VControl control) {
-		View[] tmp = new View[2];
+		View[] tmp = new View[3];
 		tmp[0] = new SplashView(control);
-		tmp[1] = new MapView(control, control.getWorld());
+		tmp[1] = new MenuView(control);
+		tmp[2] = new MapView(control, control.getWorld());
 		return tmp;
 	}
 }
