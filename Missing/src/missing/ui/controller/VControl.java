@@ -6,6 +6,7 @@
  * Date				Author				Changes 
  * 13 Sep 16		Linus Go			Created VControl.java
  * 13 Sep 16		Chris Rabe			implemented View abstract class
+ * 14 Sep 16		Chris Rabe			fixed changing view
  */
 package missing.ui.controller;
 

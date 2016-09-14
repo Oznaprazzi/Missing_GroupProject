@@ -43,16 +43,15 @@ public class GWTile {
 
 	public GWTile(WorldTile tile, int size) throws GameException {
 		/* Initialize the images. */
-		// try {
-		// sandImage = ImageIO.read(getClass().getResource("/img/sand.jpg"));
-		// waterImage = ImageIO.read(getClass().getResource("/img/water.jpg"));
-		// grassImage = ImageIO.read(getClass().getResource("/img/grass.jpg"));
-		// roadImage = ImageIO.read(getClass().getResource("/img/road.jpg"));
-		// } catch (IOException e) {
-		// convert IOException to GameException
-		// throw new GameException(e.getMessage());
-		// }
-
+		/*
+		 * try { sandImage =
+		 * ImageIO.read(getClass().getResource("/img/sand.jpg")); waterImage =
+		 * ImageIO.read(getClass().getResource("/img/water.jpg")); grassImage =
+		 * ImageIO.read(getClass().getResource("/img/grass.jpg")); roadImage =
+		 * ImageIO.read(getClass().getResource("/img/road.jpg")); } catch
+		 * (IOException e) { // convert IOException to GameException throw new
+		 * GameException(e.getMessage()); }
+		 */
 		this.tile = tile;
 		this.size = size;
 	}
