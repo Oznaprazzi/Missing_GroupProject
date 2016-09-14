@@ -48,7 +48,9 @@ public class GUIInitialiser {
 	}
 
 	public static View[] createViews(VControl control) {
-		View[] tmp = new View[3];
+		// TODO append new views at end, increase views variable
+		int views = 3;
+		View[] tmp = new View[views];
 		tmp[0] = new SplashView(control);
 		tmp[1] = new MenuView(control);
 		tmp[2] = new MapView(control, control.getWorld());
