@@ -1,5 +1,6 @@
 package missing.ui.views;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -9,34 +10,44 @@ import missing.ui.assets.GWorld;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 
+@SuppressWarnings("serial")
 public class MapView extends View {
 
 	private GWorld gWorld;
 
-	public MapView(VControl controller, World w) {
+	public MapView(VControl controller, World world) {
 		super(controller);
-		try{
-			gWorld = new GWorld(w,this, new Point(0,0));
-		}catch(GameException e){
+		try {
+			gWorld = new GWorld(world, this, new Point(0, 0));
+		} catch (GameException e) {
 			e.printStackTrace();
 		}
-		// TODO Fill this in
+		System.out.println("Done");
 	}
 
 	@Override
 	public void initialise() {
-		// TODO Auto-generated method stub
-		
 
 	}
-	
-	/**
-	 * Draws the map*/
+
 	@Override
-	public void draw(Graphics g){
-		try{
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+	}
+
+	/**
+	 * When called, this method will draw the splash screen message onto the
+	 * screen.
+	 * 
+	 * @param g
+	 */
+	@Override
+	public void paint(Graphics g) {
+		g.setColor(Color.black);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		try {
 			gWorld.draw(g);
-		}catch(GameException e){
+		} catch (GameException e) {
 			e.printStackTrace();
 		}
 	}

@@ -76,19 +76,16 @@ public abstract class NonMovable extends Item {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
 		NonMovable other = (NonMovable) obj;
-		if(!name.equals(other.name)){
+		if (height != other.height)
 			return false;
-		}
-		if(!description.equals(other.description)){
+		if (width != other.width)
 			return false;
-		}
-		if(!worldLocation.equals(other.worldLocation)){
-			return false;
-		}
-		if(!tileLocation.equals(other.tileLocation)){
-			return false;
-		}
 		return true;
 	}
+	
 }

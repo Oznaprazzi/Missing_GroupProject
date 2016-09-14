@@ -74,9 +74,10 @@ public class GWNode {
 		int tileSize = nodeSize / TILE_SIZE;
 		// draw each tile in the appropriate coordinates
 		for (int i = 0; i < tiles.length; i++) {
-			int tileY = (i * tileSize);
+			int tileY = y + (i * tileSize);
 			for (int j = 0; j < tiles.length; j++) {
-				int tileX = (j * tileSize);
+				int tileX = x + (j * tileSize);
+				tiles[i][j].setSize(tileSize);
 				tiles[i][j].draw(g, tileX, tileY);
 			}
 		}

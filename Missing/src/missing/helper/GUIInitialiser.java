@@ -15,7 +15,9 @@ package missing.helper;
 import missing.game.world.nodes.WorldNode;
 import missing.game.world.nodes.WorldTile;
 import missing.ui.assets.GWTile;
-
+import missing.ui.controller.VControl;
+import missing.ui.controller.VControl.View;
+import missing.ui.views.*;
 import missing.game.world.World;
 import missing.ui.assets.GWNode;
 
@@ -43,5 +45,12 @@ public class GUIInitialiser {
 			}
 		}
 		return temp;
+	}
+
+	public static View[] createViews(VControl control) {
+		View[] tmp = new View[2];
+		tmp[0] = new SplashView(control);
+		tmp[1] = new MapView(control, control.getWorld());
+		return tmp;
 	}
 }

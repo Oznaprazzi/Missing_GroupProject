@@ -9,15 +9,16 @@
  */
 package missing.ui.controller;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import missing.ui.views.MapView;
-import missing.ui.views.SplashView;
+import missing.game.characters.Player;
+import missing.game.world.World;
+import missing.helper.GUIInitialiser;
+import missing.helper.GameException;
 
 /**
  * 
@@ -28,28 +29,19 @@ import missing.ui.views.SplashView;
  */
 @SuppressWarnings("serial")
 public class VControl extends JFrame {
-	
-	/**Holds an instance of splashView */
-	private View splashView = new SplashView(this);
-	/**Holds an instance of mapView */
-	//TODO: placeholder null value. Need to pass in an instance of the map soon. Plz fix me.
-	private View mapView;
-	/**The current View that is being displayed. */
-	private View currentView = splashView;
-	
+
 	/**
 	 * Views are essentially JPanels with different content. This abstract class
 	 * should be extended by other classes.
 	 */
 	public static abstract class View extends JPanel {
 		protected VControl controller;
+
 		public View(VControl controller) {
 			this.controller = controller;
 			this.setFocusable(false);
 		}
-		
-		/**Draws on the current View. */
-		public abstract void draw(Graphics g);
+
 		/** Initialises the view */
 		public abstract void initialise();
 
@@ -65,50 +57,79 @@ public class VControl extends JFrame {
 		}
 	}
 
-	/** Size of each view */
-	public static final Dimension VIEW_SIZE = new Dimension(600, 600);
+	/** Size of each view */ // TODO Change this!
+	public static final Dimension VIEW_SIZE = new Dimension(1000, 1000);
+
+	private View[] views;
+	private int cur = 0;
+	private int prev = 0;
 
 	public VControl() {
 		super("Missing: The Game");
-		setLayout(new BorderLayout());
-		add(currentView, BorderLayout.CENTER);
+		this.views = GUIInitialiser.createViews(this);
+		System.out.println("TEST");
+		initialiseGUI();
+		views[cur].initialise();
+	}
+
+	// View Control Methods
+
+	public int getMapView() {
+		return 1;
+	}
+
+	public int getPrevious() {
+		return prev;
+	}
+
+	/**
+	 * Changes view on the specified index. Should be within the boundaries of
+	 * the view, otherwise it exits out.
+	 * 
+	 * @param index
+	 */
+	public void changeView(int index) {
+		System.out.println("GOT HERE");
+		if (index < 0 || index >= views.length) {
+			return;
+		}
+		if (views[index] == null) {
+			return;
+		}
+		// Record the previous index
+		this.prev = this.cur;
+		this.cur = index;
+		// Remove and replace the view
+		getContentPane().removeAll();
+		getContentPane().add(views[cur]);
+		// Setting the focus allows event listeners to be activated
+		views[index].repaint();
+		views[index].setFocus();
+		// Redraw the whole frame
+		revalidate();
+	}
+
+	// TODO Change this once we have a client control
+	public World getWorld() {
+		try {
+			return new World(new ArrayList<Player>());
+		} catch (GameException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	// Helper methods
+
+	private void initialiseGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		add(new JPanel());
+		getContentPane().add(views[cur]);
 		pack();
-		setResizable(false);
 		setVisible(true);
 	}
-	
-	/**
-	 * This draws the current view.
-	 */
-	public void drawView(Graphics g){
-		currentView.draw(g);
+
+	public static void main(String[] args) {
+		new VControl();
 	}
-	/**
-	 * Sets the current Map View
-	 * @param m
-	 */
-	public void setMapView(MapView m){
-		this.mapView = m;
-	}
-	
-	/**
-	 * Sets the current View to whatever is being passed in.
-	 */
-	public void setCurrentView(View v){
-		this.currentView = v;
-	}
-	
-	
-	@Override
-	public void paint(Graphics g){
-		drawView(g);
-	}
-	
-	public static void main(String[] args){
-		VControl v = new VControl();
-	}
-	
-	
-	
 }

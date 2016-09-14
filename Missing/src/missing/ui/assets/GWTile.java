@@ -13,6 +13,7 @@
 
 package missing.ui.assets;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class GWTile {
 	/** A reference to a tile object. */
 	private WorldTile tile;
 	/** The current size of this tile. */
-	private int size = 10;
+	private int size;
 
 	// Tile images
 	private BufferedImage sandImage;
@@ -42,17 +43,27 @@ public class GWTile {
 
 	public GWTile(WorldTile tile, int size) throws GameException {
 		/* Initialize the images. */
-		try {
-			sandImage = ImageIO.read(getClass().getResource("/img/sand.jpg"));
-			waterImage = ImageIO.read(getClass().getResource("/img/water.jpg"));
-			grassImage = ImageIO.read(getClass().getResource("/img/grass.jpg"));
-			roadImage = ImageIO.read(getClass().getResource("/img/road.jpg"));
-		} catch (IOException e) {
-			// convert IOException to GameException
-			throw new GameException(e.getMessage());
-		}
+		// try {
+		// sandImage = ImageIO.read(getClass().getResource("/img/sand.jpg"));
+		// waterImage = ImageIO.read(getClass().getResource("/img/water.jpg"));
+		// grassImage = ImageIO.read(getClass().getResource("/img/grass.jpg"));
+		// roadImage = ImageIO.read(getClass().getResource("/img/road.jpg"));
+		// } catch (IOException e) {
+		// convert IOException to GameException
+		// throw new GameException(e.getMessage());
+		// }
 
 		this.tile = tile;
+		this.size = size;
+	}
+
+	// Getters and Setters
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
 		this.size = size;
 	}
 
@@ -68,22 +79,40 @@ public class GWTile {
 	 *            - y position
 	 */
 	public void draw(Graphics g, int x, int y) throws GameException {
-
 		switch (tile.getType()) {
 		case SAND:
-			g.drawImage(sandImage, x, y, size, size, null);
+			g.setColor(Color.YELLOW);
 			break;
 		case WATER:
-			g.drawImage(waterImage, x, y, size, size, null);
+			g.setColor(Color.BLUE);
 			break;
 		case GRASS:
-			g.drawImage(grassImage, x, y, size, size, null);
+			g.setColor(Color.GREEN);
 			break;
 		case ROAD:
-			g.drawImage(roadImage, x, y, size, size, null);
+			g.setColor(Color.GRAY);
 			break;
 		default:
-			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
+			g.setColor(Color.WHITE);
+			throw new GameException("Invalid tile");
 		}
+		g.drawRect(x, y, size, size);
+		// switch (tile.getType()) {
+		// case SAND:
+		// g.drawImage(sandImage, x, y, size, size, null);
+		// break;
+		// case WATER:
+		// g.drawImage(waterImage, x, y, size, size, null);
+		// break;
+		// case GRASS:
+		// g.drawImage(grassImage, x, y, size, size, null);
+		// break;
+		// case ROAD:
+		// g.drawImage(roadImage, x, y, size, size, null);
+		// break;
+		// default:
+		// throw new GameException("Trying to draw an invalid tile type which
+		// doesn't exist!");
+		// }
 	}
 }
