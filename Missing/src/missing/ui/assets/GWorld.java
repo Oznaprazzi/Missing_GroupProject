@@ -37,6 +37,7 @@ public class GWorld {
 	public GWorld(World world, View view, Point padding) throws GameException {
 		this.world = world;
 		this.curView = view;
+		this.padding= padding;
 		int nodeSize = Math.min(curView.getWidth(), curView.getHeight()) / World.WORLD_WIDTH;
 		gwNodes = GUIInitialiser.initialiseGNodes(world, nodeSize);
 	}
