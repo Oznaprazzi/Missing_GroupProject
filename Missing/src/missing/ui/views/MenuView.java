@@ -41,6 +41,28 @@ public class MenuView extends View {
 		super(controller);
 		this.initialiseLayout();
 	}
+	/**
+	 * This method defines the action listeners and allows actions to be performed once the button is pressed.
+	 */
+	private void setupActionListeners() {
+		btnSinglePlayer.addActionListener(e->{
+			
+		});
+		
+		btnMultiPlayer.addActionListener(e->{
+			
+		});
+		
+		btnAbout.addActionListener(e->{
+			
+		});
+		
+		btnExit.addActionListener(e->{
+		System.exit(0);
+		});
+		
+		
+	}
 
 	/**
 	 * This method initializes all of the buttons and the layout.
@@ -49,45 +71,41 @@ public class MenuView extends View {
 		setLayout(null);
 
 		btnSinglePlayer = new JButton("Single Player");
+		btnSinglePlayer.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnSinglePlayer.setBackground(Color.YELLOW);
-		btnSinglePlayer.setBounds(370, 100, 165, 45);
+		btnSinglePlayer.setBounds(370, 87, 200, 61);
 		add(btnSinglePlayer);
 
 		btnMultiPlayer = new JButton("Multi Player");
+		btnMultiPlayer.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnMultiPlayer.setBackground(Color.YELLOW);
-		btnMultiPlayer.setBounds(370, 156, 165, 45);
+		btnMultiPlayer.setBounds(370, 156, 200, 61);
 		add(btnMultiPlayer);
 
 		btnAbout = new JButton("About \"Missing\"");
+		btnAbout.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnAbout.setBackground(Color.YELLOW);
-		btnAbout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnAbout.setBounds(370, 212, 165, 45);
+		btnAbout.setBounds(370, 224, 200, 61);
 		add(btnAbout);
 
 		btnExit = new JButton("Exit Game");
+		btnExit.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnExit.setBackground(Color.YELLOW);
-		btnExit.setBounds(370, 269, 165, 45);
+		btnExit.setBounds(369, 290, 200, 61);
 		add(btnExit);
 
 		btnSinglePlayer = new JButton("Start Single Player");
 		btnMultiPlayer = new JButton("Multi Player");
 		btnAbout = new JButton("About Game");
 		btnExit = new JButton("Exit Game");
-		this.repaint();
-		
+		//this.repaint();
+		this.setupActionListeners();
+
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-	}
-
-	/** This will paint onto the Menu View JFrame. */
-	@Override
-	public void paint(Graphics g) {
 		int wd = super.getSize().width;
 		int ht = super.getSize().height;
 		g.setColor(Color.BLACK);
@@ -95,6 +113,9 @@ public class MenuView extends View {
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Comic Sans MS", Font.ITALIC, 36));
 		g.drawString("MAIN MENU", (wd / 3), 50);
+		
+		
+		
 	}
 
 	@Override
