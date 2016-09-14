@@ -13,12 +13,7 @@
 
 package missing.ui.assets;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import missing.game.world.nodes.WorldTile;
 import missing.helper.GameException;
@@ -35,23 +30,7 @@ public class GWTile {
 	/** The current size of this tile. */
 	private int size;
 
-	// Tile images
-	private BufferedImage sandImage;
-	private BufferedImage waterImage;
-	private BufferedImage grassImage;
-	private BufferedImage roadImage;
-
 	public GWTile(WorldTile tile, int size) throws GameException {
-		/* Initialize the images. */
-		/*
-		 * try { sandImage =
-		 * ImageIO.read(getClass().getResource("/img/sand.jpg")); waterImage =
-		 * ImageIO.read(getClass().getResource("/img/water.jpg")); grassImage =
-		 * ImageIO.read(getClass().getResource("/img/grass.jpg")); roadImage =
-		 * ImageIO.read(getClass().getResource("/img/road.jpg")); } catch
-		 * (IOException e) { // convert IOException to GameException throw new
-		 * GameException(e.getMessage()); }
-		 */
 		this.tile = tile;
 		this.size = size;
 	}
@@ -80,38 +59,19 @@ public class GWTile {
 	public void draw(Graphics g, int x, int y) throws GameException {
 		switch (tile.getType()) {
 		case SAND:
-			g.setColor(Color.YELLOW);
+			g.drawImage(GameAssets.getSandImage(), x, y, size, size, null);
 			break;
 		case WATER:
-			g.setColor(Color.BLUE);
+			g.drawImage(GameAssets.getWaterImage(), x, y, size, size, null);
 			break;
 		case GRASS:
-			g.setColor(Color.GREEN);
+			g.drawImage(GameAssets.getGrassImage(), x, y, size, size, null);
 			break;
 		case ROAD:
-			g.setColor(Color.GRAY);
+			g.drawImage(GameAssets.getRoadImage(), x, y, size, size, null);
 			break;
 		default:
-			g.setColor(Color.WHITE);
-			throw new GameException("Invalid tile");
+			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
 		}
-		g.drawRect(x, y, size, size);
-		// switch (tile.getType()) {
-		// case SAND:
-		// g.drawImage(sandImage, x, y, size, size, null);
-		// break;
-		// case WATER:
-		// g.drawImage(waterImage, x, y, size, size, null);
-		// break;
-		// case GRASS:
-		// g.drawImage(grassImage, x, y, size, size, null);
-		// break;
-		// case ROAD:
-		// g.drawImage(roadImage, x, y, size, size, null);
-		// break;
-		// default:
-		// throw new GameException("Trying to draw an invalid tile type which
-		// doesn't exist!");
-		// }
 	}
 }

@@ -23,7 +23,7 @@ import missing.helper.GameException;
 
 /**
  * 
- * This Class represents the Controller for the Game. It extends JFrame, and
+ * This class represents the Controller for the Game. It extends JFrame, and
  * will contain a View, and buttons and toggles that the user is able to
  * manipulate.
  *

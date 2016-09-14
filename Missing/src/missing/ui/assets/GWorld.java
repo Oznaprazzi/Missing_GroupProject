@@ -39,7 +39,7 @@ public class GWorld {
 		this.curView = view;
 		this.padding = padding;
 		int nodeSize = Math.min(curView.getWidth(), curView.getHeight()) / World.WORLD_WIDTH;
-		gwNodes = GUIInitialiser.initialiseGNodes(world, nodeSize);
+		gwNodes = GUIInitialiser.initialiseGNodes(this.world, nodeSize);
 	}
 
 	// Methods
