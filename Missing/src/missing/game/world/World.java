@@ -15,11 +15,11 @@ package missing.game.world;
 
 import java.util.List;
 
+import missing.datastorage.initialisers.WorldInitialiser;
 import missing.game.characters.Player;
 import missing.game.world.nodes.WorldNode;
 import missing.game.world.nodes.WorldTile;
 import missing.helper.GameException;
-import missing.helper.WorldInitialiser;
 
 /**
  * This class contains all the logic for moving around the players within the

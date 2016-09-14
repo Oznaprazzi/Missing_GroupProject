@@ -9,7 +9,7 @@
  *  8 Sep 16		Edward Kelly		implemented Loading World methods
  *  12 Sep 16		Chris Rabe			fixed initialiser
  */
-package missing.helper;
+package missing.datastorage.initialisers;
 
 import java.awt.Point;
 import java.io.BufferedReader;
@@ -22,6 +22,7 @@ import missing.game.world.World;
 import missing.game.world.nodes.WorldNode;
 import missing.game.world.nodes.WorldTile;
 import missing.game.world.nodes.WorldTile.TileType;
+import missing.helper.GameException;
 
 /**
  * Helper class containing static methods used to help with creation of the

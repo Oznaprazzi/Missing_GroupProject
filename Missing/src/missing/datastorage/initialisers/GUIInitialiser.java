@@ -10,10 +10,11 @@
  * 13 Sep 16		Chris Rabe			implemented initialiseGTiles method
  * 13 Sep 16		Chris Rabe			made methods throw GameException
  */
-package missing.helper;
+package missing.datastorage.initialisers;
 
 import missing.game.world.nodes.WorldNode;
 import missing.game.world.nodes.WorldTile;
+import missing.helper.GameException;
 import missing.ui.assets.GWTile;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;

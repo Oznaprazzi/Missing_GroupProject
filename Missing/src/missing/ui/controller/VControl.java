@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.characters.Player;
 import missing.game.world.World;
-import missing.helper.GUIInitialiser;
 import missing.helper.GameException;
 
 /**

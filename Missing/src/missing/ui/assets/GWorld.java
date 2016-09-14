@@ -16,8 +16,8 @@ package missing.ui.assets;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.world.World;
-import missing.helper.GUIInitialiser;
 import missing.helper.GameException;
 import missing.ui.controller.VControl.View;
 

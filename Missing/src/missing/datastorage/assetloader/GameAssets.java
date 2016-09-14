@@ -25,7 +25,7 @@ public class GameAssets {
 	private static final String STORAGE_PATH = "/missing/datastorage";
 
 	// File assets
-	private static final String WORLD_FILE_PATH = STORAGE_PATH + "/world/node/";
+	private static final String WORLD_FILE_PATH = STORAGE_PATH + "/files/nodes/";
 
 	// Image assets
 
