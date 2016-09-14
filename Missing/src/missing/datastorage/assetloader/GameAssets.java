@@ -4,13 +4,14 @@
  * 
  * 	Date			Author				Changes
  * 	14 Sep 16		Chris Rabe			created GameAssets.java
- * 	
+ * 	15 Sep 16		Chris Rabe			moved loading the node files here
  */
 
 package missing.datastorage.assetloader;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -19,6 +20,9 @@ import javax.imageio.ImageIO;
  * for retrieving those fields.
  */
 public class GameAssets {
+
+	// File assets
+	private static final String WORLD_FILE_PATH = "/missing/datastorage/world/node/";
 
 	// Image assets
 
@@ -30,7 +34,13 @@ public class GameAssets {
 
 	private static BufferedImage roadImage;
 
-	// getters for the assets
+	// Getters for File Assets
+
+	public static InputStream getWorldFile(int x, int y) {
+		return GameAssets.class.getResourceAsStream(WORLD_FILE_PATH + x + "," + y + ".txt");
+	}
+
+	// getters for the image assets
 
 	public static BufferedImage getSandImage() {
 		if (sandImage == null) {

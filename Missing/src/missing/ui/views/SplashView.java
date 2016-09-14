@@ -33,7 +33,7 @@ public class SplashView extends View {
 		} catch (InterruptedException e) {
 			// nothing
 		}
-		controller.changeView(controller.getMapView()); // change to main Menu
+		controller.changeView(controller.getMenuView()); // change to main Menu
 	}
 
 	@Override

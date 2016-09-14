@@ -56,5 +56,4 @@ public class MapView extends View {
 		// TODO Auto-generated method stub
 
 	}
-
 }

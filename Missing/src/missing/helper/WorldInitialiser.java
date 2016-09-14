@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import missing.datastorage.assetloader.GameAssets;
 import missing.game.world.World;
 import missing.game.world.nodes.WorldNode;
 import missing.game.world.nodes.WorldTile;
@@ -30,7 +31,6 @@ import missing.game.world.nodes.WorldTile.TileType;
 public class WorldInitialiser {
 	/** Size of row and column of one world node */
 	private static final int NODE_SIZE = 10;
-	private static final String WORLD_FILE_PATH = "/missing/datastorage/world/node/";
 
 	/**
 	 * Loads the nodes inside the world using predefined text files.
@@ -44,7 +44,7 @@ public class WorldInitialiser {
 		InputStream input;
 		for (int y = 0; y < World.WORLD_HEIGHT; y++) {
 			for (int x = 0; x < World.WORLD_WIDTH; x++) {
-				input = WorldInitialiser.class.getResourceAsStream(WORLD_FILE_PATH + x + "," + y + ".txt");
+				input = GameAssets.getWorldFile(x, y);
 				WorldNode worldNode = parseWorldNode(input, x, y);
 				worldNodes[y][x] = worldNode;
 			}

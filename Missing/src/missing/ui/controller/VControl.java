@@ -74,8 +74,12 @@ public class VControl extends JFrame {
 
 	// View Control Methods
 
-	public int getMapView() {
+	public int getMenuView() {
 		return 1;
+	}
+
+	public int getMapView() {
+		return 2;
 	}
 
 	public int getPrevious() {
