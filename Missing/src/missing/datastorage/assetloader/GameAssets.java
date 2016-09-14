@@ -4,13 +4,14 @@
  * 
  * 	Date			Author				Changes
  * 	14 Sep 16		Chris Rabe			created GameAssets.java
- * 	
+ * 	15 Sep 16		Chris Rabe			moved loading the node files here
  */
 
-package missing.ui.assets;
+package missing.datastorage.assetloader;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -19,6 +20,12 @@ import javax.imageio.ImageIO;
  * for retrieving those fields.
  */
 public class GameAssets {
+	// Data Storage path
+
+	private static final String STORAGE_PATH = "/missing/datastorage";
+
+	// File assets
+	private static final String WORLD_FILE_PATH = STORAGE_PATH + "/files/nodes/";
 
 	// Image assets
 
@@ -30,12 +37,18 @@ public class GameAssets {
 
 	private static BufferedImage roadImage;
 
-	// getters for the assets
+	// Getters for File Assets
+
+	public static InputStream getWorldFile(int x, int y) {
+		return GameAssets.class.getResourceAsStream(WORLD_FILE_PATH + x + "," + y + ".txt");
+	}
+
+	// getters for the image assets
 
 	public static BufferedImage getSandImage() {
 		if (sandImage == null) {
 			try {
-				sandImage = ImageIO.read(GameAssets.class.getResource("/img/sand.png"));
+				sandImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/sand.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -46,7 +59,7 @@ public class GameAssets {
 	public static BufferedImage getWaterImage() {
 		if (waterImage == null) {
 			try {
-				waterImage = ImageIO.read(GameAssets.class.getResource("/img/water.png"));
+				waterImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/water.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -57,7 +70,7 @@ public class GameAssets {
 	public static BufferedImage getGrassImage() {
 		if (grassImage == null) {
 			try {
-				grassImage = ImageIO.read(GameAssets.class.getResource("/img/grass.png"));
+				grassImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/grass.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -68,7 +81,7 @@ public class GameAssets {
 	public static BufferedImage getRoadImage() {
 		if (roadImage == null) {
 			try {
-				roadImage = ImageIO.read(GameAssets.class.getResource("/img/road.png"));
+				roadImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/road.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

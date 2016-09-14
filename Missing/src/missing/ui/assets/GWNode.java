@@ -15,8 +15,8 @@ package missing.ui.assets;
 
 import java.awt.Graphics;
 
+import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.world.nodes.WorldNode;
-import missing.helper.GUIInitialiser;
 import missing.helper.GameException;
 
 /**

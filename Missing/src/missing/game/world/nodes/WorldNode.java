@@ -11,9 +11,6 @@
 package missing.game.world.nodes;
 
 import java.awt.Point;
-import java.util.List;
-
-import missing.game.items.Item;
 
 /**
  * World node contains various types of world tiles. It should also contain a
@@ -35,8 +32,6 @@ public class WorldNode {
 	private Point gameLocation;
 	/** The World Tile 2D array. Each world node has these. */
 	private WorldTile[][] worldTiles;
-
-	private List<Item> items; // TODO Use these to initialise world
 
 	public WorldNode(Point location, WorldTile[][] worldTiles) {
 		this.gameLocation = location;

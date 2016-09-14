@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.characters.Player;
 import missing.game.world.World;
-import missing.helper.GUIInitialiser;
 import missing.helper.GameException;
 
 /**
@@ -74,8 +74,12 @@ public class VControl extends JFrame {
 
 	// View Control Methods
 
-	public int getMapView() {
+	public int getMenuView() {
 		return 1;
+	}
+
+	public int getMapView() {
+		return 2;
 	}
 
 	public int getPrevious() {
