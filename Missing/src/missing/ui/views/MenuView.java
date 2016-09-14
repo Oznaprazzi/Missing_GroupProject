@@ -51,17 +51,17 @@ public class MenuView extends View{
 		setLayout(null);
 		
 		btnSinglePlayer = new JButton("Single Player");
-		btnSinglePlayer.setBackground(Color.BLACK);
+		btnSinglePlayer.setBackground(Color.YELLOW);
 		btnSinglePlayer.setBounds(370, 100, 165, 45);
 		add(btnSinglePlayer);
 		
 		btnMultiPlayer = new JButton("Multi Player");
-		btnMultiPlayer.setBackground(Color.BLACK);
+		btnMultiPlayer.setBackground(Color.YELLOW);
 		btnMultiPlayer.setBounds(370, 156, 165, 45);
 		add(btnMultiPlayer);
 		
 		btnAbout = new JButton("About \"Missing\"");
-		btnAbout.setBackground(Color.BLACK);
+		btnAbout.setBackground(Color.YELLOW);
 		btnAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -70,7 +70,7 @@ public class MenuView extends View{
 		add(btnAbout);
 		
 		btnExit = new JButton("Exit Game");
-		btnExit.setBackground(Color.BLACK);
+		btnExit.setBackground(Color.YELLOW);
 		btnExit.setBounds(370, 269, 165, 45);
 		add(btnExit);
 		
@@ -78,6 +78,8 @@ public class MenuView extends View{
 		btnMultiPlayer = new JButton("Multi Player");
 		btnAbout = new JButton("About Game");
 		btnExit = new JButton("Exit Game");
+		this.repaint();
+		
 	}
 	
 	
