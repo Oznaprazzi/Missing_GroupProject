@@ -133,6 +133,6 @@ public class VControl extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new VControl();
+		new VControl(); // Run to test views
 	}
 }
