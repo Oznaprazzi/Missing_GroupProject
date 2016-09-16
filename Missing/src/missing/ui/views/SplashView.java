@@ -31,7 +31,7 @@ public class SplashView extends View {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// nothing
+			e.printStackTrace();
 		}
 		controller.changeView(controller.getMapView()); // change to main Menu
 	}
