@@ -11,13 +11,11 @@
 package missing.ui.controller;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import missing.datastorage.initialisers.GUIInitialiser;
-import missing.game.characters.Player;
 import missing.game.world.World;
 import missing.helper.GameException;
 
@@ -115,7 +113,7 @@ public class VControl extends JFrame {
 	// TODO Change this once we have a client control
 	public World getWorld() {
 		try {
-			return new World(new ArrayList<Player>());
+			return new World();
 		} catch (GameException e) {
 			e.printStackTrace();
 			return null;

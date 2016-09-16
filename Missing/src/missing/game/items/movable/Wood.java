@@ -27,17 +27,15 @@ public class Wood extends Resource {
 	 *            the section of the world this item is located in
 	 * @param tileLocation
 	 *            the tile in the worldLocation in which the item is located
-	 * @param size
-	 *            represents size of item
 	 * @param amount
 	 *            amount of Wood items
 	 */
-	public Wood(Point worldLocation, Point tileLocation, int amount, int size) {
-		super("Wood", "Planks of Wood.", worldLocation, tileLocation, amount, size);
+	public Wood(Point worldLocation, Point tileLocation, int amount) {
+		super("Wood", "Planks of Wood.", worldLocation, tileLocation, amount, 1);
 	}
 
 	@Override
 	public String toString() {
-		return "Resource: Wood, " + super.toString();
+		return getName();
 	}
 }

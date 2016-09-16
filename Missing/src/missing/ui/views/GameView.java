@@ -2,13 +2,12 @@ package missing.ui.views;
 
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
-import javax.swing.JSplitPane;
-import javax.swing.JPanel;
 /**
  * This class represents the Game View in the regular sate.
  * @author linus
  *
  */
+@SuppressWarnings("serial")
 public class GameView extends View {
 	
 	public GameView(VControl controller) {

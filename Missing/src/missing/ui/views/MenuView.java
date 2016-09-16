@@ -17,8 +17,6 @@ import javax.swing.JOptionPane;
 
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * This class represents the MenuView - that is the main menu that appears once

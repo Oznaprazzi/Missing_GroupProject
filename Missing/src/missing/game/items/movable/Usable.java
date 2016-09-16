@@ -14,8 +14,6 @@ import java.awt.Point;
 /**
  * This class represents a Usable item in the Game. It extends the Movable
  * subclass and the Item subclass.
- * 
- * @author linus
  */
 public abstract class Usable extends Movable {
 

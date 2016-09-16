@@ -13,10 +13,7 @@
 
 package missing.game.world;
 
-import java.util.List;
-
 import missing.datastorage.initialisers.WorldInitialiser;
-import missing.game.characters.Player;
 import missing.game.world.nodes.WorldNode;
 import missing.game.world.nodes.WorldTile;
 import missing.helper.GameException;
@@ -32,11 +29,8 @@ public class World {
 
 	/** The WorldNodes that make up the World */
 	private WorldNode[][] worldNodes;
-	/** Reference to the players in the world */
-	private List<Player> players;
 
-	public World(List<Player> players) throws GameException {
-		this.players = players;
+	public World() throws GameException {
 		setupWorld();
 	}
 

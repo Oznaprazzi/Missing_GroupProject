@@ -7,9 +7,6 @@
  */
 package missing.tests;
 
-import java.util.ArrayList;
-
-import missing.game.characters.Player;
 import missing.game.world.World;
 import missing.helper.GameException;
 
@@ -23,7 +20,7 @@ public class WorldNodeParsingTests {
 	public static void test_01() {
 		System.out.println("test_01");
 		try {
-			World world = new World(new ArrayList<Player>());
+			World world = new World();
 			System.out.println(world.toString());
 		} catch (GameException e) {
 			e.printStackTrace();
