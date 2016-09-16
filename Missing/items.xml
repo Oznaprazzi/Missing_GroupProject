@@ -1,5 +1,204 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<nodes>
+	<!-- World Node 0,0 Items -->
+	<node worldLocation="0,0">
+		<items>
+			<tree>
+				<location>
+					<x>7</x>
+					<y>6</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>7</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>8</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<rock>
+				<location>
+					<x>8</x>
+					<y>2</y>
+				</location>
+			</rock>
+		</items>
+	</node>
+	<!-- World Node 0,1 Items -->
+	<node worldLocation="0,1">
+		<items>
+			<bush>
+				<location>
+					<x>1</x>
+					<y>7</y>
+				</location>
+			</bush>
+			<tree>
+				<location>
+					<x>1</x>
+					<y>6</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>8</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>7</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>6</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>5</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<rock>
+				<location>
+					<x>8</x>
+					<y>5</y>
+				</location>
+			</rock>
+		</items>
+	</node>
+	<!-- World Node 0,2 Items -->
+	<node worldLocation="0,2">
+		<items>
+			<tree>
+				<location>
+					<x>3</x>
+					<y>8</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>5</x>
+					<y>8</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>1</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>2</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>3</x>
+					<y>7</y>
+				</location>
+			</tree>
+		</items>
+	</node>
+	<!-- World Node 0,3 Items -->
+	<node worldLocation="0,3">
+		<items>
+			<tree>
+				<location>
+					<x>6</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>5</x>
+					<y>6</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>4</x>
+					<y>5</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>3</x>
+					<y>6</y>
+				</location>
+			</tree>
+		</items>
+	</node>
+	<!-- World Node 1,0 Items -->
+	<node worldLocation="1,0">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 1,1 Items -->
+	<node worldLocation="1,1">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 1,2 Items -->
+	<node worldLocation="1,2">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 1,3 Items -->
+	<node worldLocation="1,3">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 2,0 Items -->
+	<node worldLocation="2,0">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 2,1 Items -->
+	<node worldLocation="2,1">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 2,2 Items -->
+	<node worldLocation="2,2">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 2,3 Items -->
+	<node worldLocation="2,3">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 3,0 Items -->
+	<node worldLocation="3,0">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 3,1 Items -->
+	<node worldLocation="3,1">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 3,2 Items -->
+	<node worldLocation="3,2">
+		<items>
+		</items>
+	</node>
+	<!-- World Node 3,3 Items -->
+	<node worldLocation="3,3">
+		<items>
+		</items>
+	</node>
+</nodes>
 
-<items>
-	
-</items>
