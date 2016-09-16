@@ -5,6 +5,7 @@
  * 	Date			Author				Changes
  * 	14 Sep 16		Chris Rabe			created GameAssets.java
  * 	15 Sep 16		Chris Rabe			moved loading the node files here
+ * 	16 Sep 16		Casey Huang			Updated class with new images added
  */
 
 package missing.datastorage.assetloader;
@@ -36,7 +37,16 @@ public class GameAssets {
 	private static BufferedImage grassImage;
 
 	private static BufferedImage roadImage;
+	
+	private static BufferedImage appleImage;
+	
+	private static BufferedImage bushImage;
+	
+	private static BufferedImage fireplaceImage;
+	
+	private static BufferedImage treeImage;
 
+	private static BufferedImage woodImage;
 	// Getters for File Assets
 
 	public static InputStream getWorldFile(int x, int y) {
@@ -87,5 +97,60 @@ public class GameAssets {
 			}
 		}
 		return roadImage;
+	}
+	
+	public static BufferedImage getAppleImage() {
+		if (appleImage == null) {
+			try {
+				appleImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/apple.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return appleImage;
+	}
+	
+	public static BufferedImage getBushImage() {
+		if (bushImage == null) {
+			try {
+				bushImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/bush.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return bushImage;
+	}
+	
+	public static BufferedImage getFireplaceImage() {
+		if (fireplaceImage == null) {
+			try {
+				fireplaceImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/fireplace.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return fireplaceImage;
+	}
+
+	public static BufferedImage getTreeImage() {
+		if (treeImage == null) {
+			try {
+				treeImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/tree.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return treeImage;
+	}
+	
+	public static BufferedImage getWoodImage() {
+		if (woodImage == null) {
+			try {
+				woodImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/wood.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return woodImage;
 	}
 }
