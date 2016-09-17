@@ -1,11 +1,12 @@
 /* File: Wood.java
  * 
  * Authors:
- * Linus Go		300345571
  * Edward Kelly	300334192
+ * Chris Rabe	30334207
  * 
  * Date			Author			Modification
  * 7 Sep 16		Edward Kelly	created Wood class
+ * 7 Sep 16		Chris Rabe		added new constructor and default amount
  */
 package missing.game.items.movable;
 
@@ -16,20 +17,11 @@ import java.awt.Point;
  *
  */
 public class Wood extends Resource {
-	/**
-	 * Construct a new Instance of a Resource.
-	 * 
-	 * @param name
-	 *            name of the item
-	 * @param description
-	 *            describes what the item is
-	 * @param worldLocation
-	 *            the section of the world this item is located in
-	 * @param tileLocation
-	 *            the tile in the worldLocation in which the item is located
-	 * @param amount
-	 *            amount of Wood items
-	 */
+
+	public Wood(Point worldLocation, Point tileLocation) {
+		this(worldLocation, tileLocation, DEFAULT_AMOUNT);
+	}
+
 	public Wood(Point worldLocation, Point tileLocation, int amount) {
 		super("Wood", "Planks of Wood.", worldLocation, tileLocation, amount, 1);
 	}

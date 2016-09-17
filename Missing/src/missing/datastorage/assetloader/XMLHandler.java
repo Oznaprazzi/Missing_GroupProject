@@ -4,6 +4,7 @@
  * 
  * 	Date			Author				Changes
  * 	17 Sep 16		Chris Rabe			created XMLHandler.java
+ * 	17 Sep 16		Chris Rabe			can now parse rocks
  */
 
 package missing.datastorage.assetloader;
@@ -83,7 +84,7 @@ public class XMLHandler {
 		// Parse non-movable objects
 		List<Item> trees = parseTrees(worldLocation, doc, xPath, expression);
 		List<Item> bushes = parseBushes(worldLocation, doc, xPath, expression);
-		// TODO Parse Rock
+		List<Item> rocks = parseRocks(worldLocation, doc, xPath, expression);
 		// TODO Parse Shop
 		// TODO Parse Fireplace
 		// Parse movable objects
@@ -94,12 +95,35 @@ public class XMLHandler {
 		// Add everything together
 		tmp.addAll(trees);
 		tmp.addAll(bushes);
+		tmp.addAll(rocks);
 		return tmp;
 	}
 
 	// Movable Parsers
 
 	// NonMovable Parsers
+
+	private static List<Item> parseRocks(Point worldLocation, Document doc, XPath xPath, String expression) {
+		List<Item> tmp = new ArrayList<Item>();
+		expression += "/rock"; // TODO Change expression
+		try {
+			NodeList trees = (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
+			for (int i = 0; i < trees.getLength(); i++) {
+				Node tree = trees.item(i);
+				if (tree.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) tree;
+					Node locNode = elem.getElementsByTagName("location").item(0);
+					Point location = parseLocation(locNode);
+					// TODO Change what is added
+					tmp.add(new Rock(worldLocation, location));
+				}
+			}
+		} catch (XPathExpressionException e) {
+			System.out.println(e.getMessage());
+			System.exit(1);
+		}
+		return tmp;
+	}
 
 	private static List<Item> parseBushes(Point worldLocation, Document doc, XPath xPath, String expression) {
 		List<Item> tmp = new ArrayList<Item>();

@@ -30,12 +30,11 @@ public class Tree extends Source {
 	// TODO Add timer for refreshing resources
 	// TODO Do null check before storing resource inside player's pocket
 
-	private static final int MAX_WOOD = 10;
 	private static final int APPLE_CHANCE = 50;
 
 	public Tree(Point worldLocation, Point tileLocation) {
 		super("Tree", "A tall majestic tree.", worldLocation, tileLocation,
-				new Wood(worldLocation, tileLocation, MAX_WOOD));
+				new Wood(worldLocation, tileLocation, MAX_RESOURCE));
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class Tree extends Source {
 		resource.setStored(true);
 		p.addToPocket(resource);
 		// Replace resource -- should add timer here
-		int numWood = 1 + (int) (random() * MAX_WOOD);
+		int numWood = 1 + (int) (random() * MAX_RESOURCE);
 		resource = new Wood(worldLocation, tileLocation, numWood);
 		// 50% chance that player will get apples too
 		int playerChance = (int) (random() * 100);

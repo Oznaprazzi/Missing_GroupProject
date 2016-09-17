@@ -21,6 +21,8 @@ import missing.helper.GameException;
  *
  */
 public abstract class Source extends Interactable {
+	protected static final int MAX_RESOURCE = 10;
+
 	/** Represents the resource which can be collected */
 	protected Resource resource;
 
