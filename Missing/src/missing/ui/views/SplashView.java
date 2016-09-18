@@ -7,6 +7,7 @@
  * 	13 Sep 16				Jian Wei 				created SplashView
  * 	13 Sep 16				Linus Go				added implementation of SplashView.
  	14 Sep 16				Linus Go				added code to draw SplashScreen.
+ 	18 Sep 16				Linus Go				changed the next view to be the GameView
  */
 package missing.ui.views;
 
@@ -33,7 +34,7 @@ public class SplashView extends View {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		controller.changeView(controller.getMapView()); // change to main Menu
+		controller.changeView(controller.getGameView()); // change to main Menu
 	}
 
 	@Override

@@ -7,6 +7,7 @@
  * 13 Sep 16		Linus Go			Created VControl.java
  * 13 Sep 16		Chris Rabe			implemented View abstract class
  * 14 Sep 16		Chris Rabe			fixed changing view
+ * 18 Sep 16		Linus Go			added get game view method.
  */
 package missing.ui.controller;
 
@@ -78,6 +79,10 @@ public class VControl extends JFrame {
 
 	public int getMapView() {
 		return 2;
+	}
+	
+	public int getGameView(){
+		return 3;
 	}
 
 	public int getPrevious() {

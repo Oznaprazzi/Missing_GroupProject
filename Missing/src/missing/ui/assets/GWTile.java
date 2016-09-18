@@ -11,6 +11,7 @@
  *  13 Sep 16		Chris Rabe			made images compatible with executable jar files
  *  18 Sep 16		Casey Huang			Added the draw isometric tiles method
  *  18 Sep 16 		Casey Huang			Added integer fields to help draw the isometric tiles
+ *  18 Sep 16		Linus Go			Set the draw isometric tiles method to public
  */
 
 package missing.ui.assets;
@@ -91,7 +92,7 @@ public class GWTile {
 	 * @param x x coordinate in grid
 	 * @param y y coordinate in grid
 	 */
-	private void drawIsometricTile(Graphics g, int x, int y){
+	public void drawIsometricTile(Graphics g, int x, int y){
 		/* Get isometric tile dimensions */
 		// top corner of tile
 		int topX = (x - y) * TILE_WIDTH/2 + CANVAS_WIDTH/2;
