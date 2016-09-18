@@ -8,6 +8,7 @@
  * 13 Sep 16		Chris Rabe			implemented View abstract class
  * 14 Sep 16		Chris Rabe			fixed changing view
  * 18 Sep 16		Linus Go			added get game view method.
+ * 18 Sep 16		Casey Huang			attempted scaling implementation
  */
 package missing.ui.views;
 
@@ -28,9 +29,9 @@ import missing.ui.controller.VControl.View;
  */
 @SuppressWarnings("serial")
 public class GameView extends View {
-	
+
 	private GWorld graphicWorld;
-	
+
 	public GameView(VControl controller, World w) {
 		super(controller);
 		try{
@@ -43,39 +44,33 @@ public class GameView extends View {
 	@Override
 	public void initialise() {
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		paintIsometricNodes(g);	
 	}
-	
+
 	private void paintIsometricNodes(Graphics g){
 		GWNode gwNodes[][] = graphicWorld.gwNodes();
-		//just draw 10 of them for now.
-		for (int y=0; y<1;y++){
-			for (int x=0; x<1; x++){
-				try {
-					gwNodes[x][y].drawIsometricNode(g);
-				} catch (GameException e) {
-					e.printStackTrace();
-				}
+		try {
+			graphicWorld.setNodeSize();
+			//just draw 10 of them for now.
+			for (int y=0; y<1;y++){
+				for (int x=0; x<1; x++){
+					System.out.println(this.getWidth());
+					gwNodes[x][y].drawIsometricNode(g, this.getWidth());
+				} 
+			}
+		}
+		catch (GameException e) {
+			e.printStackTrace();
 		}
 	}
-	}
-	
-	
-	
-	
+
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
 	}
-	
-	
-	
-	
-	
-	
 
 }
