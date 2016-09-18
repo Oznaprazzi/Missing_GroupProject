@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <nodes>
-	<!-- World Node 0,0 Items -->
 	<node worldLocation="0,0">
 		<items>
 			<tree>
@@ -29,7 +28,6 @@
 			</rock>
 		</items>
 	</node>
-	<!-- World Node 0,1 Items -->
 	<node worldLocation="0,1">
 		<items>
 			<bush>
@@ -76,7 +74,6 @@
 			</rock>
 		</items>
 	</node>
-	<!-- World Node 0,2 Items -->
 	<node worldLocation="0,2">
 		<items>
 			<tree>
@@ -111,7 +108,6 @@
 			</tree>
 		</items>
 	</node>
-	<!-- World Node 0,3 Items -->
 	<node worldLocation="0,3">
 		<items>
 			<tree>
@@ -140,14 +136,127 @@
 			</tree>
 		</items>
 	</node>
-	<!-- World Node 1,0 Items -->
 	<node worldLocation="1,0">
 		<items>
+			<tree>
+				<location>
+					<x>8</x>
+					<y>3</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>6</x>
+					<y>4</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>5</x>
+					<y>3</y>
+				</location>
+			</tree>
+			<rock>
+				<location>
+					<x>8</x>
+					<y>7</y>
+				</location>
+			</rock>
 		</items>
 	</node>
-	<!-- World Node 1,1 Items -->
 	<node worldLocation="1,1">
 		<items>
+			<tree>
+				<location>
+					<x>1</x>
+					<y>3</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>2</x>
+					<y>3</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>2</x>
+					<y>4</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>3</x>
+					<y>3</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>4</x>
+					<y>2</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>5</x>
+					<y>2</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>5</x>
+					<y>1</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>7</x>
+					<y>2</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>6</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>5</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>5</x>
+					<y>8</y>
+				</location>
+			</tree>
+			<tree>
+				<location>
+					<x>4</x>
+					<y>7</y>
+				</location>
+			</tree>
+			<bush>
+				<location>
+					<x>7</x>
+					<y>3</y>
+				</location>
+			</bush>
+			<bush>
+				<location>
+					<x>2</x>
+					<y>1</y>
+				</location>
+			</bush>
+			<bush>
+				<location>
+					<x>2</x>
+					<y>8</y>
+				</location>
+			</bush>
+			
 		</items>
 	</node>
 	<!-- World Node 1,2 Items -->
