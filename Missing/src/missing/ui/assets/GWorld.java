@@ -10,6 +10,7 @@
  * 13 Sep 16		Linus Go			changed constructor
  * 13 Sep 16		Chris Rabe			added padding variable (indicates where world will be drawn)
  * 13 Sep 16		Chris Rabe			defined draw method
+ * 18 Sep 16		Linus Go			added gwNodes getter method.
  */
 package missing.ui.assets;
 
@@ -56,5 +57,9 @@ public class GWorld {
 				gwNodes[i][j].draw(g, x, y);
 			}
 		}
+	}
+	
+	public GWNode[][] gwNodes(){
+		return this.gwNodes;
 	}
 }

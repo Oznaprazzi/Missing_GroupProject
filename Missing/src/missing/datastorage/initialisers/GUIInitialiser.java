@@ -9,6 +9,7 @@
  * 13 Sep 16		Chris Rabe			implemented intialiseGNodes method
  * 13 Sep 16		Chris Rabe			implemented initialiseGTiles method
  * 13 Sep 16		Chris Rabe			made methods throw GameException
+ * 18 Sep 16		Linus Go			added GameView into createViews
  */
 package missing.datastorage.initialisers;
 
@@ -50,11 +51,12 @@ public class GUIInitialiser {
 
 	public static View[] createViews(VControl control) {
 		// TODO append new views at end, increase views variable
-		int views = 3;
+		int views = 4;
 		View[] tmp = new View[views];
 		tmp[0] = new SplashView(control);
 		tmp[1] = new MenuView(control);
 		tmp[2] = new MapView(control, control.getWorld());
+		tmp[3] = new GameView(control, control.getWorld());
 		return tmp;
 	}
 }

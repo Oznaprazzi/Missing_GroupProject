@@ -9,6 +9,7 @@
  * 	13 Sep 16		Jian Wei			created GWNode.java
  * 	13 Sep 16		Chris Rabe			added comments and draw method
  * 	13 Sep 16		Linus Go			defined draw method
+ *  18 Sep 16		Linus Go			added isometric draw method.
  */
 
 package missing.ui.assets;
@@ -81,6 +82,18 @@ public class GWNode {
 				tiles[i][j].draw(g, tileX, tileY);
 			}
 		}
-
 	}
+	
+	public void drawIsometricNode(Graphics g) throws GameException{
+		// calculate size of each tile relative to the node
+		int tileSize = nodeSize / TILE_SIZE;
+		// draw each tile in the appropriate coordinates
+		for (int y = 0; y < 10; y++) {
+			for (int x = 0; x < 10; x++) {
+				tiles[x][y].drawIsometricTile(g, x, y);
+			}
+		}
+	}
+	
+	
 }
