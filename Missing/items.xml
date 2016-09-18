@@ -351,7 +351,6 @@
 			</tree>
 		</items>
 	</node>
-	<!-- World Node 2,0 Items -->
 	<node worldLocation="2,0">
 		<items>
 			<tree>
@@ -392,7 +391,6 @@
 			</rock>
 		</items>
 	</node>
-	<!-- World Node 2,1 Items -->
 	<node worldLocation="2,1">
 		<items>
 			<tree>
@@ -547,7 +545,6 @@
 			</bush>
 		</items>
 	</node>
-	<!-- World Node 2,2 Items -->
 	<node worldLocation="2,2">
 		<items>
 			<bush>
@@ -642,7 +639,6 @@
 			</tree>
 		</items>
 	</node>
-	<!-- World Node 2,3 Items -->
 	<node worldLocation="2,3">
 		<items>
 			<bush>
@@ -707,7 +703,6 @@
 			</tree>
 		</items>
 	</node>
-	<!-- World Node 3,0 Items -->
 	<node worldLocation="3,0">
 		<items>
 			<tree>
@@ -730,7 +725,6 @@
 			</tree>
 		</items>
 	</node>
-	<!-- World Node 3,1 Items -->
 	<node worldLocation="3,1">
 		<items>
 			<tree>
@@ -819,7 +813,6 @@
 			</bush>
 		</items>
 	</node>
-	<!-- World Node 3,2 Items -->
 	<node worldLocation="3,2">
 		<items>
 			<tree>
@@ -890,7 +883,6 @@
 			</rock>
 		</items>
 	</node>
-	<!-- World Node 3,3 Items -->
 	<node worldLocation="3,3">
 		<items>
 			<tree>
