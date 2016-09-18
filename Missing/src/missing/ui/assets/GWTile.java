@@ -12,6 +12,7 @@
  *  18 Sep 16		Casey Huang			Added the draw isometric tiles method
  *  18 Sep 16 		Casey Huang			Added integer fields to help draw the isometric tiles
  *  18 Sep 16		Linus Go			Set the draw isometric tiles method to public
+ *  18 Sep 16		Casey Huang			attempted scaling implementation
  */
 
 package missing.ui.assets;
@@ -29,11 +30,6 @@ import missing.helper.GameException;
  * single tile in the node.
  */
 public class GWTile {
-	public final int TILE_WIDTH = 64; // width of isometric tile
-	public final int TILE_HEIGHT = TILE_WIDTH/2; // height of isometric tile
-	public final int CANVAS_WIDTH = 800;
-	public final int CANVAS_HEIGHT = 500;
-	
 	/** A reference to a tile object. */
 	private WorldTile tile;
 	/** The current size of this tile. */
@@ -92,20 +88,22 @@ public class GWTile {
 	 * @param x x coordinate in grid
 	 * @param y y coordinate in grid
 	 */
-	public void drawIsometricTile(Graphics g, int x, int y){
+	public void drawIsometricTile(Graphics g, int x, int y, int canvas_width){
 		/* Get isometric tile dimensions */
+		int tile_width = this.size;
+		int tile_height = tile_width/2;
 		// top corner of tile
-		int topX = (x - y) * TILE_WIDTH/2 + CANVAS_WIDTH/2;
-		int topY = (x + y) * TILE_HEIGHT/2;
+		int topX = (x - y) * tile_width/2 + canvas_width/2;
+		int topY = (x + y) * tile_height/2;
 		// bottom corner of tile
 		int botX = topX;
-		int botY = topY+TILE_HEIGHT;
+		int botY = topY+tile_height;
 		// left corner of tile
-		int leftX = topX - TILE_WIDTH/2;
-		int leftY = topY + TILE_HEIGHT/2;
+		int leftX = topX - tile_width/2;
+		int leftY = topY + tile_height/2;
 		// right corner of tile
-		int rightX = topX + TILE_WIDTH/2;
-		int rightY = topY + TILE_HEIGHT/2;
+		int rightX = topX + tile_width/2;
+		int rightY = topY + tile_height/2;
 		
 		// Create a polygon to draw tile
 		int[] xPoints = {topX,rightX,botX,leftX};
@@ -117,16 +115,16 @@ public class GWTile {
 		
 		switch(tile.getType()){
 		case SAND:
-			g.drawImage(GameAssets.getSandImage(), leftX, topY, TILE_WIDTH, TILE_HEIGHT, null);
+			g.drawImage(GameAssets.getSandImage(), leftX, topY, tile_width, tile_height, null);
 			break;
 		case WATER:
-			g.drawImage(GameAssets.getWaterImage(), leftX, topY, TILE_WIDTH, TILE_HEIGHT, null);
+			g.drawImage(GameAssets.getWaterImage(), leftX, topY, tile_width, tile_height, null);
 			break;
 		case GRASS:
-			g.drawImage(GameAssets.getGrassImage(), leftX, topY, TILE_WIDTH, TILE_HEIGHT, null);
+			g.drawImage(GameAssets.getGrassImage(), leftX, topY, tile_width, tile_height, null);
 			break;
 		case ROAD:
-			g.drawImage(GameAssets.getRoadImage(), leftX, topY, TILE_WIDTH, TILE_HEIGHT, null);
+			g.drawImage(GameAssets.getRoadImage(), leftX, topY, tile_width, tile_height, null);
 			break;
 		}
 		// reset clip

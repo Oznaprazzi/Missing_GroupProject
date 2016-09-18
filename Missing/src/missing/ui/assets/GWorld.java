@@ -11,6 +11,7 @@
  * 13 Sep 16		Chris Rabe			added padding variable (indicates where world will be drawn)
  * 13 Sep 16		Chris Rabe			defined draw method
  * 18 Sep 16		Linus Go			added gwNodes getter method.
+ * 18 Sep 16		Casey Huang			attempted scaling implementation
  */
 package missing.ui.assets;
 
@@ -46,6 +47,7 @@ public class GWorld {
 	// Methods
 
 	public void draw(Graphics g) throws GameException {
+		this.setNodeSize();
 		// Calculate node size relative to the View panel
 		int nodeSize = Math.min(curView.getWidth(), curView.getHeight()) / World.WORLD_WIDTH;
 		// Draw each node in appropriate coordinates
@@ -53,12 +55,22 @@ public class GWorld {
 			int y = (i * nodeSize) + padding.y;
 			for (int j = 0; j < gwNodes[i].length; j++) {
 				int x = (j * nodeSize) + padding.x;
-				gwNodes[i][j].setNodeSize(nodeSize);
 				gwNodes[i][j].draw(g, x, y);
 			}
 		}
 	}
-	
+
+	public void setNodeSize() throws GameException{
+		// Calculate node size relative to the View panel
+		int nodeSize = Math.min(curView.getWidth(), curView.getHeight()) / World.WORLD_WIDTH;
+		// Draw each node in appropriate coordinates
+		for (int i = 0; i < gwNodes.length; i++) {
+			for (int j = 0; j < gwNodes[i].length; j++) {
+				gwNodes[i][j].setNodeSize(nodeSize);
+			}
+		}
+	}
+
 	public GWNode[][] gwNodes(){
 		return this.gwNodes;
 	}
