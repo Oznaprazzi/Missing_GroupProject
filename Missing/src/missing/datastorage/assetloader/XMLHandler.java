@@ -5,6 +5,7 @@
  * 	Date			Author				Changes
  * 	17 Sep 16		Chris Rabe			created XMLHandler.java
  * 	17 Sep 16		Chris Rabe			can now parse rocks
+ * 	17 Sep 16		Chris Rabe			now uses the filename field to parse
  */
 
 package missing.datastorage.assetloader;
@@ -31,12 +32,16 @@ import org.xml.sax.SAXException;
 
 import missing.game.items.Item;
 import missing.game.items.nonmovable.*;
+import missing.helper.GameException;
 
 public class XMLHandler {
 
 	public static String filename;
 
-	public static List<Item> getItemsFromFile(String filename) {
+	public static List<Item> getItemsFromFile() throws GameException {
+		if (filename == null) {
+			throw new GameException("No file loaded!");
+		}
 		List<Item> tmp = new ArrayList<Item>();
 		// Create document
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

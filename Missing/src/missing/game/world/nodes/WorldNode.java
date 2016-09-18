@@ -6,11 +6,14 @@
  * 	8 Sep 16		Chris Rabe			create worldNode class
  * 	8 Sep 16		Linus Go			filled the class and added fields.
  * 	8 Sep 16		Chris Rabe			removed some fields and constructor
+ * 	18 Sep 16		Chris Rabe			implemented item distribution
  */
 
 package missing.game.world.nodes;
 
 import java.awt.Point;
+
+import missing.game.world.nodes.WorldTile.TileObject;
 
 /**
  * World node contains various types of world tiles. It should also contain a
@@ -84,6 +87,14 @@ public class WorldNode {
 	public void setGameLocation(Point gameLocation) {
 		this.gameLocation = gameLocation;
 	}
+
+	// Methods
+
+	public void distributeToTile(Point tileLocation, TileObject item) {
+		worldTiles[tileLocation.y][tileLocation.x].getDistributedObject(item);
+	}
+
+	// Object Methods...
 
 	@Override
 	public String toString() {

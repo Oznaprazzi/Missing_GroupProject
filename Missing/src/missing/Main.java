@@ -1,4 +1,14 @@
+/*	File: Main.java
+ * 	Author
+ * 	Chris Rabe		300334207
+ * 
+ * 	Date			Author				Changes
+ * 	18 Sep 16		Chris Rabe			implemented functions for xmlFile
+ */
+
 package missing;
+
+import missing.datastorage.assetloader.XMLHandler;
 
 public class Main {
 
@@ -20,5 +30,8 @@ public class Main {
 			System.out.println("Please load an XML file.");
 			System.exit(1);
 		}
+
+		// Set the handler's filename as the xmlFile stated
+		XMLHandler.filename = xmlFile;
 	}
 }

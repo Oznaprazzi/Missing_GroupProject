@@ -8,6 +8,7 @@
  * 	8 Sep 16		Chris Rabe			removed some methods and fields
  *  8 Sep 16		Edward Kelly		added new constructor
  *  8 Sep 16		Chris Rabe			added methods inside the TileObject interface
+ *  18 Sep 16		Chris Rabe			can now receive distributed item
  */
 package missing.game.world.nodes;
 
@@ -103,6 +104,20 @@ public class WorldTile {
 	/** Specifies whether or not the tile is occupied */
 	public boolean isOccupied() {
 		return object != null;
+	}
+
+	/**
+	 * This method is solely used for initialisation purposes. It does some
+	 * checks to see whether or not it is valid to add the object inside the
+	 * tile. If it is invalid, it discards the object
+	 * 
+	 * @param item
+	 */
+	public void getDistributedObject(TileObject item) {
+		if (!this.isEnterable() || this.isOccupied()) {
+			return;
+		}
+		this.object = item;
 	}
 
 	// Helper methods
