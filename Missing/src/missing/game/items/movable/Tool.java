@@ -10,12 +10,13 @@ package missing.game.items.movable;
  * 
  * */
 import java.awt.Point;
+
 /**
- * This class represents a Tool item in the Game. It extends the Craftable, 
+ * This class represents a Tool item in the Game. It extends the Craftable,
  * Usable, Movable and Item subclasses
  */
-public abstract class Tool extends Craftable{
-	
+public abstract class Tool extends Craftable {
+
 	/**
 	 * Creates instance of Tool class.
 	 * 
@@ -29,7 +30,6 @@ public abstract class Tool extends Craftable{
 
 	public Tool(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
 		super(name, description, worldLocation, tileLocation, amount, size);
-		// TODO Auto-generated constructor stub
 	}
 
 }
