@@ -16,7 +16,7 @@ import java.awt.Point;
  */
 
 public abstract class Craftable extends Usable{
-
+ 
 	/**
 	 * Creates instance of Craftable class.
 	 * 
