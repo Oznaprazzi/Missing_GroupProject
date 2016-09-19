@@ -4,6 +4,7 @@
  * 
  * 	Date				Author					Changes
  * 	18 Sep 16			Chris Rabe				create Game.java
+ *  19 Sep 16			Casey Huang				created getAvatars method
  */
 
 package missing.game;
@@ -44,5 +45,15 @@ public class Game {
 			Point tileLocation = i.getTileLocation();
 			world.distributeToNode(worldLocation, tileLocation, i);
 		}
+	}
+
+	public World getWorld() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Player[] getAvatars() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

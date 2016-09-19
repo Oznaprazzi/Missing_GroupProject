@@ -9,12 +9,17 @@
  * 14 Sep 16		Chris Rabe			fixed changing view
  * 18 Sep 16		Linus Go			added get game view method.
  * 18 Sep 16		Casey Huang			attempted scaling implementation
+ * 19 Sep 16		Casey Huang			made paintIsometricNodes @deprecated
+ * 19 Sep 16		Casey Huang			renamed GameView.java to GamePanel and moved it to a new package
+ * 19 Sep 16 		Casey Huang			updated paint method and constructor
  */
-package missing.ui.views;
+package missing.ui.panels;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+
+import javax.swing.JPanel;
 
 import missing.game.world.World;
 import missing.helper.GameException;
@@ -28,49 +33,34 @@ import missing.ui.controller.VControl.View;
  *
  */
 @SuppressWarnings("serial")
-public class GameView extends View {
+public class GamePanel extends JPanel {
 
 	private GWorld graphicWorld;
+	private Point curPoint;
+	private GWNode curGWNode;
 
-	public GameView(VControl controller, World w) {
-		super(controller);
-		try{
-			graphicWorld = new GWorld(w, this, new Point(0,0));
-		}catch (GameException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void initialise() {
+	public GamePanel(VControl controller, World w) {
+		graphicWorld = controller.getGGame().getGWorld();
+		//TODO: need getCurPlayer
+		curPoint = controller.getGGame().getGame().getAvatars()[0].getWorldLocation();
+		curGWNode = graphicWorld.gwNodes()[0][0];
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		paintIsometricNodes(g);	
-	}
-
-	private void paintIsometricNodes(Graphics g){
-		GWNode gwNodes[][] = graphicWorld.gwNodes();
-		try {
-			graphicWorld.setNodeSize();
-			//just draw 10 of them for now.
-			for (int y=0; y<1;y++){
-				for (int x=0; x<1; x++){
-					System.out.println(this.getWidth());
-					gwNodes[x][y].drawIsometricNode(g, this.getWidth());
-				} 
-			}
-		}
-		catch (GameException e) {
-			e.printStackTrace();
-		}
+		//paintIsometricNodes(g);	
 	}
 
 	@Override
-	public void setFocus() {
-		// TODO Auto-generated method stub
+	public void paint(Graphics g){
+		curGWNode.setNodeSize(Math.min(this.getWidth(), this.getHeight()));
+		try {
+			curGWNode.draw(g, 0, 0);
+		} catch (GameException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
