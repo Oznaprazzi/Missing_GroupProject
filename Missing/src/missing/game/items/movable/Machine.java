@@ -1,4 +1,4 @@
-/*File : Unique.java
+/*File : Machine.java
  * 
  * Authors    		ID
  * Jian Wei Chong	300352789
@@ -8,14 +8,17 @@
  * 
  * */
 package missing.game.items.movable;
+
+
 import java.awt.Point;
 /**
- * This class represents a Unique item in the Game. It extends the Usable
- * subclass, Movable subclass and the Item subclass.
+ * This class represents a Machine item in the Game. It extends the Craftable, 
+ * Usable, Movable and Item subclasses
  */
-public class Unique extends Usable{
+public class Machine extends Craftable{
+
 	/**
-	 * Creates instance of Unique class.
+	 * Creates instance of Machine class.
 	 * 
 	 * @param name
 	 * @param description
@@ -24,8 +27,7 @@ public class Unique extends Usable{
 	 * @param amount
 	 * @param size
 	 */
-
-	public Unique(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
+	public Machine(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
 		super(name, description, worldLocation, tileLocation, amount, size);
 		// TODO Auto-generated constructor stub
 	}

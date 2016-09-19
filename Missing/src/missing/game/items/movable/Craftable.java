@@ -1,5 +1,4 @@
-/*
- * File : Craftable.java
+/*File : Craftable.java
  * 
  * Authors    		ID
  * Jian Wei Chong	300352789
@@ -7,19 +6,17 @@
  * Date 		Author		Modification
  * 18/9/16		Jian Wei	created the class
  * 
- */
+ * */
 
 package missing.game.items.movable;
-
 import java.awt.Point;
-
 /**
- * This class represents a Craftable item in the Game. It extends the Usable,
- * Movable and Item subclasses
+ * This class represents a Craftable item in the Game. It extends the 
+ * Usable, Movable and Item subclasses
  */
 
-public abstract class Craftable extends Usable {
-
+public abstract class Craftable extends Usable{
+ 
 	/**
 	 * Creates instance of Craftable class.
 	 * 
@@ -32,6 +29,7 @@ public abstract class Craftable extends Usable {
 	 */
 	public Craftable(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
 		super(name, description, worldLocation, tileLocation, amount, size);
+		// TODO Auto-generated constructor stub
 	}
 
 }
