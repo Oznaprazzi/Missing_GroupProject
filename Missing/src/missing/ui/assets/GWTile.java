@@ -13,6 +13,7 @@
  *  18 Sep 16 		Casey Huang			Added integer fields to help draw the isometric tiles
  *  18 Sep 16		Linus Go			Set the draw isometric tiles method to public
  *  18 Sep 16		Casey Huang			attempted scaling implementation
+ *  19 Sep 16 		Casey Huang			made drawIsometricTile @deprecated
  */
 
 package missing.ui.assets;
@@ -84,6 +85,7 @@ public class GWTile {
 	 * Draws an individual tile. This is done by drawing an image for each tile and
 	 * clipping it with a polygon which is of the isometric shape. 
 	 * 
+	 * @deprecated
 	 * @param g
 	 * @param x x coordinate in grid
 	 * @param y y coordinate in grid
