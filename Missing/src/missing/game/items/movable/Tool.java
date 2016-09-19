@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import missing.game.items.Item;
 import missing.game.items.nonmovable.Source;
 /**
- * This class represents a Tool item in the Game. It extends the Craftable, 
+ * This class represents a Tool item in the Game. It extends the Craftable,
  * Usable, Movable and Item subclasses
  */
 import missing.helper.GameException;

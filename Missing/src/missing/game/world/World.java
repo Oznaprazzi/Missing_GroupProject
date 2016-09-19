@@ -9,13 +9,17 @@
  *  13 Sep 16		Chris Rabe			removed some non-related fields to the world node
  *  13 Sep 16		Chris Rabe			implemented the toString() method
  *  13 Sep 16		Chris Rabe			added a getter for the worldNodes field
+ *  18 Sep 16		Chris Rabe			implemented item distribution method
  */
 
 package missing.game.world;
 
+import java.awt.Point;
+
 import missing.datastorage.initialisers.WorldInitialiser;
 import missing.game.world.nodes.WorldNode;
 import missing.game.world.nodes.WorldTile;
+import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 
 /**
@@ -38,6 +42,12 @@ public class World {
 
 	public WorldNode[][] getWorldNodes() {
 		return worldNodes;
+	}
+
+	// Methods
+
+	public void distributeToNode(Point worldLocation, Point tileLocation, TileObject item) {
+		worldNodes[worldLocation.y][worldLocation.x].distributeToTile(tileLocation, item);
 	}
 
 	// Helper Methods...

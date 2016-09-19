@@ -11,6 +11,7 @@
  * 	13 Sep 16		Linus Go			defined draw method
  *  18 Sep 16		Linus Go			added isometric draw method.
  *  18 Sep 16		Casey Huang			attempted scaling implementation
+ *  19 Sep 16		Casey Huang			made drawIsometricNode @deprecated.
  */
 
 package missing.ui.assets;
@@ -85,6 +86,12 @@ public class GWNode {
 		}
 	}
 	
+	/**
+	 * @deprecated
+	 * @param g
+	 * @param canvas_width
+	 * @throws GameException
+	 */
 	public void drawIsometricNode(Graphics g, int canvas_width) throws GameException{
 		// calculate size of each tile relative to the node
 		int tileSize = nodeSize / TILE_SIZE;

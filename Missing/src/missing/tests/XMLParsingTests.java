@@ -13,7 +13,9 @@ import static missing.datastorage.assetloader.XMLHandler.getItemsFromFile;
 import java.awt.Point;
 import java.util.List;
 
-import missing.game.items.Item;;
+import missing.datastorage.assetloader.XMLHandler;
+import missing.game.items.Item;
+import missing.helper.GameException;;
 
 /**
  * This class tests whether the XMLHandler is working properly.
@@ -21,7 +23,13 @@ import missing.game.items.Item;;
 public class XMLParsingTests {
 
 	public static void test_01() {
-		List<Item> items = getItemsFromFile("items.xml");
+		XMLHandler.filename = "items.xml";
+		List<Item> items = null;
+		try {
+			items = getItemsFromFile();
+		} catch (GameException e) {
+			e.printStackTrace();
+		}
 		for (Item i : items) {
 			Point worldLocation = i.getWorldLocation();
 			Point tileLocation = i.getTileLocation();
