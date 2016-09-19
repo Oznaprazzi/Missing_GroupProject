@@ -9,27 +9,28 @@
  * */
 
 package missing.game.items.movable;
+
 import java.awt.Point;
+import java.util.List;
+
 /**
- * This class represents a Craftable item in the Game. It extends the 
- * Usable, Movable and Item subclasses
+ * This class represents a Craftable item in the Game. It extends the Usable,
+ * Movable and Item subclasses. A Craftable object requires a list of resource
+ * in order to make.
  */
 
-public abstract class Craftable extends Usable{
- 
+public abstract class Craftable extends Usable {
+
+	protected List<Resource> ingredients;
+
 	/**
 	 * Creates instance of Craftable class.
 	 * 
-	 * @param name
-	 * @param description
 	 * @param worldLocation
 	 * @param tileLocation
-	 * @param amount
-	 * @param size
 	 */
-	public Craftable(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
-		super(name, description, worldLocation, tileLocation, amount, size);
-		// TODO Auto-generated constructor stub
+	public Craftable(Point worldLocation, Point tileLocation, List<Resource> ingredients) {
+		super(null, null, worldLocation, tileLocation, 1, 1);
+		this.ingredients = ingredients;
 	}
-
 }
