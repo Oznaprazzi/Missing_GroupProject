@@ -48,12 +48,10 @@ public class Game {
 	}
 
 	public World getWorld() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.world;
 	}
 
 	public Player[] getAvatars() {
-		// TODO Auto-generated method stub
-		return null;
+		return avatars;
 	}
 }
