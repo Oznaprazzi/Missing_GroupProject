@@ -34,7 +34,7 @@ public class SourceTests {
 	 */
 	@Test
 	public void treeTest_1() {
-		Player player = new Player("Chris");
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Tree tree = new Tree(worldLocation, tileLocation);
@@ -53,7 +53,7 @@ public class SourceTests {
 	 */
 	@Test
 	public void treeTest_2() {
-		Player player = new Player("Chris");
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Tree tree = new Tree(worldLocation, tileLocation);

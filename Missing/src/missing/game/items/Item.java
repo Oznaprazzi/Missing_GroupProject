@@ -21,6 +21,7 @@ import missing.game.world.nodes.WorldTile.TileObject;
  *
  */
 public abstract class Item implements TileObject {
+
 	/** name of item, used when displaying details of item */
 	protected String name;
 	/** description of item, used when displaying details of item */
@@ -29,6 +30,10 @@ public abstract class Item implements TileObject {
 	protected Point worldLocation;
 	/** represents the tile this item is located on inside the worldLocation */
 	protected Point tileLocation;
+	/** represents the direction which the item is facing */
+	protected Direction orientation;
+	/** represents the direction which the item can be approached from */
+	protected Direction approach;
 
 	/**
 	 * Create an Instance of an Item, given its location.
@@ -47,10 +52,10 @@ public abstract class Item implements TileObject {
 		this.description = description;
 		this.worldLocation = worldLocation;
 		this.tileLocation = tileLocation;
+		this.orientation = Direction.SOUTH;
+		this.approach = Direction.ALL;
 	}
 
-	// would it be better to pass a worldLocation and tileLocation as parameters
-	// here?
 	/**
 	 * Checks if this item is on the tile at the given x, y location
 	 * 
@@ -67,6 +72,16 @@ public abstract class Item implements TileObject {
 	}
 
 	// Getters and Setters
+
+	@Override
+	public Direction getOrientation() {
+		return orientation;
+	}
+
+	@Override
+	public Direction getApproach() {
+		return approach;
+	}
 
 	public String getName() {
 		return name;
