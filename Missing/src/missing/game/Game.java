@@ -48,7 +48,7 @@ public class Game {
 	}
 
 	public World getWorld() {
-		return world;
+		return this.world;
 	}
 
 	public Player[] getAvatars() {
