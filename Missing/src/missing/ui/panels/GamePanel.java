@@ -11,6 +11,7 @@
  * 18 Sep 16		Casey Huang			attempted scaling implementation
  * 19 Sep 16		Casey Huang			made paintIsometricNodes @deprecated
  * 19 Sep 16		Casey Huang			renamed GameView.java to GamePanel and moved it to a new package
+ * 19 Sep 16 		Casey Huang			updated paint method and constructor
  */
 package missing.ui.panels;
 
@@ -35,9 +36,14 @@ import missing.ui.controller.VControl.View;
 public class GamePanel extends JPanel {
 
 	private GWorld graphicWorld;
+	private Point curPoint;
+	private GWNode curGWNode;
 
 	public GamePanel(VControl controller, World w) {
-		//graphicWorld = controller.getG
+		graphicWorld = controller.getGGame().getGWorld();
+		//TODO: need getCurPlayer
+		curPoint = controller.getGGame().getGame().getAvatars()[0].getWorldLocation();
+		curGWNode = graphicWorld.gwNodes()[0][0];
 	}
 
 	@Override
@@ -46,23 +52,13 @@ public class GamePanel extends JPanel {
 		//paintIsometricNodes(g);	
 	}
 
-	/**
-	 * @deprecated
-	 * @param g
-	 */
-	private void paintIsometricNodes(Graphics g){
-		GWNode gwNodes[][] = graphicWorld.gwNodes();
+	@Override
+	public void paint(Graphics g){
+		curGWNode.setNodeSize(Math.min(this.getWidth(), this.getHeight()));
 		try {
-			graphicWorld.setNodeSize();
-			//just draw 10 of them for now.
-			for (int y=0; y<1;y++){
-				for (int x=0; x<1; x++){
-					System.out.println(this.getWidth());
-					gwNodes[x][y].drawIsometricNode(g, this.getWidth());
-				} 
-			}
-		}
-		catch (GameException e) {
+			curGWNode.draw(g, 0, 0);
+		} catch (GameException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -7,6 +7,7 @@
  * Date				Author				Changes
  * 19 Sep 16		Casey Huang			created GGame class
  * 19 Sep 16		Linus Go			added the fields
+ * 19 Sep 16		Casey Huang			created getGame method
  */
 package missing.ui.assets;
 
@@ -40,5 +41,9 @@ public class GGame {
 	// Methods
 	public GWorld getGWorld(){
 		return gworld;
+	}
+
+	public Game getGame() {
+		return game;
 	}
 }
