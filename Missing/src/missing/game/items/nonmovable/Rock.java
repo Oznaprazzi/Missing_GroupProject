@@ -33,6 +33,7 @@ public class Rock extends Source {
 		p.addToPocket(resource);
 		// Replace resource -- should add timer here
 		int numStone = 1 + (int) (random() * MAX_RESOURCE);
+		//if(numStone ==11)numStone--;
 		resource = new Stone(worldLocation, tileLocation, numStone);
 		// Add ores here...
 	}

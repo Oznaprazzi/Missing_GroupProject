@@ -1,5 +1,3 @@
-package missing.game.items.movable;
-
 /*File : Machine.java
  * 
  * Authors    		ID
@@ -9,6 +7,9 @@ package missing.game.items.movable;
  * 18/9/16		Jian Wei	created the class
  * 
  * */
+package missing.game.items.movable;
+
+
 import java.awt.Point;
 /**
  * This class represents a Machine item in the Game. It extends the Craftable, 

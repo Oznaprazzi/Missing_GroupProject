@@ -1,5 +1,3 @@
-package missing.game.items.movable;
-
 /*File : Unique.java
  * 
  * Authors    		ID
@@ -9,6 +7,7 @@ package missing.game.items.movable;
  * 18/9/16		Jian Wei	created the class
  * 
  * */
+package missing.game.items.movable;
 import java.awt.Point;
 /**
  * This class represents a Unique item in the Game. It extends the Usable
