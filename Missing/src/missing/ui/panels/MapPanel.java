@@ -1,4 +1,12 @@
-package missing.ui.views;
+/*	File: MapPanel.java
+ * 	Author
+ * 	Casey Huang		300316284
+ *  
+ * 	Date			Author				Changes
+ * 	19 Sep 16		Casey Huang			created MapPanel class
+ * 	19 Sep 16		Casey Huang			renamed MapView to MapPanel
+ */
+package missing.ui.panels;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,11 +19,11 @@ import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 
 @SuppressWarnings("serial")
-public class MapView extends View {
+public class MapPanel extends View {
 
 	private GWorld gWorld;
 
-	public MapView(VControl controller, World world) {
+	public MapPanel(VControl controller, World world) {
 		super(controller);
 		gWorld = controller.getGGame().getGWorld();
 	}
