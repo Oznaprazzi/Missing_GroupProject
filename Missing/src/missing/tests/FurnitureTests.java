@@ -34,7 +34,7 @@ public class FurnitureTests {
 	 */
 	@Test
 	public void fireplaceTest_1() {
-		Player player = new Player("Chris");
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Food food = new Food(worldLocation, tileLocation, FoodType.APPLE);
@@ -56,7 +56,7 @@ public class FurnitureTests {
 	 */
 	@Test
 	public void fireplaceTest_2() {
-		Player player = new Player("Chris");
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Food food = new Food(worldLocation, tileLocation, FoodType.APPLE);
@@ -79,7 +79,7 @@ public class FurnitureTests {
 	 */
 	@Test
 	public void fireplaceTest_3() {
-		Player player = new Player("Chris");
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Food food = new Food(worldLocation, tileLocation, FoodType.APPLE);

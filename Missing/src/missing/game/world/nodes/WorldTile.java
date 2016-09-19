@@ -15,6 +15,7 @@ package missing.game.world.nodes;
 import java.awt.Point;
 
 import missing.game.items.nonmovable.NonMovable;
+import missing.helper.GameException;
 
 /**
  * This class represents a WorldTile within the Game. It is the internal data
@@ -30,6 +31,18 @@ public class WorldTile {
 	 * WorldTile.
 	 */
 	public interface TileObject {
+
+		/**
+		 * This enumeration should be used to represent where the object is
+		 * facing or where the object can be approached from. The 'ALL'
+		 * enumeration is a special value which indicates that the object can be
+		 * approached in all directions (this should not be used if this
+		 * enumeration is used to represent where the item is facing)
+		 */
+		public static enum Direction {
+			NORTH, SOUTH, EAST, WEST, ALL
+		}
+
 		public String getName();
 
 		public String getDescription();
@@ -41,6 +54,48 @@ public class WorldTile {
 		public Point getWorldLocation();
 
 		public void setWorldLocation(Point worldLocation);
+
+		/**
+		 * Returns the direction which the TileObject is facing.
+		 */
+		public Direction getOrientation();
+
+		/**
+		 * Returns the direction which the TileObject can be approached from.
+		 */
+		public Direction getApproach();
+
+		/**
+		 * * Compares the orientation direction and the approach direction. A
+		 * valid approach is when the approach direction and the orientation
+		 * direction are opposite to each other.
+		 * 
+		 * If the approach direction is set to 'ALL' this method returns true.
+		 * 
+		 * @param obj1
+		 *            - object executing the interaction.
+		 * @param obj2
+		 *            - objet being interacted on
+		 * @return true if the approach is valid
+		 * @throws GameException
+		 */
+		public static boolean approachValid(TileObject obj1, TileObject obj2) throws GameException {
+			if (obj2.getApproach() == Direction.ALL) {
+				return true;
+			}
+			switch (obj1.getOrientation()) {
+			case EAST:
+				return obj2.getApproach() == Direction.WEST;
+			case NORTH:
+				return obj2.getApproach() == Direction.SOUTH;
+			case SOUTH:
+				return obj2.getApproach() == Direction.NORTH;
+			case WEST:
+				return obj2.getApproach() == Direction.EAST;
+			default:
+				throw new GameException("Invalid Orientation!!");
+			}
+		}
 	}
 
 	/**
