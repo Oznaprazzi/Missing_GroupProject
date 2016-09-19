@@ -20,6 +20,7 @@ import missing.ui.assets.GWTile;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.panels.GamePanel;
+import missing.ui.panels.MapPanel;
 import missing.ui.views.*;
 import missing.game.world.World;
 import missing.ui.assets.GWNode;
@@ -56,7 +57,7 @@ public class GUIInitialiser {
 		View[] tmp = new View[views];
 		tmp[0] = new SplashView(control);
 		tmp[1] = new MenuView(control);
-		tmp[2] = new MapView(control, control.getWorld());
+		tmp[2] = new MapPanel(control, control.getWorld());
 		//tmp[3] = new GamePanel(control, control.getWorld());
 		return tmp;
 	}

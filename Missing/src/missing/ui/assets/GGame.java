@@ -1,8 +1,6 @@
 /* File: GGame.java
  * Author:
- * Linus Go			300345571
- * Jian Wei Chong	300352789
- * Chris Rabe		300334207
+ * Casey Huang		300316284
  * 
  * Date				Author				Changes
  * 19 Sep 16		Casey Huang			created GGame class
