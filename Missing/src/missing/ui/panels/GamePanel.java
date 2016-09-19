@@ -10,12 +10,15 @@
  * 18 Sep 16		Linus Go			added get game view method.
  * 18 Sep 16		Casey Huang			attempted scaling implementation
  * 19 Sep 16		Casey Huang			made paintIsometricNodes @deprecated
+ * 19 Sep 16		Casey Huang			renamed GameView.java to GamePanel and moved it to a new package
  */
-package missing.ui.views;
+package missing.ui.panels;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+
+import javax.swing.JPanel;
 
 import missing.game.world.World;
 import missing.helper.GameException;
@@ -29,21 +32,12 @@ import missing.ui.controller.VControl.View;
  *
  */
 @SuppressWarnings("serial")
-public class GameView extends View {
+public class GamePanel extends JPanel {
 
 	private GWorld graphicWorld;
 
-	public GameView(VControl controller, World w) {
-		super(controller);
-		try{
-			graphicWorld = new GWorld(w, this, new Point(0,0));
-		}catch (GameException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void initialise() {
+	public GamePanel(VControl controller, World w) {
+		//graphicWorld = controller.getG
 	}
 
 	@Override
@@ -71,11 +65,6 @@ public class GameView extends View {
 		catch (GameException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void setFocus() {
-		// TODO Auto-generated method stub
 	}
 
 }

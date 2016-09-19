@@ -19,6 +19,7 @@ import missing.helper.GameException;
 import missing.ui.assets.GWTile;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
+import missing.ui.panels.GamePanel;
 import missing.ui.views.*;
 import missing.game.world.World;
 import missing.ui.assets.GWNode;
@@ -56,7 +57,7 @@ public class GUIInitialiser {
 		tmp[0] = new SplashView(control);
 		tmp[1] = new MenuView(control);
 		tmp[2] = new MapView(control, control.getWorld());
-		tmp[3] = new GameView(control, control.getWorld());
+		//tmp[3] = new GamePanel(control, control.getWorld());
 		return tmp;
 	}
 }
