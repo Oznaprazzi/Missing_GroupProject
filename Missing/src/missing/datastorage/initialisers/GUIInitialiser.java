@@ -19,7 +19,6 @@ import missing.helper.GameException;
 import missing.ui.assets.GWTile;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
-import missing.ui.panels.GamePanel;
 import missing.ui.panels.MapPanel;
 import missing.ui.views.*;
 import missing.game.world.World;
