@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.world.World;
 import missing.helper.GameException;
+import missing.ui.assets.GGame;
 
 /**
  * 
@@ -137,5 +138,10 @@ public class VControl extends JFrame {
 
 	public static void main(String[] args) {
 		new VControl(); // Run to test views
+	}
+
+	public GGame getGGame() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

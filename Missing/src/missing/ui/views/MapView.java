@@ -17,11 +17,7 @@ public class MapView extends View {
 
 	public MapView(VControl controller, World world) {
 		super(controller);
-		try {
-			gWorld = new GWorld(world, this, new Point(0, 0));
-		} catch (GameException e) {
-			e.printStackTrace();
-		}
+		gWorld = controller.getGGame().getGWorld();
 	}
 
 	@Override
