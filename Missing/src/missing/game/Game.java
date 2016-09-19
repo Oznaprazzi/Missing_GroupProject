@@ -45,4 +45,9 @@ public class Game {
 			world.distributeToNode(worldLocation, tileLocation, i);
 		}
 	}
+
+	public World getWorld() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

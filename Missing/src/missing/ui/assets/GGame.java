@@ -1,4 +1,4 @@
-/* File: GWorld.java
+/* File: GGame.java
  * Author:
  * Linus Go			300345571
  * Jian Wei Chong	300352789
@@ -6,6 +6,7 @@
  * 
  * Date				Author				Changes
  * 19 Sep 16		Casey Huang			created GGame class
+ * 19 Sep 16		Linus Go			added the fields
  */
 package missing.ui.assets;
 
@@ -13,6 +14,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 import missing.datastorage.initialisers.GUIInitialiser;
+import missing.game.Game;
 import missing.game.world.World;
 import missing.helper.GameException;
 import missing.ui.controller.VControl.View;
@@ -22,45 +24,20 @@ import missing.ui.controller.VControl.View;
  * which are purely used for graphics and rendering.
  */
 public class GGame {
-
-	private View curView;
+	
 	private GWorld gworld;
-
+	private Game game;
 	/** This field indicates where the world will be drawn */
 	private Point padding;
+	private View theView;
 
-	public GGame(World world, View view, Point padding) throws GameException {
-		gworld = new GWorld(world, view, padding);
-		int nodeSize = Math.min(curView.getWidth(), curView.getHeight()) / World.WORLD_WIDTH;
+	public GGame(Game game, View theView) throws GameException{
+		this.game = game;
+		gworld = new GWorld(game.getWorld(), theView, new Point(0,0));
+		this.theView = theView;
 	}
 
 	// Methods
-
-	public void draw(Graphics g) throws GameException {
-		this.setNodeSize();
-		// Calculate node size relative to the View panel
-		int nodeSize = Math.min(curView.getWidth(), curView.getHeight()) / World.WORLD_WIDTH;
-		// Draw each node in appropriate coordinates
-		for (int i = 0; i < gwNodes.length; i++) {
-			int y = (i * nodeSize) + padding.y;
-			for (int j = 0; j < gwNodes[i].length; j++) {
-				int x = (j * nodeSize) + padding.x;
-				gwNodes[i][j].draw(g, x, y);
-			}
-		}
-	}
-
-	public void setNodeSize() throws GameException{
-		// Calculate node size relative to the View panel
-		int nodeSize = Math.min(curView.getWidth(), curView.getHeight()) / World.WORLD_WIDTH;
-		// Draw each node in appropriate coordinates
-		for (int i = 0; i < gwNodes.length; i++) {
-			for (int j = 0; j < gwNodes[i].length; j++) {
-				gwNodes[i][j].setNodeSize(nodeSize);
-			}
-		}
-	}
-	
 	public GWorld getGWorld(){
 		return gworld;
 	}
