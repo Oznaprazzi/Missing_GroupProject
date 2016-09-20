@@ -15,6 +15,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import java.awt.Insets;
+import java.awt.BorderLayout;
 
 public class TestWindow extends JFrame {
 	
@@ -29,22 +31,16 @@ public class TestWindow extends JFrame {
 		this.setSize(panelWd, panelHt);
 		System.out.println();
 		this.getContentPane().add(gPanel);
-		GridBagLayout gbl_gPanel = new GridBagLayout();
-		gbl_gPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_gPanel.rowHeights = new int[]{0, 0};
-		gbl_gPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_gPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		gPanel.setLayout(gbl_gPanel);
+		gPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 20;
-		gbc_panel.gridy = 0;
-		gPanel.add(panel, gbc_panel);
-		
-		JLabel lblPlayerViewControls = new JLabel("Player View Controls");
-		panel.add(lblPlayerViewControls);
+		getContentPane().add(panel, BorderLayout.EAST);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{0};
+		gbl_panel.rowHeights = new int[]{0};
+		gbl_panel.columnWeights = new double[]{Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
 		pack();
 	}
 	
