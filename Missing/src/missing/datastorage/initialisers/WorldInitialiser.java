@@ -31,7 +31,7 @@ import missing.helper.GameException;
  */
 public class WorldInitialiser {
 	/** Size of row and column of one world node */
-	private static final int NODE_SIZE = 10;
+	public static final int NODE_SIZE = 10;
 
 	/**
 	 * Loads the nodes inside the world using predefined text files.
