@@ -17,6 +17,7 @@
 package missing.ui.panels;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -28,10 +29,10 @@ import missing.ui.assets.GWNode;
 import missing.ui.assets.GWorld;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
+ 
 /**
- * This class represents the Game View in the regular sate.
- * @author linus
- *
+ * This class represents the Game Panel in the regular state. When the game is
+ * running, this will be shown.
  */
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
@@ -42,24 +43,55 @@ public class GamePanel extends JPanel {
 
 	public GamePanel(VControl controller, World w) {
 		graphicWorld = controller.getGGame().getGWorld();
-		//TODO: need getCurPlayer
+		// TODO: need getCurPlayer
 		curPoint = controller.getGGame().getGame().getAvatars()[0].getWorldLocation();
-		curGWNode = graphicWorld.gwNodes()[0][0];
+		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
+	}
+
+	public GamePanel(Point renderLoc) {
+		try {
+			graphicWorld = new GWorld(new World(), new View(null) {
+				@Override
+				public void initialise() {
+				}
+
+				@Override
+				public void setFocus() {
+				}
+
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(800, 600);
+				}
+
+			}, new Point(0, 0));
+		} catch (GameException e) {
+			e.printStackTrace();
+		}
+		curPoint = renderLoc;
+		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
+	}
+
+	public Dimension getPreferredSize() {
+		return VControl.VIEW_SIZE;
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		//paintIsometricNodes(g);	
 	}
-
+	
+	/**
+	 * Draws the paint 
+	 */
 	@Override
-	public void paint(Graphics g){
+	public void paint(Graphics g) {
+		int val = Math.min(this.getWidth(), this.getHeight());
+		System.out.println(val);
 		curGWNode.setNodeSize(Math.min(this.getWidth(), this.getHeight()));
 		try {
 			curGWNode.draw(g, 0, 0);
 		} catch (GameException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
