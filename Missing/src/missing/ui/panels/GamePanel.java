@@ -76,7 +76,7 @@ public class GamePanel extends JPanel {
 
 				@Override
 				public Dimension getPreferredSize() {
-					return new Dimension(800, 600);
+					return new Dimension(600, 600);
 				}
 
 			}, new Point(0, 0));
@@ -87,6 +87,9 @@ public class GamePanel extends JPanel {
 		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
 	}
 	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public GamePanel(Player currentPlayer) {
 
 		try {
@@ -101,7 +104,7 @@ public class GamePanel extends JPanel {
 
 				@Override
 				public Dimension getPreferredSize() {
-					return new Dimension(800, 600);
+					return new Dimension(600, 600);
 				}
 
 			}, new Point(0, 0));
@@ -117,7 +120,7 @@ public class GamePanel extends JPanel {
 	
 	
 	public Dimension getPreferredSize() {
-		return new Dimension(800,600);
+		return new Dimension(600,600);
 	}
 
 	@Override

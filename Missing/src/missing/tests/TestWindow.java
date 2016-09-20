@@ -21,7 +21,7 @@ import java.awt.BorderLayout;
 public class TestWindow extends JFrame {
 	
 	private GamePanel gPanel;
-	private final int panelWd = 800;
+	private final int panelWd = 600;
 	private final int panelHt = 600;
 	
 	public TestWindow(World w, Player p){
@@ -32,18 +32,12 @@ public class TestWindow extends JFrame {
 		System.out.println();
 		this.getContentPane().add(gPanel);
 		gPanel.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.EAST);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0};
-		gbl_panel.rowHeights = new int[]{0};
-		gbl_panel.columnWeights = new double[]{Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
 		pack();
 	}
 	
-	
+	@Override
+	public Dimension getPreferredSize(){
+		return new Dimension(panelWd, panelHt);
+	}
 	
 }
