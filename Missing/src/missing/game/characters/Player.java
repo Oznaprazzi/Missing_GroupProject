@@ -6,6 +6,7 @@
  * 	7 Sep 16			Chris Rabe			created player class
  * 	8 Sep 16			Chris Rabe			implemented TileObject
  *  8 Sep 16			Edward Kelly		made Player implement TileObject
+ *  20 Sep 16			Jian Wei Chong		added findTool method
  */
 
 package missing.game.characters;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import missing.game.items.movable.Movable;
+import missing.game.items.movable.Tool;
+import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.nonmovable.Bag;
 import missing.helper.GameException;
 
@@ -165,5 +168,33 @@ public class Player extends Character {
 			bag.addItem(tmp);
 			throw new GameException(e.getMessage());
 		}
+	}
+	
+	
+	
+	/**
+	 * finds the tool from the player's pocket of that ToolType*/
+	public Tool getTool(ToolType type){
+		ArrayList<Tool> tools = new ArrayList<Tool>();
+		for(Movable item: getPocket()){
+			if(item instanceof Tool){
+				if(((Tool) item).getType().equals(type)){
+					tools.add((Tool) item); //add all the tools of that type
+				}
+			}
+		}
+		//find the tool of that type which has the lowest durability
+		Tool lowest =null;
+		for(Tool tool: tools){
+			if(lowest==null) lowest=tool;
+			else{
+				if(lowest.getDurability()>tool.getDurability()){
+					lowest = tool;
+				}
+			}
+		}
+		
+		return lowest;
+		
 	}
 }

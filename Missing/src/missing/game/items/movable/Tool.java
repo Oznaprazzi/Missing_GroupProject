@@ -7,7 +7,7 @@
  * 18/9/16		Jian Wei	created the class
  * 19/9/16		Jian Wei	added the creation of axe and pickaxe
  * 19/9/16		Chris Rabe	added javadocs and rearranged methods
- * 
+ * 20/9/16		Jian Wei	added creation of shovel
  * */
 package missing.game.items.movable;
 
@@ -25,7 +25,7 @@ import missing.helper.GameException;
 public class Tool extends Craftable {
 
 	public static enum ToolType {
-		AXE, PICKAXE // TODO Add shovel
+		AXE, PICKAXE, SHOVEL
 	}
 
 	// number of times tool can be used before it breaks
@@ -74,7 +74,15 @@ public class Tool extends Craftable {
 				return true;
 			}
 			return false;
-		// TODO Create shovel
+			
+		case SHOVEL: 
+			toolType = type;
+			if(createShovel()){
+				name = "Shovel";
+				description = "Can dig stuff";
+				return true;
+			}
+			return false;
 		default:
 			return false;
 		}
@@ -83,10 +91,14 @@ public class Tool extends Craftable {
 	// Methods
 
 	/**
-	 * This decreases the durability of the tool.
+	 * This decreases the durability of the tool. Returns true if it has no more durability
 	 */
-	public void useTool() {
+	public boolean useTool() {
 		durability--;
+		if(durability==0){
+			return true;
+		}
+		return false;
 		// TODO: verify that what they are trying to do requires that tool
 	}
 
@@ -130,6 +142,27 @@ public class Tool extends Craftable {
 		if (woodCount != 2)
 			return false;
 		if (stoneCount != 3)
+			return false;
+		return true;
+	}
+	
+	/**
+	 * checks that there are 2 wood and 1 stone inside the resources list which
+	 * are the required resources to create a Shovel
+	 */
+	private boolean createShovel() {
+		int woodCount = 0;
+		int stoneCount = 0;
+
+		for (Item item : ingredients) {
+			if (item instanceof Wood)
+				woodCount++;
+			else if (item instanceof Stone)
+				stoneCount++;
+		}
+		if (woodCount != 2)
+			return false;
+		if (stoneCount != 1)
 			return false;
 		return true;
 	}
