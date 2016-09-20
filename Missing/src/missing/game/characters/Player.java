@@ -169,32 +169,32 @@ public class Player extends Character {
 			throw new GameException(e.getMessage());
 		}
 	}
-	
-	
-	
+
 	/**
-	 * finds the tool from the player's pocket of that ToolType*/
-	public Tool getTool(ToolType type){
+	 * This method retrieves the tool with the lowest durability to ensure
+	 * efficiency.
+	 */
+	public Tool getTool(ToolType type) {
+		// Get all the tools with the given type inside the player's pocket
 		ArrayList<Tool> tools = new ArrayList<Tool>();
-		for(Movable item: getPocket()){
-			if(item instanceof Tool){
-				if(((Tool) item).getType().equals(type)){
-					tools.add((Tool) item); //add all the tools of that type
+		for (Movable item : getPocket()) {
+			if (item instanceof Tool) {
+				if (((Tool) item).getType().equals(type)) {
+					tools.add((Tool) item); // add all the tools of that type
 				}
 			}
 		}
-		//find the tool of that type which has the lowest durability
-		Tool lowest =null;
-		for(Tool tool: tools){
-			if(lowest==null) lowest=tool;
-			else{
-				if(lowest.getDurability()>tool.getDurability()){
+		// Find the tool with the lowest durability
+		Tool lowest = null;
+		for (Tool tool : tools) {
+			if (lowest == null) {
+				lowest = tool;
+			} else {
+				if (lowest.getDurability() > tool.getDurability()) {
 					lowest = tool;
 				}
 			}
 		}
-		
 		return lowest;
-		
 	}
 }

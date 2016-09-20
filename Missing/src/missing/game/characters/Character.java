@@ -16,7 +16,7 @@ import missing.game.world.nodes.WorldTile.TileObject;
  * This should be extended by Player classes and NPCs.
  */
 public abstract class Character implements TileObject {
-	
+
 	private String name;
 	private String description;
 	private Point worldLocation;
@@ -68,6 +68,10 @@ public abstract class Character implements TileObject {
 	@Override
 	public Direction getOrientation() {
 		return orientation;
+	}
+
+	public void setOrientation(Direction direction) {
+		this.orientation = direction;
 	}
 
 	@Override

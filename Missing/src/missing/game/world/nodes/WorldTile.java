@@ -115,7 +115,7 @@ public class WorldTile {
 	/** Represents whether or not players can enter this tile */
 	private boolean enterable;
 
-	/** Represents the entity or item within the tile */
+	/** Represents the item within the tile */
 	private TileObject object;
 
 	public WorldTile(TileType type, Point nodeLocation) {
