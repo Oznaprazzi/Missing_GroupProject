@@ -16,6 +16,7 @@ import missing.datastorage.assetloader.XMLHandler;
 import missing.game.characters.Player;
 import missing.game.items.Item;
 import missing.game.world.World;
+import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 
 /**
@@ -30,6 +31,52 @@ public class Game {
 		this.avatars = avatars;
 		this.world = new World();
 		distributeItems(XMLHandler.getItemsFromFile());
+	}
+
+	// Getters
+
+	public World getWorld() {
+		return this.world;
+	}
+
+	public Player[] getAvatars() {
+		return avatars;
+	}
+
+	// Methods for moving
+
+	/**
+	 * Moves the player to a certain direction.
+	 * 
+	 * @param id
+	 * @param direction
+	 * @throws GameException
+	 */
+	public void movePlayer(int id, Direction direction) throws GameException {
+		Player player = avatars[id]; // retrieve player's piece
+		Point newTileLocation = null;
+		switch (direction) {
+		case EAST:
+			break;
+		case NORTH:
+			break;
+		case SOUTH:
+			break;
+		case WEST:
+			break;
+		default:
+			throw new GameException("Invalid direction. Please use NORTH, SOUTH, EAST, WEST.");
+		}
+	}
+
+	/**
+	 * When this method is called, it checks the object which is in front of the
+	 * client based on the orientation.
+	 * 
+	 * @param id
+	 */
+	public void performAction(int id) {
+
 	}
 
 	// Helper methods
@@ -47,11 +94,4 @@ public class Game {
 		}
 	}
 
-	public World getWorld() {
-		return this.world;
-	}
-
-	public Player[] getAvatars() {
-		return avatars;
-	}
 }
