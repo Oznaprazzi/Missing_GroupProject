@@ -2,6 +2,7 @@
  * 	
  * 	Authors:			ID
  *	Edward Kelly		300334192
+ *	Casey Huang			300316284
  * 	Date				Author					Changes
 	7 Sep 16			Edward Kelly			Created NonMovable class
 	7 Sep 16 			Casey Huang				Created width and height fields and generated getters and setters for them.
@@ -21,44 +22,53 @@ import missing.game.items.Item;
 public abstract class NonMovable extends Item {
 	private int width;
 	private int height;
-	
+
 	/**
 	 * Creates a new instance of a NonMovable item
-	 * @param name name of Movable
-	 * @param description description of the Movable item
-	 * @param worldLocation the section of the world the Movable item is located
-	 * @param tileLocation the tile inside a worldLocation the Movable item is located
+	 * 
+	 * @param name
+	 *            name of Movable
+	 * @param description
+	 *            description of the Movable item
+	 * @param worldLocation
+	 *            the section of the world the Movable item is located
+	 * @param tileLocation
+	 *            the tile inside a worldLocation the Movable item is located
 	 */
 	public NonMovable(String name, String description, Point worldLocation, Point tileLocation) {
 		super(name, description, worldLocation, tileLocation);
 	}
-	
+
 	/**
 	 * Returns the width of this item.
+	 * 
 	 * @return
 	 */
 	public int getWidth() {
 		return width;
 	}
-	
+
 	/**
 	 * Sets the width of this item.
+	 * 
 	 * @param width
 	 */
 	public void setWidth(int width) {
 		this.width = width;
 	}
-	
+
 	/**
 	 * Returns the height of this item.
+	 * 
 	 * @return
 	 */
 	public int getHeight() {
 		return height;
 	}
-	
+
 	/**
 	 * Sets the height of this item.
+	 * 
 	 * @param height
 	 */
 	public void setHeight(int height) {
@@ -87,5 +97,5 @@ public abstract class NonMovable extends Item {
 			return false;
 		return true;
 	}
-	
+
 }

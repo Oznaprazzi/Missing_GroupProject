@@ -1,6 +1,7 @@
 /*	File: Game.java
  * 	Author
  * 	Chris Rabe			300334207
+ * 	Casey Huang			300316284
  * 
  * 	Date				Author					Changes
  * 	18 Sep 16			Chris Rabe				create Game.java

@@ -1,6 +1,7 @@
 /*	File: Player.java
  * 	Authors				ID
  * 	Chris Rabe			300334207
+ * 	Jian Wei Chong		300352789
  * 
  * 	Date				Author				Changes
  * 	7 Sep 16			Chris Rabe			created player class

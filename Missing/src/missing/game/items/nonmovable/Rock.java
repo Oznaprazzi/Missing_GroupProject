@@ -10,12 +10,9 @@ package missing.game.items.nonmovable;
 
 import java.awt.Point;
 
-import static java.lang.Math.random;
-
 import missing.game.characters.Player;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
-import missing.game.items.movable.Wood;
 import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
 
@@ -35,7 +32,7 @@ public class Rock extends Source {
 		int numStoneTaking = 0;// amount of wood they are trying to take from
 		// this tree
 		Tool playersTool = p.getTool(ToolType.PICKAXE); // gets the axe from the
-													// player's pocket
+		// player's pocket
 		if (playersTool != null) { // if the player has an axe
 			numStoneTaking = 5;
 			if (playersTool.useTool())
@@ -47,7 +44,7 @@ public class Rock extends Source {
 			numStoneTaking = 1; // doesnt have axe, so can only take one wood
 			p.setHealth(p.getHealth() - 1);
 		} // should reduce health if they are breaking it with their hands
-		
+
 		int remainingStone = resource.getAmount() - numStoneTaking;
 		resource = new Stone(worldLocation, tileLocation, numStoneTaking);
 		resource.setStored(true);

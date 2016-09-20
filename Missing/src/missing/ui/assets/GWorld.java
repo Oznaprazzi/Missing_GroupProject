@@ -3,6 +3,7 @@
  * Linus Go			300345571
  * Jian Wei Chong	300352789
  * Chris Rabe		300334207
+ * Casey Huang		300316284
  * 
  * Date				Author				Changes
  * 13 Sep 16		Jian Wei			create GWorld.java
@@ -12,6 +13,7 @@
  * 13 Sep 16		Chris Rabe			defined draw method
  * 18 Sep 16		Linus Go			added gwNodes getter method.
  * 18 Sep 16		Casey Huang			attempted scaling implementation
+ * 20 Sep 16		Chris Rabe			optimised drawing performance
  */
 package missing.ui.assets;
 
@@ -47,7 +49,6 @@ public class GWorld {
 	// Methods
 
 	public void draw(Graphics g) throws GameException {
-		this.setNodeSize();
 		// Calculate node size relative to the View panel
 		int nodeSize = Math.min(curView.getWidth(), curView.getHeight()) / World.WORLD_WIDTH;
 		// Draw each node in appropriate coordinates
@@ -55,23 +56,13 @@ public class GWorld {
 			int y = (i * nodeSize) + padding.y;
 			for (int j = 0; j < gwNodes[i].length; j++) {
 				int x = (j * nodeSize) + padding.x;
+				gwNodes[i][j].setNodeSize(nodeSize);
 				gwNodes[i][j].draw(g, x, y);
 			}
 		}
 	}
 
-	public void setNodeSize() throws GameException{
-		// Calculate node size relative to the View panel
-		int nodeSize = Math.min(curView.getWidth(), curView.getHeight()) / World.WORLD_WIDTH;
-		// Draw each node in appropriate coordinates
-		for (int i = 0; i < gwNodes.length; i++) {
-			for (int j = 0; j < gwNodes[i].length; j++) {
-				gwNodes[i][j].setNodeSize(nodeSize);
-			}
-		}
-	}
-
-	public GWNode[][] gwNodes(){
+	public GWNode[][] gwNodes() {
 		return this.gwNodes;
 	}
 }

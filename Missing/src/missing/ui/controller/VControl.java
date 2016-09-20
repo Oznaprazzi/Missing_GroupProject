@@ -2,6 +2,7 @@
  * Authors:
  * Linus Go			300345571
  * Chris Rabe		300334207
+ * Casey Huang		300316284
  * 
  * Date				Author				Changes 
  * 13 Sep 16		Linus Go			Created VControl.java
@@ -82,8 +83,8 @@ public class VControl extends JFrame {
 	public int getMapView() {
 		return 2;
 	}
-	
-	public int getGameView(){
+
+	public int getGameView() {
 		return 3;
 	}
 

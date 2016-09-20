@@ -4,6 +4,7 @@
  * 	Jian Wei Chong	300352789
  * 	Chris Rabe		300334207
  * 	Linus Go		300345571
+ * 	Casey Huang		300316284
  * 
  * 	Date			Author				Changes
  * 	13 Sep 16		Jian Wei			created GWNode.java
@@ -85,14 +86,14 @@ public class GWNode {
 			}
 		}
 	}
-	
+
 	/**
 	 * @deprecated
 	 * @param g
 	 * @param canvas_width
 	 * @throws GameException
 	 */
-	public void drawIsometricNode(Graphics g, int canvas_width) throws GameException{
+	public void drawIsometricNode(Graphics g, int canvas_width) throws GameException {
 		// calculate size of each tile relative to the node
 		int tileSize = nodeSize / TILE_SIZE;
 		// draw each tile in the appropriate coordinates
@@ -103,6 +104,5 @@ public class GWNode {
 			}
 		}
 	}
-	
-	
+
 }

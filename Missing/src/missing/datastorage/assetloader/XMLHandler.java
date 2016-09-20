@@ -34,6 +34,9 @@ import missing.game.items.Item;
 import missing.game.items.nonmovable.*;
 import missing.helper.GameException;
 
+/**
+ * This class is responsible for reading and writing XML files.
+ */
 public class XMLHandler {
 
 	public static String filename;
@@ -110,7 +113,7 @@ public class XMLHandler {
 
 	private static List<Item> parseRocks(Point worldLocation, Document doc, XPath xPath, String expression) {
 		List<Item> tmp = new ArrayList<Item>();
-		expression += "/rock"; // TODO Change expression
+		expression += "/rock";
 		try {
 			NodeList trees = (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
 			for (int i = 0; i < trees.getLength(); i++) {
@@ -119,7 +122,6 @@ public class XMLHandler {
 					Element elem = (Element) tree;
 					Node locNode = elem.getElementsByTagName("location").item(0);
 					Point location = parseLocation(locNode);
-					// TODO Change what is added
 					tmp.add(new Rock(worldLocation, location));
 				}
 			}
@@ -132,7 +134,7 @@ public class XMLHandler {
 
 	private static List<Item> parseBushes(Point worldLocation, Document doc, XPath xPath, String expression) {
 		List<Item> tmp = new ArrayList<Item>();
-		expression += "/bush"; // TODO Change expression
+		expression += "/bush";
 		try {
 			NodeList trees = (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
 			for (int i = 0; i < trees.getLength(); i++) {
@@ -141,7 +143,6 @@ public class XMLHandler {
 					Element elem = (Element) tree;
 					Node locNode = elem.getElementsByTagName("location").item(0);
 					Point location = parseLocation(locNode);
-					// TODO Change what is added
 					tmp.add(new Bush(worldLocation, location));
 				}
 			}

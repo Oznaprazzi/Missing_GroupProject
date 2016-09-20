@@ -4,6 +4,7 @@
  * 
  * 	Date				Author				Changes
  * 	19 Sep 16			Chris Rabe			create character.java
+ * 	20 Sep 16			Chris Rabe			implemented orientation and approach
  */
 package missing.game.characters;
 

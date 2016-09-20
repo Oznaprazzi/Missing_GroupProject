@@ -3,7 +3,7 @@
  * 	Author:
  * 	Jian Wei Chong	300352789
  * 	Chris Rabe		300334207
- * 	
+ * 	Casey Huang		300316284 	
  * 	Date			Author				Changes
  * 	13 Sep 16		Jian Wei			create GWTile.java
  * 	13 Sep 16		Chris Rabe			implemented the draw method
@@ -80,42 +80,44 @@ public class GWTile {
 			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
 		}
 	}
-	
+
 	/**
-	 * Draws an individual tile. This is done by drawing an image for each tile and
-	 * clipping it with a polygon which is of the isometric shape. 
+	 * Draws an individual tile. This is done by drawing an image for each tile
+	 * and clipping it with a polygon which is of the isometric shape.
 	 * 
 	 * @deprecated
 	 * @param g
-	 * @param x x coordinate in grid
-	 * @param y y coordinate in grid
+	 * @param x
+	 *            x coordinate in grid
+	 * @param y
+	 *            y coordinate in grid
 	 */
-	public void drawIsometricTile(Graphics g, int x, int y, int canvas_width){
+	public void drawIsometricTile(Graphics g, int x, int y, int canvas_width) {
 		/* Get isometric tile dimensions */
 		int tile_width = this.size;
-		int tile_height = tile_width/2;
+		int tile_height = tile_width / 2;
 		// top corner of tile
-		int topX = (x - y) * tile_width/2 + canvas_width/2;
-		int topY = (x + y) * tile_height/2;
+		int topX = (x - y) * tile_width / 2 + canvas_width / 2;
+		int topY = (x + y) * tile_height / 2;
 		// bottom corner of tile
 		int botX = topX;
-		int botY = topY+tile_height;
+		int botY = topY + tile_height;
 		// left corner of tile
-		int leftX = topX - tile_width/2;
-		int leftY = topY + tile_height/2;
+		int leftX = topX - tile_width / 2;
+		int leftY = topY + tile_height / 2;
 		// right corner of tile
-		int rightX = topX + tile_width/2;
-		int rightY = topY + tile_height/2;
-		
+		int rightX = topX + tile_width / 2;
+		int rightY = topY + tile_height / 2;
+
 		// Create a polygon to draw tile
-		int[] xPoints = {topX,rightX,botX,leftX};
-		int[] yPoints = {topY,rightY,botY,leftY};
+		int[] xPoints = { topX, rightX, botX, leftX };
+		int[] yPoints = { topY, rightY, botY, leftY };
 		Polygon poly = new Polygon(xPoints, yPoints, 4);
-		
+
 		// Clips the isometric tile shape around the image about to be drawn
 		g.setClip(poly);
-		
-		switch(tile.getType()){
+
+		switch (tile.getType()) {
 		case SAND:
 			g.drawImage(GameAssets.getSandImage(), leftX, topY, tile_width, tile_height, null);
 			break;

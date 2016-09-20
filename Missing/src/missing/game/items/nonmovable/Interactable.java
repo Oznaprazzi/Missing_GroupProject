@@ -1,4 +1,4 @@
-/*	File: NonMovable.java
+/*	File: Interactable.java
  * 	
  * 	Authors:			ID
  *	Casey Huang			300316284

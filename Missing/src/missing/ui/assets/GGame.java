@@ -1,6 +1,7 @@
 /* File: GGame.java
  * Author:
  * Casey Huang		300316284
+ * Linus Go			300345571
  * 
  * Date				Author				Changes
  * 19 Sep 16		Casey Huang			created GGame class
@@ -23,14 +24,10 @@ public class GGame {
 
 	private GWorld gworld;
 	private Game game;
-	/** This field indicates where the world will be drawn */
-	private Point padding;
-	private View theView;
 
 	public GGame(Game game, View theView) throws GameException {
 		this.game = game;
 		gworld = new GWorld(game.getWorld(), theView, new Point(0, 0));
-		this.theView = theView;
 	}
 
 	// Methods

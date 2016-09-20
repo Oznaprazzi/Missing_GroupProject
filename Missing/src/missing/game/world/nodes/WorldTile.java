@@ -2,6 +2,7 @@
  * 	Author:
  * 	Linus Go		300345571
  * 	Chris Rabe		300334207
+ * 	Edward Kelly	300334192
  * 
  * 	Date			Author				changes
  * 	8 Sep 16		Linus Go			created WorldTile class.

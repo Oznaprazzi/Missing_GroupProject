@@ -10,7 +10,6 @@ package missing.ui.panels;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 
 import missing.game.world.World;
 import missing.helper.GameException;

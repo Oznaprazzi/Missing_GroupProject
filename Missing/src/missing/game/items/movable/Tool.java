@@ -2,6 +2,7 @@
  * 
  * Authors    		ID
  * Jian Wei Chong	300352789
+ * Chris Rabe		300334207
  * 
  * Date 		Author		Modification
  * 18/9/16		Jian Wei	created the class
@@ -74,10 +75,10 @@ public class Tool extends Craftable {
 				return true;
 			}
 			return false;
-			
-		case SHOVEL: 
+
+		case SHOVEL:
 			toolType = type;
-			if(createShovel()){
+			if (createShovel()) {
 				name = "Shovel";
 				description = "Can dig stuff";
 				return true;
@@ -91,11 +92,12 @@ public class Tool extends Craftable {
 	// Methods
 
 	/**
-	 * This decreases the durability of the tool. Returns true if it has no more durability
+	 * This decreases the durability of the tool. Returns true if it has no more
+	 * durability
 	 */
 	public boolean useTool() {
 		durability--;
-		if(durability==0){
+		if (durability == 0) {
 			return true;
 		}
 		return false;
@@ -145,7 +147,7 @@ public class Tool extends Craftable {
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * checks that there are 2 wood and 1 stone inside the resources list which
 	 * are the required resources to create a Shovel

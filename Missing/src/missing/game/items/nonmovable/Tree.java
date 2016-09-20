@@ -3,6 +3,7 @@
  * 	Authors:			ID
  *	Casey Huang			300316284
  *	Chris Rabe			300334207
+ *	Jian Wei Chong		300352789
  *
  * 	Date				Author					Changes
  *	7 Sep 16 			Casey Huang				Created Tree class and added javaDoc comments
@@ -44,7 +45,8 @@ public class Tree extends Source {
 	public void performAction(Player p) throws GameException {
 		int numWoodTaking = 0;// amount of wood they are trying to take from
 								// this tree
-		Tool playersTool = p.getTool(ToolType.AXE); // gets the axe from the  player's pocket
+		Tool playersTool = p.getTool(ToolType.AXE); // gets the axe from the
+													// player's pocket
 		if (playersTool != null) { // if the player has an axe
 			numWoodTaking = 3;
 			if (playersTool.useTool())
