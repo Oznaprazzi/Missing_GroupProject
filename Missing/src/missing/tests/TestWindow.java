@@ -43,9 +43,6 @@ public class TestWindow extends JFrame {
 		gbc_panel.gridy = 0;
 		gPanel.add(panel, gbc_panel);
 		
-		JButton btnNewButton = new JButton("New button");
-		panel.add(btnNewButton);
-		
 		JLabel lblPlayerViewControls = new JLabel("Player View Controls");
 		panel.add(lblPlayerViewControls);
 		pack();
