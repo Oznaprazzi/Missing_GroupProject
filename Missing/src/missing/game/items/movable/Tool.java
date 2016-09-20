@@ -91,10 +91,14 @@ public class Tool extends Craftable {
 	// Methods
 
 	/**
-	 * This decreases the durability of the tool.
+	 * This decreases the durability of the tool. Returns true if it has no more durability
 	 */
-	public void useTool() {
+	public boolean useTool() {
 		durability--;
+		if(durability==0){
+			return true;
+		}
+		return false;
 		// TODO: verify that what they are trying to do requires that tool
 	}
 

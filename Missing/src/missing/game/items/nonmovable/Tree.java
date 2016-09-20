@@ -9,6 +9,7 @@
  *	7 Sep 16			Casey Huang				Updated the performAction method.
  *	7 Sep 16			Chris Rabe				updated constructor
  *	7 Sep 16			Chris Rabe				added a chance for apples to be given
+ *  20 Sep 16			Jian Wei				extended the playerAction method to include using an axe
  */
 package missing.game.items.nonmovable;
 
@@ -20,6 +21,8 @@ import missing.game.characters.Player;
 import missing.game.items.movable.Wood;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
+import missing.game.items.movable.Tool;
+import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
 
 /**
@@ -39,10 +42,26 @@ public class Tree extends Source {
 
 	@Override
 	public void performAction(Player p) throws GameException {
+		int numWoodTaking = 0;// amount of wood they are trying to take from
+								// this tree
+		Tool playersTool = p.getTool(ToolType.AXE); // gets the axe from the  player's pocket
+		if (playersTool != null) { // if the player has an axe
+			numWoodTaking = 3;
+			if (playersTool.useTool())
+				p.getPocket().remove(playersTool); // uses the tool, if true is
+													// returned, the tool has
+													// broken, so we need to
+													// remove it
+		} else {
+			numWoodTaking = 1; // doesnt have axe, so can only take one wood
+			p.setHealth(p.getHealth() - 1);
+		} // should reduce health if they are breaking it with their hands
+		int remainingWood = resource.getAmount() - numWoodTaking;
+		resource = new Wood(worldLocation, tileLocation, numWoodTaking);
 		resource.setStored(true);
 		p.addToPocket(resource);
 		// Replace resource -- should add timer here
-		int numWood = 1 + (int) (random() * MAX_RESOURCE);
+		int numWood = remainingWood;
 		resource = new Wood(worldLocation, tileLocation, numWood);
 		// 50% chance that player will get apples too
 		int playerChance = (int) (random() * 100);
