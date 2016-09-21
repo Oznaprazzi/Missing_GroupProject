@@ -39,5 +39,4 @@ public abstract class Resource extends Movable {
 	public Resource(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
 		super(name, description, worldLocation, tileLocation, amount, size);
 	}
-
 }

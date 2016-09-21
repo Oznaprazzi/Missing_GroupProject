@@ -15,8 +15,10 @@ package missing.game.world.nodes;
 
 import java.awt.Point;
 
+import missing.game.characters.Player;
 import missing.game.items.nonmovable.NonMovable;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * This class represents a WorldTile within the Game. It is the internal data
@@ -65,6 +67,18 @@ public class WorldTile {
 		 * Returns the direction which the TileObject can be approached from.
 		 */
 		public Direction getApproach();
+
+		/**
+		 * Performs the default action for the specified item. If the item is a
+		 * movable object, then the player picks that item up. If the item is
+		 * interactable, then it allows the user to perform special actions such
+		 * as cook food or collect resources.
+		 * 
+		 * @param player
+		 * @throws GameException
+		 * @throws SignalException
+		 */
+		public void performAction(Player player) throws GameException, SignalException;
 
 		/**
 		 * * Compares the orientation direction and the approach direction. A

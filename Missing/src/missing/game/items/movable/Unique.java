@@ -8,12 +8,17 @@
  * 
  * */
 package missing.game.items.movable;
+
 import java.awt.Point;
+
+import missing.game.characters.Player;
+import missing.helper.GameException;
+
 /**
  * This class represents a Unique item in the Game. It extends the Usable
  * subclass, Movable subclass and the Item subclass.
  */
-public class Unique extends Usable{
+public class Unique extends Usable {
 	/**
 	 * Creates instance of Unique class.
 	 * 
@@ -28,6 +33,18 @@ public class Unique extends Usable{
 	public Unique(String name, String description, Point worldLocation, Point tileLocation, int amount, int size) {
 		super(name, description, worldLocation, tileLocation, amount, size);
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void performAction(Player player) throws GameException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void use(Player player) throws GameException {
+		// TODO Auto-generated method stub
+
 	}
 
 }
