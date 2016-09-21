@@ -15,6 +15,7 @@ package missing.game.items.movable;
 import java.awt.Point;
 import java.util.List;
 
+import missing.game.characters.Player;
 import missing.game.items.Item;
 import missing.helper.GameException;
 
@@ -169,4 +170,12 @@ public class Tool extends Craftable {
 		return true;
 	}
 
+	/**
+	 * This method does not do anything because when the player is collecting
+	 * resources, the tool is searched on the player's pocket and a multiplier
+	 * is applied.
+	 */
+	@Override
+	public void use(Player player) throws GameException {
+	}
 }

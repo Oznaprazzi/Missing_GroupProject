@@ -85,7 +85,7 @@ public class Game {
 	 * @param id
 	 */
 	public void performAction(int id) {
-
+		// get the item in front of the player
 	}
 
 	// Helper methods

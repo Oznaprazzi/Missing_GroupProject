@@ -13,8 +13,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import missing.game.characters.Player;
 import missing.game.items.movable.Movable;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * A container which stores movable objects.
@@ -71,5 +73,10 @@ public class Container extends NonMovable {
 		Movable item = items.get(index);
 		items.remove(index);
 		return item;
+	}
+
+	@Override
+	public void performAction(Player player) throws GameException, SignalException {
+		throw new SignalException("CONTAINER");
 	}
 }

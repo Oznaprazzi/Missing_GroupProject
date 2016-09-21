@@ -10,12 +10,15 @@
  * 7 Sep 16		Linus Go		Added size field and getters and setters.
  * 7 Sep 16		Casey Huang		Added stored field
  * 7 Sep 16		Chris Rabe		added getters and setters for stored field
+ * 21 Sep 16	Chris Rabe		allowed player to interact with the object
  */
 package missing.game.items.movable;
 
 import java.awt.Point;
 
+import missing.game.characters.Player;
 import missing.game.items.Item;
+import missing.helper.GameException;
 
 /**
  * Represents an item that can be moved/carried in the game. Movable items can
@@ -100,4 +103,18 @@ public abstract class Movable extends Item {
 		return true;
 	}
 
+	/**
+	 * This method attempts to add the resource into the player's pocket or bag.
+	 * If there is not enough room, then it throws an exception.
+	 */
+	@Override
+	public void performAction(Player player) throws GameException {
+		// Try to add it to player's pocket
+		try {
+			player.addToPocket(this);
+		} catch (GameException e) {
+			// Try to add it to player's bag
+			player.addToBag(this);
+		}
+	}
 }

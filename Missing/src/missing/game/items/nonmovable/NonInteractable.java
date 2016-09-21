@@ -13,10 +13,11 @@ import java.awt.Point;
  * Represents a NonInteractable item in the game.
  *
  */
-public class NonInteractable extends NonMovable{
-	
+public abstract class NonInteractable extends NonMovable {
+
 	/**
 	 * Creates a new an instance of a NonInteractable item.
+	 * 
 	 * @param name
 	 * @param description
 	 * @param worldLocation

@@ -50,7 +50,9 @@ public class Player extends Character {
 	}
 
 	public void setHealth(int health) {
-		this.health = health;
+		if (health > 0 && health < 100) {
+			this.health = health;
+		}
 	}
 
 	public int getCurrentItemSize() {
@@ -197,5 +199,11 @@ public class Player extends Character {
 			}
 		}
 		return lowest;
+	}
+
+	@Override
+	public void performAction(Player player) throws GameException {
+		// TODO Auto-generated method stub
+
 	}
 }

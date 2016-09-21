@@ -15,10 +15,14 @@
  * 7 Sep 16		Chris Rabe		changed some methods to be helper methods
  * 7 Sep 16		Chris Rabe		added helper method for the toString method
  * 7 Sep 16		Chris Rabe		overrided equals and hashcode methods
+ * 21 Sep 16	Chris Rabe		implemented fish and berries
  */
 package missing.game.items.movable;
 
 import java.awt.Point;
+
+import missing.game.characters.Player;
+import missing.helper.GameException;
 
 /**
  * This class represents Food Items. Classes that extend the Food class are
@@ -31,7 +35,7 @@ public class Food extends Health {
 	 * Represents the type of food.
 	 */
 	public static enum FoodType {
-		APPLE
+		APPLE, BERRY, FISH
 	}
 
 	private FoodType foodType;
@@ -62,6 +66,36 @@ public class Food extends Health {
 
 	public void setCooked(boolean cooked) {
 		this.cooked = cooked;
+	}
+
+	/**
+	 * If the food item is cooked, then it increases the regenAmount by 10%.
+	 */
+	protected int getRegenAmount() {
+		if (cooked) {
+			return (int) (regenAmount * 0.1) + regenAmount;
+		}
+		return regenAmount;
+	}
+
+	// Methods
+
+	/**
+	 * The player consumes the food item. The player must have the item in
+	 * his/her pocket in order to use the item. It increases the player's health
+	 * by the food item's regen amount.
+	 * 
+	 * @throws GameException
+	 */
+	@Override
+	public void use(Player player) throws GameException {
+		// Check if player has the food in his pocket
+		if (player.has(this)) {
+			// increase player's health by regen amount
+			player.setHealth(player.getHealth() + getRegenAmount());
+			// remove the item from player's pocket
+			player.removeFromPocket(this);
+		}
 	}
 
 	// Object methods
@@ -107,6 +141,22 @@ public class Food extends Health {
 			regenAmount = 15;
 			cooked = false;
 			break;
+		case BERRY:
+			name = "Berry";
+			description = "Yummy berries.";
+			super.setAmount(5);
+			regenAmount = 5;
+			cooked = false;
+			break;
+		case FISH:
+			name = "Fish";
+			description = "A slimy fish.";
+			super.setAmount(1);
+			regenAmount = 20;
+			cooked = false;
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -117,6 +167,10 @@ public class Food extends Health {
 		switch (foodType) {
 		case APPLE:
 			return "a";
+		case BERRY:
+			return "b";
+		case FISH:
+			return "f";
 		default:
 			return "u"; // unknown
 		}
