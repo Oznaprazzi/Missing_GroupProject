@@ -174,6 +174,8 @@ public class WorldTile {
 			return;
 		}
 		this.object = item;
+		// redetermine enterable
+		this.enterable = determineEnterable();
 	}
 
 	// Helper methods
