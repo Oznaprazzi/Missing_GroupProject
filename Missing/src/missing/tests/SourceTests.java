@@ -9,6 +9,7 @@
  * 16 Sep 16		Chris Rabe			Updated tests to match the new Tree constructor
  * 19 Sep 16		Jian Wei			Added treeTest_3 and RockTests 1&2
  * 20 Sep 16		Jian Wei			Added treeTest_4 , treeTest_5 && rockTest 3&4
+ * 21 Sep 16		Jian Wei			Added soilTest_1-4
  * */
 package missing.tests;
 
@@ -21,6 +22,7 @@ import org.junit.Test;
 
 import missing.game.characters.Player;
 import missing.game.items.Item;
+import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Tool.ToolType;
@@ -29,6 +31,7 @@ import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Rock;
+import missing.game.items.nonmovable.Soil;
 import missing.game.items.nonmovable.Tree;
 import missing.helper.GameException;
 
@@ -245,6 +248,99 @@ public class SourceTests {
 			has5Stone = player.getPocket().get(1).getAmount() == 5;
 		}
 		assertTrue(has5Stone); // checks that player has 1 wood in pocket
+	}
+	
+	
+	/**
+	 * Creates a soil and performs its action, then asserts that the player has
+	 * 1 item in its pocket
+	 */
+	@Test
+	public void soilTest_1() {
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Point worldLocation = new Point(1, 1);
+		Point tileLocation = new Point(1, 1);
+		Soil soil = new Soil(worldLocation, tileLocation);
+
+		try {
+			soil.performAction(player);// player takes dirt from that soil
+		} catch (GameException e) {
+			fail(e.getMessage());
+		}
+		boolean isTrue = (player.getPocket().size() == 1);
+		assertTrue(isTrue); // checks that player has 1
+							// item in pocket
+	}
+	
+	/**
+	 * Creates a soil and performs its action, then asserts that the player has
+	 * 1 dirt in its pocket
+	 */
+	@Test
+	public void soilTest_2() {
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Point worldLocation = new Point(1, 1);
+		Point tileLocation = new Point(1, 1);
+		Soil soil = new Soil(worldLocation, tileLocation);
+
+		try {
+			soil.performAction(player);// player takes Stone from that rock
+		} catch (GameException e) {
+			fail(e.getMessage());
+		}
+		boolean isTrue = (player.getPocket().get(0) instanceof Dirt);
+		assertTrue(isTrue); // checks that player has 1
+							// item in pocket
+	}
+	
+	/**
+	 * Tests that when a player breaks the soil, he gets 1 Dirt*/
+	@Test
+	public void soilTest_3(){
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Point worldLocation = new Point(1, 1);
+		Point tileLocation = new Point(1, 1);
+		Soil soil = new Soil(worldLocation, tileLocation);
+		try {
+			soil.performAction(player);// player takes wood from tree
+		} catch (GameException e) {
+			fail(e.getMessage());
+		}
+		boolean has1Stone = false;
+		if(player.getPocket().get(0) instanceof Dirt){
+			has1Stone = player.getPocket().get(0).getAmount() == 1;
+		}
+		assertTrue(has1Stone); // checks that player has 1 dirt in pocket
+	}
+	
+	/**
+	 * Creates a shovel, player and soil. Adds the shovel to the players pocket, then digs the soil
+	 * Tests that when a player digs the soil with a shovel, he gets 5 Dirt*/
+	@Test
+	public void soilTest_4(){
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		ArrayList<Resource> resources = new ArrayList<Resource>();
+		Point worldLocation = new Point(1, 1);
+		Point tileLocation = new Point(1, 1);
+		Soil soil = new Soil(worldLocation, tileLocation);
+		for(int i=0; i<2; i++){
+			resources.add(new Wood(worldLocation,tileLocation)); //adds 2 wood
+		}
+		for(int i=0; i<1; i++){
+			resources.add(new Stone(worldLocation,tileLocation)); //adds 1 stone
+		}
+		try {
+			Tool shovel = new Tool(ToolType.SHOVEL, resources, worldLocation, tileLocation);
+			player.addToPocket(shovel);
+			soil.performAction(player);// player takes wood from tree
+		} catch (GameException e) {
+			fail(e.getMessage());
+		}
+		boolean has5Dirt = false;
+		if(player.getPocket().get(1) instanceof Dirt){
+			has5Dirt = player.getPocket().get(1).getAmount() == 5;
+		}
+		assertTrue(has5Dirt); // checks that player has 5 Dirt in pocket
 	}
 
 
