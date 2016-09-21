@@ -11,28 +11,13 @@
 
 package missing.tests;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import missing.datastorage.assetloader.XMLHandler;
 import missing.game.Game;
 import missing.game.characters.Player;
 import missing.game.world.World;
 import missing.helper.GameException;
-import missing.ui.panels.GamePanel;
 
 public class GameViewTests {
 	public static void main(String[] args) {
@@ -40,7 +25,7 @@ public class GameViewTests {
 		String xmlFile = "items.xml";
 		XMLHandler.filename = xmlFile;
 		// Create an array of players
-		//one at worldnode 1,1 and at tile position 1,1
+		// one at worldnode 1,1 and at tile position 1,1
 		Player[] avatars = { new Player("Chris", new Point(1, 1), new Point(1, 1)) };
 		try {
 
@@ -53,10 +38,4 @@ public class GameViewTests {
 			System.exit(1);
 		}
 	}
-
-	@SuppressWarnings("serial")
-	private static class TestWindow2 extends JFrame {
-
-	}
-
 }

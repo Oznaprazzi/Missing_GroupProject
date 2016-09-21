@@ -14,6 +14,7 @@
  * 19 Sep 16		Casey Huang			renamed GameView.java to GamePanel and moved it to a new package
  * 19 Sep 16 		Casey Huang			updated paint method and constructor
  * 20 Sep 16		Linus Go			Made GamePanel render a a current Players node.
+ * 21 Sep 16		Chris Rabe			fixed bugs. Rendering can now update
  */
 package missing.ui.panels;
 
@@ -30,7 +31,7 @@ import missing.ui.assets.GWNode;
 import missing.ui.assets.GWorld;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
- 
+
 /**
  * This class represents the Game Panel in the regular state. When the game is
  * running, this will be shown.
@@ -45,8 +46,11 @@ public class GamePanel extends JPanel {
 
 	/**
 	 * Construct a GamePanel instance with a controller and a world object.
-	 * @param VControl controller
-	 * @param World w
+	 * 
+	 * @param VControl
+	 *            controller
+	 * @param World
+	 *            w
 	 */
 	public GamePanel(VControl controller, World w) {
 		graphicWorld = controller.getGGame().getGWorld();
@@ -54,9 +58,11 @@ public class GamePanel extends JPanel {
 		curPoint = controller.getGGame().getGame().getAvatars()[0].getWorldLocation();
 		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
 	}
-	
-	/******Testing constructors! TODO: remove this/alter in the final release. *********/
-	
+
+	/******
+	 * Testing constructors! TODO: remove this/alter in the final release.
+	 *********/
+
 	/**
 	 * @wbp.parser.constructor
 	 */
@@ -81,23 +87,27 @@ public class GamePanel extends JPanel {
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
-
+		this.currentPlayer = currentPlayer;
 		curPoint = currentPlayer.getWorldLocation();
 		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
 	}
-	
-	
+
 	public Dimension getPreferredSize() {
-		return new Dimension(600,600);
+		return new Dimension(600, 600);
+	}
+
+	public void updateNodeRender() {
+		curPoint = currentPlayer.getWorldLocation();
+		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
-	
+
 	/**
-	 * Draws the paint 
+	 * Draws the paint
 	 */
 	@Override
 	public void paint(Graphics g) {

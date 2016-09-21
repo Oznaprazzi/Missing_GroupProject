@@ -237,8 +237,9 @@ public class Game {
 			if (tile.getObject() != null && tile.getObject() instanceof Movable) {
 				return true;
 			}
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	/**
