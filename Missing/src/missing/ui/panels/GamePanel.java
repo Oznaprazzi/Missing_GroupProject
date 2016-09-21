@@ -58,35 +58,6 @@ public class GamePanel extends JPanel {
 	/******Testing constructors! TODO: remove this/alter in the final release. *********/
 	
 	/**
-	 * Construct a GamePanel instance with a controller and a worldLocation.
-	 * @deprecated See the other two constructors to call this.
-	 * @param renderLoc
-	 */
-	public GamePanel(Point renderLoc) {
-		try {
-			graphicWorld = new GWorld(new World(), new View(null) {
-				@Override
-				public void initialise() {
-				}
-
-				@Override
-				public void setFocus() {
-				}
-
-				@Override
-				public Dimension getPreferredSize() {
-					return new Dimension(600, 600);
-				}
-
-			}, new Point(0, 0));
-		} catch (GameException e) {
-			e.printStackTrace();
-		}
-		curPoint = renderLoc;
-		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
-	}
-	
-	/**
 	 * @wbp.parser.constructor
 	 */
 	public GamePanel(Player currentPlayer) {
@@ -111,11 +82,9 @@ public class GamePanel extends JPanel {
 			e.printStackTrace();
 		}
 
-		if(currentPlayer == null) curPoint = new Point(0,0); //default to the top left of the map if it doesn't fit.
-		else curPoint = currentPlayer.getWorldLocation();
+		curPoint = currentPlayer.getWorldLocation();
 		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
 	}
-	
 	
 	
 	public Dimension getPreferredSize() {

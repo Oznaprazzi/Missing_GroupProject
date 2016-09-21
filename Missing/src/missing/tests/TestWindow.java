@@ -15,20 +15,36 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import missing.game.Game;
 import missing.game.characters.Player;
 import missing.game.world.World;
+import missing.game.world.nodes.WorldTile.TileObject.Direction;
+import missing.helper.GameException;
 import missing.ui.panels.GamePanel;
 
 public class TestWindow extends JFrame {
 	private final int panelWd = 800;
 	private final int panelHt = 600;
+	
 	private JTextField txtName;
 	private JTextField txtPanning;
+	private JButton btnUp;
+	private JButton btnDown;
+	private JButton btnLeft;
+	private JButton btnRight;
 	
-	public TestWindow(World w, Player p){
+	private Player curPlayer;
+	//holds a current instance of the game.
+	private Game gameinstance;
+	//holds the gamepanel renderer.
+	private GamePanel gamePanel;
+
+	public TestWindow(Game game, World w, Player p){
 		super("Test Panel");
 		this.setVisible(true);
 		this.setSize(panelWd, panelHt);
+		this.gameinstance = game;
+		this.curPlayer = p;
 		System.out.println();
 		
 		JPanel panel = new JPanel();
@@ -52,7 +68,8 @@ public class TestWindow extends JFrame {
 		panel.add(lblCurrentPlayer, gbc_lblCurrentPlayer);
 		
 		txtName = new JTextField();
-		txtName.setText("Name");
+		txtName.setText(curPlayer.getName());
+		
 		GridBagConstraints gbc_txtName = new GridBagConstraints();
 		gbc_txtName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtName.insets = new Insets(0, 0, 5, 0);
@@ -61,16 +78,9 @@ public class TestWindow extends JFrame {
 		panel.add(txtName, gbc_txtName);
 		txtName.setColumns(10);
 		
-		JButton button = new JButton("New button");
-		GridBagConstraints gbc_button = new GridBagConstraints();
-		gbc_button.insets = new Insets(0, 0, 5, 0);
-		gbc_button.anchor = GridBagConstraints.NORTHWEST;
-		gbc_button.gridx = 0;
-		gbc_button.gridy = 2;
-		panel.add(button, gbc_button);
 		
 		txtPanning = new JTextField();
-		txtPanning.setText("Panning");
+		txtPanning.setText(curPlayer.getWorldLocation().toString());
 		GridBagConstraints gbc_txtPanning = new GridBagConstraints();
 		gbc_txtPanning.insets = new Insets(0, 0, 5, 0);
 		gbc_txtPanning.fill = GridBagConstraints.HORIZONTAL;
@@ -87,37 +97,96 @@ public class TestWindow extends JFrame {
 		gbc_layeredPane.gridy = 4;
 		panel.add(layeredPane, gbc_layeredPane);
 		
-		JButton btnUp = new JButton("Up");
-		btnUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnUp = new JButton("Up");
 		btnUp.setBounds(65, 30, 70, 70);
 		layeredPane.add(btnUp);
 		
-		JButton btnLeft = new JButton("Left");
-		btnLeft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnLeft = new JButton("Left");
 		btnLeft.setBounds(30, 100, 70, 70);
 		layeredPane.add(btnLeft);
 		
-		JButton btnRight = new JButton("Right");
+		btnRight = new JButton("Right");
 		btnRight.setBounds(100, 100, 70, 70);
 		layeredPane.add(btnRight);
 		
-		JButton btnDown = new JButton("Down");
+		btnDown = new JButton("Down");
 		btnDown.setBounds(65, 170, 70, 70);
 		layeredPane.add(btnDown);
 		
-		JPanel panel_1 = new GamePanel(p);
-		getContentPane().add(panel_1, BorderLayout.WEST);
+		gamePanel = new GamePanel(curPlayer);
+		getContentPane().add(gamePanel, BorderLayout.WEST);
 		
-		
+		setupActionListeners();
 		pack();
 	}
-	
+	//TODO: here lies my problem. I am attempting to move the player around with my buttons, but it does not update and change world node position.
+	//Please let me know if someone can look at it/fix it?
+	private void setupActionListeners(){
+		btnUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			System.out.println("pressing up");
+			try {
+				gameinstance.movePlayer(0, Direction.NORTH);
+				gamePanel.revalidate();
+				txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World" +
+				gameinstance.getAvatars()[0].getWorldLocation().toString());
+				gamePanel.repaint();
+				System.out.println(gameinstance.getAvatars()[0].getWorldLocation().toString());
+
+			} catch (GameException e1) {
+				e1.printStackTrace();
+			}
+			}
+		});
+		
+		btnDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					gameinstance.movePlayer(0, Direction.SOUTH);
+					gamePanel.revalidate();
+					txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World" +
+					gameinstance.getAvatars()[0].getWorldLocation().toString());
+					gamePanel.repaint();
+					System.out.println(gameinstance.getAvatars()[0].getWorldLocation().toString());
+
+				} catch (GameException e1) {
+					e1.printStackTrace();
+				}
+				}
+		});
+		
+		btnLeft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			System.out.println("pressing left");
+			try {
+				gameinstance.movePlayer(0, Direction.WEST);
+				gamePanel.revalidate();
+				txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World" +
+				gameinstance.getAvatars()[0].getWorldLocation().toString());
+				gamePanel.repaint();
+				System.out.println(gameinstance.getAvatars()[0].getWorldLocation().toString());
+			} catch (GameException e1) {
+				e1.printStackTrace();
+			}
+			}
+		});
+		
+		btnRight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			System.out.println("pressing right");
+			try {
+				gameinstance.movePlayer(0, Direction.EAST);
+				gamePanel.revalidate();
+				txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World" +
+				gameinstance.getAvatars()[0].getWorldLocation().toString());
+				gamePanel.repaint();
+				System.out.println(gameinstance.getAvatars()[0].getWorldLocation().toString());
+
+			} catch (GameException e1) {
+				e1.printStackTrace();
+			}
+			}
+		});	}
 	@Override
 	public Dimension getPreferredSize(){
 		return new Dimension(panelWd, panelHt);
