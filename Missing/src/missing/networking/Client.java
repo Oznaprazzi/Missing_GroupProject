@@ -5,11 +5,11 @@
  * 
  * Date				Author			Modification
  * 19 Sep 16		Edward Kelly	created class
+ * 
  */
 package missing.networking;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -17,13 +17,17 @@ import java.net.Socket;
 
 
 import missing.game.Game;
+import missing.game.world.nodes.WorldTile.TileObject.Direction;
+import missing.helper.GameException;
+import missing.helper.SignalException;
+import missing.ui.controller.VControl;
 /**
  * The Client is responsible for sending inputs from the player
  * to the server and providing an instance of the game to the
  * view package to be displayed to the player.
  *
  */
-public class Client extends Thread implements KeyListener{
+public class Client extends Thread {
 	/** The socket representing this client */
 	private Socket socket;
 	/** Receives info from server */
@@ -34,6 +38,8 @@ public class Client extends Thread implements KeyListener{
 	private Game game;
 	/** Unique ID representing player/client */
 	private int clientID;
+	/** VControl responsible for displaying game and taking inputs from player */
+	private VControl vControl;
 
 	public Client(Socket s) {
 		this.socket  =  s;
@@ -42,14 +48,12 @@ public class Client extends Thread implements KeyListener{
 	public void run() {
 		System.out.println("Client running");
 		
-		// TODO: needs a swing component to listen to keys
-		// maybe init VControl here, passing game and clientID
 		
 		try {
 			// setup input and output streams to server
 			in = new ObjectInputStream(socket.getInputStream());
 			out = new PrintWriter(socket.getOutputStream(), true);
-			
+			boolean vControlGameSet = false; // used to know if game has been passed to VControl
 			// listen for updates from server
 			while(true){
 				Object input = in.readObject();
@@ -59,11 +63,19 @@ public class Client extends Thread implements KeyListener{
 				if (input.getClass() == Game.class){
 					// received game
 					game = (Game)input;
+					if (!vControlGameSet){
+						//TODO: set game for VControl here
+						vControlGameSet = true;
+					}
 					//TODO: repaint view
-				}
-				else if (input.getClass() == Integer.class){
+				} else if (input.getClass() == Integer.class){
 					// received clientID
 					clientID = (Integer)input;
+					//TODO: set clientID for VControl here
+				} else if (input.getClass() == GameException.class){
+					//TODO: forward to controller
+				} else if (input.getClass() == SignalException.class){
+					//TODO: forward to controller
 				}
 				
 			}
@@ -78,44 +90,12 @@ public class Client extends Thread implements KeyListener{
 			}
 		}
 	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_UP || key == KeyEvent.VK_KP_UP){
-			out.println("NORTH");
-			System.out.println("north pressed");
-		}
-		else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_KP_DOWN){
-			out.println("SOUTH");
-			System.out.println("south pressed");
-		}
-		else if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_KP_LEFT){
-			out.println("WEST");
-			System.out.println("west pressed");
-		}
-		else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_KP_RIGHT){
-			out.println("EAST");
-			System.out.println("east pressed");
-		}
-		else if (key == KeyEvent.VK_E){
-			out.println("E");
-			System.out.println("E pressed");
-		}
+	
+	public void movePlayer(String direction){
+		out.println(direction);
 	}
-
-
-
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	
+	public void performAction(){
+		out.println("E");
 	}
 }

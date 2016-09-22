@@ -5,6 +5,7 @@
  * 
  * Date				Author			Modification
  * 19 Sep 16		Edward Kelly	created class
+ * 23 Sep 16		Edward Kelly	allowed GameException to be sent to clients
  */
 package missing.networking;
 
@@ -77,7 +78,12 @@ public class Server extends Thread{
 							Direction[] directions = Direction.values();
 							for (Direction direction : directions){
 								if (direction.toString().equals(input)){
-									game.movePlayer(playerNum, direction);
+									try {
+										game.movePlayer(playerNum, direction);
+									} catch (GameException e){
+										outs[playerNum].reset();
+										outs[playerNum].writeObject(e);
+									}
 								}
 							}							
 						}
@@ -96,7 +102,7 @@ public class Server extends Thread{
 						}
 						update = false;
 					}
-				} catch (IOException | GameException e){
+				} catch (IOException e){
 					//TODO implement disconnects properly
 					e.printStackTrace();					
 				}
