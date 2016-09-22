@@ -10,10 +10,13 @@
  *  8 Sep 16		Edward Kelly		added new constructor
  *  8 Sep 16		Chris Rabe			added methods inside the TileObject interface
  *  18 Sep 16		Chris Rabe			can now receive distributed item
+ *  23 Sep 16		Casey Huang			put if statement after item is assigned in getDistributedObject method
  */
 package missing.game.world.nodes;
 
 import java.awt.Point;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import missing.game.characters.Player;
 import missing.game.items.nonmovable.NonMovable;
@@ -173,7 +176,8 @@ public class WorldTile {
 
 	/** Specifies whether or not the tile is occupied */
 	public boolean isOccupied() {
-		return object != null;
+		System.out.println(object);
+		return this.object != null;
 	}
 
 	/**
@@ -184,10 +188,10 @@ public class WorldTile {
 	 * @param item
 	 */
 	public void getDistributedObject(TileObject item) {
+		this.object = item;
 		if (!this.isEnterable() || this.isOccupied()) {
 			return;
 		}
-		this.object = item;
 		// redetermine enterable
 		this.enterable = determineEnterable();
 	}
