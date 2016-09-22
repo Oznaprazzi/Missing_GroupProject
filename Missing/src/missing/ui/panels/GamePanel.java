@@ -110,8 +110,6 @@ public class GamePanel extends JPanel {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		int val = Math.min(this.getWidth(), this.getHeight());
-		System.out.println(val);
 		curGWNode.setNodeSize(Math.min(this.getWidth(), this.getHeight()));
 		try {
 			curGWNode.draw(g, 0, 0);

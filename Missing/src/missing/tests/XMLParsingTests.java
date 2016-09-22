@@ -17,7 +17,9 @@ import missing.datastorage.assetloader.XMLHandler;
 import missing.game.Game;
 import missing.game.characters.Player;
 import missing.game.items.Item;
+import missing.game.world.nodes.WorldNode;
 import missing.game.world.nodes.WorldTile;
+import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;;
 
 /**
@@ -56,6 +58,35 @@ public class XMLParsingTests {
 		}
 	}
 
+	public static void test_03() {
+		Game game = createGame();
+		// Retrieve world nodes
+		WorldNode[][] nodes = game.getWorld().getWorldNodes();
+		// Print out the items inside the node
+		for (int i = 0; i < nodes.length; i++) {
+			for (int j = 0; j < nodes[i].length; j++) {
+				printObjects(nodes[i][j]);
+			}
+		}
+	}
+
+	private static void printObjects(WorldNode worldNode) {
+		System.out.println(
+				String.format("WORLD NODE [%d, %d]", worldNode.getGameLocation().x, worldNode.getGameLocation().y));
+		WorldTile[][] tiles = worldNode.getWorldTiles();
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles[i].length; j++) {
+				if (tiles[i][j].isOccupied()) {
+					TileObject item = tiles[i][j].getObject();
+					Point wLoc = item.getWorldLocation();
+					Point tLoc = item.getTileLocation();
+					System.out.println(String.format("Tile [%d, %d] : ItemLoc W[%d,%d] T[%d,%d]", j, i, wLoc.x, wLoc.y,
+							tLoc.x, tLoc.y));
+				}
+			}
+		}
+	}
+
 	private static Game createGame() {
 		// XMLHandler received file name...
 		String xmlFile = "items.xml";
@@ -72,7 +103,8 @@ public class XMLParsingTests {
 	}
 
 	public static void main(String[] args) {
-		test_01();
-		test_02();
+		// test_01();
+		// test_02();
+		test_03();
 	}
 }

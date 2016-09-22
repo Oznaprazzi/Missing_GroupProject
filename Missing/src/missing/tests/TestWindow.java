@@ -57,7 +57,6 @@ public class TestWindow extends JFrame {
 		this.setSize(panelWd, panelHt);
 		this.gameinstance = game;
 		this.curPlayer = p;
-		System.out.println();
 
 		JPanel panel = new JPanel();
 		panel.setSize(500, panelHt);

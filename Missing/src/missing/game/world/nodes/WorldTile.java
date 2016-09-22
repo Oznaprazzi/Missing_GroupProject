@@ -16,8 +16,6 @@ package missing.game.world.nodes;
 
 import java.awt.Point;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 import missing.game.characters.Player;
 import missing.game.items.nonmovable.NonMovable;
 import missing.helper.GameException;
@@ -144,7 +142,6 @@ public class WorldTile {
 
 	/** Specifies whether or not the tile is occupied */
 	public boolean isOccupied() {
-		System.out.println(object);
 		return this.object != null;
 	}
 
@@ -156,10 +153,10 @@ public class WorldTile {
 	 * @param item
 	 */
 	public void getDistributedObject(TileObject item) {
-		this.object = item;
 		if (!this.isEnterable() || this.isOccupied()) {
 			return;
 		}
+		this.object = item;
 		// redetermine enterable
 		this.enterable = determineEnterable();
 	}
