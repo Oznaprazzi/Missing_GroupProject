@@ -12,13 +12,12 @@ package missing.game.items.nonmovable;
 import java.awt.Point;
 
 import missing.game.characters.Player;
-import missing.game.items.movable.Resource;
 import missing.helper.GameException;
 
 public class FishArea extends Source{
 
 	public FishArea(Point worldLocation, Point tileLocation) {
-		super("Fish Area", "Can get fish", worldLocation, tileLocation, new Resource());
+		super("Fish Area", "Can get fish", worldLocation, tileLocation, null);
 		// TODO Auto-generated constructor stub
 	}
 
