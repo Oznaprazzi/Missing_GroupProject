@@ -25,6 +25,7 @@ import missing.game.world.nodes.WorldTile;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * This class assumes that when the game is initialised, the XMLHandler is
@@ -50,7 +51,7 @@ public class Game {
 		return avatars;
 	}
 
-	// Methods for moving
+	// Methods for interacting with the game
 
 	/**
 	 * Moves the player to a certain direction.
@@ -89,12 +90,19 @@ public class Game {
 
 	/**
 	 * When this method is called, it checks the object which is in front of the
-	 * client based on the orientation.
+	 * client based on the orientation. If the method throws a signal exception,
+	 * this means that a special action need to be made.
 	 * 
 	 * @param id
+	 * @see SignalException
+	 * @throws GameException
+	 * @throws SignalException
 	 */
-	public void performAction(int id) {
+	public void performAction(int id) throws GameException, SignalException {
+		Player player = avatars[id];
 		// get the item in front of the player
+		TileObject object = getObjectInFront(player);
+		object.performAction(player);
 	}
 
 	/**
@@ -110,8 +118,8 @@ public class Game {
 		int[] dCoords = getCoordChange(player.getOrientation());
 		// retrieve the world location and tile location values of item in front
 		Point[] tLoc = getNewLocations(player, dCoords[0], dCoords[1], player.getOrientation());
-		
-		return null;
+		WorldTile tile = world.getWorldNodes()[tLoc[0].y][tLoc[0].x].getWorldTiles()[tLoc[1].y][tLoc[1].x];
+		return tile.getObject();
 	}
 
 	// Helper methods
