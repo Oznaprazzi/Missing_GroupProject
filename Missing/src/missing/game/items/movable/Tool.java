@@ -9,6 +9,7 @@
  * 19/9/16		Jian Wei	added the creation of axe and pickaxe
  * 19/9/16		Chris Rabe	added javadocs and rearranged methods
  * 20/9/16		Jian Wei	added creation of shovel
+ * 22/9/16		Jian Wei	added creation of fishing rod
  * */
 package missing.game.items.movable;
 
@@ -27,7 +28,7 @@ import missing.helper.GameException;
 public class Tool extends Craftable {
 
 	public static enum ToolType {
-		AXE, PICKAXE, SHOVEL
+		AXE, PICKAXE, SHOVEL, FISHINGROD
 	}
 
 	// number of times tool can be used before it breaks
@@ -85,6 +86,14 @@ public class Tool extends Craftable {
 				return true;
 			}
 			return false;
+		case FISHINGROD:
+			toolType = type;
+			if (createFishingRod()) {
+				name = "Fishing Rod";
+				description = "Can get fish";
+				return true;
+			}
+			return false;	
 		default:
 			return false;
 		}
@@ -166,6 +175,27 @@ public class Tool extends Craftable {
 		if (woodCount != 2)
 			return false;
 		if (stoneCount != 1)
+			return false;
+		return true;
+	}
+	
+	/**
+	 * checks that there are 2 wood and 3 dirt inside the resources list which
+	 * are the required resources to create a fishing rod
+	 */
+	private boolean createFishingRod() {
+		int woodCount = 0;
+		int dirtCount = 0;
+
+		for (Item item : ingredients) {
+			if (item instanceof Wood)
+				woodCount++;
+			else if (item instanceof Dirt)
+				dirtCount++;
+		}
+		if (woodCount != 2)
+			return false;
+		if (dirtCount != 3)
 			return false;
 		return true;
 	}
