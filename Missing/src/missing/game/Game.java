@@ -7,6 +7,8 @@
  * 	18 Sep 16			Chris Rabe				create Game.java
  *  19 Sep 16			Casey Huang				created getAvatars method
  *  19 Sep 16			Chris Rabe				created moving method
+ *  22 Sep 16			Chris Rabe				implemented performAction method
+ *  22 Sep 16			Chris Rabe				implemented rotation method
  */
 
 package missing.game;
@@ -30,6 +32,8 @@ import missing.helper.SignalException;
 /**
  * This class assumes that when the game is initialised, the XMLHandler is
  * passed in a file and the players had picked their avatars.
+ * 
+ * 
  */
 public class Game {
 	private Player[] avatars;
@@ -83,9 +87,20 @@ public class Game {
 	 * 
 	 * @param id
 	 * @param direction
+	 * @throws GameException
 	 */
-	public void turnPlayer(int id, Direction direction) {
-
+	public void turnPlayer(int id, Direction direction) throws GameException {
+		Player player = avatars[id];
+		switch (direction) {
+		case EAST:
+			turnPlayer(player, 1);
+			break;
+		case WEST:
+			turnPlayer(player, -1);
+			break;
+		default:
+			throw new GameException("Can only turn left or right!");
+		}
 	}
 
 	/**
@@ -102,7 +117,27 @@ public class Game {
 		Player player = avatars[id];
 		// get the item in front of the player
 		TileObject object = getObjectInFront(player);
-		object.performAction(player);
+		// Check if it is a valid approach
+		if (validApproach(player, object)) {
+			object.performAction(player);
+		}
+	}
+
+	/**
+	 * This method should be called before the movePlayer method. The reason for
+	 * this is because you want to be able to animate the player's movements
+	 * before setting the player into the new square.
+	 * 
+	 * @param id
+	 * @param direction
+	 * @return
+	 * @throws GameException
+	 */
+	public boolean validMove(int id, Direction direction) throws GameException {
+		Player player = avatars[id];
+		int[] dCoords = getCoordChange(direction);
+		Point[] tLoc = getNewLocations(player, dCoords[0], dCoords[1], direction);
+		return validMove(tLoc[0], tLoc[1]);
 	}
 
 	/**
@@ -123,6 +158,84 @@ public class Game {
 	}
 
 	// Helper methods
+
+	/**
+	 * This method changes the player's orientation based on the rotation
+	 * parameter passed. If the rotation parameter is greater than 0, then it
+	 * turns the player clockwise. If the rotation parameter is less than 0,
+	 * then it turns the player anti-clockwise.
+	 * 
+	 * @param player
+	 * @param rotation
+	 * @throws GameException
+	 */
+	private void turnPlayer(Player player, int rotation) throws GameException {
+		Direction newOrien = getNewOrientation(player.getOrientation(), rotation);
+		player.setOrientation(newOrien);
+	}
+
+	/**
+	 * This method returns the new orientation based on the rotation parameter
+	 * passed and with relation to the orientation parameter. If the rotation
+	 * parameter is greater than 0, then it returns the next direction
+	 * clockwise. If the rotation parameter is less than 0, then it returns the
+	 * next direction anti-clockwise.
+	 * 
+	 * @param orientation
+	 * @param rotation
+	 * @return
+	 * @throws GameException
+	 */
+	private Direction getNewOrientation(Direction orientation, int rotation) throws GameException {
+		Direction newOrien = null;
+		switch (orientation) {
+		case NORTH:
+			newOrien = rotation > 0 ? Direction.EAST : Direction.WEST;
+			break;
+		case EAST:
+			newOrien = rotation > 0 ? Direction.SOUTH : Direction.NORTH;
+			break;
+		case SOUTH:
+			newOrien = rotation > 0 ? Direction.WEST : Direction.EAST;
+			break;
+		case WEST:
+			newOrien = rotation > 0 ? Direction.NORTH : Direction.SOUTH;
+			break;
+		default:
+			throw new GameException("wrong parameter!");
+		}
+		return newOrien;
+	}
+
+	/**
+	 * This method checks if the player approached the object correctly based on
+	 * the player's orientation and the object's approach direction. Usually,
+	 * the approach of the object and the player's orientation must be opposite
+	 * to each other to simulate that the two items are 'facing each other'. A
+	 * special case for a valid approach is when the object's approach direction
+	 * is set to 'ALL'.
+	 * 
+	 * @param player
+	 * @param object
+	 * @return
+	 */
+	private boolean validApproach(Player player, TileObject object) {
+		if (object.getApproach() == Direction.ALL) {
+			return true;
+		}
+		switch (player.getOrientation()) {
+		case EAST:
+			return object.getApproach() == Direction.WEST;
+		case NORTH:
+			return object.getApproach() == Direction.SOUTH;
+		case SOUTH:
+			return object.getApproach() == Direction.NORTH;
+		case WEST:
+			return object.getApproach() == Direction.EAST;
+		default:
+			return false;
+		}
+	}
 
 	/**
 	 * Returns the dx and dy values for the given direction. It stores it inside
