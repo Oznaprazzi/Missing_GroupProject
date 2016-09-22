@@ -15,16 +15,15 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-
 import missing.game.Game;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
 import missing.ui.controller.VControl;
 /**
- * The Client is responsible for sending inputs from the player
- * to the server and providing an instance of the game to the
- * view package to be displayed to the player.
+ * The Client is responsible for sending inputs from the player to the server
+ * and providing an instance of the game to the view package to be displayed to
+ * the player.
  *
  */
 public class Client extends Thread {
@@ -42,33 +41,51 @@ public class Client extends Thread {
 	private VControl vControl;
 
 	public Client(Socket s) {
-		this.socket  =  s;
+		this.socket = s;
 	}
-	
+
+	// Getters and Setters
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	public int getClientID() {
+		return clientID;
+	}
+
+	public void setClientID(int clientID) {
+		this.clientID = clientID;
+	}
+
+	// Methods
+
 	public void run() {
 		System.out.println("Client running");
-		
-		
 		try {
 			// setup input and output streams to server
 			in = new ObjectInputStream(socket.getInputStream());
 			out = new PrintWriter(socket.getOutputStream(), true);
 			boolean vControlGameSet = false; // used to know if game has been passed to VControl
 			// listen for updates from server
-			while(true){
+			while (true) {
 				Object input = in.readObject();
-				if (input == null){
+				if (input == null) {
 					break;
 				}
-				if (input.getClass() == Game.class){
+				if (input.getClass() == Game.class) {
 					// received game
 					game = (Game)input;
 					if (!vControlGameSet){
 						//TODO: set game for VControl here
 						vControlGameSet = true;
 					}
-					//TODO: repaint view
-				} else if (input.getClass() == Integer.class){
+					// TODO: repaint view
+				} else if (input.getClass() == Integer.class) {
 					// received clientID
 					clientID = (Integer)input;
 					//TODO: set clientID for VControl here
@@ -77,7 +94,6 @@ public class Client extends Thread {
 				} else if (input.getClass() == SignalException.class){
 					//TODO: forward to controller
 				}
-				
 			}
 			socket.close();
 		} catch (IOException | ClassNotFoundException e) {

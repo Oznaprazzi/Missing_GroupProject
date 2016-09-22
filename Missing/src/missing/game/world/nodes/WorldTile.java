@@ -10,6 +10,7 @@
  *  8 Sep 16		Edward Kelly		added new constructor
  *  8 Sep 16		Chris Rabe			added methods inside the TileObject interface
  *  18 Sep 16		Chris Rabe			can now receive distributed item
+ *  23 Sep 16		Casey Huang			put if statement after item is assigned in getDistributedObject method
  */
 package missing.game.world.nodes;
 
@@ -79,38 +80,6 @@ public class WorldTile {
 		 * @throws SignalException
 		 */
 		public void performAction(Player player) throws GameException, SignalException;
-
-		/**
-		 * * Compares the orientation direction and the approach direction. A
-		 * valid approach is when the approach direction and the orientation
-		 * direction are opposite to each other.
-		 * 
-		 * If the approach direction is set to 'ALL' this method returns true.
-		 * 
-		 * @param obj1
-		 *            - object executing the interaction.
-		 * @param obj2
-		 *            - objet being interacted on
-		 * @return true if the approach is valid
-		 * @throws GameException
-		 */
-		public static boolean approachValid(TileObject obj1, TileObject obj2) throws GameException {
-			if (obj2.getApproach() == Direction.ALL) {
-				return true;
-			}
-			switch (obj1.getOrientation()) {
-			case EAST:
-				return obj2.getApproach() == Direction.WEST;
-			case NORTH:
-				return obj2.getApproach() == Direction.SOUTH;
-			case SOUTH:
-				return obj2.getApproach() == Direction.NORTH;
-			case WEST:
-				return obj2.getApproach() == Direction.EAST;
-			default:
-				throw new GameException("Invalid Orientation!!");
-			}
-		}
 	}
 
 	/**
@@ -173,7 +142,7 @@ public class WorldTile {
 
 	/** Specifies whether or not the tile is occupied */
 	public boolean isOccupied() {
-		return object != null;
+		return this.object != null;
 	}
 
 	/**

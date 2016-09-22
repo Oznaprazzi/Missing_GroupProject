@@ -15,6 +15,7 @@
  * 19 Sep 16 		Casey Huang			updated paint method and constructor
  * 20 Sep 16		Linus Go			Made GamePanel render a a current Players node.
  * 21 Sep 16		Chris Rabe			fixed bugs. Rendering can now update
+ * 22 Sep 16		Chris Rabe			removed old testing constructor. Now bases world off the game class.
  */
 package missing.ui.panels;
 
@@ -24,6 +25,7 @@ import java.awt.Point;
 
 import javax.swing.JPanel;
 
+import missing.game.Game;
 import missing.game.characters.Player;
 import missing.game.world.World;
 import missing.helper.GameException;
@@ -63,28 +65,25 @@ public class GamePanel extends JPanel {
 	 * Testing constructors! TODO: remove this/alter in the final release.
 	 *********/
 
-	/**
-	 * @wbp.parser.constructor
-	 */
-	public GamePanel(Player currentPlayer) {
-
+	public GamePanel(Game game, Player currentPlayer) {
 		try {
-			graphicWorld = new GWorld(new World(), new View(null) {
+			graphicWorld = new GWorld(game.getWorld(), new View(null) {
+
 				@Override
 				public void initialise() {
+					// TODO Auto-generated method stub
+
 				}
 
 				@Override
 				public void setFocus() {
-				}
+					// TODO Auto-generated method stub
 
-				@Override
-				public Dimension getPreferredSize() {
-					return new Dimension(600, 600);
 				}
 
 			}, new Point(0, 0));
 		} catch (GameException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.currentPlayer = currentPlayer;
@@ -111,8 +110,6 @@ public class GamePanel extends JPanel {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		int val = Math.min(this.getWidth(), this.getHeight());
-		System.out.println(val);
 		curGWNode.setNodeSize(Math.min(this.getWidth(), this.getHeight()));
 		try {
 			curGWNode.draw(g, 0, 0);

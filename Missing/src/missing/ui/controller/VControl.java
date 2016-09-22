@@ -138,12 +138,12 @@ public class VControl extends JFrame {
 		setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		new VControl(); // Run to test views
-	}
-
 	public GGame getGGame() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public static void main(String[] args) {
+		new VControl(); // Run to test views
 	}
 }

@@ -18,6 +18,7 @@
 
 package missing.ui.assets;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
 
@@ -50,6 +51,10 @@ public class GWTile {
 	public void setSize(int size) {
 		this.size = size;
 	}
+	
+	public WorldTile getWorldTile(){
+		return tile;
+	}
 
 	/**
 	 * Draw the tile at the specified x and y position onto this graphics
@@ -78,6 +83,15 @@ public class GWTile {
 			break;
 		default:
 			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
+		}
+		
+		if(tile.isOccupied()){
+			g.setColor(Color.red);
+			g.drawOval(x, y, size, size);
+		}
+		if(!tile.isEnterable()){
+			g.setColor(Color.yellow);
+			g.drawOval(x, y, size, size);
 		}
 	}
 
