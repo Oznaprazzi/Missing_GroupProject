@@ -19,6 +19,7 @@ public class SignalException extends Exception {
 
 	// List of signals used
 	// CONTAINER - signals that player is trying to interact with a container
+	// TRADE - signals that the player is trying to interact with another player
 
 	public SignalException(String msg) {
 		super(msg);

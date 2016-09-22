@@ -21,6 +21,7 @@ import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.nonmovable.Bag;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * This class represents individual players within the game world.
@@ -201,9 +202,12 @@ public class Player extends Character {
 		return lowest;
 	}
 
+	/**
+	 * This method throws a SignalException which means that a trade must be
+	 * initiated between the other player and this player.
+	 */
 	@Override
-	public void performAction(Player player) throws GameException {
-		// TODO Auto-generated method stub
-
+	public void performAction(Player player) throws GameException, SignalException {
+		throw new SignalException("TRADE");
 	}
 }

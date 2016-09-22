@@ -22,6 +22,7 @@ import missing.game.items.Item;
 import missing.game.items.movable.Movable;
 import missing.game.world.World;
 import missing.game.world.nodes.WorldTile;
+import missing.game.world.nodes.WorldTile.TileObject;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 
@@ -54,28 +55,36 @@ public class Game {
 	/**
 	 * Moves the player to a certain direction.
 	 * 
+	 * Preconditions:
+	 * <ul>
+	 * <li>id passed must be within the boundaries of the avatar length.</li>
+	 * </ul>
+	 * 
 	 * @param id
 	 * @param direction
 	 * @throws GameException
 	 */
 	public void movePlayer(int id, Direction direction) throws GameException {
 		Player player = avatars[id]; // retrieve player's piece
-		switch (direction) {
-		case EAST:
-			movePlayer(player, 1, 0, direction);
-			break;
-		case NORTH:
-			movePlayer(player, 0, -1, direction);
-			break;
-		case SOUTH:
-			movePlayer(player, 0, 1, direction);
-			break;
-		case WEST:
-			movePlayer(player, -1, 0, direction);
-			break;
-		default:
-			throw new GameException("Invalid direction. Please use NORTH, SOUTH, EAST, WEST.");
-		}
+		int[] dCoords = getCoordChange(direction);
+		movePlayer(player, dCoords[0], dCoords[1], direction);
+	}
+
+	/**
+	 * Changes the player's orientation based on the given direction.
+	 * Preconditions for this method MUST be followed.
+	 * 
+	 * Preconditions:
+	 * <ul>
+	 * <li>Direction passed MUST be WEST or EAST.</li>
+	 * <li>id passed must be within the boundaries of the avatar length.</li>
+	 * </ul>
+	 * 
+	 * @param id
+	 * @param direction
+	 */
+	public void turnPlayer(int id, Direction direction) {
+
 	}
 
 	/**
@@ -88,7 +97,57 @@ public class Game {
 		// get the item in front of the player
 	}
 
+	/**
+	 * Retrieves the tilObject in front of the defined player parameter by
+	 * analysing the defined player's orientation.
+	 * 
+	 * @param obj
+	 * @return
+	 * @throws GameException
+	 */
+	public TileObject getObjectInFront(Player player) throws GameException {
+		// retrieve the dx and dy values which represents moving forward
+		int[] dCoords = getCoordChange(player.getOrientation());
+		// retrieve the world location and tile location values of item in front
+		Point[] tLoc = getNewLocations(player, dCoords[0], dCoords[1], player.getOrientation());
+		
+		return null;
+	}
+
 	// Helper methods
+
+	/**
+	 * Returns the dx and dy values for the given direction. It stores it inside
+	 * an integer array which contains two elements. The first element
+	 * represents dx and the second element represents dy.
+	 * 
+	 * @param direction
+	 * @return
+	 */
+	private int[] getCoordChange(Direction direction) throws GameException {
+		int[] coords = new int[2];
+		switch (direction) {
+		case EAST:
+			coords[0] = 1;
+			coords[1] = 0;
+			break;
+		case NORTH:
+			coords[0] = 0;
+			coords[1] = -1;
+			break;
+		case SOUTH:
+			coords[0] = 0;
+			coords[1] = 1;
+			break;
+		case WEST:
+			coords[0] = -1;
+			coords[1] = 0;
+			break;
+		default:
+			throw new GameException("Invalid direction. Please use NORTH, SOUTH, EAST, WEST.");
+		}
+		return coords;
+	}
 
 	/**
 	 * This method moves the player's tile position by dx and dy and changes the
