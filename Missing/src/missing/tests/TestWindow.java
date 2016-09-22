@@ -6,7 +6,8 @@
  * 	
  * 	Date				Author					Changes
  * 	20 Sep 16			Casey + Linus			created and worked on this
- * 	21 Sep 16			Chris Rabe				fixed bugs
+ * 	21 Sep 16			Chris Rabe				fixed moving bug...
+ * 	23 Sep 16			Chris Rabe				fixed item rendering bug...
  */
 package missing.tests;
 
@@ -123,7 +124,7 @@ public class TestWindow extends JFrame {
 		btnDown.setBounds(65, 170, 70, 70);
 		layeredPane.add(btnDown);
 
-		gamePanel = new GamePanel(curPlayer);
+		gamePanel = new GamePanel(game, curPlayer);
 		getContentPane().add(gamePanel, BorderLayout.WEST);
 
 		setupActionListeners();
