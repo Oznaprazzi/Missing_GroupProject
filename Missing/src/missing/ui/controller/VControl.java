@@ -3,6 +3,7 @@
  * Linus Go			300345571
  * Chris Rabe		300334207
  * Casey Huang		300316284
+ * Edward Kelly		300334192
  * 
  * Date				Author				Changes 
  * 13 Sep 16		Linus Go			Created VControl.java
@@ -10,6 +11,7 @@
  * 14 Sep 16		Chris Rabe			fixed changing view
  * 18 Sep 16		Linus Go			added get game view method.
  * 19 Sep 16 		Casey Huang			created getGGame method
+ * 23 Sep 16		Edward Kelly		added GGame and playerID
  */
 package missing.ui.controller;
 
@@ -66,6 +68,8 @@ public class VControl extends JFrame {
 	private View[] views;
 	private int cur = 0;
 	private int prev = 0;
+	private GGame gGame;
+	private int playerID;
 
 	public VControl() {
 		super("Missing: The Game");
@@ -139,8 +143,18 @@ public class VControl extends JFrame {
 	}
 
 	public GGame getGGame() {
-		// TODO Auto-generated method stub
-		return null;
+		return gGame;
+	}
+	public void setGGame(GGame gGame){
+		this.gGame = gGame;
+	}
+	
+	public int getPlayerID() {
+		return playerID;
+	}
+
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
 	}
 
 	public static void main(String[] args) {

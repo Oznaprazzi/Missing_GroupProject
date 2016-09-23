@@ -56,7 +56,7 @@ public class GUIInitialiser {
 		View[] tmp = new View[views];
 		tmp[0] = new SplashView(control);
 		tmp[1] = new MenuView(control);
-		tmp[2] = new MapPanel(control, control.getWorld());
+		tmp[2] = new MapPanel(control);
 		//tmp[3] = new GamePanel(control, control.getWorld());
 		return tmp;
 	}

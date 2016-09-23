@@ -1,10 +1,12 @@
 /*	File: MapPanel.java
  * 	Author
  * 	Casey Huang		300316284
+ *  Edward Kelly	300334192
  *  
  * 	Date			Author				Changes
  * 	19 Sep 16		Casey Huang			created MapPanel class
  * 	19 Sep 16		Casey Huang			renamed MapView to MapPanel
+ *  23 Sep 16		Edward Kelly		removed World param from constructor
  */
 package missing.ui.panels;
 
@@ -22,7 +24,7 @@ public class MapPanel extends View {
 
 	private GWorld gWorld;
 
-	public MapPanel(VControl controller, World world) {
+	public MapPanel(VControl controller) {
 		super(controller);
 		gWorld = controller.getGGame().getGWorld();
 	}
