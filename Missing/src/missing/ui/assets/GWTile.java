@@ -105,10 +105,8 @@ public class GWTile {
 			g.drawImage(GameAssets.getWoodImage(), x ,y ,size,size, null);
 		}
 		
-		
-		/*If the tile is not enterable */
-		g.setColor(Color.green);
-		if(!tile.isEnterable()){
+		/*If the tile is not enterable and there is an object image for it.*/
+		if(!tile.isEnterable() && tile.getObject() != null){
 			g.setColor(Color.green);
 			g.drawOval(x, y, size, size);
 		}

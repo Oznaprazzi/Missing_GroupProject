@@ -18,6 +18,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,7 +36,7 @@ import missing.helper.GameException;
 import missing.ui.panels.GamePanel;
 
 @SuppressWarnings("serial")
-public class TestWindow extends JFrame {
+public class TestWindow extends JFrame implements KeyListener {
 	private final int panelWd = 800;
 	private final int panelHt = 600;
 
@@ -130,9 +132,6 @@ public class TestWindow extends JFrame {
 		pack();
 	}
 
-	// TODO: here lies my problem. I am attempting to move the player around
-	// with my buttons, but it does not update and change world node position.
-	// Please let me know if someone can look at it/fix it?
 	private void setupActionListeners() {
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -144,8 +143,6 @@ public class TestWindow extends JFrame {
 							+ gameinstance.getAvatars()[0].getWorldLocation().toString());
 					gamePanel.updateNodeRender(); // TODO Added this!
 					gamePanel.repaint();
-					System.out.println(gameinstance.getAvatars()[0].getWorldLocation().toString());
-
 				} catch (GameException e1) {
 					e1.printStackTrace();
 				}
@@ -161,8 +158,6 @@ public class TestWindow extends JFrame {
 							+ gameinstance.getAvatars()[0].getWorldLocation().toString());
 					gamePanel.updateNodeRender(); // TODO Added this!
 					gamePanel.repaint();
-					System.out.println(gameinstance.getAvatars()[0].getWorldLocation().toString());
-
 				} catch (GameException e1) {
 					e1.printStackTrace();
 				}
@@ -179,7 +174,6 @@ public class TestWindow extends JFrame {
 							+ gameinstance.getAvatars()[0].getWorldLocation().toString());
 					gamePanel.updateNodeRender(); // TODO Added this!
 					gamePanel.repaint();
-					System.out.println(gameinstance.getAvatars()[0].getWorldLocation().toString());
 				} catch (GameException e1) {
 					e1.printStackTrace();
 				}
@@ -196,17 +190,53 @@ public class TestWindow extends JFrame {
 							+ gameinstance.getAvatars()[0].getWorldLocation().toString());
 					gamePanel.updateNodeRender(); // TODO Added this!
 					gamePanel.repaint();
-					System.out.println(gameinstance.getAvatars()[0].getWorldLocation().toString());
-
 				} catch (GameException e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
 	}
-
+	
+	
+	/*These events are moving events that should be called whenever a button or key is being pressed */
+	
+	private void moveEvent(int playerID, Direction dir) throws GameException{
+		switch(dir){
+		case NORTH:
+		gameinstance.movePlayer(playerID, Direction.NORTH);
+		break;
+		case SOUTH:
+		gameinstance.movePlayer(playerID, Direction.SOUTH);
+		break;
+		case EAST:
+		gameinstance.movePlayer(playerID, Direction.EAST);
+		break;
+		case WEST:
+		gameinstance.movePlayer(playerID, Direction.WEST);
+		break;
+		}
+		gamePanel.revalidate();
+		txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World"
+				+ gameinstance.getAvatars()[0].getWorldLocation().toString());
+		gamePanel.updateNodeRender(); // TODO Added this!
+		gamePanel.repaint();
+	}
+	
+	
+	
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(panelWd, panelHt);
 	}
+	
+	
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {}
 }
