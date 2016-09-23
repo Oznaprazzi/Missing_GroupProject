@@ -1,11 +1,13 @@
 /*	File: GameAssets.java
  * 	Author
  * 	Chris Rabe		300334207
+ * 	Casey Huang		300316284
  * 
  * 	Date			Author				Changes
  * 	14 Sep 16		Chris Rabe			created GameAssets.java
  * 	15 Sep 16		Chris Rabe			moved loading the node files here
  * 	16 Sep 16		Casey Huang			Updated class with new images added
+ * 	19 Sep 16		Casey Huang			Added all the other item images
  */
 
 package missing.datastorage.assetloader;
