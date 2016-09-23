@@ -23,6 +23,10 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 
 import missing.datastorage.assetloader.GameAssets;
+import missing.game.items.movable.Wood;
+import missing.game.items.nonmovable.Bush;
+import missing.game.items.nonmovable.Fireplace;
+import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile;
 import missing.helper.GameException;
 
@@ -84,13 +88,28 @@ public class GWTile {
 		default:
 			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
 		}
-		
+		/*Draws the player. */
 		if(tile.isOccupied()){
 			g.setColor(Color.red);
 			g.drawOval(x, y, size, size);
 		}
+		
+		/*Draw the Items onto the tile. */
+		if(tile.getObject() instanceof Tree){
+			g.drawImage(GameAssets.getTreeImage(), x, y, size, size, null);
+		}else if(tile.getObject() instanceof Bush){
+			g.drawImage(GameAssets.getBushImage(), x ,y ,size,size, null);
+		}else if(tile.getObject() instanceof Fireplace){
+			g.drawImage(GameAssets.getFireplaceImage(), x ,y ,size,size, null);
+		}else if(tile.getObject() instanceof Wood){
+			g.drawImage(GameAssets.getWoodImage(), x ,y ,size,size, null);
+		}
+		
+		
+		/*If the tile is not enterable */
+		g.setColor(Color.green);
 		if(!tile.isEnterable()){
-			g.setColor(Color.yellow);
+			g.setColor(Color.green);
 			g.drawOval(x, y, size, size);
 		}
 	}
