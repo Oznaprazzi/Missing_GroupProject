@@ -47,6 +47,26 @@ public class GameAssets {
 	private static BufferedImage treeImage;
 
 	private static BufferedImage woodImage;
+	
+	private static BufferedImage rockImage;
+	
+	private static BufferedImage soilImage;
+	
+	private static BufferedImage dirtImage;
+	
+	private static BufferedImage stoneImage;
+	
+	private static BufferedImage axeImage;
+	
+	private static BufferedImage pickaxeImage;
+	
+	private static BufferedImage shovelImage;
+	
+	private static BufferedImage fishingRodImage;
+	
+	private static BufferedImage fishingAreaImage;
+	
+	private static BufferedImage darkGrassImage;
 	// Getters for File Assets
 
 	public static InputStream getWorldFile(int x, int y) {
@@ -152,5 +172,115 @@ public class GameAssets {
 			}
 		}
 		return woodImage;
+	}
+	
+	public static BufferedImage getRockImage() {
+		if (rockImage == null) {
+			try {
+				rockImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/rock.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return rockImage;
+	}
+	
+	public static BufferedImage getSoilImage() {
+		if (soilImage == null) {
+			try {
+				soilImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/soil.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return soilImage;
+	}
+	
+	public static BufferedImage getDirtImage() {
+		if (dirtImage == null) {
+			try {
+				dirtImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/dirt.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return dirtImage;
+	}
+	
+	public static BufferedImage getStoneImage() {
+		if (stoneImage == null) {
+			try {
+				stoneImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/stone.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return stoneImage;
+	}
+	
+	public static BufferedImage getAxeImage() {
+		if (axeImage == null) {
+			try {
+				axeImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/axe.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return axeImage;
+	}
+	
+	public static BufferedImage getPickaxeImage() {
+		if (pickaxeImage == null) {
+			try {
+				pickaxeImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/pickaxe.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return pickaxeImage;
+	}
+	
+	public static BufferedImage getShovelImage() {
+		if (shovelImage == null) {
+			try {
+				shovelImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/shovel.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return shovelImage;
+	}
+	
+	public static BufferedImage getFishingRodImage() {
+		if (fishingRodImage == null) {
+			try {
+				fishingRodImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/fishingrod.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return fishingRodImage;
+	}
+	
+	public static BufferedImage getFishingAreaImage() {
+		if (fishingAreaImage == null) {
+			try {
+				fishingAreaImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/fishingarea.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return fishingAreaImage;
+	}
+	
+	public static BufferedImage getDarkGrassImage() {
+		if (darkGrassImage == null) {
+			try {
+				darkGrassImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/darkgrass.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return darkGrassImage;
 	}
 }

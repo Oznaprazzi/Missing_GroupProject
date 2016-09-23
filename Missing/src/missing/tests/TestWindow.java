@@ -55,6 +55,7 @@ public class TestWindow extends JFrame implements KeyListener {
 
 	public TestWindow(Game game, World w, Player p) {
 		super("Test Panel");
+		this.addKeyListener(this);
 		this.setVisible(true);
 		this.setSize(panelWd, panelHt);
 		this.gameinstance = game;
@@ -189,31 +190,30 @@ public class TestWindow extends JFrame implements KeyListener {
 					txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World"
 							+ gameinstance.getAvatars()[0].getWorldLocation().toString());
 					gamePanel.updateNodeRender(); // TODO Added this!
-					gamePanel.repaint();
-				} catch (GameException e1) {
-					e1.printStackTrace();
-				}
+					gamePanel.repaint();				} catch (GameException e1) {
+						e1.printStackTrace();
+					}
 			}
 		});
 	}
-	
-	
+
+
 	/*These events are moving events that should be called whenever a button or key is being pressed */
-	
+
 	private void moveEvent(int playerID, Direction dir) throws GameException{
 		switch(dir){
 		case NORTH:
-		gameinstance.movePlayer(playerID, Direction.NORTH);
-		break;
+			gameinstance.movePlayer(playerID, Direction.NORTH);
+			break;
 		case SOUTH:
-		gameinstance.movePlayer(playerID, Direction.SOUTH);
-		break;
+			gameinstance.movePlayer(playerID, Direction.SOUTH);
+			break;
 		case EAST:
-		gameinstance.movePlayer(playerID, Direction.EAST);
-		break;
+			gameinstance.movePlayer(playerID, Direction.EAST);
+			break;
 		case WEST:
-		gameinstance.movePlayer(playerID, Direction.WEST);
-		break;
+			gameinstance.movePlayer(playerID, Direction.WEST);
+			break;
 		}
 		gamePanel.revalidate();
 		txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World"
@@ -221,18 +221,43 @@ public class TestWindow extends JFrame implements KeyListener {
 		gamePanel.updateNodeRender(); // TODO Added this!
 		gamePanel.repaint();
 	}
-	
-	
-	
+
+
+
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(panelWd, panelHt);
 	}
-	
-	
+
+
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {}
+	public void keyPressed(KeyEvent e){
+		int keyID = e.getKeyCode();
+		try{
+			switch(keyID){
+			case KeyEvent.VK_UP:
+				System.out.println("up");
+				this.moveEvent(0, Direction.NORTH);
+				break;
+			case KeyEvent.VK_DOWN:
+				System.out.println("down");
+				this.moveEvent(0, Direction.SOUTH);
+				break;
+			case KeyEvent.VK_RIGHT:
+				System.out.println("right");
+				this.moveEvent(0, Direction.EAST);
+				break;
+			case KeyEvent.VK_LEFT:
+				System.out.println("left");
+				this.moveEvent(0, Direction.WEST);
+				break;
+			}
+		}catch(GameException g){
+
+		}
+
+	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {}
