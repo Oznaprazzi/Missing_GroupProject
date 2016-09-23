@@ -8,9 +8,13 @@
  */
 package missing.game.items.nonmovable;
 
+import static java.lang.Math.random;
+
 import java.awt.Point;
 
 import missing.game.characters.Player;
+import missing.game.items.movable.Food;
+import missing.game.items.movable.Food.FoodType;
 import missing.helper.GameException;
 
 /**
@@ -18,6 +22,7 @@ import missing.helper.GameException;
  */
 public class Bush extends Foliage {
 
+	private static final int BERRY_CHANCE = 70;
 	/**
 	 * Creates a new Bush object at the given locations
 	 * 
@@ -33,6 +38,12 @@ public class Bush extends Foliage {
 	@Override
 	public void performAction(Player player) throws GameException {
 		// TODO Auto-generated method stub
+		int playerChance = (int) (random() * 100);
+		if (playerChance < BERRY_CHANCE) {
+			Food berry = new Food(worldLocation, tileLocation, FoodType.BERRY);
+			berry.setStored(true);
+			player.addToPocket(berry);
+		}
 
 	}
 

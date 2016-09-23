@@ -10,6 +10,7 @@
  * 19 Sep 16		Jian Wei			Added treeTest_3 and RockTests 1&2
  * 20 Sep 16		Jian Wei			Added treeTest_4 , treeTest_5 && rockTest 3&4
  * 21 Sep 16		Jian Wei			Added soilTest_1-4 
+ * 22 Sep 16		Jian Wei			Added FishAreaTest_1 and FishArea_Invalid_Test_1
  * */
 package missing.tests;
 
@@ -30,6 +31,7 @@ import missing.game.items.movable.Resource;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
+import missing.game.items.nonmovable.FishArea;
 import missing.game.items.nonmovable.Rock;
 import missing.game.items.nonmovable.Soil;
 import missing.game.items.nonmovable.Tree;
@@ -341,6 +343,61 @@ public class SourceTests {
 			has5Dirt = player.getPocket().get(1).getAmount() == 5;
 		}
 		assertTrue(has5Dirt); // checks that player has 5 Dirt in pocket
+	}
+	
+	/**
+	 * Creates a fishArea and performs its action, then asserts that the if the player 
+	 * ends up with 2 items in their pocket, the second is a fish
+	 */
+	@Test
+	public void fishAreaTest_1() {
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Point worldLocation = new Point(1, 1);
+		Point tileLocation = new Point(1, 1);
+		ArrayList<Resource> resources = new ArrayList<Resource>();
+		for (int i = 0; i < 2; i++) {
+			resources.add(new Wood(worldLocation, tileLocation)); // adds 2 wood
+		}
+		for (int i = 0; i < 3; i++) {
+			resources.add(new Dirt(worldLocation, tileLocation)); // adds 3 dirt														
+		}
+		FishArea fishArea = new FishArea(worldLocation, tileLocation);
+
+		try {
+			Tool fishingRod = new Tool(ToolType.FISHINGROD, resources, worldLocation, tileLocation);
+			player.addToPocket(fishingRod);
+			fishArea.performAction(player);// player takes dirt from that soil
+		} catch (GameException e) {
+			fail(e.getMessage());
+		}
+		
+		if(player.getPocket().size()==2){
+			boolean isFish = false;
+			if(player.getPocket().get(1) instanceof Food){
+				isFish = ((Food) player.getPocket().get(1)).getFoodType() == FoodType.FISH;
+			}
+			assertTrue(isFish);
+		}
+	}
+	
+	/**
+	 * Creates a fishArea and performs its action, this should fail as no fishing rod has been created
+	 */
+	@Test
+	public void fishArea_Invalid_Test_1() {
+		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Point worldLocation = new Point(1, 1);
+		Point tileLocation = new Point(1, 1);
+		FishArea fishArea = new FishArea(worldLocation, tileLocation);
+
+		boolean fail = false;
+		try {
+			fishArea.performAction(player);// player takes dirt from that soil
+		} catch (GameException e) {
+			fail = true;
+		}
+		assertTrue(fail);
+
 	}
 
 
