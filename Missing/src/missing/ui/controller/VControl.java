@@ -91,6 +91,16 @@ public class VControl extends JFrame {
 	public int getGameView() {
 		return 3;
 	}
+	
+	public int getPlayGameView() {
+		return 4;
+	}
+	public int getHostGameView() {
+		return 5;
+	}
+	public int getJoinGameView() {
+		return 6;
+	}
 
 	public int getPrevious() {
 		return prev;
@@ -103,6 +113,7 @@ public class VControl extends JFrame {
 	 * @param index
 	 */
 	public void changeView(int index) {
+		//TODO: change GGame view
 		if (index < 0 || index >= views.length) {
 			return;
 		}
