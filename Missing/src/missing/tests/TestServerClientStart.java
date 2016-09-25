@@ -14,7 +14,7 @@ public class TestServerClientStart {
 
 	public static void main(String[] args) {
 		VControl vControl = new VControl();
-		
+		vControl.changeView(vControl.getPlayGameView());
 
 	}
 

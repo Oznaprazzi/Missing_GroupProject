@@ -5,7 +5,7 @@
  * 
  * Date				Author			Modification
  * 19 Sep 16		Edward Kelly	created class
- * 
+ * 24 Sep 16		Edward Kelly	added vControl setting up
  */
 package missing.networking;
 
@@ -19,6 +19,7 @@ import missing.game.Game;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
+import missing.ui.assets.GGame;
 import missing.ui.controller.VControl;
 /**
  * The Client is responsible for sending inputs from the player to the server
@@ -35,13 +36,14 @@ public class Client extends Thread {
 	private PrintWriter out;
 	/** Reference to the game sent by server. */
 	private Game game;
-	/** Unique ID representing player/client */
+	/** Unique ID representing player/client. If 0, the client is the host*/
 	private int clientID;
 	/** VControl responsible for displaying game and taking inputs from player */
 	private VControl vControl;
 
-	public Client(Socket s) {
+	public Client(Socket s, VControl vControl) {
 		this.socket = s;
+		this.vControl = vControl;
 	}
 
 	// Getters and Setters
@@ -81,14 +83,21 @@ public class Client extends Thread {
 					// received game
 					game = (Game)input;
 					if (!vControlGameSet){
-						//TODO: set game for VControl here
+						//TODO: may need to set game each time
+						try {
+							vControl.setGGame(new GGame(game, null));
+						} catch (GameException e) {
+							// TODO forward to controller
+							e.printStackTrace();
+						}
 						vControlGameSet = true;
+						continue; // dont want to paint until game started
 					}
-					// TODO: repaint view
+					vControl.repaint();
 				} else if (input.getClass() == Integer.class) {
 					// received clientID
 					clientID = (Integer)input;
-					//TODO: set clientID for VControl here
+					vControl.setPlayerID(clientID);
 				} else if (input.getClass() == GameException.class){
 					//TODO: forward to controller
 				} else if (input.getClass() == SignalException.class){

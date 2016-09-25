@@ -22,11 +22,10 @@ import missing.ui.controller.VControl.View;
 @SuppressWarnings("serial")
 public class MapPanel extends View {
 
-	private GWorld gWorld;
+	
 
 	public MapPanel(VControl controller) {
 		super(controller);
-		gWorld = controller.getGGame().getGWorld();
 	}
 
 	@Override
@@ -50,7 +49,7 @@ public class MapPanel extends View {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		try {
-			gWorld.draw(g);
+			controller.getGGame().getGWorld().draw(g);
 		} catch (GameException e) {
 			e.printStackTrace();
 		}

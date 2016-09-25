@@ -54,7 +54,6 @@ public class SocketListener extends Thread{
 				System.out.println("Waiting for " + (numClients) + " more players to join...");
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	}
