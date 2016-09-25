@@ -39,36 +39,42 @@ public class GameAssets {
 	private static BufferedImage grassImage;
 
 	private static BufferedImage roadImage;
-	
+
 	private static BufferedImage appleImage;
-	
+
 	private static BufferedImage bushImage;
-	
+
 	private static BufferedImage fireplaceImage;
-	
+
 	private static BufferedImage treeImage;
 
 	private static BufferedImage woodImage;
-	
+
 	private static BufferedImage rockImage;
-	
+
 	private static BufferedImage soilImage;
-	
+
 	private static BufferedImage dirtImage;
-	
+
 	private static BufferedImage stoneImage;
-	
+
 	private static BufferedImage axeImage;
-	
+
 	private static BufferedImage pickaxeImage;
-	
+
 	private static BufferedImage shovelImage;
-	
+
 	private static BufferedImage fishingRodImage;
-	
+
 	private static BufferedImage fishingAreaImage;
-	
+
 	private static BufferedImage darkGrassImage;
+
+	private static BufferedImage fishImage;
+
+	private static BufferedImage berriesImage;
+	
+	private static BufferedImage bagBackgroundImage;
 	// Getters for File Assets
 
 	public static InputStream getWorldFile(int x, int y) {
@@ -120,7 +126,7 @@ public class GameAssets {
 		}
 		return roadImage;
 	}
-	
+
 	public static BufferedImage getAppleImage() {
 		if (appleImage == null) {
 			try {
@@ -131,7 +137,7 @@ public class GameAssets {
 		}
 		return appleImage;
 	}
-	
+
 	public static BufferedImage getBushImage() {
 		if (bushImage == null) {
 			try {
@@ -142,7 +148,7 @@ public class GameAssets {
 		}
 		return bushImage;
 	}
-	
+
 	public static BufferedImage getFireplaceImage() {
 		if (fireplaceImage == null) {
 			try {
@@ -164,7 +170,7 @@ public class GameAssets {
 		}
 		return treeImage;
 	}
-	
+
 	public static BufferedImage getWoodImage() {
 		if (woodImage == null) {
 			try {
@@ -175,7 +181,7 @@ public class GameAssets {
 		}
 		return woodImage;
 	}
-	
+
 	public static BufferedImage getRockImage() {
 		if (rockImage == null) {
 			try {
@@ -186,7 +192,7 @@ public class GameAssets {
 		}
 		return rockImage;
 	}
-	
+
 	public static BufferedImage getSoilImage() {
 		if (soilImage == null) {
 			try {
@@ -197,7 +203,7 @@ public class GameAssets {
 		}
 		return soilImage;
 	}
-	
+
 	public static BufferedImage getDirtImage() {
 		if (dirtImage == null) {
 			try {
@@ -208,7 +214,7 @@ public class GameAssets {
 		}
 		return dirtImage;
 	}
-	
+
 	public static BufferedImage getStoneImage() {
 		if (stoneImage == null) {
 			try {
@@ -219,7 +225,7 @@ public class GameAssets {
 		}
 		return stoneImage;
 	}
-	
+
 	public static BufferedImage getAxeImage() {
 		if (axeImage == null) {
 			try {
@@ -230,7 +236,7 @@ public class GameAssets {
 		}
 		return axeImage;
 	}
-	
+
 	public static BufferedImage getPickaxeImage() {
 		if (pickaxeImage == null) {
 			try {
@@ -241,7 +247,7 @@ public class GameAssets {
 		}
 		return pickaxeImage;
 	}
-	
+
 	public static BufferedImage getShovelImage() {
 		if (shovelImage == null) {
 			try {
@@ -252,7 +258,7 @@ public class GameAssets {
 		}
 		return shovelImage;
 	}
-	
+
 	public static BufferedImage getFishingRodImage() {
 		if (fishingRodImage == null) {
 			try {
@@ -263,7 +269,7 @@ public class GameAssets {
 		}
 		return fishingRodImage;
 	}
-	
+
 	public static BufferedImage getFishingAreaImage() {
 		if (fishingAreaImage == null) {
 			try {
@@ -274,7 +280,7 @@ public class GameAssets {
 		}
 		return fishingAreaImage;
 	}
-	
+
 	public static BufferedImage getDarkGrassImage() {
 		if (darkGrassImage == null) {
 			try {
@@ -285,4 +291,39 @@ public class GameAssets {
 		}
 		return darkGrassImage;
 	}
+	
+	public static BufferedImage getBerriesImage() {
+		if (berriesImage == null) {
+			try {
+				berriesImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/berries.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return berriesImage;
+	}
+
+	public static BufferedImage getFishImage() {
+		if (fishImage == null) {
+			try {
+				fishImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/fish.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return fishImage;
+	}
+	
+	public static BufferedImage getBagBackgroundImage() {
+		if (bagBackgroundImage == null) {
+			try {
+				bagBackgroundImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/bagBackground.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return bagBackgroundImage;
+	}
+	
+	
 }
