@@ -1,20 +1,17 @@
 /*	File: BagCanvas.java
- * 	Author
+ * 	Author:
  * 	Casey Huang		300316284
  * 
- * 	Date			Author				Changes
- * 	25 Sep 16		Casey Huang			created BagCanvas.java
+ * 	Date			Author				changes
+ * 	26 Sep 16		Casey Huang			created BagCanvas class.
  */
-
 package missing.ui.canvas;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+
+import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.items.movable.Dirt;
@@ -26,20 +23,15 @@ import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
 
 /**
- * Canvas used to display the cards that a current Player has.
- * This is drawn on an attached JFrame.
- * @author Casey and Linus
- *
+ * Canvas used to display the Player's bag's items
  */
 public class BagCanvas extends Canvas{
 	/**
-	 * List of cards to display on the canvas.
+	 * Bag of items to display
 	 */
 	private Bag bag;
+	//TODO Do we need this???????????????????????????????????
 	public boolean hasbeenPainted = false;
-	private int index_R = 0;
-	private int index_W = 0;
-	private int index_C = 0;
 
 	/**
 	 * x position of item to be drawn.
@@ -112,3 +104,5 @@ public class BagCanvas extends Canvas{
 	}
 
 }
+
+
