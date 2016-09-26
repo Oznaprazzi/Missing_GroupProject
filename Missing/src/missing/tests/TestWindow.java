@@ -8,6 +8,7 @@
  * 	20 Sep 16			Casey + Linus			created and worked on this
  * 	21 Sep 16			Chris Rabe				fixed moving bug...
  * 	23 Sep 16			Chris Rabe				fixed item rendering bug...
+ *  26 Sep 16			Linus Go				Allowed WASD movement and fixed up side panel.
  */
 package missing.tests;
 
@@ -40,8 +41,7 @@ public class TestWindow extends JFrame implements KeyListener {
 	private final int panelWd = 800;
 	private final int panelHt = 600;
 
-	private JTextField txtName;
-	private JTextField txtPanning;
+	private JTextField nameField;
 	private JButton btnUp;
 	private JButton btnDown;
 	private JButton btnLeft;
@@ -52,6 +52,10 @@ public class TestWindow extends JFrame implements KeyListener {
 	private Game gameinstance;
 	// holds the gamepanel renderer.
 	private GamePanel gamePanel;
+	private JTextField tilePos;
+	private JTextField worldPos;
+	private JTextField playerOrientation;
+	private JLabel lblPlayerOrientation;
 
 	public TestWindow(Game game, World w, Player p) {
 		super("Test Panel");
@@ -69,9 +73,9 @@ public class TestWindow extends JFrame implements KeyListener {
 		GridBagLayout gbl_panel = new GridBagLayout();
 
 		gbl_panel.columnWidths = new int[] { 89, 0 };
-		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0 };
+		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
 
 		JLabel lblCurrentPlayer = new JLabel("Current Player");
@@ -81,33 +85,73 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_lblCurrentPlayer.gridy = 0;
 		panel.add(lblCurrentPlayer, gbc_lblCurrentPlayer);
 
-		txtName = new JTextField();
-		txtName.setText(curPlayer.getName());
+		nameField = new JTextField();
+		nameField.setText(curPlayer.getName());
 
 		GridBagConstraints gbc_txtName = new GridBagConstraints();
 		gbc_txtName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtName.insets = new Insets(0, 0, 5, 0);
 		gbc_txtName.gridx = 0;
 		gbc_txtName.gridy = 1;
-		panel.add(txtName, gbc_txtName);
-		txtName.setColumns(10);
+		panel.add(nameField, gbc_txtName);
+		nameField.setColumns(10);
+		
+		JLabel lblPlayerWorldPos = new JLabel("Player Tile Pos");
+		GridBagConstraints gbc_lblPlayerWorldPos = new GridBagConstraints();
+		gbc_lblPlayerWorldPos.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPlayerWorldPos.gridx = 0;
+		gbc_lblPlayerWorldPos.gridy = 3;
+		panel.add(lblPlayerWorldPos, gbc_lblPlayerWorldPos);
+		
+		tilePos = new JTextField();
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.insets = new Insets(0, 0, 5, 0);
+		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField.gridx = 0;
+		gbc_textField.gridy = 4;
+		panel.add(tilePos, gbc_textField);
+		tilePos.setColumns(10);
+		
+		JLabel lblPlayerTilePos = new JLabel("Player World Pos");
+		GridBagConstraints gbc_lblPlayerTilePos = new GridBagConstraints();
+		gbc_lblPlayerTilePos.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPlayerTilePos.gridx = 0;
+		gbc_lblPlayerTilePos.gridy = 5;
+		panel.add(lblPlayerTilePos, gbc_lblPlayerTilePos);
+		
+		worldPos = new JTextField();
+		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_1.gridx = 0;
+		gbc_textField_1.gridy = 6;
+		panel.add(worldPos, gbc_textField_1);
+		worldPos.setColumns(10);
+		
+		lblPlayerOrientation = new JLabel("Player Orientation");
+		GridBagConstraints gbc_lblPlayerOrientation = new GridBagConstraints();
+		gbc_lblPlayerOrientation.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPlayerOrientation.gridx = 0;
+		gbc_lblPlayerOrientation.gridy = 7;
+		panel.add(lblPlayerOrientation, gbc_lblPlayerOrientation);
+		
+		playerOrientation = new JTextField();
+		playerOrientation.setColumns(10);
+		GridBagConstraints gbc_orientationField = new GridBagConstraints();
+		gbc_orientationField.insets = new Insets(0, 0, 5, 0);
+		gbc_orientationField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_orientationField.gridx = 0;
+		gbc_orientationField.gridy = 8;
+		panel.add(playerOrientation, gbc_orientationField);
+		
 
-		txtPanning = new JTextField();
-		txtPanning.setText(curPlayer.getWorldLocation().toString());
-		GridBagConstraints gbc_txtPanning = new GridBagConstraints();
-		gbc_txtPanning.insets = new Insets(0, 0, 5, 0);
-		gbc_txtPanning.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtPanning.gridx = 0;
-		gbc_txtPanning.gridy = 3;
-		panel.add(txtPanning, gbc_txtPanning);
-		txtPanning.setColumns(10);
 
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setLayout(null);
 		GridBagConstraints gbc_layeredPane = new GridBagConstraints();
 		gbc_layeredPane.fill = GridBagConstraints.BOTH;
 		gbc_layeredPane.gridx = 0;
-		gbc_layeredPane.gridy = 4;
+		gbc_layeredPane.gridy = 9;
 		panel.add(layeredPane, gbc_layeredPane);
 
 		btnUp = new JButton("Up");
@@ -136,12 +180,9 @@ public class TestWindow extends JFrame implements KeyListener {
 	private void setupActionListeners() {
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("pressing up");
 				try {
-					gameinstance.movePlayer(0, Direction.NORTH);
+					moveEvent(0, Direction.NORTH);
 					gamePanel.revalidate();
-					txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World"
-							+ gameinstance.getAvatars()[0].getWorldLocation().toString());
 					gamePanel.updateNodeRender(); // TODO Added this!
 					gamePanel.repaint();
 				} catch (GameException e1) {
@@ -153,10 +194,8 @@ public class TestWindow extends JFrame implements KeyListener {
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					gameinstance.movePlayer(0, Direction.SOUTH);
+					moveEvent(0, Direction.SOUTH);
 					gamePanel.revalidate();
-					txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World"
-							+ gameinstance.getAvatars()[0].getWorldLocation().toString());
 					gamePanel.updateNodeRender(); // TODO Added this!
 					gamePanel.repaint();
 				} catch (GameException e1) {
@@ -167,12 +206,9 @@ public class TestWindow extends JFrame implements KeyListener {
 
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("pressing left");
 				try {
-					gameinstance.movePlayer(0, Direction.WEST);
+					moveEvent(0, Direction.WEST);
 					gamePanel.revalidate();
-					txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World"
-							+ gameinstance.getAvatars()[0].getWorldLocation().toString());
 					gamePanel.updateNodeRender(); // TODO Added this!
 					gamePanel.repaint();
 				} catch (GameException e1) {
@@ -183,23 +219,27 @@ public class TestWindow extends JFrame implements KeyListener {
 
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("pressing right");
 				try {
-					gameinstance.movePlayer(0, Direction.EAST);
+					moveEvent(0, Direction.EAST);
 					gamePanel.revalidate();
-					txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World"
-							+ gameinstance.getAvatars()[0].getWorldLocation().toString());
 					gamePanel.updateNodeRender(); // TODO Added this!
-					gamePanel.repaint();				} catch (GameException e1) {
-						e1.printStackTrace();
-					}
+					gamePanel.repaint();				
+				} catch (GameException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
 
 
 	/*These events are moving events that should be called whenever a button or key is being pressed */
-
+	
+	/**
+	 * Move the selected player one place in a specific direction.
+	 * @param int - playerID
+	 * @param Direction - dir
+	 * @throws GameException
+	 */
 	private void moveEvent(int playerID, Direction dir) throws GameException{
 		switch(dir){
 		case NORTH:
@@ -215,15 +255,19 @@ public class TestWindow extends JFrame implements KeyListener {
 			gameinstance.movePlayer(playerID, Direction.WEST);
 			break;
 		}
+		updateTextBarPositions();
 		gamePanel.revalidate();
-		txtPanning.setText("Tile " + gameinstance.getAvatars()[0].getTileLocation().toString() + "\n World"
-				+ gameinstance.getAvatars()[0].getWorldLocation().toString());
 		gamePanel.updateNodeRender(); // TODO Added this!
 		gamePanel.repaint();
 	}
 
-
-
+	
+	private void updateTextBarPositions(){
+		tilePos.setText("x: " + curPlayer.getTileLocation().getX() + " y: " + curPlayer.getTileLocation().getY());
+		worldPos.setText("x: " + curPlayer.getWorldLocation().getX() + " y: " + curPlayer.getWorldLocation().getY());
+		playerOrientation.setText(curPlayer.getOrientation().toString());
+	}
+	
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(panelWd, panelHt);
@@ -236,21 +280,17 @@ public class TestWindow extends JFrame implements KeyListener {
 		int keyID = e.getKeyCode();
 		try{
 			switch(keyID){
-			case KeyEvent.VK_UP:
-				System.out.println("up");
-				this.moveEvent(0, Direction.NORTH);
+			case KeyEvent.VK_UP: case KeyEvent.VK_W:
+				moveEvent(0, Direction.NORTH);
 				break;
-			case KeyEvent.VK_DOWN:
-				System.out.println("down");
-				this.moveEvent(0, Direction.SOUTH);
+			case KeyEvent.VK_DOWN: case KeyEvent.VK_S:
+				moveEvent(0, Direction.SOUTH);
 				break;
-			case KeyEvent.VK_RIGHT:
-				System.out.println("right");
-				this.moveEvent(0, Direction.EAST);
+			case KeyEvent.VK_RIGHT: case KeyEvent.VK_D:
+				moveEvent(0, Direction.EAST);
 				break;
-			case KeyEvent.VK_LEFT:
-				System.out.println("left");
-				this.moveEvent(0, Direction.WEST);
+			case KeyEvent.VK_LEFT: case KeyEvent.VK_A:
+				moveEvent(0, Direction.WEST);
 				break;
 			}
 		}catch(GameException g){

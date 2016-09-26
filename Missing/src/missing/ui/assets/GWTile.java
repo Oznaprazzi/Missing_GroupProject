@@ -23,6 +23,7 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 
 import missing.datastorage.assetloader.GameAssets;
+import missing.game.characters.Player;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Fireplace;
@@ -40,6 +41,8 @@ public class GWTile {
 	private WorldTile tile;
 	/** The current size of this tile. */
 	private int size;
+	/** The current player, used just to obtain data about drawing position.*/
+	private Player curPlayer;
 
 	public GWTile(WorldTile tile, int size) throws GameException {
 		this.tile = tile;
@@ -58,6 +61,13 @@ public class GWTile {
 	
 	public WorldTile getWorldTile(){
 		return tile;
+	}
+	/**
+	 * Sets the current Player that is to be drawn onto a tile.
+	 * @param Player p
+	 */
+	public void setCurrentPlayer(Player p){
+		this.curPlayer = p;
 	}
 
 	/**
@@ -111,6 +121,32 @@ public class GWTile {
 			g.drawOval(x, y, size, size);
 		}
 	}
+	
+	/**
+	 * Draws the player based on his current Orientation. TODO: need to finish this.
+	 * @param g
+	 */
+	private void drawPlayer(Graphics g, int x, int y, Player p){
+		g.setColor(Color.red);
+		switch(curPlayer.getOrientation()){
+		case NORTH:
+			g.drawOval(x, y, size, size);
+			break;
+		case SOUTH:
+			g.drawOval(x, y, size, size);
+			break;
+		case EAST:
+			g.drawOval(x, y, size, size);
+			break;
+		case WEST:
+			g.drawOval(x, y, size, size);
+			break;
+		}
+		
+	}
+	
+	
+	
 
 	/**
 	 * Draws an individual tile. This is done by drawing an image for each tile
