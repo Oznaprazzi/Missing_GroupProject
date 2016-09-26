@@ -38,44 +38,54 @@ import missing.ui.panels.GamePanel;
 
 @SuppressWarnings("serial")
 public class TestWindow extends JFrame implements KeyListener {
+	/*Dimensions for the Game Panels width and height */
 	private final int panelWd = 800;
 	private final int panelHt = 600;
-
+	/*Swing components for this window */
 	private JTextField nameField;
-	private JButton btnUp;
-	private JButton btnDown;
-	private JButton btnLeft;
-	private JButton btnRight;
-
-	private Player curPlayer;
-	// holds a current instance of the game.
-	private Game gameinstance;
-	// holds the gamepanel renderer.
-	private GamePanel gamePanel;
 	private JTextField tilePos;
 	private JTextField worldPos;
 	private JTextField playerOrientation;
 	private JLabel lblPlayerOrientation;
-
+	private JLabel lblPlayerTilePos;
+	private JLabel lblPlayerWorldPos;
+	private JButton btnUp;
+	private JButton btnDown;
+	private JButton btnLeft;
+	private JButton btnRight;
+	private JButton btnViewMap;
+	/* The current player */
+	private Player curPlayer;
+	/*Holds a local instance of the game */
+	private Game gameinstance;
+	// Holds the gamePanel renderer.
+	private GamePanel gamePanel;
+	
 	public TestWindow(Game game, World w, Player p) {
 		super("Test Panel");
-		this.addKeyListener(this);
-		this.setVisible(true);
-		this.setSize(panelWd, panelHt);
-		this.gameinstance = game;
-		this.curPlayer = p;
-
+		addKeyListener(this);
+		setVisible(true);
+		setSize(panelWd, panelHt);
+		gameinstance = game;
+		curPlayer = p;
+		initializeGUI();
+		setupActionListeners();
+		pack();
+	}
+	/**
+	 * Helper method to initialize the Windows GUI components.
+	 */
+	private void initializeGUI(){
 		JPanel panel = new JPanel();
 		panel.setSize(500, panelHt);
-		System.out.println(panel.getWidth() + " height: " + panel.getHeight());
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().add(panel, BorderLayout.CENTER);
 		GridBagLayout gbl_panel = new GridBagLayout();
 
 		gbl_panel.columnWidths = new int[] { 89, 0 };
-		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
 
 		JLabel lblCurrentPlayer = new JLabel("Current Player");
@@ -96,7 +106,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		panel.add(nameField, gbc_txtName);
 		nameField.setColumns(10);
 		
-		JLabel lblPlayerWorldPos = new JLabel("Player Tile Pos");
+		lblPlayerWorldPos = new JLabel("Player Tile Pos");
 		GridBagConstraints gbc_lblPlayerWorldPos = new GridBagConstraints();
 		gbc_lblPlayerWorldPos.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPlayerWorldPos.gridx = 0;
@@ -112,7 +122,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		panel.add(tilePos, gbc_textField);
 		tilePos.setColumns(10);
 		
-		JLabel lblPlayerTilePos = new JLabel("Player World Pos");
+		lblPlayerTilePos = new JLabel("Player World Pos");
 		GridBagConstraints gbc_lblPlayerTilePos = new GridBagConstraints();
 		gbc_lblPlayerTilePos.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPlayerTilePos.gridx = 0;
@@ -144,14 +154,19 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_orientationField.gridy = 8;
 		panel.add(playerOrientation, gbc_orientationField);
 		
-
-
+		btnViewMap = new JButton("View Map");
+		GridBagConstraints gbc_btnViewMap = new GridBagConstraints();
+		gbc_btnViewMap.insets = new Insets(0, 0, 5, 0);
+		gbc_btnViewMap.gridx = 0;
+		gbc_btnViewMap.gridy = 9;
+		panel.add(btnViewMap, gbc_btnViewMap);
+		
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setLayout(null);
 		GridBagConstraints gbc_layeredPane = new GridBagConstraints();
 		gbc_layeredPane.fill = GridBagConstraints.BOTH;
 		gbc_layeredPane.gridx = 0;
-		gbc_layeredPane.gridy = 9;
+		gbc_layeredPane.gridy = 10;
 		panel.add(layeredPane, gbc_layeredPane);
 
 		btnUp = new JButton("Up");
@@ -170,13 +185,14 @@ public class TestWindow extends JFrame implements KeyListener {
 		btnDown.setBounds(65, 170, 70, 70);
 		layeredPane.add(btnDown);
 
-		gamePanel = new GamePanel(game, curPlayer);
+		gamePanel = new GamePanel(gameinstance, curPlayer);
 		getContentPane().add(gamePanel, BorderLayout.WEST);
 
-		setupActionListeners();
-		pack();
 	}
-
+	
+	/**
+	 * Used to set up the action listeners.
+	 */
 	private void setupActionListeners() {
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -229,13 +245,18 @@ public class TestWindow extends JFrame implements KeyListener {
 				}
 			}
 		});
+		btnViewMap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("I'm supposed to do something cool!");
+			}
+		});
 	}
 
 
 	/*These events are moving events that should be called whenever a button or key is being pressed */
 	
 	/**
-	 * Move the selected player one place in a specific direction.
+	 * Move the selected player one spot in a specific direction.
 	 * @param int - playerID
 	 * @param Direction - dir
 	 * @throws GameException
@@ -294,7 +315,7 @@ public class TestWindow extends JFrame implements KeyListener {
 				break;
 			}
 		}catch(GameException g){
-
+			g.printStackTrace();
 		}
 
 	}
