@@ -8,6 +8,7 @@
  * 	8 Sep 16			Chris Rabe			implemented TileObject
  *  8 Sep 16			Edward Kelly		made Player implement TileObject
  *  20 Sep 16			Jian Wei Chong		added findTool method
+ *  26 Sep 16 			Casey Huang			added item's count when item added to bag
  */
 
 package missing.game.characters;
@@ -103,6 +104,7 @@ public class Player extends Character {
 		}
 		this.currentItemSize = newSize;
 		pocket.add(item);
+		item.increaseCount();
 	}
 
 	/**
@@ -121,6 +123,9 @@ public class Player extends Character {
 		}
 		Movable tmp = pocket.get(index);
 		pocket.remove(index);
+		if(tmp.getCount() > 0){
+			tmp.decreaseCount();
+		}
 		return tmp;
 	}
 
@@ -142,6 +147,9 @@ public class Player extends Character {
 				Movable tmp = pocket.get(i);
 				pocket.remove(i);
 				this.currentItemSize -= tmp.getSize();
+				if(item.getCount() > 0){
+					item.decreaseCount();
+				}
 				return tmp;
 			}
 		}
@@ -152,6 +160,7 @@ public class Player extends Character {
 	/** Adds the specified item into the bag */
 	public void addToBag(Movable item) throws GameException {
 		bag.addItem(item);
+		item.increaseCount();
 	}
 
 	/**
@@ -167,11 +176,15 @@ public class Player extends Character {
 		Movable tmp = bag.removeItem(index);
 		try {
 			addToPocket(tmp);
+			if(tmp.getCount() > 0){
+				tmp.decreaseCount();
+			}
 		} catch (GameException e) {
 			// No room inside pocket
 			bag.addItem(tmp);
 			throw new GameException(e.getMessage());
 		}
+		
 	}
 
 	/**

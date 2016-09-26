@@ -4,12 +4,16 @@
  * 
  * 	Date			Author				changes
  * 	26 Sep 16		Casey Huang			created BagCanvas class.
+ *  26 Sep 16		Casey Huang			added drawGrid method and convertBagToSet method
  */
 package missing.ui.canvas;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.util.HashSet;
 
 import javax.swing.JPanel;
 
@@ -30,8 +34,10 @@ public class BagCanvas extends Canvas{
 	 * Bag of items to display
 	 */
 	private Bag bag;
-	//TODO Do we need this???????????????????????????????????
-	public boolean hasbeenPainted = false;
+
+	private Movable[][] bagGrid;
+
+	private HashSet<Movable> bagSet;
 
 	/**
 	 * x position of item to be drawn.
@@ -47,20 +53,28 @@ public class BagCanvas extends Canvas{
 
 	public BagCanvas(Bag bag){
 		this.bag = bag;
-		hasbeenPainted = false;
+		bagSet = new HashSet<Movable>();
+		bagGrid = new Movable[bag.getItems().size()/10][10];
+		convertBagToSet();
 	}
 
 	@Override
 	public void paint(Graphics g){
 		g.drawImage(GameAssets.getBagBackgroundImage(), 0, 0, null);
-		g.drawString("Items in hand:", 5, 15);
+		Font serif = new Font("Calisto MT", Font.BOLD, 20);
+		g.setFont(serif);
+		g.setColor(Color.black);
+		g.drawString("Items in hand:", 10, 30);
 		this.drawItems(g);
 	}
 
-	public void drawItems(Graphics g){
+	private void drawItems(Graphics g){
 		int count = 0;
-		for(int i = 0; i < bag.getItems().size()/5; i++){
-			for(int j = 0; j < 5; j++){
+		Font serif = new Font("Calisto MT", Font.BOLD, 10);
+		g.setFont(serif);
+		g.setColor(Color.black);
+		for(int i = 0; i < bagSet.size()/10; i++){
+			for(int j = 0; j < 10; j++){
 				Movable item = bag.getItems().get(count);
 				if(item instanceof Food){
 					if(((Food) item).getFoodType().equals(Food.FoodType.APPLE)){
@@ -87,6 +101,7 @@ public class BagCanvas extends Canvas{
 				}else if(item instanceof Wood){
 					g.drawImage(GameAssets.getWoodImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
 				}
+				g.drawString(String.valueOf(item.getCount()), X_OFFSET+j*size, Y_OFFSET+i*size);
 				if(j > 5){
 					j = 0;
 				}
@@ -98,9 +113,32 @@ public class BagCanvas extends Canvas{
 		}
 	}
 
+	/**
+	 * Draws the outline of where the items will be placed on the screen
+	 * @param g
+	 */
+	private void drawGrid(Graphics g){
+		for(int i = 0; i < bagSet.size()/10; i++){
+			for(int j = 0; j < 10; j++){
+				g.drawRect(X_OFFSET+j*size, Y_OFFSET+i*size, size, size);
+			}
+		}
+	}
+
+	/**
+	 * Converts the bag of items into a set - no duplicates to account for count of item and to only draw one item.
+	 */
+	private void convertBagToSet(){
+		for(Movable m : bag.getItems()){
+			if(!bagSet.contains(m)){
+				bagSet.add(m);
+			}
+		}
+	}
+
 	@Override
 	public Dimension getPreferredSize(){
-		return new Dimension(453,366);
+		return new Dimension(682, 551);
 	}
 
 }

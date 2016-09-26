@@ -11,6 +11,7 @@
  * 7 Sep 16		Casey Huang		Added stored field
  * 7 Sep 16		Chris Rabe		added getters and setters for stored field
  * 21 Sep 16	Chris Rabe		allowed player to interact with the object
+ * 26 Sep 16	Casey Huang		added count field to count how many items of this type the player holds
  */
 package missing.game.items.movable;
 
@@ -31,9 +32,10 @@ public abstract class Movable extends Item {
 	protected int size;
 	/** Number of movable items */
 	private int amount;
-	/** represents whether the item is stored inside the player. */
+	/** Represents whether the item is stored inside the player. */
 	private boolean stored;
-
+	/** Represents the number of items the player holds*/
+	private int count = 0;
 	/**
 	 * Creates a new instance of a Movable item
 	 * 
@@ -57,6 +59,10 @@ public abstract class Movable extends Item {
 	public int getSize() {
 		return this.amount * this.size;
 	}
+	
+	public int getCount(){
+		return this.count;
+	}
 
 	public int getAmount() {
 		return amount;
@@ -64,6 +70,14 @@ public abstract class Movable extends Item {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	
+	public void increaseCount(){
+		this.count++;
+	}
+	
+	public void decreaseCount(){
+		this.count--;
 	}
 
 	public boolean isStored() {
