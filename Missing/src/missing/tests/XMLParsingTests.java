@@ -36,11 +36,13 @@ public class XMLParsingTests {
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
-		for (Item i : items) {
-			Point worldLocation = i.getWorldLocation();
-			Point tileLocation = i.getTileLocation();
-			System.out.println(String.format("%s : (%d,%d):(%d,%d)", i.getName(), worldLocation.x, worldLocation.y,
-					tileLocation.x, tileLocation.y));
+		if (items != null) {
+			for (Item i : items) {
+				Point worldLocation = i.getWorldLocation();
+				Point tileLocation = i.getTileLocation();
+				System.out.println(String.format("%s : (%d,%d):(%d,%d)", i.getName(), worldLocation.x, worldLocation.y,
+						tileLocation.x, tileLocation.y));
+			}
 		}
 	}
 

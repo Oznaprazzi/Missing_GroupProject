@@ -13,17 +13,17 @@ import java.awt.Point;
 
 import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
-import missing.game.items.movable.Resource;
-import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
 
-public class Soil extends Source{
+/**
+ * Represents a soil object in the game. This object gives the player some dirt.
+ */
+public class Soil extends Source {
 
 	public Soil(Point worldLocation, Point tileLocation) {
-		super("Soil", "It is soil", worldLocation, tileLocation,
-				new Dirt(worldLocation, tileLocation, MAX_RESOURCE));
+		super("Soil", "It is soil", worldLocation, tileLocation, new Dirt(worldLocation, tileLocation, MAX_RESOURCE));
 	}
 
 	@Override

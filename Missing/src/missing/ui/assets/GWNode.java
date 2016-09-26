@@ -86,23 +86,4 @@ public class GWNode {
 			}
 		}
 	}
-
-	/**
-	 * @deprecated
-	 * @param g
-	 * @param canvas_width
-	 * @throws GameException
-	 */
-	public void drawIsometricNode(Graphics g, int canvas_width) throws GameException {
-		// calculate size of each tile relative to the node
-		int tileSize = nodeSize / TILE_SIZE;
-		// draw each tile in the appropriate coordinates
-		for (int y = 0; y < 10; y++) {
-			for (int x = 0; x < 10; x++) {
-				tiles[x][y].setSize(tileSize);
-				tiles[x][y].drawIsometricTile(g, x, y, canvas_width);
-			}
-		}
-	}
-
 }
