@@ -24,11 +24,13 @@ import java.awt.Polygon;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
+import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Fireplace;
 import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile;
+import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 
 /**
@@ -48,7 +50,7 @@ public class GWTile {
 		this.tile = tile;
 		this.size = size;
 	}
-
+	
 	// Getters and Setters
 
 	public int getSize() {
@@ -61,13 +63,6 @@ public class GWTile {
 	
 	public WorldTile getWorldTile(){
 		return tile;
-	}
-	/**
-	 * Sets the current Player that is to be drawn onto a tile.
-	 * @param Player p
-	 */
-	public void setCurrentPlayer(Player p){
-		this.curPlayer = p;
 	}
 
 	/**
@@ -99,9 +94,8 @@ public class GWTile {
 			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
 		}
 		/*Draws the player. */
-		if(tile.isOccupied()){
-			g.setColor(Color.red);
-			g.drawOval(x, y, size, size);
+		if(tile.isOccupied() && tile.getObject() instanceof Player){
+			drawPlayer(g,x,y,tile.getObject());
 		}
 		
 		/*Draw the Items onto the tile. */
@@ -113,8 +107,12 @@ public class GWTile {
 			g.drawImage(GameAssets.getFireplaceImage(), x ,y ,size,size, null);
 		}else if(tile.getObject() instanceof Wood){
 			g.drawImage(GameAssets.getWoodImage(), x ,y ,size,size, null);
+		}else if(tile.getObject() instanceof Dirt){
+			g.drawImage(GameAssets.getDirtImage(), x, y, size,size,null);
 		}
 		
+		
+	
 		/*If the tile is not enterable and there is an object image for it.*/
 		if(!tile.isEnterable() && tile.getObject() != null){
 			g.setColor(Color.green);
@@ -123,82 +121,35 @@ public class GWTile {
 	}
 	
 	/**
-	 * Draws the player based on his current Orientation. TODO: need to finish this.
+	 * Draws the player based on his current Orientation. TODO: need to update this to show proper player animation.
 	 * @param g
 	 */
-	private void drawPlayer(Graphics g, int x, int y, Player p){
+	private void drawPlayer(Graphics g, int x, int y, TileObject tileobj){
 		g.setColor(Color.red);
-		switch(curPlayer.getOrientation()){
+		
+		if(tileobj instanceof Player){
+		switch(tileobj.getOrientation()){
 		case NORTH:
 			g.drawOval(x, y, size, size);
+			g.drawString("N", x+(size/2), y+(size/2));
 			break;
 		case SOUTH:
 			g.drawOval(x, y, size, size);
+			g.drawString("S", x+(size/2), y+(size/2));
 			break;
 		case EAST:
 			g.drawOval(x, y, size, size);
+			g.drawString("E", x+(size/2), y+(size/2));
 			break;
 		case WEST:
 			g.drawOval(x, y, size, size);
+			g.drawString("W", x+(size/2), y+(size/2));
+			break;
+		default:
 			break;
 		}
-		
+		}
 	}
 	
 	
-	
-
-	/**
-	 * Draws an individual tile. This is done by drawing an image for each tile
-	 * and clipping it with a polygon which is of the isometric shape.
-	 * 
-	 * @deprecated
-	 * @param g
-	 * @param x
-	 *            x coordinate in grid
-	 * @param y
-	 *            y coordinate in grid
-	 */
-	public void drawIsometricTile(Graphics g, int x, int y, int canvas_width) {
-		/* Get isometric tile dimensions */
-		int tile_width = this.size;
-		int tile_height = tile_width / 2;
-		// top corner of tile
-		int topX = (x - y) * tile_width / 2 + canvas_width / 2;
-		int topY = (x + y) * tile_height / 2;
-		// bottom corner of tile
-		int botX = topX;
-		int botY = topY + tile_height;
-		// left corner of tile
-		int leftX = topX - tile_width / 2;
-		int leftY = topY + tile_height / 2;
-		// right corner of tile
-		int rightX = topX + tile_width / 2;
-		int rightY = topY + tile_height / 2;
-
-		// Create a polygon to draw tile
-		int[] xPoints = { topX, rightX, botX, leftX };
-		int[] yPoints = { topY, rightY, botY, leftY };
-		Polygon poly = new Polygon(xPoints, yPoints, 4);
-
-		// Clips the isometric tile shape around the image about to be drawn
-		g.setClip(poly);
-
-		switch (tile.getType()) {
-		case SAND:
-			g.drawImage(GameAssets.getSandImage(), leftX, topY, tile_width, tile_height, null);
-			break;
-		case WATER:
-			g.drawImage(GameAssets.getWaterImage(), leftX, topY, tile_width, tile_height, null);
-			break;
-		case GRASS:
-			g.drawImage(GameAssets.getGrassImage(), leftX, topY, tile_width, tile_height, null);
-			break;
-		case ROAD:
-			g.drawImage(GameAssets.getRoadImage(), leftX, topY, tile_width, tile_height, null);
-			break;
-		}
-		// reset clip
-		g.setClip(null);
-	}
 }
