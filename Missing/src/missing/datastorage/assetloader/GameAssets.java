@@ -8,6 +8,7 @@
  * 	15 Sep 16		Chris Rabe			moved loading the node files here
  * 	16 Sep 16		Casey Huang			Updated class with new images added
  * 	19 Sep 16		Casey Huang			Added all the other item images
+ *  27 Sep 16		Linus Go			added player images.
  */
 
 package missing.datastorage.assetloader;
@@ -31,7 +32,18 @@ public class GameAssets {
 	private static final String WORLD_FILE_PATH = STORAGE_PATH + "/files/nodes/";
 
 	// Image assets
-
+	
+	private static BufferedImage playerEastImage;
+	
+	private static BufferedImage playerWestImage;
+	
+	private static BufferedImage playerSouthImage;
+	
+	private static BufferedImage playerNorthImage;
+	
+	
+	
+	
 	private static BufferedImage sandImage;
 
 	private static BufferedImage waterImage;
@@ -82,7 +94,52 @@ public class GameAssets {
 	}
 
 	// getters for the image assets
-
+	
+	public static BufferedImage getPlayerNorthImage(){
+		if (playerNorthImage == null) {
+			try {
+				playerNorthImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playernorth.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return playerNorthImage;
+	}
+	
+	public static BufferedImage getPlayerSouthImage(){
+		if (playerSouthImage == null) {
+			try {
+				playerSouthImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playersouth.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return playerSouthImage;
+	}
+	
+	public static BufferedImage getPlayerEastImage(){
+		if (playerEastImage == null) {
+			try {
+				playerEastImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playereast.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return playerEastImage;
+	}
+	
+	public static BufferedImage getPlayerWestImage(){
+		if (playerWestImage == null) {
+			try {
+				playerWestImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playerwest.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return playerWestImage;
+	}
+	
+	
 	public static BufferedImage getSandImage() {
 		if (sandImage == null) {
 			try {
