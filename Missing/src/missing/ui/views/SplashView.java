@@ -34,7 +34,7 @@ public class SplashView extends View {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		controller.changeView(controller.getGameView()); // change to main Menu
+		controller.changeView(controller.getPlayGameView()); // change to main Menu
 	}
 
 	@Override

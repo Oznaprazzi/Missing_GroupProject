@@ -164,6 +164,7 @@ public class VControl extends JFrame {
 	}
 	public void setGGame(GGame gGame){
 		this.gGame = gGame;
+		views[3].initialise();
 	}
 	
 	public int getPlayerID() {
@@ -173,7 +174,13 @@ public class VControl extends JFrame {
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
 	}
-
+	
+	@Override
+	public void repaint(){
+		super.repaint();
+//		this.views[cur].repaint();
+	}
+	
 	public static void main(String[] args) {
 		new VControl(); // Run to test views
 	}
