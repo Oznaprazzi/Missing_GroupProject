@@ -10,6 +10,7 @@
  *  22 Sep 16			Chris Rabe				implemented performAction method
  *  22 Sep 16			Chris Rabe				implemented rotation method
  *  27 Sep 16			Chris Rabe				upgraded game logic
+ *  27 Sep 16			Chris Rabe				implemented spawn points
  */
 
 package missing.game;
@@ -20,6 +21,7 @@ import java.awt.Point;
 import java.util.List;
 
 import missing.datastorage.assetloader.XMLHandler;
+import missing.datastorage.initialisers.WorldInitialiser;
 import missing.game.characters.Player;
 import missing.game.items.Item;
 import missing.game.items.movable.Movable;
@@ -38,12 +40,30 @@ import missing.helper.SignalException;
  * 
  */
 public class Game {
+
+	/**
+	 * This class stores information of all the available spawn area for the
+	 * map. Since the map is always the same for each game, then it is safe to
+	 * create pre-defined set of points.
+	 */
+	public static class Spawn {
+		public Point worldLocation;
+		public Point tileLocation;
+
+		public Spawn(Point worldLocation, Point tileLocation) {
+			this.worldLocation = worldLocation;
+			this.tileLocation = tileLocation;
+		}
+	}
+
 	private Player[] avatars;
 	private World world;
+	private List<Spawn> spawns;
 
 	public Game(Player[] avatars) throws GameException {
 		this.avatars = avatars;
 		this.world = new World();
+		this.spawns = WorldInitialiser.getSpawnPoints();
 		distributeItems(XMLHandler.getItemsFromFile());
 	}
 
@@ -55,6 +75,10 @@ public class Game {
 
 	public Player[] getAvatars() {
 		return avatars;
+	}
+
+	public List<Spawn> getSpawns() {
+		return spawns;
 	}
 
 	// Methods for interacting with the game
@@ -157,6 +181,20 @@ public class Game {
 		Point[] tLoc = getNewLocations(player, dCoords[0], dCoords[1], player.getOrientation());
 		WorldTile tile = world.getWorldNodes()[tLoc[0].y][tLoc[0].x].getWorldTiles()[tLoc[1].y][tLoc[1].x];
 		return tile.getObject();
+	}
+
+	/**
+	 * This converts the player with the given id to a pile of items. This
+	 * method should be called to handle client disconnection from the server.
+	 * 
+	 * @param id
+	 */
+	public void convertPlayerToPile(int id) {
+		Player player = avatars[id];
+		Point wLoc = player.getWorldLocation();
+		Point tLoc = player.getTileLocation();
+		WorldTile tile = world.getWorldNodes()[wLoc.y][wLoc.x].getWorldTiles()[tLoc.y][tLoc.x];
+		tile.convertPlayerToPile(player);
 	}
 
 	// Helper methods

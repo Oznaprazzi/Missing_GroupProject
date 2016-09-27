@@ -26,12 +26,10 @@ public class FishArea extends Source{
 	private static final int FISH_CHANCE = 70;
 	public FishArea(Point worldLocation, Point tileLocation) {
 		super("Fish Area", "Can get fish", worldLocation, tileLocation, null);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void performAction(Player p) throws GameException {
-		// TODO Auto-generated method stub
 		Tool fishingRod = p.getTool(ToolType.FISHINGROD);
 		if (fishingRod == null){
 			throw new GameException("You must have a fishing rod to fish");

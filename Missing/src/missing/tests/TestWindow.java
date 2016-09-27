@@ -207,7 +207,7 @@ public class TestWindow extends JFrame implements KeyListener {
 				try {
 					moveEvent(0, Direction.NORTH);
 					gamePanel.revalidate();
-					gamePanel.updateNodeRender(); // TODO Added this!
+					gamePanel.updateNodeRender(); 
 					gamePanel.repaint();
 				} catch (GameException e1) {
 					e1.printStackTrace();
@@ -220,7 +220,7 @@ public class TestWindow extends JFrame implements KeyListener {
 				try {
 					moveEvent(0, Direction.SOUTH);
 					gamePanel.revalidate();
-					gamePanel.updateNodeRender(); // TODO Added this!
+					gamePanel.updateNodeRender();
 					gamePanel.repaint();
 				} catch (GameException e1) {
 					e1.printStackTrace();
@@ -233,7 +233,7 @@ public class TestWindow extends JFrame implements KeyListener {
 				try {
 					moveEvent(0, Direction.WEST);
 					gamePanel.revalidate();
-					gamePanel.updateNodeRender(); // TODO Added this!
+					gamePanel.updateNodeRender(); 
 					gamePanel.repaint();
 				} catch (GameException e1) {
 					e1.printStackTrace();
@@ -246,7 +246,7 @@ public class TestWindow extends JFrame implements KeyListener {
 				try {
 					moveEvent(0, Direction.EAST);
 					gamePanel.revalidate();
-					gamePanel.updateNodeRender(); // TODO Added this!
+					gamePanel.updateNodeRender(); 
 					gamePanel.repaint();				
 				} catch (GameException e1) {
 					e1.printStackTrace();
@@ -282,6 +282,8 @@ public class TestWindow extends JFrame implements KeyListener {
 			break;
 		case WEST:
 			gameinstance.movePlayer(playerID, Direction.WEST);
+			break;
+		default:
 			break;
 		}
 		updateTextBarPositions();

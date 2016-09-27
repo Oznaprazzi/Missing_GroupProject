@@ -39,7 +39,7 @@ import missing.ui.controller.VControl.View;
  * running, this will be shown.
  */
 @SuppressWarnings("serial")
-public class GamePanel extends JPanel {
+public class GamePanel extends View {
 
 	private GWorld graphicWorld;
 	private Point curPoint;
@@ -54,11 +54,8 @@ public class GamePanel extends JPanel {
 	 * @param World
 	 *            w
 	 */
-	public GamePanel(VControl controller, World w) {
-		graphicWorld = controller.getGGame().getGWorld();
-		// TODO: need getCurPlayer
-		curPoint = controller.getGGame().getGame().getAvatars()[0].getWorldLocation();
-		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
+	public GamePanel(VControl controller) {
+		super(controller);
 	}
 
 	/******
@@ -66,6 +63,7 @@ public class GamePanel extends JPanel {
 	 *********/
 
 	public GamePanel(Game game, Player currentPlayer) {
+		super(null);
 		try {
 			graphicWorld = new GWorld(game.getWorld(), new View(null) {
 
@@ -110,12 +108,28 @@ public class GamePanel extends JPanel {
 	 */
 	@Override
 	public void paint(Graphics g) {
+		if (curGWNode==null)return;
 		curGWNode.setNodeSize(Math.min(this.getWidth(), this.getHeight()));
 		try {
 			curGWNode.draw(g, 0, 0);
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void initialise() {
+		graphicWorld = controller.getGGame().getGWorld();
+		// TODO: need getCurPlayer
+		curPoint = controller.getGGame().getGame().getAvatars()[0].getWorldLocation();
+		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
+		
+	}
+
+	@Override
+	public void setFocus() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
