@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
-import missing.ui.menustyle.MenuComponent;
+import missing.ui.menustyle.MenuFactory;
 
 public class LobbyView extends View{
 	private JPanel playerTablePanel;
@@ -37,7 +37,7 @@ public class LobbyView extends View{
 		createPlayerTablePanel();
 		createButtonsPanel();
 		
-		JLabel title = MenuComponent.createHeading("Lobby");
+		JLabel title = MenuFactory.createHeading("Lobby");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		

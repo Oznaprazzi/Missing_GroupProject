@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
 import missing.networking.NetworkingHelper;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
-import missing.ui.menustyle.MenuComponent;
+import missing.ui.menustyle.MenuFactory;
 /**
  * Displays the view for entering details for joining a game
  *
@@ -64,7 +64,7 @@ public class JoinGameView extends View{
 		GridBagConstraints c = new GridBagConstraints();
 		createCentrePanel();
 
-		JLabel title = MenuComponent.createHeading("Join Game");
+		JLabel title = MenuFactory.createHeading("Join Game");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		c.gridx = 0;
@@ -109,16 +109,16 @@ public class JoinGameView extends View{
 		layout.setHgap(20);
 		gameInfoPanel = new JPanel(layout);
 		// Create labels
-		JLabel playerNameLabel = MenuComponent.createLabel("Player Name");
-		JLabel IPLabel = MenuComponent.createLabel("IP Address");
-		JLabel portLabel = MenuComponent.createLabel("Port");
+		JLabel playerNameLabel = MenuFactory.createLabel("Player Name");
+		JLabel IPLabel = MenuFactory.createLabel("IP Address");
+		JLabel portLabel = MenuFactory.createLabel("Port");
 		playerNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		IPLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		portLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		// Create text fields
-		playerNameEntry = MenuComponent.createTextField(150);
-		IPEntry = MenuComponent.createTextField(150);
-		portEntry = MenuComponent.createTextField(150);
+		playerNameEntry = MenuFactory.createTextField(150);
+		IPEntry = MenuFactory.createTextField(150);
+		portEntry = MenuFactory.createTextField(150);
 
 		gameInfoPanel.add(playerNameLabel);
 		gameInfoPanel.add(playerNameEntry);
@@ -139,7 +139,7 @@ public class JoinGameView extends View{
 		buttonPanel.setOpaque(false);
 		
 		//Create join button
-		JButton btnStartServer = MenuComponent.createButton("Join");
+		JButton btnStartServer = MenuFactory.createButton("Join");
 		btnStartServer.addActionListener(e -> {
 			if (setInputs()){
 				try {
@@ -152,7 +152,7 @@ public class JoinGameView extends View{
 		});
 		
 		//Create back button
-		JButton btnBack = MenuComponent.createButton("Back");
+		JButton btnBack = MenuFactory.createButton("Back");
 		btnBack.addActionListener(e -> {
 			controller.changeView(controller.getPlayGameView());
 		});
