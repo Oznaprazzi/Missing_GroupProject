@@ -101,6 +101,12 @@ public class VControl extends JFrame {
 	public int getJoinGameView() {
 		return 6;
 	}
+	public int getLobbyView() {
+		return 7;
+	}
+	public int getClientWaitingView(){
+		return 8;
+	}
 
 	public int getPrevious() {
 		return prev;
