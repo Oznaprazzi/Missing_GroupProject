@@ -22,7 +22,7 @@ import missing.game.world.World;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 
-public class playerMovingTests {
+public class PlayerMovingTests {
 	
 	public static void main(String args[]){
 		//movingTests_1();
