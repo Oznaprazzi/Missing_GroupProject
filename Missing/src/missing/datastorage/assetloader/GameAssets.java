@@ -8,6 +8,7 @@
  * 	15 Sep 16		Chris Rabe			moved loading the node files here
  * 	16 Sep 16		Casey Huang			Updated class with new images added
  * 	19 Sep 16		Casey Huang			Added all the other item images
+ *  27 Sep 16       Casey Huang			Added more images
  */
 
 package missing.datastorage.assetloader;
@@ -160,10 +161,11 @@ public class GameAssets {
 		return fireplaceImage;
 	}
 
-	public static BufferedImage getTreeImage() {
+	public static BufferedImage getTreeImage(int num) {
+		String imageNm = "tree" + String.valueOf(num);
 		if (treeImage == null) {
 			try {
-				treeImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/tree.png"));
+				treeImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/"+ imageNm +".png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
