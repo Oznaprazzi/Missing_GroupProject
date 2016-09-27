@@ -138,16 +138,16 @@ public class GWTile {
 		if(tileobj instanceof Player){
 		switch(tileobj.getOrientation()){
 		case NORTH:
-			g.drawImage(GameAssets.getPlayerNorthImage(), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
+			g.drawImage(GameAssets.getPlayerNorthImage("boy"), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
 			break;
 		case SOUTH:
-			g.drawImage(GameAssets.getPlayerSouthImage(), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
+			g.drawImage(GameAssets.getPlayerSouthImage("boy"), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
 			break;
 		case EAST:
-			g.drawImage(GameAssets.getPlayerEastImage(), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
+			g.drawImage(GameAssets.getPlayerEastImage("boy"), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
 			break;
 		case WEST:
-			g.drawImage(GameAssets.getPlayerWestImage(), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
+			g.drawImage(GameAssets.getPlayerWestImage("boy"), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
 			break;
 		default:
 			break;

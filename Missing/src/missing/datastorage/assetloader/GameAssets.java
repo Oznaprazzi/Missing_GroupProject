@@ -10,6 +10,7 @@
  * 	19 Sep 16		Casey Huang			Added all the other item images
  *  27 Sep 16       Casey Huang			Added more images
  *  27 Sep 16		Linus Go			added player images.
+ *  27 Sep 16		Casey Huang			Added girl player images.
  */
 
 package missing.datastorage.assetloader;
@@ -33,18 +34,18 @@ public class GameAssets {
 	private static final String WORLD_FILE_PATH = STORAGE_PATH + "/files/nodes/";
 
 	// Image assets
-	
+
 	private static BufferedImage playerEastImage;
-	
+
 	private static BufferedImage playerWestImage;
-	
+
 	private static BufferedImage playerSouthImage;
-	
+
 	private static BufferedImage playerNorthImage;
-	
-	
-	
-	
+
+
+
+
 	private static BufferedImage sandImage;
 
 	private static BufferedImage waterImage;
@@ -86,7 +87,7 @@ public class GameAssets {
 	private static BufferedImage fishImage;
 
 	private static BufferedImage berriesImage;
-	
+
 	private static BufferedImage bagBackgroundImage;
 	// Getters for File Assets
 
@@ -95,52 +96,68 @@ public class GameAssets {
 	}
 
 	// getters for the image assets
-	
-	public static BufferedImage getPlayerNorthImage(){
+
+	public static BufferedImage getPlayerNorthImage(String gender){
 		if (playerNorthImage == null) {
 			try {
-				playerNorthImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playernorth.png"));
+				if(gender.equalsIgnoreCase("girl")){
+					playerNorthImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/"+gender+"playernorth.png"));
+				}else{
+					playerNorthImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playernorth.png"));
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		return playerNorthImage;
 	}
-	
-	public static BufferedImage getPlayerSouthImage(){
+
+	public static BufferedImage getPlayerSouthImage(String gender){
 		if (playerSouthImage == null) {
 			try {
-				playerSouthImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playersouth.png"));
+				if(gender.equalsIgnoreCase("girl")){
+					playerSouthImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/"+gender+"playersouth.png"));
+				}else{
+					playerSouthImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playersouth.png"));
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		return playerSouthImage;
 	}
-	
-	public static BufferedImage getPlayerEastImage(){
+
+	public static BufferedImage getPlayerEastImage(String gender){
 		if (playerEastImage == null) {
 			try {
-				playerEastImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playereast.png"));
+				if(gender.equalsIgnoreCase("girl")){
+					playerEastImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/"+gender+"playereast.png"));
+				}else{
+					playerEastImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playereast.png"));
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		return playerEastImage;
 	}
-	
-	public static BufferedImage getPlayerWestImage(){
+
+	public static BufferedImage getPlayerWestImage(String gender){
 		if (playerWestImage == null) {
 			try {
-				playerWestImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playerwest.png"));
+				if(gender.equalsIgnoreCase("girl")){
+					playerWestImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/"+gender+"playerwest.png"));
+				}else{
+					playerWestImage= ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playerwest.png"));
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		return playerWestImage;
 	}
-	
-	
+
+
 	public static BufferedImage getSandImage() {
 		if (sandImage == null) {
 			try {
@@ -350,7 +367,7 @@ public class GameAssets {
 		}
 		return darkGrassImage;
 	}
-	
+
 	public static BufferedImage getBerriesImage() {
 		if (berriesImage == null) {
 			try {
@@ -372,7 +389,7 @@ public class GameAssets {
 		}
 		return fishImage;
 	}
-	
+
 	public static BufferedImage getBagBackgroundImage() {
 		if (bagBackgroundImage == null) {
 			try {
@@ -383,6 +400,6 @@ public class GameAssets {
 		}
 		return bagBackgroundImage;
 	}
-	
-	
+
+
 }
