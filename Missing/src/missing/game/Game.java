@@ -9,6 +9,7 @@
  *  19 Sep 16			Chris Rabe				created moving method
  *  22 Sep 16			Chris Rabe				implemented performAction method
  *  22 Sep 16			Chris Rabe				implemented rotation method
+ *  27 Sep 16			Chris Rabe				upgraded game logic
  */
 
 package missing.game;
@@ -309,19 +310,24 @@ public class Game {
 		Point oldWLoc = player.getWorldLocation();
 		Point oldTLoc = player.getTileLocation();
 		WorldTile tile = world.getWorldNodes()[oldWLoc.y][oldWLoc.x].getWorldTiles()[oldTLoc.y][oldTLoc.x];
-		tile.setObject(null);
+		if (tile.getObject() instanceof Pile) {
+			tile.removePlayerFromPile();
+		} else {
+			tile.setObject(null);
+		}
 		// Now we move the player...
 		tile = world.getWorldNodes()[wLoc.y][wLoc.x].getWorldTiles()[tLoc.y][tLoc.x];
-		// If there is an item, add it to the player's pocket.
-		if (tile.isOccupied()) {
-			
-		}
 		// Change the player's position
 		player.setWorldLocation(wLoc);
 		player.setTileLocation(tLoc);
-		tile.setObject(player);
 		// Change the player's orientation
 		player.setOrientation(direction);
+		// If there is an item, add the player to the pile
+		if (tile.isOccupied()) {
+			tile.addPlayerToPile(player);
+		} else {
+			tile.setObject(player);
+		}
 	}
 
 	/**

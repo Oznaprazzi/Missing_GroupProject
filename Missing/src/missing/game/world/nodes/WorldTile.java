@@ -101,7 +101,11 @@ public class WorldTile {
 
 		public Pile(TileObject object) {
 			items = new ArrayList<TileObject>();
-			this.items.add(object);
+			if (object instanceof Player) {
+				this.player = object;
+			} else {
+				this.items.add(object);
+			}
 			this.worldLocation = object.getWorldLocation();
 			this.tileLocation = object.getTileLocation();
 		}
@@ -159,6 +163,10 @@ public class WorldTile {
 
 		// Methods
 
+		public boolean hasPlayer() {
+			return player != null;
+		}
+
 		public TileObject getPlayer() {
 			return player;
 		}
@@ -170,6 +178,10 @@ public class WorldTile {
 		/** Adds the item to the pile of items */
 		public void addItem(TileObject item) {
 			items.add(item);
+		}
+
+		public void addAllItems(List<? extends TileObject> item) {
+			items.addAll(item);
 		}
 
 		public List<TileObject> getItems() {
@@ -222,6 +234,11 @@ public class WorldTile {
 	}
 
 	public TileObject getObject() {
+		if (object instanceof Pile) {
+			if (((Pile) object).hasPlayer()) {
+				return ((Pile) object).getPlayer();
+			}
+		}
 		return object;
 	}
 
@@ -246,20 +263,12 @@ public class WorldTile {
 	}
 
 	/**
-	 * Creates a pile so that multiple items can be stored within the tile.
-	 */
-	public void createPile() {
-		Pile tmp = new Pile(this.object);
-		this.object = tmp;
-	}
-
-	/**
 	 * Removes the player from the pile. If the pile only has one item, it
 	 * retrieves that item from the pile, reverts the pile object into an item.
 	 * This method assumes that the current object field is an instance of Pile.
 	 */
 	public void removePlayerFromPile() {
-		// Sanity check
+		// Sanity check - must have pile
 		if (object instanceof Pile) {
 			Pile pile = (Pile) object;
 			pile.setPlayer(null);
@@ -277,7 +286,14 @@ public class WorldTile {
 	 * field is converted into a pile and the player is inserted into the pile.
 	 */
 	public void addPlayerToPile(Player player) {
-
+		// Sanity check - must have pile
+		if (object instanceof Pile) {
+			Pile pile = (Pile) object;
+			pile.setPlayer(player);
+		} else {
+			createPile();
+			addPlayerToPile(player);
+		}
 	}
 
 	/**
@@ -285,7 +301,32 @@ public class WorldTile {
 	 * the pile and then adds the passed item into the new pile.
 	 */
 	public void addObjectToPile(TileObject item) {
+		// Sanity check - must have pile
+		if (object instanceof Pile) {
+			Pile pile = (Pile) object;
+			pile.addItem(item);
+		} else {
+			createPile();
+			addObjectToPile(item);
+		}
+	}
 
+	/**
+	 * This method should be called whenever a player disconnects from the game.
+	 * It turns the player into a pile of items.
+	 * 
+	 * @param player
+	 */
+	public void convertPlayerToPile(Player player) {
+		// Sanity check - must have pile
+		if (object instanceof Pile) {
+			Pile pile = (Pile) object;
+			pile.addAllItems(player.getPocket());
+			pile.addAllItems(player.getBag().getItems());
+		} else {
+			createPile();
+			convertPlayerToPile(player);
+		}
 	}
 
 	/**
@@ -305,6 +346,14 @@ public class WorldTile {
 	}
 
 	// Helper methods
+
+	/**
+	 * Creates a pile so that multiple items can be stored within the tile.
+	 */
+	private void createPile() {
+		Pile tmp = new Pile(this.object);
+		this.object = tmp;
+	}
 
 	private boolean determineEnterable() {
 		if (object == null && type != TileType.WATER) {
