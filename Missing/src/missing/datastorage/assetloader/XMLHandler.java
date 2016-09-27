@@ -93,9 +93,13 @@ public class XMLHandler {
 		List<Item> trees = parseTrees(worldLocation, doc, xPath, expression);
 		List<Item> bushes = parseBushes(worldLocation, doc, xPath, expression);
 		List<Item> rocks = parseRocks(worldLocation, doc, xPath, expression);
+		// TODO Parse Soil
+		// TODO Parse FishArea
 		// TODO Parse Shop
 		// TODO Parse Fireplace
+		// TODO Parse Pile
 		// Parse movable objects
+		// TODO Parse Dirt
 		// TODO Parse Wood
 		// TODO Parse Stone
 		// TODO Parse Food

@@ -28,7 +28,6 @@ public class Soil extends Source {
 
 	@Override
 	public void performAction(Player p) throws GameException {
-		// TODO Auto-generated method stub
 		int numDirtTaking = 0;// amount of Dirt they are trying to take from
 		// this tree
 		Tool playersTool = p.getTool(ToolType.SHOVEL); // gets the axe from the
@@ -41,7 +40,7 @@ public class Soil extends Source {
 			// broken, so we need to
 			// remove it
 		} else {
-			numDirtTaking = 1; // doesnt have axe, so can only take one wood
+			numDirtTaking = 1; // doesnt have axe, so can only take one dirt
 			p.setHealth(p.getHealth() - 1);
 		} // should reduce health if they are breaking it with their hands
 
