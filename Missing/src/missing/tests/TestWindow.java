@@ -49,6 +49,8 @@ public class TestWindow extends JFrame implements KeyListener {
 	private JLabel lblPlayerOrientation;
 	private JLabel lblPlayerTilePos;
 	private JLabel lblPlayerWorldPos;
+	private JButton btnTurnL;
+	private JButton btnTurnR;
 	private JButton btnUp;
 	private JButton btnDown;
 	private JButton btnLeft;
@@ -60,6 +62,7 @@ public class TestWindow extends JFrame implements KeyListener {
 	private Game gameinstance;
 	// Holds the gamePanel renderer.
 	private GamePanel gamePanel;
+	
 	
 	public TestWindow(Game game, World w, Player p) {
 		super("Test Panel");
@@ -83,9 +86,9 @@ public class TestWindow extends JFrame implements KeyListener {
 		GridBagLayout gbl_panel = new GridBagLayout();
 
 		gbl_panel.columnWidths = new int[] { 89, 0 };
-		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
 
 		JLabel lblCurrentPlayer = new JLabel("Current Player");
@@ -106,11 +109,25 @@ public class TestWindow extends JFrame implements KeyListener {
 		panel.add(nameField, gbc_txtName);
 		nameField.setColumns(10);
 		
+		btnTurnL = new JButton("TL");
+		GridBagConstraints gbc_btnTurnL = new GridBagConstraints();
+		gbc_btnTurnL.insets = new Insets(0, 0, 5, 0);
+		gbc_btnTurnL.gridx = 0;
+		gbc_btnTurnL.gridy = 3;
+		panel.add(btnTurnL, gbc_btnTurnL);
+		
+		btnTurnR = new JButton("TR");
+		GridBagConstraints gbc_btnTurnR = new GridBagConstraints();
+		gbc_btnTurnR.insets = new Insets(0, 0, 5, 0);
+		gbc_btnTurnR.gridx = 0;
+		gbc_btnTurnR.gridy = 4;
+		panel.add(btnTurnR, gbc_btnTurnR);
+		
 		lblPlayerWorldPos = new JLabel("Player Tile Pos");
 		GridBagConstraints gbc_lblPlayerWorldPos = new GridBagConstraints();
 		gbc_lblPlayerWorldPos.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPlayerWorldPos.gridx = 0;
-		gbc_lblPlayerWorldPos.gridy = 3;
+		gbc_lblPlayerWorldPos.gridy = 5;
 		panel.add(lblPlayerWorldPos, gbc_lblPlayerWorldPos);
 		
 		tilePos = new JTextField();
@@ -118,7 +135,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 0;
-		gbc_textField.gridy = 4;
+		gbc_textField.gridy = 6;
 		panel.add(tilePos, gbc_textField);
 		tilePos.setColumns(10);
 		
@@ -126,7 +143,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		GridBagConstraints gbc_lblPlayerTilePos = new GridBagConstraints();
 		gbc_lblPlayerTilePos.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPlayerTilePos.gridx = 0;
-		gbc_lblPlayerTilePos.gridy = 5;
+		gbc_lblPlayerTilePos.gridy = 7;
 		panel.add(lblPlayerTilePos, gbc_lblPlayerTilePos);
 		
 		worldPos = new JTextField();
@@ -134,7 +151,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_1.gridx = 0;
-		gbc_textField_1.gridy = 6;
+		gbc_textField_1.gridy = 8;
 		panel.add(worldPos, gbc_textField_1);
 		worldPos.setColumns(10);
 		
@@ -142,7 +159,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		GridBagConstraints gbc_lblPlayerOrientation = new GridBagConstraints();
 		gbc_lblPlayerOrientation.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPlayerOrientation.gridx = 0;
-		gbc_lblPlayerOrientation.gridy = 7;
+		gbc_lblPlayerOrientation.gridy = 9;
 		panel.add(lblPlayerOrientation, gbc_lblPlayerOrientation);
 		
 		playerOrientation = new JTextField();
@@ -151,21 +168,21 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_orientationField.insets = new Insets(0, 0, 5, 0);
 		gbc_orientationField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_orientationField.gridx = 0;
-		gbc_orientationField.gridy = 8;
+		gbc_orientationField.gridy = 10;
 		panel.add(playerOrientation, gbc_orientationField);
 		
 		btnViewMap = new JButton("View Map");
 		GridBagConstraints gbc_btnViewMap = new GridBagConstraints();
 		gbc_btnViewMap.insets = new Insets(0, 0, 5, 0);
 		gbc_btnViewMap.gridx = 0;
-		gbc_btnViewMap.gridy = 9;
+		gbc_btnViewMap.gridy = 11;
 		panel.add(btnViewMap, gbc_btnViewMap);
 		
 		JButton btnPlayersBag = new JButton("Players Bag");
 		GridBagConstraints gbc_btnPlayersBag = new GridBagConstraints();
 		gbc_btnPlayersBag.insets = new Insets(0, 0, 5, 0);
 		gbc_btnPlayersBag.gridx = 0;
-		gbc_btnPlayersBag.gridy = 10;
+		gbc_btnPlayersBag.gridy = 12;
 		panel.add(btnPlayersBag, gbc_btnPlayersBag);
 		
 		JLayeredPane layeredPane = new JLayeredPane();
@@ -173,7 +190,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		GridBagConstraints gbc_layeredPane = new GridBagConstraints();
 		gbc_layeredPane.fill = GridBagConstraints.BOTH;
 		gbc_layeredPane.gridx = 0;
-		gbc_layeredPane.gridy = 11;
+		gbc_layeredPane.gridy = 13;
 		panel.add(layeredPane, gbc_layeredPane);
 
 		btnUp = new JButton("Up");
@@ -258,6 +275,22 @@ public class TestWindow extends JFrame implements KeyListener {
 				System.out.println("I'm supposed to do something cool!");
 			}
 		});
+		
+		btnTurnL.addActionListener(e->{
+			try{
+				rotateEvent(0, Direction.WEST);
+			}catch(GameException ex){
+				ex.printStackTrace();
+			}
+		});
+		
+		btnTurnR.addActionListener(e->{
+			try{
+				rotateEvent(0, Direction.EAST);
+			}catch(GameException ex){
+				ex.printStackTrace();
+			}
+		});
 	}
 
 
@@ -291,7 +324,32 @@ public class TestWindow extends JFrame implements KeyListener {
 		gamePanel.updateNodeRender();
 		gamePanel.repaint();
 	}
-
+	
+	/**
+	 * Call this method if you want the current player to rotate in the opposite direction.
+	 * @param playerID
+	 * @param dir
+	 * @throws GameException
+	 */
+	private void rotateEvent(int playerID, Direction dir) throws GameException{
+		switch(dir){
+		case NORTH: case SOUTH:
+			throw new GameException("Can't rotate a player if they're moving left or right!");
+		case EAST:
+		gameinstance.turnPlayer(playerID, Direction.EAST);
+		break;
+		case WEST:
+		gameinstance.turnPlayer(playerID, Direction.WEST);
+		break;
+		}
+		updateTextBarPositions();
+		gamePanel.revalidate();
+		gamePanel.updateNodeRender();
+		gamePanel.repaint();
+	}
+	
+	
+	
 	
 	private void updateTextBarPositions(){
 		tilePos.setText("x: " + curPlayer.getTileLocation().getX() + " y: " + curPlayer.getTileLocation().getY());
@@ -322,6 +380,12 @@ public class TestWindow extends JFrame implements KeyListener {
 				break;
 			case KeyEvent.VK_LEFT: case KeyEvent.VK_A:
 				moveEvent(0, Direction.WEST);
+				break;
+			case KeyEvent.VK_E:
+				rotateEvent(0, Direction.EAST);
+				break;
+			case KeyEvent.VK_Q:
+				rotateEvent(0, Direction.WEST);
 				break;
 			}
 		}catch(GameException g){
