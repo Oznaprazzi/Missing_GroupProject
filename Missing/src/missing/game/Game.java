@@ -18,6 +18,7 @@ package missing.game;
 import static missing.datastorage.initialisers.WorldInitialiser.NODE_SIZE;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.List;
 
 import missing.datastorage.assetloader.XMLHandler;
@@ -39,14 +40,23 @@ import missing.helper.SignalException;
  * 
  * 
  */
-public class Game {
+public class Game implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8190730673024776187L;
+
 
 	/**
 	 * This class stores information of all the available spawn area for the
 	 * map. Since the map is always the same for each game, then it is safe to
 	 * create pre-defined set of points.
 	 */
-	public static class Spawn {
+	public static class Spawn implements Serializable{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 8627976199088194793L;
 		public Point worldLocation;
 		public Point tileLocation;
 

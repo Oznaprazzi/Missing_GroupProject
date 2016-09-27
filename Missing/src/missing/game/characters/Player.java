@@ -16,6 +16,7 @@
 package missing.game.characters;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import missing.helper.SignalException;
  * This class represents individual players within the game world.
  */
 public class Player extends Character {
+
 
 	/** Represents the maximum number of items which the player could have. */
 	private final int MAX_ITEM_SIZE = 10;
