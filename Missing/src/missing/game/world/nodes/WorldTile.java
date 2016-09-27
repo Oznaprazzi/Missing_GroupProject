@@ -11,14 +11,15 @@
  *  8 Sep 16		Chris Rabe			added methods inside the TileObject interface
  *  18 Sep 16		Chris Rabe			can now receive distributed item
  *  23 Sep 16		Casey Huang			put if statement after item is assigned in getDistributedObject method
+ *  27 Sep 16		Chris Rabe			created Pile class
  */
 package missing.game.world.nodes;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 
 import missing.game.characters.Player;
-import missing.game.items.movable.Movable;
 import missing.game.items.nonmovable.NonMovable;
 import missing.helper.GameException;
 import missing.helper.SignalException;
@@ -83,67 +84,109 @@ public class WorldTile {
 		 */
 		public void performAction(Player player) throws GameException, SignalException;
 	}
-	
-	public class PileObject implements TileObject{
 
-		public ArrayList<Movable> items;
-		public Player player;
-		
+	/**
+	 * This class is created if the player wants to step inside the tile and
+	 * there is an object inside it. This class is contained inside the
+	 * WorldTile class because it is a class created for additional
+	 * functionality.
+	 */
+	public static class Pile implements TileObject {
+
+		private Point worldLocation;
+		private Point tileLocation;
+
+		private TileObject player = null;
+		private List<TileObject> items = null;
+
+		public Pile(TileObject object) {
+			items = new ArrayList<TileObject>();
+			if (object instanceof Player) {
+				this.player = object;
+			} else {
+				this.items.add(object);
+			}
+			this.worldLocation = object.getWorldLocation();
+			this.tileLocation = object.getTileLocation();
+		}
+
+		// Implemented Methods
+
 		@Override
 		public String getName() {
-			// TODO Auto-generated method stub
-			return null;
+			return "Pile";
 		}
 
 		@Override
 		public String getDescription() {
-			// TODO Auto-generated method stub
-			return null;
+			return "A pile of items";
 		}
 
 		@Override
 		public Point getTileLocation() {
-			// TODO Auto-generated method stub
-			return null;
+			return tileLocation;
 		}
 
 		@Override
 		public void setTileLocation(Point tileLocation) {
-			// TODO Auto-generated method stub
-			
+			this.tileLocation = tileLocation;
 		}
 
 		@Override
 		public Point getWorldLocation() {
-			// TODO Auto-generated method stub
-			return null;
+			return worldLocation;
 		}
 
 		@Override
 		public void setWorldLocation(Point worldLocation) {
-			// TODO Auto-generated method stub
-			
+			this.worldLocation = worldLocation;
 		}
 
 		@Override
 		public Direction getOrientation() {
-			// TODO Auto-generated method stub
-			return null;
+			return Direction.SOUTH;
 		}
 
 		@Override
 		public Direction getApproach() {
-			// TODO Auto-generated method stub
-			return null;
+			return Direction.ALL;
 		}
 
 		@Override
 		public void performAction(Player player) throws GameException, SignalException {
-			// TODO Auto-generated method stub
-			
+			if (this.player != null) {
+				this.player.performAction(player);
+			} else {
+				throw new SignalException("PILE");
+			}
 		}
-		
-		
+
+		// Methods
+
+		public boolean hasPlayer() {
+			return player != null;
+		}
+
+		public TileObject getPlayer() {
+			return player;
+		}
+
+		public void setPlayer(TileObject player) {
+			this.player = player;
+		}
+
+		/** Adds the item to the pile of items */
+		public void addItem(TileObject item) {
+			items.add(item);
+		}
+
+		public void addAllItems(List<? extends TileObject> item) {
+			items.addAll(item);
+		}
+
+		public List<TileObject> getItems() {
+			return items;
+		}
 	}
 
 	/**
@@ -191,6 +234,11 @@ public class WorldTile {
 	}
 
 	public TileObject getObject() {
+		if (object instanceof Pile) {
+			if (((Pile) object).hasPlayer()) {
+				return ((Pile) object).getPlayer();
+			}
+		}
 		return object;
 	}
 
@@ -206,7 +254,79 @@ public class WorldTile {
 
 	/** Specifies whether or not the tile is occupied */
 	public boolean isOccupied() {
-		return this.object != null;
+		return object != null;
+	}
+
+	/** this check needs to be performed when moving around the game */
+	public boolean hasPile() {
+		return object != null && object instanceof Pile;
+	}
+
+	/**
+	 * Removes the player from the pile. If the pile only has one item, it
+	 * retrieves that item from the pile, reverts the pile object into an item.
+	 * This method assumes that the current object field is an instance of Pile.
+	 */
+	public void removePlayerFromPile() {
+		// Sanity check - must have pile
+		if (object instanceof Pile) {
+			Pile pile = (Pile) object;
+			pile.setPlayer(null);
+			// now check if we can revert the pile to an object only
+			if (pile.getItems().isEmpty()) {
+				this.object = null;
+			} else if (pile.getItems().size() == 1) {
+				this.object = pile.getItems().get(0);
+			}
+		}
+	}
+
+	/**
+	 * Adds the player to the pile. If a pile is not created yet, the object
+	 * field is converted into a pile and the player is inserted into the pile.
+	 */
+	public void addPlayerToPile(Player player) {
+		// Sanity check - must have pile
+		if (object instanceof Pile) {
+			Pile pile = (Pile) object;
+			pile.setPlayer(player);
+		} else {
+			createPile();
+			addPlayerToPile(player);
+		}
+	}
+
+	/**
+	 * Adds the given item to the pile. If a pile is not created yet, it creates
+	 * the pile and then adds the passed item into the new pile.
+	 */
+	public void addObjectToPile(TileObject item) {
+		// Sanity check - must have pile
+		if (object instanceof Pile) {
+			Pile pile = (Pile) object;
+			pile.addItem(item);
+		} else {
+			createPile();
+			addObjectToPile(item);
+		}
+	}
+
+	/**
+	 * This method should be called whenever a player disconnects from the game.
+	 * It turns the player into a pile of items.
+	 * 
+	 * @param player
+	 */
+	public void convertPlayerToPile(Player player) {
+		// Sanity check - must have pile
+		if (object instanceof Pile) {
+			Pile pile = (Pile) object;
+			pile.addAllItems(player.getPocket());
+			pile.addAllItems(player.getBag().getItems());
+		} else {
+			createPile();
+			convertPlayerToPile(player);
+		}
 	}
 
 	/**
@@ -226,6 +346,14 @@ public class WorldTile {
 	}
 
 	// Helper methods
+
+	/**
+	 * Creates a pile so that multiple items can be stored within the tile.
+	 */
+	private void createPile() {
+		Pile tmp = new Pile(this.object);
+		this.object = tmp;
+	}
 
 	private boolean determineEnterable() {
 		if (object == null && type != TileType.WATER) {

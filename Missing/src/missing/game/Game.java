@@ -9,6 +9,7 @@
  *  19 Sep 16			Chris Rabe				created moving method
  *  22 Sep 16			Chris Rabe				implemented performAction method
  *  22 Sep 16			Chris Rabe				implemented rotation method
+ *  27 Sep 16			Chris Rabe				upgraded game logic
  */
 
 package missing.game;
@@ -24,6 +25,7 @@ import missing.game.items.Item;
 import missing.game.items.movable.Movable;
 import missing.game.world.World;
 import missing.game.world.nodes.WorldTile;
+import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
@@ -308,28 +310,24 @@ public class Game {
 		Point oldWLoc = player.getWorldLocation();
 		Point oldTLoc = player.getTileLocation();
 		WorldTile tile = world.getWorldNodes()[oldWLoc.y][oldWLoc.x].getWorldTiles()[oldTLoc.y][oldTLoc.x];
-		tile.setObject(null);
+		if (tile.getObject() instanceof Pile) {
+			tile.removePlayerFromPile();
+		} else {
+			tile.setObject(null);
+		}
 		// Now we move the player...
 		tile = world.getWorldNodes()[wLoc.y][wLoc.x].getWorldTiles()[tLoc.y][tLoc.x];
-		// If there is an item, add it to the player's pocket.
-		if (tile.isOccupied()) {
-			try {
-				player.addToPocket((Movable) tile.getObject());
-			} catch (GameException e) {
-				// If adding to pocket failed, add it to bag
-				try {
-					player.addToBag((Movable) tile.getObject());
-				} catch (GameException e1) {
-					// If it fails, player crushes the item with his weight
-				}
-			}
-		}
 		// Change the player's position
 		player.setWorldLocation(wLoc);
 		player.setTileLocation(tLoc);
-		tile.setObject(player);
 		// Change the player's orientation
 		player.setOrientation(direction);
+		// If there is an item, add the player to the pile
+		if (tile.isOccupied()) {
+			tile.addPlayerToPile(player);
+		} else {
+			tile.setObject(player);
+		}
 	}
 
 	/**
@@ -414,7 +412,7 @@ public class Game {
 		// Next check if the tile is occupied by an object
 		if (tile.isOccupied()) {
 			// Only movable objects can be walked over -- can pick them up
-			if (tile.getObject() != null && tile.getObject() instanceof Movable) {
+			if (tile.getObject() != null && (tile.getObject() instanceof Movable || tile.getObject() instanceof Pile)) {
 				return true;
 			}
 			return false;
