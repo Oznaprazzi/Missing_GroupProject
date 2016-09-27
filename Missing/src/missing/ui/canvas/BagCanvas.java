@@ -5,6 +5,7 @@
  * 	Date			Author				changes
  * 	26 Sep 16		Casey Huang			created BagCanvas class.
  *  26 Sep 16		Casey Huang			added drawGrid method and convertBagToSet method
+ *  27 Sep 16		Casey Huang			updated drawing methods and added rows and columns final static fields
  */
 package missing.ui.canvas;
 
@@ -13,7 +14,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -30,31 +31,27 @@ import missing.game.items.nonmovable.Bag;
  * Canvas used to display the Player's bag's items
  */
 public class BagCanvas extends Canvas{
-	/**
-	 * Bag of items to display
-	 */
+	/** Bag of items to display */
 	private Bag bag;
 
-	private Movable[][] bagGrid;
+	/** Contains the number of unique items in the bag */
+	private ArrayList<Movable> bagSet;
 
-	private HashSet<Movable> bagSet;
+	/** x position of item to be drawn. */
+	protected static final int X_OFFSET = 96;
 
-	/**
-	 * x position of item to be drawn.
-	 */
-	protected static final int X_OFFSET = 5;
-
-	/**
-	 * Y position of item.
-	 */
+	/** Y position of item. */
 	private static final int Y_OFFSET = 100;
 
 	private static final int size = 50;
+	
+	private static final int rows = 2;
+	
+	private static final int colunmns = 5;
 
 	public BagCanvas(Bag bag){
 		this.bag = bag;
-		bagSet = new HashSet<Movable>();
-		bagGrid = new Movable[bag.getItems().size()/10][10];
+		bagSet = new ArrayList<Movable>();
 		convertBagToSet();
 	}
 
@@ -65,6 +62,7 @@ public class BagCanvas extends Canvas{
 		g.setFont(serif);
 		g.setColor(Color.black);
 		g.drawString("Items in hand:", 10, 30);
+		this.drawGrid(g);
 		this.drawItems(g);
 	}
 
@@ -73,9 +71,9 @@ public class BagCanvas extends Canvas{
 		Font serif = new Font("Calisto MT", Font.BOLD, 10);
 		g.setFont(serif);
 		g.setColor(Color.black);
-		for(int i = 0; i < bagSet.size()/10; i++){
-			for(int j = 0; j < 10; j++){
-				Movable item = bag.getItems().get(count);
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < colunmns; j++){
+				Movable item = bagSet.get(count);
 				if(item instanceof Food){
 					if(((Food) item).getFoodType().equals(Food.FoodType.APPLE)){
 						g.drawImage(GameAssets.getAppleImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
@@ -101,12 +99,12 @@ public class BagCanvas extends Canvas{
 				}else if(item instanceof Wood){
 					g.drawImage(GameAssets.getWoodImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
 				}
-				g.drawString(String.valueOf(item.getCount()), X_OFFSET+j*size, Y_OFFSET+i*size);
+				g.drawString(String.valueOf(item.getCount()), X_OFFSET+2+j*size, Y_OFFSET+10+i*size);
 				if(j > 5){
 					j = 0;
 				}
 				count++;
-				if(count >= bag.getItems().size()){
+				if(count >= bagSet.size()){
 					return;
 				}
 			}
@@ -118,8 +116,8 @@ public class BagCanvas extends Canvas{
 	 * @param g
 	 */
 	private void drawGrid(Graphics g){
-		for(int i = 0; i < bagSet.size()/10; i++){
-			for(int j = 0; j < 10; j++){
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < colunmns; j++){
 				g.drawRect(X_OFFSET+j*size, Y_OFFSET+i*size, size, size);
 			}
 		}
@@ -138,7 +136,7 @@ public class BagCanvas extends Canvas{
 
 	@Override
 	public Dimension getPreferredSize(){
-		return new Dimension(682, 551);
+		return new Dimension(442, 409);
 	}
 
 }

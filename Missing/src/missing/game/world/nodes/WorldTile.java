@@ -116,6 +116,13 @@ public class WorldTile implements Serializable{
 			this.tileLocation = object.getTileLocation();
 		}
 
+		public Pile(Point worldLocation, Point tileLocation, TileObject player, List<TileObject> items) {
+			this.worldLocation = worldLocation;
+			this.tileLocation = tileLocation;
+			this.player = player;
+			this.items = items;
+		}
+
 		// Implemented Methods
 
 		@Override

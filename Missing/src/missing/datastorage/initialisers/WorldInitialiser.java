@@ -16,8 +16,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import missing.datastorage.assetloader.GameAssets;
+import missing.game.Game.Spawn;
 import missing.game.world.World;
 import missing.game.world.nodes.WorldNode;
 import missing.game.world.nodes.WorldTile;
@@ -32,6 +35,16 @@ import missing.helper.GameException;
 public class WorldInitialiser {
 	/** Size of row and column of one world node */
 	public static final int NODE_SIZE = 10;
+
+	public static List<Spawn> getSpawnPoints() {
+		List<Spawn> tmp = new ArrayList<Spawn>();
+		tmp.add(new Spawn(new Point(0, 2), new Point(2, 3)));
+		tmp.add(new Spawn(new Point(3, 0), new Point(2, 2)));
+		tmp.add(new Spawn(new Point(1, 1), new Point(8, 7)));
+		tmp.add(new Spawn(new Point(2, 3), new Point(7, 5)));
+		tmp.add(new Spawn(new Point(0, 1), new Point(3, 5)));
+		return tmp;
+	}
 
 	/**
 	 * Loads the nodes inside the world using predefined text files.

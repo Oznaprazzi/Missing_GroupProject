@@ -10,6 +10,7 @@
  *  22 Sep 16			Chris Rabe				implemented performAction method
  *  22 Sep 16			Chris Rabe				implemented rotation method
  *  27 Sep 16			Chris Rabe				upgraded game logic
+ *  27 Sep 16			Chris Rabe				implemented spawn points
  */
 
 package missing.game;
@@ -21,6 +22,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import missing.datastorage.assetloader.XMLHandler;
+import missing.datastorage.initialisers.WorldInitialiser;
 import missing.game.characters.Player;
 import missing.game.items.Item;
 import missing.game.items.movable.Movable;
@@ -43,12 +45,31 @@ public class Game implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -8190730673024776187L;
+
+
+	/**
+	 * This class stores information of all the available spawn area for the
+	 * map. Since the map is always the same for each game, then it is safe to
+	 * create pre-defined set of points.
+	 */
+	public static class Spawn {
+		public Point worldLocation;
+		public Point tileLocation;
+
+		public Spawn(Point worldLocation, Point tileLocation) {
+			this.worldLocation = worldLocation;
+			this.tileLocation = tileLocation;
+		}
+	}
+
 	private Player[] avatars;
 	private World world;
+	private List<Spawn> spawns;
 
 	public Game(Player[] avatars) throws GameException {
 		this.avatars = avatars;
 		this.world = new World();
+		this.spawns = WorldInitialiser.getSpawnPoints();
 		distributeItems(XMLHandler.getItemsFromFile());
 	}
 
@@ -60,6 +81,10 @@ public class Game implements Serializable{
 
 	public Player[] getAvatars() {
 		return avatars;
+	}
+
+	public List<Spawn> getSpawns() {
+		return spawns;
 	}
 
 	// Methods for interacting with the game

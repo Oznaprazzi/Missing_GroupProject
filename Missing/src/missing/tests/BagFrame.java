@@ -3,10 +3,9 @@
  * 	Casey Huang		300316284
  * 
  * 	Date			Author				changes
- * 	26 Sep 16		Casey Huang			created BagFrame class.
- *  27 Sep 16		Casey Huang			removed main method
+ * 	27 Sep 16		Casey Huang			created copy of BagFrame class for testing purposes.
  */
-package missing.ui.frames;
+package missing.tests;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -30,10 +29,37 @@ public class BagFrame extends JFrame {
 	private JPanel contentPane;
 
 	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Bag bag = new Bag();
+					Movable wood = new Wood(new Point(0, 0), new Point(0,0));
+					Movable wood2 = new Wood(new Point(0, 0), new Point(0,0));
+					Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
+					Movable food2 = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
+					Movable food3 = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
+					bag.addItem(wood);
+					bag.addItem(wood2);
+					bag.addItem(food);
+					bag.addItem(food2);
+					bag.addItem(food3);
+					BagFrame frame = new BagFrame(bag);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
 	 * Create the frame.
 	 */
 	public BagFrame(Bag bag) {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setSize(442, 409);
 		contentPane = new JPanel();

@@ -5,6 +5,10 @@
  * 	Date				Author					Changes
  * 	19 Sep 16			Chris Rabe				created container class
  * 	19 Sep 16			Chris Rabe				added getters and setters
+ *  27 Sep 16			Casey Huang				fixed addItem bug
+ *  27 Sep 16			Casey Huang				Added item.increase() when adding item to container
+ *  27 Sep 16			Casey Huang				Added findItem method to be able to increase the amount of the same 
+ *  											item the player is carrying
  */
 
 package missing.game.items.nonmovable;
@@ -54,6 +58,9 @@ public class Container extends NonMovable {
 	public void addItem(Movable item) throws GameException {
 		if (items.size() < size) {
 			this.items.add(item);
+			Movable m = findItem(item);
+			m.increaseCount();
+			return;
 		}
 		throw new GameException("No more space left.");
 	}
@@ -72,6 +79,24 @@ public class Container extends NonMovable {
 		}
 		Movable item = items.get(index);
 		items.remove(index);
+		Movable m = findItem(item);
+		if(m.getCount() > 0){
+			m.decreaseCount();
+		}
+		return item;
+	}
+	
+	/**
+	 * Checks if item is already in the container and returns that item, else it will just return the item
+	 * @param item
+	 * @return
+	 */
+	private Movable findItem(Movable item){
+		for(Movable m : items){
+			if(item.equals(m)){
+				return m;
+			}
+		}
 		return item;
 	}
 
