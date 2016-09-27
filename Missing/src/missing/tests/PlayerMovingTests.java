@@ -18,7 +18,6 @@ import org.junit.Test;
 import missing.datastorage.assetloader.XMLHandler;
 import missing.game.Game;
 import missing.game.characters.Player;
-import missing.game.world.World;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 
@@ -32,20 +31,16 @@ public class PlayerMovingTests {
 	@Test
 	public void movingTests_1(){
 		Player[] avatars = { new Player("Chris", new Point(1, 1), new Point(1, 1)) };
-		boolean hitItem = false; //if the player tries to move onto an item square
+		Scanner input = new Scanner(System.in);
 		try {
 
 			String xmlFile = "items.xml";
 			XMLHandler.filename = xmlFile;
 			Game game = new Game(avatars);
 			Player chris = avatars[0];
-			World world = game.getWorld();
-			Scanner input = new Scanner(System.in);
-			
 			while(true){
 				System.out.println("Choose the direction you want the player to move in(n,s,e,w)");
 				System.out.println("press x to stop");
-				Point wloc = chris.getWorldLocation();
 				Point tloc = chris.getTileLocation();
 				Direction dir = chris.getOrientation();
 				boolean pressedx = false;
@@ -97,7 +92,6 @@ public class PlayerMovingTests {
 						break;
 					default:
 						System.out.println("press n,s,e,w or x");
-						
 					}
 					
 				}
@@ -107,6 +101,8 @@ public class PlayerMovingTests {
 			}
 		}catch(GameException e){
 			e.printStackTrace();
+		}finally{
+			input.close();
 		}
 	
 	}
