@@ -52,7 +52,11 @@ public class Game implements Serializable{
 	 * map. Since the map is always the same for each game, then it is safe to
 	 * create pre-defined set of points.
 	 */
-	public static class Spawn {
+	public static class Spawn implements Serializable{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 8627976199088194793L;
 		public Point worldLocation;
 		public Point tileLocation;
 

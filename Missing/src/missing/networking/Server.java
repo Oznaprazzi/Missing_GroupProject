@@ -6,6 +6,8 @@
  * Date				Author			Modification
  * 19 Sep 16		Edward Kelly	created class
  * 23 Sep 16		Edward Kelly	allowed GameException to be sent to clients
+ * 26 Sep 16		Edward Kelly	implemented receiving names
+ * 27 Sep 16		Edward Kelly	implemented setUpGame, now can send game
  */
 package missing.networking;
 

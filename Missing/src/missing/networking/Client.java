@@ -86,7 +86,6 @@ public class Client extends Thread implements KeyListener{
 				out.println(playerName);
 			}
 
-			boolean vControlGameSet = false; // used to know if game has been passed to VControl
 			clientID = (int)in.readObject();
 			vControl.setPlayerID(clientID);
 			game = (Game)in.readObject();
@@ -99,8 +98,6 @@ public class Client extends Thread implements KeyListener{
 				// TODO forward to controller
 				e.printStackTrace();
 			}
-			vControlGameSet = true;
-			
 			// listen for updates from server
 			while (true) {
 				Object input = in.readObject();
@@ -116,7 +113,10 @@ public class Client extends Thread implements KeyListener{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					long start = System.currentTimeMillis();
 					vControl.repaint();
+					long end = System.currentTimeMillis();
+					System.out.println("Render time " + (end-start));
 				} else if (input.getClass() == GameException.class){
 					System.out.println(((GameException)input).toString());
 					//TODO: forward to controller
