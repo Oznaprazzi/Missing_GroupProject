@@ -116,7 +116,6 @@ public class GWTile {
 		}else if(tile.getObject() instanceof Rock){
 			int rockSize = (size/2);
 			g.drawImage(GameAssets.getRockImage(), x+(rockSize/2) ,y+(rockSize/2), rockSize,rockSize,null);
-
 		}
 		
 		
