@@ -160,7 +160,6 @@ public class Player extends Character {
 	/** Adds the specified item into the bag */
 	public void addToBag(Movable item) throws GameException {
 		bag.addItem(item);
-		item.increaseCount();
 	}
 
 	/**
@@ -176,9 +175,6 @@ public class Player extends Character {
 		Movable tmp = bag.removeItem(index);
 		try {
 			addToPocket(tmp);
-			if(tmp.getCount() > 0){
-				tmp.decreaseCount();
-			}
 		} catch (GameException e) {
 			// No room inside pocket
 			bag.addItem(tmp);
