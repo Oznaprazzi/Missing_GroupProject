@@ -28,6 +28,7 @@ import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Fireplace;
+import missing.game.items.nonmovable.Rock;
 import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile;
 import missing.game.world.nodes.WorldTile.TileObject;
@@ -102,13 +103,18 @@ public class GWTile {
 		if(tile.getObject() instanceof Tree){
 			g.drawImage(GameAssets.getTreeImage(), x, y, size, size, null);
 		}else if(tile.getObject() instanceof Bush){
-			g.drawImage(GameAssets.getBushImage(), x ,y ,size,size, null);
+			int bushSize = size/2;
+			g.drawImage(GameAssets.getBushImage(), x+(bushSize/2) ,y+(bushSize/2) ,bushSize,bushSize, null);
 		}else if(tile.getObject() instanceof Fireplace){
 			g.drawImage(GameAssets.getFireplaceImage(), x ,y ,size,size, null);
 		}else if(tile.getObject() instanceof Wood){
 			g.drawImage(GameAssets.getWoodImage(), x ,y ,size,size, null);
 		}else if(tile.getObject() instanceof Dirt){
 			g.drawImage(GameAssets.getDirtImage(), x, y, size,size,null);
+		}else if(tile.getObject() instanceof Rock){
+			int rockSize = (size/2);
+			g.drawImage(GameAssets.getRockImage(), x+(rockSize/2) ,y+(rockSize/2), rockSize,rockSize,null);
+
 		}
 		
 		
@@ -126,20 +132,21 @@ public class GWTile {
 	 */
 	private void drawPlayer(Graphics g, int x, int y, TileObject tileobj){
 		g.setColor(Color.red);
+		int pSize = size/2;
 		
 		if(tileobj instanceof Player){
 		switch(tileobj.getOrientation()){
 		case NORTH:
-			g.drawImage(GameAssets.getPlayerNorthImage(), x,y,size,size,null);
+			g.drawImage(GameAssets.getPlayerNorthImage(), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
 			break;
 		case SOUTH:
-			g.drawImage(GameAssets.getPlayerSouthImage(), x,y,size,size,null);
+			g.drawImage(GameAssets.getPlayerSouthImage(), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
 			break;
 		case EAST:
-			g.drawImage(GameAssets.getPlayerEastImage(), x,y,size,size,null);
+			g.drawImage(GameAssets.getPlayerEastImage(), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
 			break;
 		case WEST:
-			g.drawImage(GameAssets.getPlayerWestImage(), x,y,size,size,null);
+			g.drawImage(GameAssets.getPlayerWestImage(), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
 			break;
 		default:
 			break;

@@ -83,9 +83,9 @@ public class TestWindow extends JFrame implements KeyListener {
 		GridBagLayout gbl_panel = new GridBagLayout();
 
 		gbl_panel.columnWidths = new int[] { 89, 0 };
-		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
 
 		JLabel lblCurrentPlayer = new JLabel("Current Player");
@@ -161,12 +161,19 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_btnViewMap.gridy = 9;
 		panel.add(btnViewMap, gbc_btnViewMap);
 		
+		JButton btnPlayersBag = new JButton("Players Bag");
+		GridBagConstraints gbc_btnPlayersBag = new GridBagConstraints();
+		gbc_btnPlayersBag.insets = new Insets(0, 0, 5, 0);
+		gbc_btnPlayersBag.gridx = 0;
+		gbc_btnPlayersBag.gridy = 10;
+		panel.add(btnPlayersBag, gbc_btnPlayersBag);
+		
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setLayout(null);
 		GridBagConstraints gbc_layeredPane = new GridBagConstraints();
 		gbc_layeredPane.fill = GridBagConstraints.BOTH;
 		gbc_layeredPane.gridx = 0;
-		gbc_layeredPane.gridy = 10;
+		gbc_layeredPane.gridy = 11;
 		panel.add(layeredPane, gbc_layeredPane);
 
 		btnUp = new JButton("Up");
@@ -187,7 +194,8 @@ public class TestWindow extends JFrame implements KeyListener {
 
 		gamePanel = new GamePanel(gameinstance, curPlayer);
 		getContentPane().add(gamePanel, BorderLayout.WEST);
-
+		gamePanel.updateNodeRender();
+		gamePanel.repaint();
 	}
 	
 	/**
@@ -278,7 +286,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		}
 		updateTextBarPositions();
 		gamePanel.revalidate();
-		gamePanel.updateNodeRender(); // TODO Added this!
+		gamePanel.updateNodeRender();
 		gamePanel.repaint();
 	}
 
