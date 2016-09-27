@@ -9,6 +9,7 @@
 package missing;
 
 import missing.datastorage.assetloader.XMLHandler;
+import missing.ui.controller.VControl;
 
 public class Main {
 
@@ -33,5 +34,6 @@ public class Main {
 
 		// Set the handler's filename as the xmlFile stated
 		XMLHandler.filename = xmlFile;
+		new VControl();
 	}
 }

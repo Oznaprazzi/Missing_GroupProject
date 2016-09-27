@@ -9,6 +9,8 @@
 
 package missing.game.items.nonmovable;
 
+import java.io.Serializable;
+
 import missing.helper.GameException;
 
 /**

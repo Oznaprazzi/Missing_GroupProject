@@ -119,8 +119,8 @@ public class GamePanel extends View {
 	@Override
 	public void initialise() {
 		graphicWorld = controller.getGGame().getGWorld();
-		// TODO: need getCurPlayer
-		curPoint = controller.getGGame().getGame().getAvatars()[0].getWorldLocation();
+		currentPlayer = controller.getGGame().getGame().getAvatars()[controller.getPlayerID()];
+		curPoint = currentPlayer.getWorldLocation();
 		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
 		
 	}

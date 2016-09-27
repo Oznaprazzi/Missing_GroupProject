@@ -10,12 +10,16 @@
 package missing.networking;
 
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 import missing.game.Game;
+import missing.game.characters.Player;
+import missing.game.world.World;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
@@ -27,7 +31,7 @@ import missing.ui.controller.VControl;
  * the player.
  *
  */
-public class Client extends Thread {
+public class Client extends Thread implements KeyListener{
 	/** The socket representing this client */
 	private Socket socket;
 	/** Receives info from server */
@@ -40,6 +44,7 @@ public class Client extends Thread {
 	private int clientID;
 	/** VControl responsible for displaying game and taking inputs from player */
 	private VControl vControl;
+	/** Name of player for this client */
 	private String playerName;
 
 	public Client(Socket s, VControl vControl, String playerName) {
@@ -75,8 +80,24 @@ public class Client extends Thread {
 			in = new ObjectInputStream(socket.getInputStream());
 			out = new PrintWriter(socket.getOutputStream(), true);
 			
-			out.write(playerName);
-			boolean vControlGameSet = false; // used to know if game has been passed to VControl
+			//wait for request for name
+			String request = (String)in.readObject();
+			if (request.equals("name")){
+				out.println(playerName);
+			}
+
+			clientID = (int)in.readObject();
+			vControl.setPlayerID(clientID);
+			game = (Game)in.readObject();
+			try {
+				vControl.addKeyListener(this);
+				vControl.setGGame(new GGame(game, vControl.getView(vControl.getGameView())));
+				vControl.changeView(vControl.getGameView());
+				vControl.setVisible(true);
+			} catch (GameException e) {
+				// TODO forward to controller
+				e.printStackTrace();
+			}
 			// listen for updates from server
 			while (true) {
 				Object input = in.readObject();
@@ -86,23 +107,16 @@ public class Client extends Thread {
 				if (input.getClass() == Game.class) {
 					// received game
 					game = (Game)input;
-					if (!vControlGameSet){
-						//TODO: may need to set game each time
-						try {
-							vControl.setGGame(new GGame(game, null));
-							vControl.changeView(vControl.getGameView());
-						} catch (GameException e) {
-							// TODO forward to controller
-							e.printStackTrace();
-						}
-						vControlGameSet = true;
-//						continue; // dont want to paint until game started
+					try {
+						vControl.setGGame(new GGame(game, vControl.getView(vControl.getGameView())));
+					} catch (GameException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
+					long start = System.currentTimeMillis();
 					vControl.repaint();
-				} else if (input.getClass() == Integer.class) {
-					// received clientID
-					clientID = (Integer)input;
-					vControl.setPlayerID(clientID);
+					long end = System.currentTimeMillis();
+					System.out.println("Render time " + (end-start));
 				} else if (input.getClass() == GameException.class){
 					System.out.println(((GameException)input).toString());
 					//TODO: forward to controller
@@ -122,12 +136,42 @@ public class Client extends Thread {
 			}
 		}
 	}
-	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		if (key == KeyEvent.VK_W ){
+			out.println("NORTH");
+		}
+		else if (key == KeyEvent.VK_S){
+			out.println("SOUTH");
+		}
+		else if (key == KeyEvent.VK_A){
+			out.println("WEST");
+		}
+		else if (key == KeyEvent.VK_D){
+			out.println("EAST");
+		}
+		else if (key == KeyEvent.VK_E){
+			out.println("E");
+		}
+	}
 	public void movePlayer(String direction){
 		out.println(direction);
 	}
 	
 	public void performAction(){
 		out.println("E");
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

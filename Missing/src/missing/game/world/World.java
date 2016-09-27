@@ -15,6 +15,7 @@
 package missing.game.world;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 import missing.datastorage.initialisers.WorldInitialiser;
 import missing.game.world.nodes.WorldNode;
@@ -27,7 +28,11 @@ import missing.helper.GameException;
  * game world as well as performing appropriate checking if item and players
  * collide.
  */
-public class World {
+public class World implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6179281677673695416L;
 	public static final int WORLD_WIDTH = 4;
 	public static final int WORLD_HEIGHT = 4;
 
