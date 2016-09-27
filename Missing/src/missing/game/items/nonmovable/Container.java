@@ -5,6 +5,7 @@
  * 	Date				Author					Changes
  * 	19 Sep 16			Chris Rabe				created container class
  * 	19 Sep 16			Chris Rabe				added getters and setters
+ *  27 Sep 16			Casey Huang				fixed addItem bug
  */
 
 package missing.game.items.nonmovable;
