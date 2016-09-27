@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
-import missing.ui.menustyle.MenuComponent;
+import missing.ui.menustyle.MenuFactory;
 
 /**
  * The view displayed to clients after they have connected to server
@@ -38,8 +38,8 @@ public class ClientWaitingView extends View {
 	public void initialise() {
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		JLabel connected = MenuComponent.createHeading("Connected to server");
-		JLabel waiting = MenuComponent.createHeading("Waiting for game to start...");
+		JLabel connected = MenuFactory.createHeading("Connected to server");
+		JLabel waiting = MenuFactory.createHeading("Waiting for game to start...");
 		connected.setHorizontalAlignment(SwingConstants.CENTER);
 		waiting.setHorizontalAlignment(SwingConstants.CENTER);
 		add(connected);

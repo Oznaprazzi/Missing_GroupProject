@@ -24,7 +24,7 @@ import javax.swing.SwingConstants;
 
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
-import missing.ui.menustyle.MenuComponent;
+import missing.ui.menustyle.MenuFactory;
 
 public class PlayGameView extends View{
 	
@@ -40,7 +40,7 @@ public class PlayGameView extends View{
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		JLabel title = MenuComponent.createHeading("Play Game");
+		JLabel title = MenuFactory.createHeading("Play Game");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		createButtons();
@@ -61,17 +61,17 @@ public class PlayGameView extends View{
 		buttonPanel = new JPanel(layout);
 		buttonPanel.setOpaque(false);
 		
-		JButton btnHostGame = MenuComponent.createButton("Host Game");
+		JButton btnHostGame = MenuFactory.createButton("Host Game");
 		btnHostGame.addActionListener(e -> {
 			controller.changeView(controller.getHostGameView());
 		});
 		
-		JButton btnJoinGame = MenuComponent.createButton("Join Game");
+		JButton btnJoinGame = MenuFactory.createButton("Join Game");
 		btnJoinGame.addActionListener(e -> {
 			controller.changeView(controller.getJoinGameView());
 		});
 		
-		JButton btnBack = MenuComponent.createButton("Back");
+		JButton btnBack = MenuFactory.createButton("Back");
 		btnBack.addActionListener(e -> {
 			controller.changeView(controller.getMenuView());
 		});

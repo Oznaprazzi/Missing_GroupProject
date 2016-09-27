@@ -27,7 +27,7 @@ import javax.swing.SwingConstants;
 import missing.networking.NetworkingHelper;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
-import missing.ui.menustyle.MenuComponent;
+import missing.ui.menustyle.MenuFactory;
 
 /**
  * Displays the view for entering details for hosting a game
@@ -67,7 +67,7 @@ public class HostGameView extends View{
 		GridBagConstraints c = new GridBagConstraints();
 		createCentrePanel();
 
-		JLabel title = MenuComponent.createHeading("Host Game");
+		JLabel title = MenuFactory.createHeading("Host Game");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		c.gridx = 0;
@@ -112,17 +112,17 @@ public class HostGameView extends View{
 		gameInfoPanel = new JPanel(layout);
 		
 		// Create labels
-		JLabel playerNameLabel = MenuComponent.createLabel("Player Name");
-		JLabel numPlayerLabel = MenuComponent.createLabel("Number of Players");
-		JLabel portLabel = MenuComponent.createLabel("Port");
+		JLabel playerNameLabel = MenuFactory.createLabel("Player Name");
+		JLabel numPlayerLabel = MenuFactory.createLabel("Number of Players");
+		JLabel portLabel = MenuFactory.createLabel("Port");
 		playerNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		numPlayerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		portLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		//Create text fields
-		playerNameEntry = MenuComponent.createTextField(200);
-		numPlayersEntry = MenuComponent.createTextField(200);
-		portEntry = MenuComponent.createTextField(200);
+		playerNameEntry = MenuFactory.createTextField(200);
+		numPlayersEntry = MenuFactory.createTextField(200);
+		portEntry = MenuFactory.createTextField(200);
 		
 		// Add to panel
 		gameInfoPanel.add(playerNameLabel);
@@ -145,7 +145,7 @@ public class HostGameView extends View{
 		buttonPanel.setOpaque(false);
 		
 		//Create Start Server button
-		JButton btnStartServer = MenuComponent.createButton("Start Server");
+		JButton btnStartServer = MenuFactory.createButton("Start Server");
 		btnStartServer.addActionListener(e -> {
 			if (this.setInputs()){
 				// Valid numPlayers and port have been entered
@@ -159,7 +159,7 @@ public class HostGameView extends View{
 			}
 		});
 		// Create Back button
-		JButton btnBack = MenuComponent.createButton("Back");
+		JButton btnBack = MenuFactory.createButton("Back");
 		btnBack.addActionListener(e -> {
 			controller.changeView(controller.getPlayGameView());
 		});
