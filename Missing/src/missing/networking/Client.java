@@ -40,10 +40,12 @@ public class Client extends Thread {
 	private int clientID;
 	/** VControl responsible for displaying game and taking inputs from player */
 	private VControl vControl;
+	private String playerName;
 
-	public Client(Socket s, VControl vControl) {
+	public Client(Socket s, VControl vControl, String playerName) {
 		this.socket = s;
 		this.vControl = vControl;
+		this.playerName = playerName;
 	}
 
 	// Getters and Setters
@@ -72,6 +74,8 @@ public class Client extends Thread {
 			// setup input and output streams to server
 			in = new ObjectInputStream(socket.getInputStream());
 			out = new PrintWriter(socket.getOutputStream(), true);
+			
+			out.write(playerName);
 			boolean vControlGameSet = false; // used to know if game has been passed to VControl
 			// listen for updates from server
 			while (true) {
@@ -86,12 +90,13 @@ public class Client extends Thread {
 						//TODO: may need to set game each time
 						try {
 							vControl.setGGame(new GGame(game, null));
+							vControl.changeView(vControl.getGameView());
 						} catch (GameException e) {
 							// TODO forward to controller
 							e.printStackTrace();
 						}
 						vControlGameSet = true;
-						continue; // dont want to paint until game started
+//						continue; // dont want to paint until game started
 					}
 					vControl.repaint();
 				} else if (input.getClass() == Integer.class) {
@@ -99,8 +104,10 @@ public class Client extends Thread {
 					clientID = (Integer)input;
 					vControl.setPlayerID(clientID);
 				} else if (input.getClass() == GameException.class){
+					System.out.println(((GameException)input).toString());
 					//TODO: forward to controller
 				} else if (input.getClass() == SignalException.class){
+					System.out.println(((SignalException)input).toString());
 					//TODO: forward to controller
 				}
 			}
