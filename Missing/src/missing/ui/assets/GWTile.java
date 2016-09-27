@@ -14,6 +14,7 @@
  *  18 Sep 16		Linus Go			Set the draw isometric tiles method to public
  *  18 Sep 16		Casey Huang			attempted scaling implementation
  *  19 Sep 16 		Casey Huang			made drawIsometricTile @deprecated
+ *  27 Sep 16		Casey Huang			Added tree number to obtaining tree image
  */
 
 package missing.ui.assets;
@@ -101,7 +102,8 @@ public class GWTile {
 		
 		/*Draw the Items onto the tile. */
 		if(tile.getObject() instanceof Tree){
-			g.drawImage(GameAssets.getTreeImage(), x, y, size, size, null);
+			int number = (int) (Math.random() * 2) + 1;
+			g.drawImage(GameAssets.getTreeImage(number), x, y, size, size, null);
 		}else if(tile.getObject() instanceof Bush){
 			int bushSize = size/2;
 			g.drawImage(GameAssets.getBushImage(), x+(bushSize/2) ,y+(bushSize/2) ,bushSize,bushSize, null);
