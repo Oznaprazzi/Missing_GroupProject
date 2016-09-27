@@ -22,6 +22,7 @@ package missing.helper;
  * <ul>
  * <li>CONTAINER - player interacting with container.</li>
  * <li>TRADE - player interacting with another player.</li>
+ * <li>PILE - player interacting with a pile </li>
  * </ul>
  */
 @SuppressWarnings("serial")

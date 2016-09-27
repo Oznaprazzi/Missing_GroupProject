@@ -24,6 +24,7 @@ import missing.game.items.Item;
 import missing.game.items.movable.Movable;
 import missing.game.world.World;
 import missing.game.world.nodes.WorldTile;
+import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
@@ -313,16 +314,7 @@ public class Game {
 		tile = world.getWorldNodes()[wLoc.y][wLoc.x].getWorldTiles()[tLoc.y][tLoc.x];
 		// If there is an item, add it to the player's pocket.
 		if (tile.isOccupied()) {
-			try {
-				player.addToPocket((Movable) tile.getObject());
-			} catch (GameException e) {
-				// If adding to pocket failed, add it to bag
-				try {
-					player.addToBag((Movable) tile.getObject());
-				} catch (GameException e1) {
-					// If it fails, player crushes the item with his weight
-				}
-			}
+			
 		}
 		// Change the player's position
 		player.setWorldLocation(wLoc);
@@ -414,7 +406,7 @@ public class Game {
 		// Next check if the tile is occupied by an object
 		if (tile.isOccupied()) {
 			// Only movable objects can be walked over -- can pick them up
-			if (tile.getObject() != null && tile.getObject() instanceof Movable) {
+			if (tile.getObject() != null && (tile.getObject() instanceof Movable || tile.getObject() instanceof Pile)) {
 				return true;
 			}
 			return false;
