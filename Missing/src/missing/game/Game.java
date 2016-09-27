@@ -159,6 +159,20 @@ public class Game {
 		return tile.getObject();
 	}
 
+	/**
+	 * This converts the player with the given id to a pile of items. This
+	 * method should be called to handle client disconnection from the server.
+	 * 
+	 * @param id
+	 */
+	public void convertPlayerToPile(int id) {
+		Player player = avatars[id];
+		Point wLoc = player.getWorldLocation();
+		Point tLoc = player.getTileLocation();
+		WorldTile tile = world.getWorldNodes()[wLoc.y][wLoc.x].getWorldTiles()[tLoc.y][tLoc.x];
+		tile.convertPlayerToPile(player);
+	}
+
 	// Helper methods
 
 	/**
