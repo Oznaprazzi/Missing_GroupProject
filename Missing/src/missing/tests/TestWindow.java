@@ -62,8 +62,10 @@ public class TestWindow extends JFrame implements KeyListener {
 	private Player curPlayer;
 	/*Holds a local instance of the game */
 	private Game gameinstance;
-	// Holds the gamePanel renderer.
+	/* Holds the gamePanel renderer. */
 	private GamePanel gamePanel;
+	/* Holds the BagFrame renderer*/
+	private BagFrame bagFrame;
 	
 	public TestWindow(Game game, World w, Player p) {
 		super("Test Panel");
@@ -294,11 +296,8 @@ public class TestWindow extends JFrame implements KeyListener {
 		});
 		
 		btnPlayersBag.addActionListener(e->{
-			try{
-				rotateEvent(0, Direction.EAST);
-			}catch(GameException ex){
-				ex.printStackTrace();
-			}
+			bagFrame = new BagFrame(curPlayer.getBag());
+			bagFrame.setVisible(true);
 		});
 	}
 
