@@ -20,6 +20,7 @@ import missing.helper.GameException;
  * Represents a Source item that a player can collect
  *
  */
+@SuppressWarnings("serial")
 public abstract class Source extends Interactable {
 	protected static final int MAX_RESOURCE = 10;
 

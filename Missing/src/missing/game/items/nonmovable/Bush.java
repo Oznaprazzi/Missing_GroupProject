@@ -20,6 +20,7 @@ import missing.helper.GameException;
 /**
  * Represents a Bush. A Bush is only for aesthetics. Subclass of Foliage
  */
+@SuppressWarnings("serial")
 public class Bush extends Foliage {
 
 	private static final int BERRY_CHANCE = 70;

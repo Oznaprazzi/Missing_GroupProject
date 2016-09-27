@@ -16,7 +16,6 @@
 package missing.game.characters;
 
 import java.awt.Point;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +29,7 @@ import missing.helper.SignalException;
 /**
  * This class represents individual players within the game world.
  */
+@SuppressWarnings("serial")
 public class Player extends Character {
 
 

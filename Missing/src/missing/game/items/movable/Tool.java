@@ -25,6 +25,7 @@ import missing.helper.GameException;
  * Usable, Movable and Item subclasses. The tool can be used by the player to
  * receive bonus number of items.
  */
+@SuppressWarnings("serial")
 public class Tool extends Craftable {
 
 	public static enum ToolType {

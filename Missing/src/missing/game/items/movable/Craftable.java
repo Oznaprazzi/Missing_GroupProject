@@ -19,6 +19,7 @@ import java.util.List;
  * in order to make.
  */
 
+@SuppressWarnings("serial")
 public abstract class Craftable extends Usable {
 
 	protected List<Resource> ingredients;

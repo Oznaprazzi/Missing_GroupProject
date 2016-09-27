@@ -11,7 +11,6 @@
  */
 package missing.networking;
 
-
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,7 +35,7 @@ public class Server extends Thread {
 	private Socket[] socket;
 	/** The game being played which is sent to clients */
 	private Game game;
-	
+
 	String[] playerNames;
 
 	public Server(Socket[] sockets) {
@@ -45,24 +44,24 @@ public class Server extends Thread {
 		// and instead the constructor is passed the game
 
 	}
-	
-	private void setUpGame() throws GameException{
+
+	private void setUpGame() throws GameException {
 		Player[] players = new Player[socket.length];
-		for (int i=0; i < socket.length; i++){
+		for (int i = 0; i < socket.length; i++) {
 			// TODO: change for spawn points
-			players[i] = new Player(playerNames[i], new Point(0,0), new Point(9, i+4));
+			players[i] = new Player(playerNames[i], new Point(0, 0), new Point(9, i + 4));
 		}
 		game = new Game(players);
 	}
-	
+
 	public void run() {
 		System.out.println("Server running");
 		try {
 			// inputs from clients
-			BufferedReader[] ins = new BufferedReader[socket.length]; 
+			BufferedReader[] ins = new BufferedReader[socket.length];
 			// outputs to clients
-			ObjectOutputStream[] outs = new ObjectOutputStream[socket.length]; 
-			
+			ObjectOutputStream[] outs = new ObjectOutputStream[socket.length];
+
 			playerNames = new String[socket.length];
 			// add input and output streams for each client socket
 			for (int i = 0; i < ins.length; i++) {
@@ -74,18 +73,19 @@ public class Server extends Thread {
 			}
 			try {
 				setUpGame();
-			} catch (GameException e){
+			} catch (GameException e) {
 				e.printStackTrace();
 			}
-			
+
 			// Send initial game state
 			for (int i = 0; i < outs.length; i++) {
 				outs[i].writeObject(i);// send clientID
 				outs[i].writeObject(game);
 				outs[i].flush();
 			}
-			
-			boolean update = false; // used to know if a new game needs to be sent to clients
+
+			boolean update = false; // used to know if a new game needs to be
+									// sent to clients
 			// loop forever listening for inputs from clients
 			while (true) {
 				try {
@@ -98,15 +98,16 @@ public class Server extends Thread {
 						String input = ins[playerNum].readLine();
 						System.out.println(input + " input received from player " + playerNum);
 
-						if (input.equals("NORTH") || input.equals("SOUTH") || input.equals("EAST") || input.equals("WEST")) {
+						if (input.equals("NORTH") || input.equals("SOUTH") || input.equals("EAST")
+								|| input.equals("WEST")) {
 							// move that player in given direction
 							Direction[] directions = Direction.values();
-							for (Direction direction : directions){
-								if (direction.toString().equals(input)){
+							for (Direction direction : directions) {
+								if (direction.toString().equals(input)) {
 									try {
 										game.movePlayer(playerNum, direction);
 										System.out.println("player moved");
-									} catch (GameException e){
+									} catch (GameException e) {
 										System.out.println("move failed");
 										outs[playerNum].reset();
 										outs[playerNum].writeObject(e);
@@ -134,13 +135,14 @@ public class Server extends Thread {
 						}
 						update = false;
 					}
-				} catch (IOException e){
-					//TODO implement disconnects properly
-					e.printStackTrace();					
+				} catch (IOException e) {
+					// TODO implement disconnects properly
+					e.printStackTrace();
 				}
 			}
 
 		} catch (IOException e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
 			try {

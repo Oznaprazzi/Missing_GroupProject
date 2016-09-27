@@ -25,6 +25,7 @@ import missing.helper.SignalException;
 /**
  * A container which stores movable objects.
  */
+@SuppressWarnings("serial")
 public class Container extends NonMovable {
 
 	private List<Movable> items;

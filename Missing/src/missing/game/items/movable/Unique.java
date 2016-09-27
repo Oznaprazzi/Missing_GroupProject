@@ -18,6 +18,7 @@ import missing.helper.GameException;
  * This class represents a Unique item in the Game. It extends the Usable
  * subclass, Movable subclass and the Item subclass.
  */
+@SuppressWarnings("serial")
 public class Unique extends Usable {
 	/**
 	 * Creates instance of Unique class.

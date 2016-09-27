@@ -15,6 +15,7 @@ import java.awt.Point;
  * This class represents non movable objects which is purely for aesthetic
  * reasons.
  */
+@SuppressWarnings("serial")
 public abstract class Foliage extends NonInteractable {
 
 	public Foliage(String name, String description, Point worldLocation, Point tileLocation) {

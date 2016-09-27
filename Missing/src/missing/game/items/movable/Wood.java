@@ -16,6 +16,7 @@ import java.awt.Point;
  * Represents a Wood item in the game. Wood is a movable resource
  *
  */
+@SuppressWarnings("serial")
 public class Wood extends Resource {
 
 	public Wood(Point worldLocation, Point tileLocation) {

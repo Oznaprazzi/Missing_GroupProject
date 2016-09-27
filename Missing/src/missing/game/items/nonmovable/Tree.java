@@ -30,6 +30,7 @@ import missing.helper.GameException;
  * Represents a Tree item that a player can cut down to get the wood resource.
  * It also has a 50% chance to get an apple from the tree.
  */
+@SuppressWarnings("serial")
 public class Tree extends Source {
 	// TODO Add timer for refreshing resources
 	// TODO Do null check before storing resource inside player's pocket

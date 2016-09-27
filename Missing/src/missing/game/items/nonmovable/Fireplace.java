@@ -23,6 +23,7 @@ import missing.helper.GameException;
 /**
  * Represents a Fireplace item that a player can use to cook food.
  */
+@SuppressWarnings("serial")
 public class Fireplace extends Cooking {
 
 	private Food food;

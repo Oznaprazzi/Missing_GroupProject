@@ -13,6 +13,7 @@ import java.awt.Point;
  * Represents a NonInteractable item in the game.
  *
  */
+@SuppressWarnings("serial")
 public abstract class NonInteractable extends NonMovable {
 
 	/**

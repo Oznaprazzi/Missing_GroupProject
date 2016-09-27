@@ -18,6 +18,7 @@ import missing.helper.GameException;
  * Represents an interactable item in the game.
  *
  */
+@SuppressWarnings("serial")
 public abstract class Interactable extends NonMovable{
 
 	/**

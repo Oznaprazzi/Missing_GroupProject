@@ -16,6 +16,7 @@ import java.awt.Point;
  * This class represents Consumable Items that can give health to a player.
  *
  */
+@SuppressWarnings("serial")
 public abstract class Health extends Consumable {
 
 	/** Dictates how much this Health item regenerates the player by. */
