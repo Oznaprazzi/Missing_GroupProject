@@ -79,6 +79,10 @@ public class Player extends Character {
 		return bag;
 	}
 
+	public void setBag(Bag bag) {
+		this.bag = bag;
+	}
+
 	// Methods for use
 
 	/**
@@ -123,6 +127,7 @@ public class Player extends Character {
 			throw new GameException("Index must be within bounds of the pocket.");
 		}
 		Movable tmp = pocket.get(index);
+		this.currentItemSize -= tmp.getSize();
 		pocket.remove(index);
 		return tmp;
 	}
@@ -175,7 +180,7 @@ public class Player extends Character {
 			bag.addItem(tmp);
 			throw new GameException(e.getMessage());
 		}
-		
+
 	}
 
 	/**

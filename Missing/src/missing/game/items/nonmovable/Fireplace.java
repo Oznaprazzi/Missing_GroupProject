@@ -54,6 +54,7 @@ public class Fireplace extends Cooking {
 
 	@Override
 	public void performAction(Player p) throws GameException {
+		// TODO search food in player's pocket then cook
 		if (food == null) {
 			throw new GameException("There is no food in the fireplace!");
 		}

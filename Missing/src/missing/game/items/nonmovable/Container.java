@@ -42,8 +42,16 @@ public class Container extends NonMovable {
 		return items;
 	}
 
-	protected void setItems(List<Movable> items) {
+	public void setItems(List<Movable> items) {
 		this.items = items;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 
 	// Methods
@@ -80,20 +88,22 @@ public class Container extends NonMovable {
 		Movable item = items.get(index);
 		items.remove(index);
 		Movable m = findItem(item);
-		if(m.getCount() > 0){
+		if (m.getCount() > 0) {
 			m.decreaseCount();
 		}
 		return item;
 	}
-	
+
 	/**
-	 * Checks if item is already in the container and returns that item, else it will just return the item
+	 * Checks if item is already in the container and returns that item, else it
+	 * will just return the item
+	 * 
 	 * @param item
 	 * @return
 	 */
-	private Movable findItem(Movable item){
-		for(Movable m : items){
-			if(item.equals(m)){
+	private Movable findItem(Movable item) {
+		for (Movable m : items) {
+			if (item.equals(m)) {
 				return m;
 			}
 		}

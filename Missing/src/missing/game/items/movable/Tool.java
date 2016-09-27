@@ -43,6 +43,12 @@ public class Tool extends Craftable {
 			throw new GameException("You had the wrong items");
 	}
 
+	public Tool(Point worldLocation, Point tileLocation, ToolType toolType, int durability) {
+		super(worldLocation, tileLocation, null);
+		this.toolType = toolType;
+		this.durability = durability;
+	}
+
 	// Getters
 
 	public ToolType getType() {
@@ -93,7 +99,7 @@ public class Tool extends Craftable {
 				description = "Can get fish";
 				return true;
 			}
-			return false;	
+			return false;
 		default:
 			return false;
 		}
@@ -178,7 +184,7 @@ public class Tool extends Craftable {
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * checks that there are 2 wood and 3 dirt inside the resources list which
 	 * are the required resources to create a fishing rod
