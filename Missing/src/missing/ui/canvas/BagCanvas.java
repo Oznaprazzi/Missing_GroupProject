@@ -13,7 +13,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -30,31 +30,23 @@ import missing.game.items.nonmovable.Bag;
  * Canvas used to display the Player's bag's items
  */
 public class BagCanvas extends Canvas{
-	/**
-	 * Bag of items to display
-	 */
+	/** Bag of items to display */
 	private Bag bag;
 
-	private Movable[][] bagGrid;
+	/** Contains the number of unique items in the bag */
+	private ArrayList<Movable> bagSet;
 
-	private HashSet<Movable> bagSet;
-
-	/**
-	 * x position of item to be drawn.
-	 */
+	/** x position of item to be drawn. */
 	protected static final int X_OFFSET = 5;
 
-	/**
-	 * Y position of item.
-	 */
+	/** Y position of item. */
 	private static final int Y_OFFSET = 100;
 
 	private static final int size = 50;
 
 	public BagCanvas(Bag bag){
 		this.bag = bag;
-		bagSet = new HashSet<Movable>();
-		bagGrid = new Movable[bag.getItems().size()/10][10];
+		bagSet = new ArrayList<Movable>();
 		convertBagToSet();
 	}
 
@@ -65,6 +57,7 @@ public class BagCanvas extends Canvas{
 		g.setFont(serif);
 		g.setColor(Color.black);
 		g.drawString("Items in hand:", 10, 30);
+		this.drawGrid(g);
 		this.drawItems(g);
 	}
 
@@ -73,9 +66,9 @@ public class BagCanvas extends Canvas{
 		Font serif = new Font("Calisto MT", Font.BOLD, 10);
 		g.setFont(serif);
 		g.setColor(Color.black);
-		for(int i = 0; i < bagSet.size()/10; i++){
-			for(int j = 0; j < 10; j++){
-				Movable item = bag.getItems().get(count);
+		for(int i = 0; i < ((int) Math.ceil(bagSet.size()/5)); i++){
+			for(int j = 0; j < 5; j++){
+				Movable item = bagSet.get(count);
 				if(item instanceof Food){
 					if(((Food) item).getFoodType().equals(Food.FoodType.APPLE)){
 						g.drawImage(GameAssets.getAppleImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
@@ -106,7 +99,7 @@ public class BagCanvas extends Canvas{
 					j = 0;
 				}
 				count++;
-				if(count >= bag.getItems().size()){
+				if(count >= bagSet.size()){
 					return;
 				}
 			}

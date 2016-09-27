@@ -54,6 +54,7 @@ public class Container extends NonMovable {
 	public void addItem(Movable item) throws GameException {
 		if (items.size() < size) {
 			this.items.add(item);
+			return;
 		}
 		throw new GameException("No more space left.");
 	}

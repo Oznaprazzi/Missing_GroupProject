@@ -9,12 +9,19 @@ package missing.ui.frames;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import missing.game.items.Item;
+import missing.game.items.movable.Food;
+import missing.game.items.movable.Food.FoodType;
+import missing.game.items.movable.Movable;
+import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
+import missing.game.items.nonmovable.Bush;
 import missing.ui.canvas.BagCanvas;
 
 public class BagFrame extends JFrame {
@@ -28,7 +35,12 @@ public class BagFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BagFrame frame = new BagFrame(new Bag());
+					Bag bag = new Bag();
+					Movable wood = new Wood(new Point(0, 0), new Point(0,0));
+					Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
+					bag.addItem(wood);
+					bag.addItem(food);
+					BagFrame frame = new BagFrame(bag);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
