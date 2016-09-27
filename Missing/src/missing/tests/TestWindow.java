@@ -56,13 +56,14 @@ public class TestWindow extends JFrame implements KeyListener {
 	private JButton btnLeft;
 	private JButton btnRight;
 	private JButton btnViewMap;
+	private JButton btnPlayersBag;
+	
 	/* The current player */
 	private Player curPlayer;
 	/*Holds a local instance of the game */
 	private Game gameinstance;
 	// Holds the gamePanel renderer.
 	private GamePanel gamePanel;
-	
 	
 	public TestWindow(Game game, World w, Player p) {
 		super("Test Panel");
@@ -178,7 +179,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_btnViewMap.gridy = 11;
 		panel.add(btnViewMap, gbc_btnViewMap);
 		
-		JButton btnPlayersBag = new JButton("Players Bag");
+		btnPlayersBag = new JButton("Players Bag");
 		GridBagConstraints gbc_btnPlayersBag = new GridBagConstraints();
 		gbc_btnPlayersBag.insets = new Insets(0, 0, 5, 0);
 		gbc_btnPlayersBag.gridx = 0;
@@ -285,6 +286,14 @@ public class TestWindow extends JFrame implements KeyListener {
 		});
 		
 		btnTurnR.addActionListener(e->{
+			try{
+				rotateEvent(0, Direction.EAST);
+			}catch(GameException ex){
+				ex.printStackTrace();
+			}
+		});
+		
+		btnPlayersBag.addActionListener(e->{
 			try{
 				rotateEvent(0, Direction.EAST);
 			}catch(GameException ex){
