@@ -9,6 +9,7 @@
  */
 package missing.networking;
 
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +17,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import missing.game.Game;
+import missing.game.characters.Player;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
@@ -31,15 +33,25 @@ public class Server extends Thread {
 	private Socket[] socket;
 	/** The game being played which is sent to clients */
 	private Game game;
+	
+	String[] playerNames;
 
 	public Server(Socket[] sockets) {
 		this.socket = sockets;
-
 		// Create game. This could be done somewhere else
 		// and instead the constructor is passed the game
 
 	}
-
+	
+	private void setUpGame() throws GameException{
+		Player[] players = new Player[socket.length];
+		for (int i=0; i < socket.length; i++){
+			// TODO: change for spawn points
+			players[i] = new Player(playerNames[i], new Point(0,0), new Point(9, i+4));
+		}
+		game = new Game(players);
+	}
+	
 	public void run() {
 		System.out.println("Server running");
 		try {
@@ -49,11 +61,19 @@ public class Server extends Thread {
 			ObjectOutputStream[] outs = new ObjectOutputStream[socket.length]; // outputs
 																				// to
 																				// clients
+			playerNames = new String[socket.length];
 			// add input and output streams for each client socket
 			for (int i = 0; i < ins.length; i++) {
 				ins[i] = new BufferedReader(new InputStreamReader(socket[i].getInputStream()));
+				playerNames[i] = ins[i].readLine(); //set playerName
 				outs[i] = new ObjectOutputStream(socket[i].getOutputStream());
 			}
+			try {
+				setUpGame();
+			} catch (GameException e){
+				e.printStackTrace();
+			}
+			
 			// Send initial game state
 			for (int i = 0; i < outs.length; i++) {
 				outs[i].writeObject(i);// send clientID

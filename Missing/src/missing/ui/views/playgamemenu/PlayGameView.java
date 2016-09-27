@@ -6,7 +6,7 @@
  *  23 Sep 16		Edward Kelly		Created class
  *  25 Sep 16		Edward Kelly		Integrated with MenuComponent methods
  */
-package missing.ui.views.playgame;
+package missing.ui.views.playgamemenu;
 
 import java.awt.Color;
 import java.awt.Font;

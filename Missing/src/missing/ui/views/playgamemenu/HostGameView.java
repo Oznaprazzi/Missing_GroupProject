@@ -7,7 +7,7 @@
  * 23 Sep 16		Edward Kelly	created class
  * 24 Sep 16		Edward Kelly	added function to start server
  */
-package missing.ui.views.playgame;
+package missing.ui.views.playgamemenu;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -41,10 +41,14 @@ public class HostGameView extends View{
 	private JPanel buttonPanel;
 	/** Holds gameInfo and button panels */
 	private JPanel centrePanel;
+	/** The player's name */
+	private String playerName;
 	/** Number of players to be in game */
 	private int numPlayers;
 	/** Port game is hosted on */
 	private int port;
+	/** Text entry for playerName */
+	private TextField playerNameEntry;
 	/** Text entry for numPlayers */
 	private TextField numPlayersEntry;
 	/** Text entry for port */
@@ -102,22 +106,27 @@ public class HostGameView extends View{
 	 * and corresponding labels
 	 */
 	private void createInfoPanel(){
-		GridLayout layout = new GridLayout(2,2);
+		GridLayout layout = new GridLayout(3,2);
 		layout.setVgap(20);
 		layout.setHgap(20);
 		gameInfoPanel = new JPanel(layout);
 		
 		// Create labels
+		JLabel playerNameLabel = MenuComponent.createLabel("Player Name");
 		JLabel numPlayerLabel = MenuComponent.createLabel("Number of Players");
 		JLabel portLabel = MenuComponent.createLabel("Port");
+		playerNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		numPlayerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		portLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		//Create text fields
+		playerNameEntry = MenuComponent.createTextField(200);
 		numPlayersEntry = MenuComponent.createTextField(200);
 		portEntry = MenuComponent.createTextField(200);
 		
 		// Add to panel
+		gameInfoPanel.add(playerNameLabel);
+		gameInfoPanel.add(playerNameEntry);
 		gameInfoPanel.add(numPlayerLabel);
 		gameInfoPanel.add(numPlayersEntry);
 		gameInfoPanel.add(portLabel);
@@ -142,11 +151,11 @@ public class HostGameView extends View{
 				// Valid numPlayers and port have been entered
 				try {
 					//Start server
-					NetworkingHelper.runServer(numPlayers, port, controller);
+					NetworkingHelper.runServer(numPlayers, port, controller, playerName);
 				} catch (IOException | IllegalArgumentException e1) {
 					JOptionPane.showMessageDialog(this, "Could not connect to server at " + NetworkingHelper.getIPAddress() + " : " +port);
 				}
-				//controller.changeView(controller.getLobbyView);
+				controller.changeView(controller.getClientWaitingView());
 			}
 		});
 		// Create Back button
@@ -167,6 +176,11 @@ public class HostGameView extends View{
 	 */
 	private boolean setInputs(){
 		try {
+			playerName = playerNameEntry.getText();
+			if (playerName == null){
+				JOptionPane.showMessageDialog(this, "Please enter a name");
+				return false;
+			}
 			numPlayers = Integer.parseInt(numPlayersEntry.getText());
 			port = Integer.parseInt(portEntry.getText());
 			return true;

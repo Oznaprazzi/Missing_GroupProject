@@ -15,8 +15,10 @@
 package missing.game.world.nodes;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import missing.game.characters.Player;
+import missing.game.items.movable.Movable;
 import missing.game.items.nonmovable.NonMovable;
 import missing.helper.GameException;
 import missing.helper.SignalException;
@@ -80,6 +82,68 @@ public class WorldTile {
 		 * @throws SignalException
 		 */
 		public void performAction(Player player) throws GameException, SignalException;
+	}
+	
+	public class PileObject implements TileObject{
+
+		public ArrayList<Movable> items;
+		public Player player;
+		
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public String getDescription() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Point getTileLocation() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void setTileLocation(Point tileLocation) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public Point getWorldLocation() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void setWorldLocation(Point worldLocation) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public Direction getOrientation() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Direction getApproach() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void performAction(Player player) throws GameException, SignalException {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
 	}
 
 	/**

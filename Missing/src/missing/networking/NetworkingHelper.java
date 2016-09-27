@@ -29,11 +29,11 @@ public class NetworkingHelper {
 	 * @param vControl vControl for client
 	 * @throws IOException
 	 */
-	public static void runClient(String addr, int port, boolean isHost, VControl vControl) throws IOException {
+	public static void runClient(String addr, int port, boolean isHost, VControl vControl, String playerName) throws IOException {
 		Socket s = new Socket(addr, port);
 		if (isHost) System.out.println("Connected to server as the host");
 		else System.out.println("You have connected to game at " + addr + " : " + port);
-		new Client(s, vControl).start();
+		new Client(s, vControl, playerName).start();
 	}
 	
 	/**
@@ -43,12 +43,12 @@ public class NetworkingHelper {
 	 * @param vControl vControl for the host player
 	 * @throws IOException
 	 */
-	public static void runServer(int numClients, int port, VControl vControl) throws IOException {
+	public static void runServer(int numClients, int port, VControl vControl, String playerName) throws IOException {
 		// Start listening for players trying to join
 		SocketListener socketListener = new SocketListener(numClients, port);
 		socketListener.start();
 		// Join server by creating a client for this player
-		runClient(getIPAddress(), port, true, vControl);
+		runClient(getIPAddress(), port, true, vControl, playerName);
 	}
 	
 	/**
