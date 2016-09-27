@@ -13,16 +13,12 @@ package missing.ui.panels;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import missing.game.world.World;
 import missing.helper.GameException;
-import missing.ui.assets.GWorld;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 
 @SuppressWarnings("serial")
 public class MapPanel extends View {
-
-	
 
 	public MapPanel(VControl controller) {
 		super(controller);

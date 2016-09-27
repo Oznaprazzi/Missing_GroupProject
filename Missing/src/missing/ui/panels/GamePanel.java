@@ -27,7 +27,6 @@ import javax.swing.JPanel;
 
 import missing.game.Game;
 import missing.game.characters.Player;
-import missing.game.world.World;
 import missing.helper.GameException;
 import missing.ui.assets.GWNode;
 import missing.ui.assets.GWorld;
