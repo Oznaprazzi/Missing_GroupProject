@@ -174,7 +174,9 @@ public class VControl extends JFrame {
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
 	}
-	
+	public View getView(int viewIndex){
+		return views[viewIndex];
+	}
 	@Override
 	public void repaint(){
 		super.repaint();

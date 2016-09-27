@@ -17,6 +17,7 @@ package missing.game;
 import static missing.datastorage.initialisers.WorldInitialiser.NODE_SIZE;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.List;
 
 import missing.datastorage.assetloader.XMLHandler;
@@ -37,7 +38,11 @@ import missing.helper.SignalException;
  * 
  * 
  */
-public class Game {
+public class Game implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8190730673024776187L;
 	private Player[] avatars;
 	private World world;
 

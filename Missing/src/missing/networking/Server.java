@@ -9,6 +9,7 @@
  */
 package missing.networking;
 
+
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,18 +56,19 @@ public class Server extends Thread {
 	public void run() {
 		System.out.println("Server running");
 		try {
-			BufferedReader[] ins = new BufferedReader[socket.length]; // inputs
-																		// from
-																		// clients
-			ObjectOutputStream[] outs = new ObjectOutputStream[socket.length]; // outputs
-																				// to
-																				// clients
+			// inputs from clients
+			BufferedReader[] ins = new BufferedReader[socket.length]; 
+			// outputs to clients
+			ObjectOutputStream[] outs = new ObjectOutputStream[socket.length]; 
+			
 			playerNames = new String[socket.length];
 			// add input and output streams for each client socket
 			for (int i = 0; i < ins.length; i++) {
 				ins[i] = new BufferedReader(new InputStreamReader(socket[i].getInputStream()));
-				playerNames[i] = ins[i].readLine(); //set playerName
 				outs[i] = new ObjectOutputStream(socket[i].getOutputStream());
+				// set playerName
+				outs[i].writeObject("name");
+				playerNames[i] = ins[i].readLine();
 			}
 			try {
 				setUpGame();
@@ -80,9 +82,8 @@ public class Server extends Thread {
 				outs[i].writeObject(game);
 				outs[i].flush();
 			}
-
-			boolean update = false; // used to know if a new game needs to be
-									// sent to clients
+			
+			boolean update = false; // used to know if a new game needs to be sent to clients
 			// loop forever listening for inputs from clients
 			while (true) {
 				try {
@@ -95,14 +96,16 @@ public class Server extends Thread {
 						String input = ins[playerNum].readLine();
 						System.out.println(input + " input received from player " + playerNum);
 
-						if (input == "NORTH" || input == "SOUTH" || input == "EAST" || input == "WEST") {
+						if (input.equals("NORTH") || input.equals("SOUTH") || input.equals("EAST") || input.equals("WEST")) {
 							// move that player in given direction
 							Direction[] directions = Direction.values();
 							for (Direction direction : directions){
 								if (direction.toString().equals(input)){
 									try {
 										game.movePlayer(playerNum, direction);
+										System.out.println("player moved");
 									} catch (GameException e){
+										System.out.println("move failed");
 										outs[playerNum].reset();
 										outs[playerNum].writeObject(e);
 									}

@@ -9,6 +9,7 @@
 package missing.game.characters;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 import missing.game.world.nodes.WorldTile.TileObject;
 
@@ -16,8 +17,12 @@ import missing.game.world.nodes.WorldTile.TileObject;
  * This provides the skeleton implementation of the Objects within the world.
  * This should be extended by Player classes and NPCs.
  */
-public abstract class Character implements TileObject {
+public abstract class Character implements TileObject, Serializable {
 
+	/**
+	 * 
+	 */
+	protected static final long serialVersionUID = 1166932944531822141L;
 	private String name;
 	private String description;
 	private Point worldLocation;

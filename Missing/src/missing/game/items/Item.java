@@ -12,6 +12,7 @@
 package missing.game.items;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 import missing.game.world.nodes.WorldTile.TileObject;
 
@@ -20,8 +21,12 @@ import missing.game.world.nodes.WorldTile.TileObject;
  * world. This should be extended to a more specialised subclass.
  *
  */
-public abstract class Item implements TileObject {
+public abstract class Item implements TileObject, Serializable {
 
+	/**
+	 * 
+	 */
+	protected static final long serialVersionUID = 1810088706552886396L;
 	/** name of item, used when displaying details of item */
 	protected String name;
 	/** description of item, used when displaying details of item */

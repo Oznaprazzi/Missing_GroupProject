@@ -16,6 +16,7 @@
 package missing.game.world.nodes;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,12 @@ import missing.helper.SignalException;
  * characteristics.
  *
  */
-public class WorldTile {
+public class WorldTile implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 442814278555588205L;
 
 	/**
 	 * This interface represents all objects which can be stored inside the
@@ -46,7 +52,7 @@ public class WorldTile {
 		 * approached in all directions (this should not be used if this
 		 * enumeration is used to represent where the item is facing)
 		 */
-		public static enum Direction {
+		public static enum Direction{
 			NORTH, SOUTH, EAST, WEST, ALL
 		}
 

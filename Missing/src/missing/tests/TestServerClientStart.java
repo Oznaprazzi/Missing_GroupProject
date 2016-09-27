@@ -8,13 +8,15 @@
  */
 package missing.tests;
 
+import missing.datastorage.assetloader.XMLHandler;
 import missing.ui.controller.VControl;
 
 public class TestServerClientStart {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
+		System.out.println("test sc");
 		VControl vControl = new VControl();
-		vControl.changeView(vControl.getPlayGameView());
+//		vControl.changeView(vControl.getPlayGameView());
 
 	}
 

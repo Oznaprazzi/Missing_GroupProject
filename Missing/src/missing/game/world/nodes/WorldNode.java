@@ -12,6 +12,7 @@
 package missing.game.world.nodes;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 import missing.game.world.nodes.WorldTile.TileObject;
 
@@ -20,7 +21,11 @@ import missing.game.world.nodes.WorldTile.TileObject;
  * list of movable and nonMovable objects because this information will be
  * needed when managing server.
  */
-public class WorldNode {
+public class WorldNode implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4620923181393501618L;
 	/** Represents the maximum number of neighbours of this node */
 	private final int NEIGHBOURS = 4;
 	/**
