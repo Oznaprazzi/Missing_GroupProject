@@ -9,8 +9,6 @@
 
 package missing.game.items.nonmovable;
 
-import java.io.Serializable;
-
 import missing.helper.GameException;
 
 /**
@@ -18,6 +16,7 @@ import missing.helper.GameException;
  * be displayed on the GUI Window. The Bag can contain 20 items of any size. The
  * size of the bag can be increased.
  */
+@SuppressWarnings("serial")
 public class Bag extends Container {
 
 	private final int MAX_CAPACITY = 50;

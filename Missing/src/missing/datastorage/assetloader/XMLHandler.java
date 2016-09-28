@@ -93,8 +93,8 @@ public class XMLHandler {
 		List<Item> trees = parseTrees(worldLocation, doc, xPath, expression);
 		List<Item> bushes = parseBushes(worldLocation, doc, xPath, expression);
 		List<Item> rocks = parseRocks(worldLocation, doc, xPath, expression);
-		// TODO Parse Soil
-		// TODO Parse FishArea
+		List<Item> soil = parseSoil(worldLocation, doc, xPath, expression);
+		List<Item> fishareas = parseFishArea(worldLocation, doc, xPath, expression);
 		// TODO Parse Shop
 		// TODO Parse Fireplace
 		// TODO Parse Pile
@@ -104,16 +104,62 @@ public class XMLHandler {
 		// TODO Parse Stone
 		// TODO Parse Food
 		// TODO Parse Tools
+		// Parse characters
+		// TODO Parse Player
 		// Add everything together
 		tmp.addAll(trees);
 		tmp.addAll(bushes);
 		tmp.addAll(rocks);
+		tmp.addAll(soil);
+		tmp.addAll(fishareas);
 		return tmp;
 	}
 
 	// Movable Parsers
 
 	// NonMovable Parsers
+
+	private static List<Item> parseFishArea(Point worldLocation, Document doc, XPath xPath, String expression) {
+		List<Item> tmp = new ArrayList<Item>();
+		expression += "/fisharea";
+		try {
+			NodeList trees = (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
+			for (int i = 0; i < trees.getLength(); i++) {
+				Node tree = trees.item(i);
+				if (tree.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) tree;
+					Node locNode = elem.getElementsByTagName("location").item(0);
+					Point location = parseLocation(locNode);
+					tmp.add(new FishArea(worldLocation, location));
+				}
+			}
+		} catch (XPathExpressionException e) {
+			System.out.println(e.getMessage());
+			System.exit(1);
+		}
+		return tmp;
+	}
+
+	private static List<Item> parseSoil(Point worldLocation, Document doc, XPath xPath, String expression) {
+		List<Item> tmp = new ArrayList<Item>();
+		expression += "/soil";
+		try {
+			NodeList trees = (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
+			for (int i = 0; i < trees.getLength(); i++) {
+				Node tree = trees.item(i);
+				if (tree.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) tree;
+					Node locNode = elem.getElementsByTagName("location").item(0);
+					Point location = parseLocation(locNode);
+					tmp.add(new Soil(worldLocation, location));
+				}
+			}
+		} catch (XPathExpressionException e) {
+			System.out.println(e.getMessage());
+			System.exit(1);
+		}
+		return tmp;
+	}
 
 	private static List<Item> parseRocks(Point worldLocation, Document doc, XPath xPath, String expression) {
 		List<Item> tmp = new ArrayList<Item>();

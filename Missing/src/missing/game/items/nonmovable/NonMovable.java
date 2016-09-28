@@ -19,6 +19,7 @@ import missing.game.items.Item;
  * used for aesthetic purposes of the game world and may be beneficial for the
  * player.
  */
+@SuppressWarnings("serial")
 public abstract class NonMovable extends Item {
 	private int width;
 	private int height;

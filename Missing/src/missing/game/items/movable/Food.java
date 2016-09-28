@@ -29,6 +29,7 @@ import missing.helper.GameException;
  * edible items that can be eaten by players to increase their health.
  *
  */
+@SuppressWarnings("serial")
 public class Food extends Health {
 
 	/**

@@ -16,6 +16,7 @@ import missing.helper.GameException;
 /**
  * Represents a furniture item that a player can interact with.
  */
+@SuppressWarnings("serial")
 public abstract class Furniture extends Interactable {
 	/**
 	 * Creates an instance of a Funiture item.

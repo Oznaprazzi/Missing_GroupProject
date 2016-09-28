@@ -20,6 +20,7 @@ import missing.helper.GameException;
  * This class represents a Usable item in the Game. It extends the Movable
  * subclass and the Item subclass.
  */
+@SuppressWarnings("serial")
 public abstract class Usable extends Movable {
 
 	/**

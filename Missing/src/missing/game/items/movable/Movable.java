@@ -26,6 +26,7 @@ import missing.helper.GameException;
  * have their location changed.
  *
  */
+@SuppressWarnings("serial")
 public abstract class Movable extends Item {
 
 	/** Represents the size of this movable object. **/

@@ -17,6 +17,7 @@ import java.awt.Point;
  * items
  *
  */
+@SuppressWarnings("serial")
 public abstract class Resource extends Movable {
 	protected static final int DEFAULT_AMOUNT = 5;
 

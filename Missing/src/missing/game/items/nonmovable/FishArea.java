@@ -21,6 +21,7 @@ import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
 
+@SuppressWarnings("serial")
 public class FishArea extends Source{
 
 	private static final int FISH_CHANCE = 70;

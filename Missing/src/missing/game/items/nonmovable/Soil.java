@@ -20,6 +20,7 @@ import missing.helper.GameException;
 /**
  * Represents a soil object in the game. This object gives the player some dirt.
  */
+@SuppressWarnings("serial")
 public class Soil extends Source {
 
 	public Soil(Point worldLocation, Point tileLocation) {

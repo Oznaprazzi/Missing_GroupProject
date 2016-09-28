@@ -16,7 +16,6 @@
 package missing.game.characters;
 
 import java.awt.Point;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +29,7 @@ import missing.helper.SignalException;
 /**
  * This class represents individual players within the game world.
  */
+@SuppressWarnings("serial")
 public class Player extends Character {
 
 
@@ -81,6 +81,10 @@ public class Player extends Character {
 		return bag;
 	}
 
+	public void setBag(Bag bag) {
+		this.bag = bag;
+	}
+
 	// Methods for use
 
 	/**
@@ -125,6 +129,7 @@ public class Player extends Character {
 			throw new GameException("Index must be within bounds of the pocket.");
 		}
 		Movable tmp = pocket.get(index);
+		this.currentItemSize -= tmp.getSize();
 		pocket.remove(index);
 		return tmp;
 	}
@@ -177,7 +182,7 @@ public class Player extends Character {
 			bag.addItem(tmp);
 			throw new GameException(e.getMessage());
 		}
-		
+
 	}
 
 	/**

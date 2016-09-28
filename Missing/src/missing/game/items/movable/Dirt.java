@@ -10,6 +10,7 @@ package missing.game.items.movable;
 
 import java.awt.Point;
 
+@SuppressWarnings("serial")
 public class Dirt extends Resource{
 
 	public Dirt(Point worldLocation, Point tileLocation) {

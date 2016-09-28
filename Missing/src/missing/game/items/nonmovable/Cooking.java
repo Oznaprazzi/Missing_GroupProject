@@ -17,6 +17,7 @@ import missing.helper.GameException;
 /**
  * Represents a Cooking item that a player can interact with in order to produce food.
  */
+@SuppressWarnings("serial")
 public abstract class Cooking extends Furniture{
 	/**
 	 * Creates an instance of a Cooking item.

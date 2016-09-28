@@ -14,6 +14,7 @@ import java.awt.Point;
  * Consumable subclass. subclasses of this class represents items that can be consumed, such as various types of food.
  * 
  */
+@SuppressWarnings("serial")
 public abstract class Consumable extends Usable {
 	/**
 	 * Construct a new Instance of a consumable Item.

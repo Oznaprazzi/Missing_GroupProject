@@ -14,6 +14,7 @@ import java.awt.Point;
 /**
  * Represents a Stone item in the game. Stone is a movable resource.
  */
+@SuppressWarnings("serial")
 public class Stone extends Resource {
 
 	public Stone(Point worldLocation, Point tileLocation) {

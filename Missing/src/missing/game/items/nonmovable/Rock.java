@@ -19,6 +19,7 @@ import missing.helper.GameException;
 /**
  * Represents a Rock item which players can mine to get the stone resource.
  */
+@SuppressWarnings("serial")
 public class Rock extends Source {
 	// TODO Potential for adding ores
 
