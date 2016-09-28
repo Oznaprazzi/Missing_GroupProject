@@ -16,9 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import missing.game.items.Item;
+import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Movable;
+import missing.game.items.movable.Stone;
+import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Bush;
@@ -40,12 +43,24 @@ public class BagFrame extends JFrame {
 					Movable wood2 = new Wood(new Point(0, 0), new Point(0,0));
 					Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
 					Movable food2 = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
-					Movable food3 = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
+					Movable food3 = new Food(new Point(0, 0), new Point(0,0), FoodType.BERRY);
+					Movable dirt = new Dirt(new Point(0, 0), new Point(0,0));
+					Movable stone = new Stone(new Point(0, 0), new Point(0,0));
+					Movable axe  = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.AXE, 0);
+					Movable pickaxe = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.PICKAXE, 0);
+					Movable shovel = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.SHOVEL, 0);
+					Movable fishingrod = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.FISHINGROD, 0);
 					bag.addItem(wood);
 					bag.addItem(wood2);
 					bag.addItem(food);
 					bag.addItem(food2);
 					bag.addItem(food3);
+					bag.addItem(dirt);
+					bag.addItem(stone);
+					bag.addItem(axe);
+					bag.addItem(pickaxe);
+					bag.addItem(shovel);
+					bag.addItem(fishingrod);
 					BagFrame frame = new BagFrame(bag);
 					frame.setVisible(true);
 				} catch (Exception e) {
