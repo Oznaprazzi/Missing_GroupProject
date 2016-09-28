@@ -44,6 +44,7 @@ public class BagFrame extends JFrame {
 					Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
 					Movable food2 = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
 					Movable food3 = new Food(new Point(0, 0), new Point(0,0), FoodType.BERRY);
+					Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
 					Movable dirt = new Dirt(new Point(0, 0), new Point(0,0));
 					Movable stone = new Stone(new Point(0, 0), new Point(0,0));
 					Movable axe  = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.AXE, 0);
@@ -55,8 +56,10 @@ public class BagFrame extends JFrame {
 					bag.addItem(food);
 					bag.addItem(food2);
 					bag.addItem(food3);
+					bag.addItem(food4);
 					bag.addItem(dirt);
 					bag.addItem(stone);
+					System.out.println(axe);
 					bag.addItem(axe);
 					bag.addItem(pickaxe);
 					bag.addItem(shovel);
