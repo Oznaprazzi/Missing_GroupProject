@@ -38,12 +38,13 @@ import missing.ui.controller.VControl.View;
  * running, this will be shown.
  */
 @SuppressWarnings("serial")
-public class GamePanel extends View {
+public class GamePanel extends JPanel {
 
 	private GWorld graphicWorld;
 	private Point curPoint;
 	private GWNode curGWNode;
 	private Player currentPlayer;
+	private VControl controller;
 
 	/**
 	 * Construct a GamePanel instance with a controller and a world object.
@@ -54,9 +55,11 @@ public class GamePanel extends View {
 	 *            w
 	 */
 	public GamePanel(VControl controller) {
-		super(controller);
+		this.controller = controller;
 	}
-
+	public void setController(VControl controller){
+		this.controller = controller;
+	}
 	/******
 	 * Testing constructors! TODO: remove this/alter in the final release.
 	 *********/
@@ -87,7 +90,15 @@ public class GamePanel extends View {
 		curPoint = currentPlayer.getWorldLocation();
 		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
 	}
-
+	
+	public void initialise() {
+		graphicWorld = controller.getGGame().getGWorld();
+		currentPlayer = controller.getGGame().getGame().getAvatars()[controller.getPlayerID()];
+		curPoint = currentPlayer.getWorldLocation();
+		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
+		
+	}
+	
 	public Dimension getPreferredSize() {
 		return new Dimension(600, 600);
 	}
@@ -114,20 +125,6 @@ public class GamePanel extends View {
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void initialise() {
-		graphicWorld = controller.getGGame().getGWorld();
-		currentPlayer = controller.getGGame().getGame().getAvatars()[controller.getPlayerID()];
-		curPoint = currentPlayer.getWorldLocation();
-		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
-		
-	}
-
-	@Override
-	public void setFocus() {
-		
 	}
 
 }

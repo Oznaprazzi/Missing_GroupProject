@@ -6,6 +6,8 @@
  * Date				Author			Modification
  * 19 Sep 16		Edward Kelly	created class
  * 24 Sep 16		Edward Kelly	added vControl setting up
+ * 28 Sep 16		Edward Kelly	fixed minimize bug
+ * 28 Sep 16		Edward Kelly	integrated GameView
  */
 package missing.networking;
 
@@ -25,6 +27,8 @@ import missing.helper.GameException;
 import missing.helper.SignalException;
 import missing.ui.assets.GGame;
 import missing.ui.controller.VControl;
+import missing.ui.panels.GamePanel;
+import missing.ui.views.GameView;
 /**
  * The Client is responsible for sending inputs from the player to the server
  * and providing an instance of the game to the view package to be displayed to
@@ -85,21 +89,22 @@ public class Client extends Thread implements KeyListener{
 			if (request.equals("name")){
 				out.println(playerName);
 			}
-
+			
+			// Set initial game state
 			clientID = (int)in.readObject();
 			vControl.setPlayerID(clientID);
 			game = (Game)in.readObject();
 			try {
 				vControl.addKeyListener(this);
-				vControl.setVisible(true);
 				vControl.setGGame(new GGame(game, vControl.getView(vControl.getGameView())));
 				vControl.changeView(vControl.getGameView());
-				vControl.pack();
+				vControl.requestFocusInWindow();
 				
 			} catch (GameException e) {
 				// TODO forward to controller
 				e.printStackTrace();
 			}
+
 			// listen for updates from server
 			while (true) {
 				Object input = in.readObject();
@@ -110,7 +115,7 @@ public class Client extends Thread implements KeyListener{
 					// received game
 					game = (Game)input;
 					try {
-						vControl.setGGame(new GGame(game, vControl.getView(vControl.getGameView())));
+						vControl.updateGGame(game);
 					} catch (GameException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -140,7 +145,6 @@ public class Client extends Thread implements KeyListener{
 		int key = e.getKeyCode();
 		if (key == KeyEvent.VK_W ){
 			out.println("NORTH");
-			System.out.println("pressed w");
 		}
 		else if (key == KeyEvent.VK_S){
 			out.println("SOUTH");
@@ -151,16 +155,15 @@ public class Client extends Thread implements KeyListener{
 		else if (key == KeyEvent.VK_D){
 			out.println("EAST");
 		}
+		else if (key == KeyEvent.VK_Q){
+			out.println("Q");
+		}
 		else if (key == KeyEvent.VK_E){
 			out.println("E");
 		}
-	}
-	public void movePlayer(String direction){
-		out.println(direction);
-	}
-	
-	public void performAction(){
-		out.println("E");
+		else if (key == KeyEvent.VK_F){
+			out.println("F");
+		}
 	}
 
 	@Override

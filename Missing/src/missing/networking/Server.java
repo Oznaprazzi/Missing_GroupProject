@@ -9,10 +9,10 @@
  * 26 Sep 16		Edward Kelly	implemented receiving names
  * 27 Sep 16		Edward Kelly	implemented setUpGame, now can send game
  * 28 Sep 16		Edward Kelly	added random spawns
+ * 28 Sep 16		Edward Kelly	added support for rotate
  */
 package missing.networking;
 
-import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -45,8 +45,6 @@ public class Server extends Thread {
 
 	public Server(Socket[] sockets) {
 		this.socket = sockets;
-		// Create game. This could be done somewhere else
-		// and instead the constructor is passed the game
 
 	}
 
@@ -114,7 +112,6 @@ public class Server extends Thread {
 								if (direction.toString().equals(input)) {
 									try {
 										game.movePlayer(playerNum, direction);
-										System.out.println("player moved");
 									} catch (GameException e) {
 										System.out.println("move failed");
 										outs[playerNum].reset();
@@ -122,7 +119,23 @@ public class Server extends Thread {
 									}
 								}
 							}
-						} else if (input == "E") {
+						} else if (input.equals("E")) {
+							// player wants to turn to EAST
+							try {
+								game.turnPlayer(playerNum, Direction.EAST);;
+							} catch (GameException e) {
+								outs[playerNum].reset();
+								outs[playerNum].writeObject(e);
+							}
+						} else if (input.equals("Q")) {
+							// player wants to turn to WEST
+							try {
+								game.turnPlayer(playerNum, Direction.WEST);;
+							} catch (GameException e) {
+								outs[playerNum].reset();
+								outs[playerNum].writeObject(e);
+							}
+						} else if (input.equals("F")) {
 							// player wants to perform action
 							try {
 								game.performAction(playerNum);
