@@ -8,6 +8,7 @@
  * 23 Sep 16		Edward Kelly	allowed GameException to be sent to clients
  * 26 Sep 16		Edward Kelly	implemented receiving names
  * 27 Sep 16		Edward Kelly	implemented setUpGame, now can send game
+ * 28 Sep 16		Edward Kelly	added random spawns
  */
 package missing.networking;
 
@@ -18,8 +19,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
+import java.util.Random;
 
+import missing.datastorage.initialisers.WorldInitialiser;
 import missing.game.Game;
+import missing.game.Game.Spawn;
 import missing.game.characters.Player;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
@@ -48,9 +53,12 @@ public class Server extends Thread {
 	
 	private void setUpGame() throws GameException{
 		Player[] players = new Player[socket.length];
+		List<Spawn> spawns = WorldInitialiser.getSpawnPoints();
+		Random random = new Random();
 		for (int i=0; i < socket.length; i++){
-			// TODO: change for spawn points
-			players[i] = new Player(playerNames[i], new Point(0,0), new Point(9, i+4));
+			int index = random.nextInt(spawns.size());
+			players[i] = new Player(playerNames[i], spawns.get(index).worldLocation, spawns.get(index).tileLocation);
+			spawns.remove(index);
 		}
 		game = new Game(players);
 	}

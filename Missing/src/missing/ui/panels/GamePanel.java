@@ -127,7 +127,6 @@ public class GamePanel extends View {
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
 		
 	}
 

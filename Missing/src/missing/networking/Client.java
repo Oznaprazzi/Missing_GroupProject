@@ -91,9 +91,11 @@ public class Client extends Thread implements KeyListener{
 			game = (Game)in.readObject();
 			try {
 				vControl.addKeyListener(this);
+				vControl.setVisible(true);
 				vControl.setGGame(new GGame(game, vControl.getView(vControl.getGameView())));
 				vControl.changeView(vControl.getGameView());
-				vControl.setVisible(true);
+				vControl.pack();
+				
 			} catch (GameException e) {
 				// TODO forward to controller
 				e.printStackTrace();
@@ -113,10 +115,7 @@ public class Client extends Thread implements KeyListener{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					long start = System.currentTimeMillis();
 					vControl.repaint();
-					long end = System.currentTimeMillis();
-					System.out.println("Render time " + (end-start));
 				} else if (input.getClass() == GameException.class){
 					System.out.println(((GameException)input).toString());
 					//TODO: forward to controller
@@ -141,6 +140,7 @@ public class Client extends Thread implements KeyListener{
 		int key = e.getKeyCode();
 		if (key == KeyEvent.VK_W ){
 			out.println("NORTH");
+			System.out.println("pressed w");
 		}
 		else if (key == KeyEvent.VK_S){
 			out.println("SOUTH");
