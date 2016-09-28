@@ -11,6 +11,7 @@
  *	7 Sep 16			Chris Rabe				removed food type field
  *	7 Sep 16			Chris Rabe				added method for adding food item to fireplace
  *	7 Sep 16			Chris Rabe				updated performAction method
+ *	28 Sep 16			Chris Rabe				updated logic for fireplace
  */
 package missing.game.items.nonmovable;
 
@@ -55,7 +56,7 @@ public class Fireplace extends Cooking {
 
 	@Override
 	public void performAction(Player p) throws GameException {
-		// TODO search food in player's pocket then cook
+		this.food = p.getFood();
 		if (food == null) {
 			throw new GameException("There is no food in the fireplace!");
 		}

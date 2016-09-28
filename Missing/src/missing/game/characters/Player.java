@@ -19,6 +19,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import missing.game.items.movable.Food;
 import missing.game.items.movable.Movable;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
@@ -31,7 +32,6 @@ import missing.helper.SignalException;
  */
 @SuppressWarnings("serial")
 public class Player extends Character {
-
 
 	/** Represents the maximum number of items which the player could have. */
 	private final int MAX_ITEM_SIZE = 10;
@@ -211,6 +211,21 @@ public class Player extends Character {
 			}
 		}
 		return lowest;
+	}
+
+	/**
+	 * This method grabs the first Food object inside the player's pocket. If
+	 * the player does not have any food, it returns null.
+	 * 
+	 * @return
+	 */
+	public Food getFood() {
+		for (Movable i : pocket) {
+			if (i instanceof Food) {
+				return (Food) i;
+			}
+		}
+		return null;
 	}
 
 	/**
