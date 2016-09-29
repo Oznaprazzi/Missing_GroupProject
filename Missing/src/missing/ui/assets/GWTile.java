@@ -96,7 +96,9 @@ public class GWTile {
 			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
 		}
 		/*Draws the player. */
+		if (!tile.isOccupied())System.out.println("not occupied");
 		if(tile.isOccupied() && tile.getObject() instanceof Player){
+			System.out.println("player in square");
 			drawPlayer(g,x,y,tile.getObject());
 		}
 		
