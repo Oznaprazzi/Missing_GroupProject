@@ -192,7 +192,7 @@ public class Client extends Thread implements KeyListener{
 				out.println("E");
 				break;
 			case KeyEvent.VK_F :
-				out.println("F");
+				sendAction();
 				break;
 		}
 		if (moveDirection != null){
@@ -207,6 +207,23 @@ public class Client extends Thread implements KeyListener{
 		}
 	}
 	
+	private void sendAction(){
+		try {
+			game.performAction(clientID);
+			out.println("F");
+		} catch(SignalException | GameException e){
+			if (e.getClass() == SignalException.class){
+				if (e.getMessage().equals("CONTAINER")){
+					vControl.displayContainerItems();
+				} else if (e.getMessage().equals("PILE")){
+					vControl.displayPileItems();
+				} else if (e.getMessage().equals("TRADE")){
+					//TODO: get other player from exception
+					// request trade with other player
+				}
+			}
+		}
+	}
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub

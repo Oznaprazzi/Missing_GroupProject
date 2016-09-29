@@ -150,6 +150,23 @@ public class VControl extends JFrame {
 			return null;
 		}
 	}
+	
+	/**
+	 * Called if the player performed an action on a Container
+	 * Displays the items in that Container
+	 */
+	public void displayContainerItems(){
+		//TODO: implement. get container items in square in front of player
+		// will probably call another method, maybe in GameView
+	}
+	
+	/**
+	 * Called if the player performed an action on a Pile
+	 * Displays the items in that Pile
+	 */
+	public void displayPileItems(){
+		//TODO: similar to displayContainerItems
+	}
 
 	// Helper methods
 
