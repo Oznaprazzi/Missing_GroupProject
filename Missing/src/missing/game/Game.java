@@ -11,6 +11,7 @@
  *  22 Sep 16			Chris Rabe				implemented rotation method
  *  27 Sep 16			Chris Rabe				upgraded game logic
  *  27 Sep 16			Chris Rabe				implemented spawn points
+ *  30 Sep 16			Chris Rabe				added null checks
  */
 
 package missing.game;
@@ -40,19 +41,18 @@ import missing.helper.SignalException;
  * 
  * 
  */
-public class Game implements Serializable{
+public class Game implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8190730673024776187L;
-
 
 	/**
 	 * This class stores information of all the available spawn area for the
 	 * map. Since the map is always the same for each game, then it is safe to
 	 * create pre-defined set of points.
 	 */
-	public static class Spawn implements Serializable{
+	public static class Spawn implements Serializable {
 		/**
 		 * 
 		 */
@@ -270,6 +270,9 @@ public class Game implements Serializable{
 	 * @return
 	 */
 	private boolean validApproach(Player player, TileObject object) {
+		if (object == null || player == null) {
+			return false;
+		}
 		if (object.getApproach() == Direction.ALL) {
 			return true;
 		}

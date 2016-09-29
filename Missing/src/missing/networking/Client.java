@@ -171,28 +171,28 @@ public class Client extends Thread implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		Direction moveDirection = null;
 		int key = e.getKeyCode();
-		switch (key) {
-		case KeyEvent.VK_W:
-			moveDirection = Direction.NORTH;
-			break;
-		case KeyEvent.VK_S:
-			moveDirection = Direction.SOUTH;
-			break;
-		case KeyEvent.VK_A:
-			moveDirection = Direction.WEST;
-			break;
-		case KeyEvent.VK_D:
-			moveDirection = Direction.EAST;
-			break;
-		case KeyEvent.VK_Q:
-			out.println("Q");
-			break;
-		case KeyEvent.VK_E:
-			out.println("E");
-			break;
-		case KeyEvent.VK_F:
-			out.println("F");
-			break;
+		switch(key){
+			case KeyEvent.VK_W :
+				moveDirection = Direction.NORTH;
+				break;
+			case KeyEvent.VK_S :
+				moveDirection = Direction.SOUTH;
+				break;
+			case KeyEvent.VK_A :
+				moveDirection = Direction.WEST;
+				break;
+			case KeyEvent.VK_D :
+				moveDirection = Direction.EAST;
+				break;
+			case KeyEvent.VK_Q :
+				out.println("Q");
+				break;
+			case KeyEvent.VK_E :
+				out.println("E");
+				break;
+			case KeyEvent.VK_F :
+				sendAction();
+				break;
 		}
 		if (moveDirection != null) {
 			try {
@@ -205,7 +205,24 @@ public class Client extends Thread implements KeyListener {
 			}
 		}
 	}
-
+	
+	private void sendAction(){
+		try {
+			game.performAction(clientID);
+			out.println("F");
+		} catch(SignalException | GameException e){
+			if (e.getClass() == SignalException.class){
+				if (e.getMessage().equals("CONTAINER")){
+					vControl.displayContainerItems();
+				} else if (e.getMessage().equals("PILE")){
+					vControl.displayPileItems();
+				} else if (e.getMessage().equals("TRADE")){
+					//TODO: get other player from exception
+					// request trade with other player
+				}
+			}
+		}
+	}
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
