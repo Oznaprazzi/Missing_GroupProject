@@ -34,8 +34,10 @@ import missing.game.characters.Player;
 import missing.game.world.World;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 import missing.ui.panels.GamePanel;
 import missing.ui.frames.*;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class TestWindow extends JFrame implements KeyListener {
@@ -67,6 +69,9 @@ public class TestWindow extends JFrame implements KeyListener {
 	private GamePanel gamePanel;
 	/* Holds the BagFrame renderer*/
 	private BagFrameTest bagFrame;
+	private JLabel lblHealthField;
+	private JTextField healthField;
+	private JButton btnDoAction;
 	
 	public TestWindow(Game game, World w, Player p) {
 		super("Test Panel");
@@ -90,9 +95,9 @@ public class TestWindow extends JFrame implements KeyListener {
 		GridBagLayout gbl_panel = new GridBagLayout();
 
 		gbl_panel.columnWidths = new int[] { 89, 0 };
-		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
 
 		JLabel lblCurrentPlayer = new JLabel("Current Player");
@@ -127,27 +132,45 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_btnTurnR.gridy = 4;
 		panel.add(btnTurnR, gbc_btnTurnR);
 		
+		lblHealthField = new JLabel("Player Health");
+		lblHealthField.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_lblHealthField = new GridBagConstraints();
+		gbc_lblHealthField.anchor = GridBagConstraints.WEST;
+		gbc_lblHealthField.insets = new Insets(0, 0, 5, 0);
+		gbc_lblHealthField.gridx = 0;
+		gbc_lblHealthField.gridy = 5;
+		panel.add(lblHealthField, gbc_lblHealthField);
+		
+		healthField = new JTextField();
+		healthField.setColumns(10);
+		GridBagConstraints gbc_healthField = new GridBagConstraints();
+		gbc_healthField.insets = new Insets(0, 0, 5, 0);
+		gbc_healthField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_healthField.gridx = 0;
+		gbc_healthField.gridy = 6;
+		panel.add(healthField, gbc_healthField);
+		
 		lblPlayerWorldPos = new JLabel("Player Tile Pos");
 		GridBagConstraints gbc_lblPlayerWorldPos = new GridBagConstraints();
 		gbc_lblPlayerWorldPos.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPlayerWorldPos.gridx = 0;
-		gbc_lblPlayerWorldPos.gridy = 5;
+		gbc_lblPlayerWorldPos.gridy = 7;
 		panel.add(lblPlayerWorldPos, gbc_lblPlayerWorldPos);
 		
 		tilePos = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 0;
-		gbc_textField.gridy = 6;
-		panel.add(tilePos, gbc_textField);
+		GridBagConstraints gbc_playerHealthfield = new GridBagConstraints();
+		gbc_playerHealthfield.insets = new Insets(0, 0, 5, 0);
+		gbc_playerHealthfield.fill = GridBagConstraints.HORIZONTAL;
+		gbc_playerHealthfield.gridx = 0;
+		gbc_playerHealthfield.gridy = 8;
+		panel.add(tilePos, gbc_playerHealthfield);
 		tilePos.setColumns(10);
 		
 		lblPlayerTilePos = new JLabel("Player World Pos");
 		GridBagConstraints gbc_lblPlayerTilePos = new GridBagConstraints();
 		gbc_lblPlayerTilePos.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPlayerTilePos.gridx = 0;
-		gbc_lblPlayerTilePos.gridy = 7;
+		gbc_lblPlayerTilePos.gridy = 9;
 		panel.add(lblPlayerTilePos, gbc_lblPlayerTilePos);
 		
 		worldPos = new JTextField();
@@ -155,7 +178,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_1.gridx = 0;
-		gbc_textField_1.gridy = 8;
+		gbc_textField_1.gridy = 10;
 		panel.add(worldPos, gbc_textField_1);
 		worldPos.setColumns(10);
 		
@@ -163,7 +186,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		GridBagConstraints gbc_lblPlayerOrientation = new GridBagConstraints();
 		gbc_lblPlayerOrientation.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPlayerOrientation.gridx = 0;
-		gbc_lblPlayerOrientation.gridy = 9;
+		gbc_lblPlayerOrientation.gridy = 11;
 		panel.add(lblPlayerOrientation, gbc_lblPlayerOrientation);
 		
 		playerOrientation = new JTextField();
@@ -172,21 +195,28 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_orientationField.insets = new Insets(0, 0, 5, 0);
 		gbc_orientationField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_orientationField.gridx = 0;
-		gbc_orientationField.gridy = 10;
+		gbc_orientationField.gridy = 12;
 		panel.add(playerOrientation, gbc_orientationField);
+		
+		btnDoAction = new JButton("Do Action");
+		GridBagConstraints gbc_btnDoAction = new GridBagConstraints();
+		gbc_btnDoAction.insets = new Insets(0, 0, 5, 0);
+		gbc_btnDoAction.gridx = 0;
+		gbc_btnDoAction.gridy = 13;
+		panel.add(btnDoAction, gbc_btnDoAction);
 		
 		btnViewMap = new JButton("View Map");
 		GridBagConstraints gbc_btnViewMap = new GridBagConstraints();
 		gbc_btnViewMap.insets = new Insets(0, 0, 5, 0);
 		gbc_btnViewMap.gridx = 0;
-		gbc_btnViewMap.gridy = 11;
+		gbc_btnViewMap.gridy = 14;
 		panel.add(btnViewMap, gbc_btnViewMap);
 		
 		btnPlayersBag = new JButton("Players Bag");
 		GridBagConstraints gbc_btnPlayersBag = new GridBagConstraints();
 		gbc_btnPlayersBag.insets = new Insets(0, 0, 5, 0);
 		gbc_btnPlayersBag.gridx = 0;
-		gbc_btnPlayersBag.gridy = 12;
+		gbc_btnPlayersBag.gridy = 15;
 		panel.add(btnPlayersBag, gbc_btnPlayersBag);
 		
 		JLayeredPane layeredPane = new JLayeredPane();
@@ -194,7 +224,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		GridBagConstraints gbc_layeredPane = new GridBagConstraints();
 		gbc_layeredPane.fill = GridBagConstraints.BOTH;
 		gbc_layeredPane.gridx = 0;
-		gbc_layeredPane.gridy = 13;
+		gbc_layeredPane.gridy = 16;
 		panel.add(layeredPane, gbc_layeredPane);
 
 		btnUp = new JButton("Up");
@@ -227,9 +257,7 @@ public class TestWindow extends JFrame implements KeyListener {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					moveEvent(0, Direction.NORTH);
-					gamePanel.revalidate();
-					gamePanel.updateNodeRender(); 
-					gamePanel.repaint();
+					repaintGamePanel();
 				} catch (GameException e1) {
 					e1.printStackTrace();
 				}
@@ -240,9 +268,7 @@ public class TestWindow extends JFrame implements KeyListener {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					moveEvent(0, Direction.SOUTH);
-					gamePanel.revalidate();
-					gamePanel.updateNodeRender();
-					gamePanel.repaint();
+					repaintGamePanel();
 				} catch (GameException e1) {
 					e1.printStackTrace();
 				}
@@ -253,9 +279,7 @@ public class TestWindow extends JFrame implements KeyListener {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					moveEvent(0, Direction.WEST);
-					gamePanel.revalidate();
-					gamePanel.updateNodeRender(); 
-					gamePanel.repaint();
+					repaintGamePanel();
 				} catch (GameException e1) {
 					e1.printStackTrace();
 				}
@@ -300,6 +324,15 @@ public class TestWindow extends JFrame implements KeyListener {
 			bagFrame = new BagFrameTest(curPlayer.getBag());
 			bagFrame.setVisible(true);
 		});
+		
+		this.btnDoAction.addActionListener(e->{
+			try {
+			 performActionEvent(0);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		
+		});
 	}
 
 
@@ -329,9 +362,8 @@ public class TestWindow extends JFrame implements KeyListener {
 			break;
 		}
 		updateTextBarPositions();
-		gamePanel.revalidate();
-		gamePanel.updateNodeRender();
-		gamePanel.repaint();
+		repaintGamePanel();
+
 	}
 	
 	/**
@@ -352,18 +384,33 @@ public class TestWindow extends JFrame implements KeyListener {
 		break;
 		}
 		updateTextBarPositions();
-		gamePanel.revalidate();
-		gamePanel.updateNodeRender();
-		gamePanel.repaint();
+		repaintGamePanel();
 	}
 	
 	
+	private void performActionEvent(int playerID) throws GameException{
+		try {
+			gameinstance.performAction(playerID);
+			updateTextBarPositions();
+			repaintGamePanel();
+		} catch (SignalException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void repaintGamePanel(){
+		gamePanel.revalidate();
+		gamePanel.updateNodeRender();
+		gamePanel.repaint();
+
+	}
 	
 	
 	private void updateTextBarPositions(){
 		tilePos.setText("x: " + curPlayer.getTileLocation().getX() + " y: " + curPlayer.getTileLocation().getY());
 		worldPos.setText("x: " + curPlayer.getWorldLocation().getX() + " y: " + curPlayer.getWorldLocation().getY());
 		playerOrientation.setText(curPlayer.getOrientation().toString());
+		healthField.setText("" + curPlayer.getHealth());
 	}
 	
 	@Override
@@ -395,6 +442,9 @@ public class TestWindow extends JFrame implements KeyListener {
 				break;
 			case KeyEvent.VK_Q:
 				rotateEvent(0, Direction.WEST);
+				break;
+			case KeyEvent.VK_F:
+				this.performActionEvent(0);
 				break;
 			}
 		}catch(GameException g){
