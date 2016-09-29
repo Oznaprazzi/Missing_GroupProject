@@ -21,7 +21,6 @@ package missing.ui.assets;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Polygon;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
@@ -94,12 +93,6 @@ public class GWTile {
 			break;
 		default:
 			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
-		}
-		/*Draws the player. */
-		if (!tile.isOccupied())System.out.println("not occupied");
-		if(tile.isOccupied() && tile.getObject() instanceof Player){
-			System.out.println("player in square");
-			drawPlayer(g,x,y,tile.getObject());
 		}
 		
 		/*Draw the Items onto the tile. */
