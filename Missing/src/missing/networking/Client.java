@@ -18,9 +18,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import missing.game.Game;
-import missing.game.characters.Player;
-import missing.game.world.World;
-import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
 import missing.ui.assets.GGame;
