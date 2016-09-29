@@ -8,6 +8,7 @@
  * 24 Sep 16		Edward Kelly	added vControl setting up
  * 28 Sep 16		Edward Kelly	fixed minimize bug
  * 28 Sep 16		Edward Kelly	integrated GameView
+ * 29 Sep 16		Edward Kelly	now receives instructions instead of game
  */
 package missing.networking;
 
@@ -111,9 +112,35 @@ public class Client extends Thread implements KeyListener{
 				if (input == null) {
 					break;
 				}
-				if (input.getClass() == Game.class) {
-					// received game
-					game = (Game)input;
+				if (input.getClass() == String.class) {
+					// received instruction
+					int movingPlayer = (Integer)(in.readObject()); // player to be changed
+					Direction direction = (Direction)(in.readObject());
+					if (input.equals("move")){
+						try {
+							if (game.validMove(movingPlayer, direction)){
+								game.movePlayer(movingPlayer, direction);
+							}
+						} catch (GameException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if(input.equals("turn")){
+						try {
+							game.turnPlayer(movingPlayer, direction);
+						} catch (GameException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if(input.equals("perform")){
+						//TODO will need to change once performAction fully implemented
+						try {
+							game.performAction(movingPlayer);
+						} catch (GameException | SignalException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 					try {
 						vControl.updateGGame(game);
 					} catch (GameException e) {
@@ -131,6 +158,7 @@ public class Client extends Thread implements KeyListener{
 			}
 			socket.close();
 		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
 			System.out.println("Server has gone offline");
 		} finally {
 			try {
@@ -142,30 +170,43 @@ public class Client extends Thread implements KeyListener{
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
+		Direction moveDirection = null;
 		int key = e.getKeyCode();
-		if (key == KeyEvent.VK_W ){
-			out.println("NORTH");
+		switch(key){
+			case KeyEvent.VK_W :
+				moveDirection = Direction.NORTH;
+				break;
+			case KeyEvent.VK_S :
+				moveDirection = Direction.SOUTH;
+				break;
+			case KeyEvent.VK_A :
+				moveDirection = Direction.WEST;
+				break;
+			case KeyEvent.VK_D :
+				moveDirection = Direction.EAST;
+				break;
+			case KeyEvent.VK_Q :
+				out.println("Q");
+				break;
+			case KeyEvent.VK_E :
+				out.println("E");
+				break;
+			case KeyEvent.VK_F :
+				out.println("F");
+				break;
 		}
-		else if (key == KeyEvent.VK_S){
-			out.println("SOUTH");
-		}
-		else if (key == KeyEvent.VK_A){
-			out.println("WEST");
-		}
-		else if (key == KeyEvent.VK_D){
-			out.println("EAST");
-		}
-		else if (key == KeyEvent.VK_Q){
-			out.println("Q");
-		}
-		else if (key == KeyEvent.VK_E){
-			out.println("E");
-		}
-		else if (key == KeyEvent.VK_F){
-			out.println("F");
+		if (moveDirection != null){
+			try {
+				if (game.validMove(clientID, moveDirection)){
+					out.println(moveDirection.toString());
+				}
+			} catch (GameException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
-
+	
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub

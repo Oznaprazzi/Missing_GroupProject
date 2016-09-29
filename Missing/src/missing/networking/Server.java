@@ -3,13 +3,14 @@
  * Authors			ID
  * Edward Kelly 	300334192
  * 
- * Date				Author			Modification
- * 19 Sep 16		Edward Kelly	created class
- * 23 Sep 16		Edward Kelly	allowed GameException to be sent to clients
- * 26 Sep 16		Edward Kelly	implemented receiving names
- * 27 Sep 16		Edward Kelly	implemented setUpGame, now can send game
- * 28 Sep 16		Edward Kelly	added random spawns
- * 28 Sep 16		Edward Kelly	added support for rotate
+ * Date			Author			Modification
+ * 19 Sep 16	Edward Kelly	created class
+ * 23 Sep 16	Edward Kelly	allowed GameException to be sent to clients
+ * 26 Sep 16	Edward Kelly	implemented receiving names
+ * 27 Sep 16	Edward Kelly	implemented setUpGame, now can send game
+ * 28 Sep 16	Edward Kelly	added random spawns
+ * 28 Sep 16	Edward Kelly	added support for rotate
+ * 29 Sep 16	Edward Kelly	now sends instructions instead of whole game
  */
 package missing.networking;
 
@@ -27,7 +28,6 @@ import missing.game.Game.Spawn;
 import missing.game.characters.Player;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
-import missing.helper.SignalException;
 
 /**
  * Represents the Server for the game. The server holds a Game object and is
@@ -40,7 +40,10 @@ public class Server extends Thread {
 	private Socket[] socket;
 	/** The game being played which is sent to clients */
 	private Game game;
-
+	/** Inputs from clients */
+	private BufferedReader[] ins;
+	/** Outputs to clients */
+	private ObjectOutputStream[] outs;
 	String[] playerNames;
 
 	public Server(Socket[] sockets) {
@@ -63,10 +66,8 @@ public class Server extends Thread {
 	public void run() {
 		System.out.println("Server running");
 		try {
-			// inputs from clients
-			BufferedReader[] ins = new BufferedReader[socket.length];
-			// outputs to clients
-			ObjectOutputStream[] outs = new ObjectOutputStream[socket.length];
+			ins = new BufferedReader[socket.length];
+			outs = new ObjectOutputStream[socket.length];
 
 			playerNames = new String[socket.length];
 			// add input and output streams for each client socket
@@ -90,71 +91,43 @@ public class Server extends Thread {
 				outs[i].flush();
 			}
 
-			boolean update = false; // used to know if a new game needs to be
-									// sent to clients
+			String instruction = null; // type of instruction to be sent
+			Direction direction = null; // direction for the move/turn, null if performAction
 			// loop forever listening for inputs from clients
 			while (true) {
 				try {
 					// listen for inputs
-					for (int playerNum = 0; playerNum < ins.length; playerNum++) {
-						if (!ins[playerNum].ready())
+					for (int playerID = 0; playerID < ins.length; playerID++) {
+						if (!ins[playerID].ready())
 							continue;
-						// new input from client. at this stage just a key
-						// direction
-						String input = ins[playerNum].readLine();
-						System.out.println(input + " input received from player " + playerNum);
+						// new input from client. 
+						String input = ins[playerID].readLine();
+						System.out.println("Server: "+input + " input received from player " + playerID);
 
+						// move that player in given direction
 						if (input.equals("NORTH") || input.equals("SOUTH") || input.equals("EAST")
 								|| input.equals("WEST")) {
-							// move that player in given direction
 							Direction[] directions = Direction.values();
-							for (Direction direction : directions) {
-								if (direction.toString().equals(input)) {
-									try {
-										game.movePlayer(playerNum, direction);
-									} catch (GameException e) {
-										System.out.println("move failed");
-										outs[playerNum].reset();
-										outs[playerNum].writeObject(e);
-									}
+							for (Direction d : directions) {
+								if (d.toString().equals(input)) {
+									instruction = "move";
+									direction = d;
 								}
 							}
 						} else if (input.equals("E")) {
 							// player wants to turn to EAST
-							try {
-								game.turnPlayer(playerNum, Direction.EAST);;
-							} catch (GameException e) {
-								outs[playerNum].reset();
-								outs[playerNum].writeObject(e);
-							}
+							instruction = "turn";
+							direction =  Direction.EAST;
 						} else if (input.equals("Q")) {
 							// player wants to turn to WEST
-							try {
-								game.turnPlayer(playerNum, Direction.WEST);;
-							} catch (GameException e) {
-								outs[playerNum].reset();
-								outs[playerNum].writeObject(e);
-							}
+							instruction = "turn";
+							direction =  Direction.WEST;
 						} else if (input.equals("F")) {
 							// player wants to perform action
-							try {
-								game.performAction(playerNum);
-							} catch (SignalException | GameException e) {
-								outs[playerNum].reset();
-								outs[playerNum].writeObject(e);
-							}
+							instruction = "perform";
 						}
-						update = true; // will need to send updated game
-					}
-
-					// Send updated game to clients if a player did something
-					if (update) {
-						for (int playerNum = 0; playerNum < outs.length; playerNum++) {
-							outs[playerNum].reset();
-							outs[playerNum].writeObject(game);
-							outs[playerNum].flush();
-						}
-						update = false;
+						this.sendInstruction(instruction, playerID, direction);
+					
 					}
 				} catch (IOException e) {
 					// TODO implement disconnects properly
@@ -176,4 +149,19 @@ public class Server extends Thread {
 		}
 		System.out.println("Server stopped");
 	}
+	
+	private void sendInstruction(String action, int playerID, Direction direction){
+		for (int playerNum = 0; playerNum < outs.length; playerNum++) {
+			try {
+				outs[playerNum].reset();
+				outs[playerNum].writeObject(action);
+				outs[playerNum].writeObject(playerID);
+				outs[playerNum].writeObject(direction);
+				outs[playerNum].flush();
+			} catch (IOException e){
+				e.printStackTrace();
+			}
+		}
+	}
+			
 }
