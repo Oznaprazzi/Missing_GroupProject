@@ -12,7 +12,6 @@
  */
 package missing.networking;
 
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -21,22 +20,19 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import missing.game.Game;
-import missing.game.characters.Player;
-import missing.game.world.World;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
 import missing.ui.assets.GGame;
 import missing.ui.controller.VControl;
-import missing.ui.panels.GamePanel;
-import missing.ui.views.GameView;
+
 /**
  * The Client is responsible for sending inputs from the player to the server
  * and providing an instance of the game to the view package to be displayed to
  * the player.
  *
  */
-public class Client extends Thread implements KeyListener{
+public class Client extends Thread implements KeyListener {
 	/** The socket representing this client */
 	private Socket socket;
 	/** Receives info from server */
@@ -45,9 +41,11 @@ public class Client extends Thread implements KeyListener{
 	private PrintWriter out;
 	/** Reference to the game sent by server. */
 	private Game game;
-	/** Unique ID representing player/client. If 0, the client is the host*/
+	/** Unique ID representing player/client. If 0, the client is the host */
 	private int clientID;
-	/** VControl responsible for displaying game and taking inputs from player */
+	/**
+	 * VControl responsible for displaying game and taking inputs from player
+	 */
 	private VControl vControl;
 	/** Name of player for this client */
 	private String playerName;
@@ -84,23 +82,23 @@ public class Client extends Thread implements KeyListener{
 			// setup input and output streams to server
 			in = new ObjectInputStream(socket.getInputStream());
 			out = new PrintWriter(socket.getOutputStream(), true);
-			
-			//wait for request for name
-			String request = (String)in.readObject();
-			if (request.equals("name")){
+
+			// wait for request for name
+			String request = (String) in.readObject();
+			if (request.equals("name")) {
 				out.println(playerName);
 			}
-			
+
 			// Set initial game state
-			clientID = (int)in.readObject();
+			clientID = (int) in.readObject();
 			vControl.setPlayerID(clientID);
-			game = (Game)in.readObject();
+			game = (Game) in.readObject();
 			try {
 				vControl.addKeyListener(this);
 				vControl.setGGame(new GGame(game, vControl.getView(vControl.getGameView())));
 				vControl.changeView(vControl.getGameView());
 				vControl.requestFocusInWindow();
-				
+
 			} catch (GameException e) {
 				// TODO forward to controller
 				e.printStackTrace();
@@ -114,26 +112,26 @@ public class Client extends Thread implements KeyListener{
 				}
 				if (input.getClass() == String.class) {
 					// received instruction
-					int movingPlayer = (Integer)(in.readObject()); // player to be changed
-					Direction direction = (Direction)(in.readObject());
-					if (input.equals("move")){
+					// player to be changed
+					int movingPlayer = (Integer) (in.readObject());
+					Direction direction = (Direction) (in.readObject());
+					if (input.equals("move")) {
 						try {
-							if (game.validMove(movingPlayer, direction)){
+							if (game.validMove(movingPlayer, direction)) {
 								game.movePlayer(movingPlayer, direction);
 							}
 						} catch (GameException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					} else if(input.equals("turn")){
+					} else if (input.equals("turn")) {
 						try {
 							game.turnPlayer(movingPlayer, direction);
 						} catch (GameException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					} else if(input.equals("perform")){
-						//TODO will need to change once performAction fully implemented
+					} else if (input.equals("perform")) {
+						// TODO will need to change once performAction fully
+						// implemented
 						try {
 							game.performAction(movingPlayer);
 						} catch (GameException | SignalException e) {
@@ -148,12 +146,12 @@ public class Client extends Thread implements KeyListener{
 						e.printStackTrace();
 					}
 					vControl.repaint();
-				} else if (input.getClass() == GameException.class){
-					System.out.println(((GameException)input).toString());
-					//TODO: forward to controller
-				} else if (input.getClass() == SignalException.class){
-					System.out.println(((SignalException)input).toString());
-					//TODO: forward to controller
+				} else if (input.getClass() == GameException.class) {
+					System.out.println(((GameException) input).toString());
+					// TODO: forward to controller
+				} else if (input.getClass() == SignalException.class) {
+					System.out.println(((SignalException) input).toString());
+					// TODO: forward to controller
 				}
 			}
 			socket.close();
@@ -168,6 +166,7 @@ public class Client extends Thread implements KeyListener{
 			}
 		}
 	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		Direction moveDirection = null;
@@ -195,9 +194,9 @@ public class Client extends Thread implements KeyListener{
 				sendAction();
 				break;
 		}
-		if (moveDirection != null){
+		if (moveDirection != null) {
 			try {
-				if (game.validMove(clientID, moveDirection)){
+				if (game.validMove(clientID, moveDirection)) {
 					out.println(moveDirection.toString());
 				}
 			} catch (GameException e1) {
@@ -227,12 +226,12 @@ public class Client extends Thread implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

@@ -30,7 +30,7 @@ import missing.game.items.nonmovable.Bag;
 /**
  * Canvas used to display the Player's bag's items
  */
-public class BagCanvas extends Canvas{
+public class BagCanvas extends Canvas {
 	/** Bag of items to display */
 	private Bag bag;
 
@@ -44,19 +44,19 @@ public class BagCanvas extends Canvas{
 	private static final int Y_OFFSET = 100;
 
 	private static final int size = 50;
-	
+
 	private static final int rows = 2;
-	
+
 	private static final int colunmns = 5;
 
-	public BagCanvas(Bag bag){
+	public BagCanvas(Bag bag) {
 		this.bag = bag;
 		bagSet = new ArrayList<Movable>();
 		convertBagToSet();
 	}
 
 	@Override
-	public void paint(Graphics g){
+	public void paint(Graphics g) {
 		g.drawImage(GameAssets.getBagBackgroundImage(), 0, 0, null);
 		Font serif = new Font("Calisto MT", Font.BOLD, 20);
 		g.setFont(serif);
@@ -66,45 +66,48 @@ public class BagCanvas extends Canvas{
 		this.drawItems(g);
 	}
 
-	private void drawItems(Graphics g){
+	private void drawItems(Graphics g) {
+		if (bagSet.isEmpty()) {
+			return;
+		}
 		int count = 0;
 		Font serif = new Font("Calisto MT", Font.BOLD, 10);
 		g.setFont(serif);
 		g.setColor(Color.black);
-		for(int i = 0; i < rows; i++){
-			for(int j = 0; j < colunmns; j++){
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < colunmns; j++) {
 				Movable item = bagSet.get(count);
-				if(item instanceof Food){
-					if(((Food) item).getFoodType().equals(Food.FoodType.APPLE)){
-						g.drawImage(GameAssets.getAppleImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
-					}else if(((Food) item).getFoodType().equals(Food.FoodType.BERRY)){
-						g.drawImage(GameAssets.getBerriesImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
-					}else if(((Food) item).getFoodType().equals(Food.FoodType.FISH)){
-						g.drawImage(GameAssets.getFishImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
+				if (item instanceof Food) {
+					if (((Food) item).getFoodType().equals(Food.FoodType.APPLE)) {
+						g.drawImage(GameAssets.getAppleImage(), X_OFFSET + j * size, Y_OFFSET + i * size, null);
+					} else if (((Food) item).getFoodType().equals(Food.FoodType.BERRY)) {
+						g.drawImage(GameAssets.getBerriesImage(), X_OFFSET + j * size, Y_OFFSET + i * size, null);
+					} else if (((Food) item).getFoodType().equals(Food.FoodType.FISH)) {
+						g.drawImage(GameAssets.getFishImage(), X_OFFSET + j * size, Y_OFFSET + i * size, null);
 					}
-				}else if(item instanceof Dirt){
-					g.drawImage(GameAssets.getDirtImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
-				}else if(item instanceof Stone){
-					g.drawImage(GameAssets.getStoneImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
-				}else if(item instanceof Tool){
-					if(((Tool) item).getType().equals(Tool.ToolType.AXE)){
-						g.drawImage(GameAssets.getAxeImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
-					}else if(((Tool) item).getType().equals(Tool.ToolType.FISHINGROD)){
-						g.drawImage(GameAssets.getFishingRodImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
-					}else if(((Tool) item).getType().equals(Tool.ToolType.PICKAXE)){
-						g.drawImage(GameAssets.getPickaxeImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
-					}else if(((Tool) item).getType().equals(Tool.ToolType.SHOVEL)){
-						g.drawImage(GameAssets.getShovelImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
+				} else if (item instanceof Dirt) {
+					g.drawImage(GameAssets.getDirtImage(), X_OFFSET + j * size, Y_OFFSET + i * size, null);
+				} else if (item instanceof Stone) {
+					g.drawImage(GameAssets.getStoneImage(), X_OFFSET + j * size, Y_OFFSET + i * size, null);
+				} else if (item instanceof Tool) {
+					if (((Tool) item).getType().equals(Tool.ToolType.AXE)) {
+						g.drawImage(GameAssets.getAxeImage(), X_OFFSET + j * size, Y_OFFSET + i * size, null);
+					} else if (((Tool) item).getType().equals(Tool.ToolType.FISHINGROD)) {
+						g.drawImage(GameAssets.getFishingRodImage(), X_OFFSET + j * size, Y_OFFSET + i * size, null);
+					} else if (((Tool) item).getType().equals(Tool.ToolType.PICKAXE)) {
+						g.drawImage(GameAssets.getPickaxeImage(), X_OFFSET + j * size, Y_OFFSET + i * size, null);
+					} else if (((Tool) item).getType().equals(Tool.ToolType.SHOVEL)) {
+						g.drawImage(GameAssets.getShovelImage(), X_OFFSET + j * size, Y_OFFSET + i * size, null);
 					}
-				}else if(item instanceof Wood){
-					g.drawImage(GameAssets.getWoodImage(), X_OFFSET+j*size, Y_OFFSET+i*size, null);
+				} else if (item instanceof Wood) {
+					g.drawImage(GameAssets.getWoodImage(), X_OFFSET + j * size, Y_OFFSET + i * size, null);
 				}
-				g.drawString(String.valueOf(item.getCount()), X_OFFSET+2+j*size, Y_OFFSET+10+i*size);
-				if(j > 5){
+				g.drawString(String.valueOf(item.getCount()), X_OFFSET + 2 + j * size, Y_OFFSET + 10 + i * size);
+				if (j > 5) {
 					j = 0;
 				}
 				count++;
-				if(count >= bagSet.size()){
+				if (count >= bagSet.size()) {
 					return;
 				}
 			}
@@ -113,32 +116,32 @@ public class BagCanvas extends Canvas{
 
 	/**
 	 * Draws the outline of where the items will be placed on the screen
+	 * 
 	 * @param g
 	 */
-	private void drawGrid(Graphics g){
-		for(int i = 0; i < rows; i++){
-			for(int j = 0; j < colunmns; j++){
-				g.drawRect(X_OFFSET+j*size, Y_OFFSET+i*size, size, size);
+	private void drawGrid(Graphics g) {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < colunmns; j++) {
+				g.drawRect(X_OFFSET + j * size, Y_OFFSET + i * size, size, size);
 			}
 		}
 	}
 
 	/**
-	 * Converts the bag of items into a set - no duplicates to account for count of item and to only draw one item.
+	 * Converts the bag of items into a set - no duplicates to account for count
+	 * of item and to only draw one item.
 	 */
-	private void convertBagToSet(){
-		for(Movable m : bag.getItems()){
-			if(!bagSet.contains(m)){
+	private void convertBagToSet() {
+		for (Movable m : bag.getItems()) {
+			if (!bagSet.contains(m)) {
 				bagSet.add(m);
 			}
 		}
 	}
 
 	@Override
-	public Dimension getPreferredSize(){
+	public Dimension getPreferredSize() {
 		return new Dimension(442, 409);
 	}
 
 }
-
-

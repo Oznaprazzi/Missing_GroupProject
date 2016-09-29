@@ -32,7 +32,7 @@ public class GameViewTests {
 			Game game = new Game(avatars);
 			Player chris = avatars[0];
 			World world = game.getWorld();
-			new TestWindow(game, world, chris);
+			new TestWindow(game,world,chris);
 		} catch (GameException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);

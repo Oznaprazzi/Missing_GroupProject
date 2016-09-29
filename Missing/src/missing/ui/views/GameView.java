@@ -19,6 +19,8 @@ import missing.ui.panels.GamePanel;
  */
 public class GameView extends View{
 	private GamePanel gamePanel;
+	
+	//TODO: 
 	public GameView(VControl controller) {
 		super(controller);
 	}
