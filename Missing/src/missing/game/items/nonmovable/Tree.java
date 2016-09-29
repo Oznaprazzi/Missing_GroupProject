@@ -31,6 +31,7 @@ import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * Represents a Tree item that a player can cut down to get the wood resource.
@@ -57,7 +58,7 @@ public class Tree extends Source {
 	}
 
 	@Override
-	public void performAction(Player p) throws GameException {
+	public void performAction(Player p) throws GameException, SignalException {
 		if (resource == null) {
 			throw new GameException("There is no wood in this tree.");
 		}
@@ -73,6 +74,7 @@ public class Tree extends Source {
 		} else {
 			numWoodTaking = 1; // doesnt have axe, so can only take one wood
 			p.setHealth(p.getHealth() - 1);
+			checkIfDead(p);
 		} // should reduce health if they are breaking it with their hands
 		if (numWoodTaking > resource.getAmount()) {
 			numWoodTaking = resource.getAmount();

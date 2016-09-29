@@ -26,13 +26,13 @@ public class GameViewTests {
 		XMLHandler.filename = xmlFile;
 		// Create an array of players
 		// one at worldnode 1,1 and at tile position 1,1
-		Player[] avatars = { new Player("Chris", new Point(1, 1), new Point(1, 1)) };
+		Player[] avatars = { new Player(0, "Chris", new Point(1, 1), new Point(1, 1)) };
 		try {
 
 			Game game = new Game(avatars);
 			Player chris = avatars[0];
 			World world = game.getWorld();
-			new TestWindow(game,world,chris);
+			new TestWindow(game, world, chris);
 		} catch (GameException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);

@@ -55,9 +55,9 @@ public class Server extends Thread {
 		Player[] players = new Player[socket.length];
 		List<Spawn> spawns = WorldInitialiser.getSpawnPoints();
 		Random random = new Random();
-		for (int i=0; i < socket.length; i++){
+		for (int i = 0; i < socket.length; i++) {
 			int index = random.nextInt(spawns.size());
-			players[i] = new Player(playerNames[i], spawns.get(index).worldLocation, spawns.get(index).tileLocation);
+			players[i] = new Player(i, playerNames[i], spawns.get(index).worldLocation, spawns.get(index).tileLocation);
 			spawns.remove(index);
 		}
 		game = new Game(players);
@@ -92,7 +92,8 @@ public class Server extends Thread {
 			}
 
 			String instruction = null; // type of instruction to be sent
-			Direction direction = null; // direction for the move/turn, null if performAction
+			Direction direction = null; // direction for the move/turn, null if
+										// performAction
 			// loop forever listening for inputs from clients
 			while (true) {
 				try {
@@ -100,9 +101,9 @@ public class Server extends Thread {
 					for (int playerID = 0; playerID < ins.length; playerID++) {
 						if (!ins[playerID].ready())
 							continue;
-						// new input from client. 
+						// new input from client.
 						String input = ins[playerID].readLine();
-						System.out.println("Server: "+input + " input received from player " + playerID);
+						System.out.println("Server: " + input + " input received from player " + playerID);
 
 						// move that player in given direction
 						if (input.equals("NORTH") || input.equals("SOUTH") || input.equals("EAST")
@@ -117,17 +118,17 @@ public class Server extends Thread {
 						} else if (input.equals("E")) {
 							// player wants to turn to EAST
 							instruction = "turn";
-							direction =  Direction.EAST;
+							direction = Direction.EAST;
 						} else if (input.equals("Q")) {
 							// player wants to turn to WEST
 							instruction = "turn";
-							direction =  Direction.WEST;
+							direction = Direction.WEST;
 						} else if (input.equals("F")) {
 							// player wants to perform action
 							instruction = "perform";
 						}
 						this.sendInstruction(instruction, playerID, direction);
-					
+
 					}
 				} catch (IOException e) {
 					// TODO implement disconnects properly
@@ -149,8 +150,8 @@ public class Server extends Thread {
 		}
 		System.out.println("Server stopped");
 	}
-	
-	private void sendInstruction(String action, int playerID, Direction direction){
+
+	private void sendInstruction(String action, int playerID, Direction direction) {
 		for (int playerNum = 0; playerNum < outs.length; playerNum++) {
 			try {
 				outs[playerNum].reset();
@@ -158,10 +159,10 @@ public class Server extends Thread {
 				outs[playerNum].writeObject(playerID);
 				outs[playerNum].writeObject(direction);
 				outs[playerNum].flush();
-			} catch (IOException e){
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-			
+
 }

@@ -21,6 +21,7 @@ import javax.swing.Timer;
 import missing.game.characters.Player;
 import missing.game.items.movable.Resource;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * Represents a Source item that a player can collect
@@ -58,7 +59,8 @@ public abstract class Source extends Interactable {
 	 * For player to perform an action on this Interactable item.
 	 * 
 	 * @throws GameException
+	 * @throws SignalException 
 	 */
-	public abstract void performAction(Player p) throws GameException;
+	public abstract void performAction(Player p) throws GameException, SignalException;
 
 }

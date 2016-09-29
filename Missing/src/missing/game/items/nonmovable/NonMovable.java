@@ -11,7 +11,9 @@ package missing.game.items.nonmovable;
 
 import java.awt.Point;
 
+import missing.game.characters.Player;
 import missing.game.items.Item;
+import missing.helper.SignalException;
 
 /**
  * This class provides skeleton implementation of items which cannot be moved by
@@ -74,6 +76,18 @@ public abstract class NonMovable extends Item {
 	 */
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	/**
+	 * Checks if the player is dead (used as a helper method for performAction)
+	 * 
+	 * @param player
+	 * @throws SignalException
+	 */
+	protected void checkIfDead(Player player) throws SignalException {
+		if (player.getHealth() == 0) {
+			throw new SignalException(String.format("DEAD %d", player.getId()));
+		}
 	}
 
 	@Override

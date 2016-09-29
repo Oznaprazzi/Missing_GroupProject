@@ -21,6 +21,7 @@ import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * Represents a Rock item which players can mine to get the stone resource.
@@ -43,7 +44,7 @@ public class Rock extends Source {
 	}
 
 	@Override
-	public void performAction(Player p) throws GameException {
+	public void performAction(Player p) throws GameException, SignalException {
 		if (resource == null) {
 			throw new GameException("There are no stones in this rock.");
 		}
@@ -59,6 +60,7 @@ public class Rock extends Source {
 		} else {
 			numStoneTaking = 1; // doesnt have axe, so can only take one wood
 			p.setHealth(p.getHealth() - 1);
+			checkIfDead(p);
 		} // should reduce health if they are breaking it with their hands
 		if (numStoneTaking > resource.getAmount()) {
 			numStoneTaking = resource.getAmount();

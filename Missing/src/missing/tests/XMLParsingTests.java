@@ -95,7 +95,7 @@ public class XMLParsingTests {
 		XMLHandler.filename = xmlFile;
 		// Create an array of players
 		// one at worldnode 1,1 and at tile position 1,1
-		Player[] avatars = { new Player("Chris", new Point(1, 1), new Point(1, 1)) };
+		Player[] avatars = { new Player(0, "Chris", new Point(1, 1), new Point(1, 1)) };
 		try {
 			return new Game(avatars);
 		} catch (GameException e) {

@@ -22,15 +22,14 @@ import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 
 public class PlayerMovingTests {
-	
-	public static void main(String args[]){
-		//movingTests_1();
+
+	public static void main(String args[]) {
+		// movingTests_1();
 	}
 
-
 	@Test
-	public void movingTests_1(){
-		Player[] avatars = { new Player("Chris", new Point(1, 1), new Point(1, 1)) };
+	public void movingTests_1() {
+		Player[] avatars = { new Player(0, "Chris", new Point(1, 1), new Point(1, 1)) };
 		Scanner input = new Scanner(System.in);
 		try {
 
@@ -38,72 +37,100 @@ public class PlayerMovingTests {
 			XMLHandler.filename = xmlFile;
 			Game game = new Game(avatars);
 			Player chris = avatars[0];
-			while(true){
+			while (true) {
 				System.out.println("Choose the direction you want the player to move in(n,s,e,w)");
 				System.out.println("press x to stop");
 				Point tloc = chris.getTileLocation();
 				Direction dir = chris.getOrientation();
 				boolean pressedx = false;
-				if(input.hasNext()){
-					switch(input.next()){
+				if (input.hasNext()) {
+					switch (input.next()) {
 					case "n":
 						game.movePlayer(0, Direction.NORTH);
-						if(!(chris.getTileLocation().equals(tloc))){ //if player has moved
-							assertTrue(chris.getOrientation() == Direction.NORTH); //assert direction has changed
+						if (!(chris.getTileLocation().equals(tloc))) { // if
+																		// player
+																		// has
+																		// moved
+							assertTrue(chris.getOrientation() == Direction.NORTH); // assert
+																					// direction
+																					// has
+																					// changed
 
 						}
-						System.out.println("old tile : "+tloc.getX() + " , "+tloc.getY());
-						System.out.println("new tile : "+chris.getTileLocation().getX() + " , "+chris.getTileLocation().getY());
-						System.out.println("Old direction = "+dir);
-						System.out.println("New Direction = "+ chris.getOrientation());
+						System.out.println("old tile : " + tloc.getX() + " , " + tloc.getY());
+						System.out.println("new tile : " + chris.getTileLocation().getX() + " , "
+								+ chris.getTileLocation().getY());
+						System.out.println("Old direction = " + dir);
+						System.out.println("New Direction = " + chris.getOrientation());
 						break;
 					case "s":
 						game.movePlayer(0, Direction.SOUTH);
-						if(!(chris.getTileLocation().equals(tloc))){ //if player has moved
-							assertTrue(chris.getOrientation() == Direction.SOUTH); //assert direction has changed
+						if (!(chris.getTileLocation().equals(tloc))) { // if
+																		// player
+																		// has
+																		// moved
+							assertTrue(chris.getOrientation() == Direction.SOUTH); // assert
+																					// direction
+																					// has
+																					// changed
 						}
-						System.out.println("old tile : "+tloc.getX() + " , "+tloc.getY());
-						System.out.println("new tile : "+chris.getTileLocation().getX() + " , "+chris.getTileLocation().getY());
-						System.out.println("Old direction = "+dir);
-						System.out.println("New Direction = "+ chris.getOrientation());
+						System.out.println("old tile : " + tloc.getX() + " , " + tloc.getY());
+						System.out.println("new tile : " + chris.getTileLocation().getX() + " , "
+								+ chris.getTileLocation().getY());
+						System.out.println("Old direction = " + dir);
+						System.out.println("New Direction = " + chris.getOrientation());
 						break;
 					case "e":
 						game.movePlayer(0, Direction.EAST);
-						if(!(chris.getTileLocation().equals(tloc))){ //if player has moved
-							assertTrue(chris.getOrientation() == Direction.EAST); //assert direction has changed
+						if (!(chris.getTileLocation().equals(tloc))) { // if
+																		// player
+																		// has
+																		// moved
+							assertTrue(chris.getOrientation() == Direction.EAST); // assert
+																					// direction
+																					// has
+																					// changed
 						}
-						System.out.println("old tile : "+tloc.getX() + " , "+tloc.getY());
-						System.out.println("new tile : "+chris.getTileLocation().getX() + " , "+chris.getTileLocation().getY());
-						System.out.println("Old direction = "+dir);
-						System.out.println("New Direction = "+ chris.getOrientation());
+						System.out.println("old tile : " + tloc.getX() + " , " + tloc.getY());
+						System.out.println("new tile : " + chris.getTileLocation().getX() + " , "
+								+ chris.getTileLocation().getY());
+						System.out.println("Old direction = " + dir);
+						System.out.println("New Direction = " + chris.getOrientation());
 						break;
 					case "w":
 						game.movePlayer(0, Direction.WEST);
-						if(!(chris.getTileLocation().equals(tloc))){ //if player has moved
-							assertTrue(chris.getOrientation() == Direction.WEST); //assert direction has changed
+						if (!(chris.getTileLocation().equals(tloc))) { // if
+																		// player
+																		// has
+																		// moved
+							assertTrue(chris.getOrientation() == Direction.WEST); // assert
+																					// direction
+																					// has
+																					// changed
 						}
-						System.out.println("old tile : "+tloc.getX() + " , "+tloc.getY());
-						System.out.println("new tile : "+chris.getTileLocation().getX() + " , "+chris.getTileLocation().getY());
-						System.out.println("Old direction = "+dir);
-						System.out.println("New Direction = "+ chris.getOrientation());
+						System.out.println("old tile : " + tloc.getX() + " , " + tloc.getY());
+						System.out.println("new tile : " + chris.getTileLocation().getX() + " , "
+								+ chris.getTileLocation().getY());
+						System.out.println("Old direction = " + dir);
+						System.out.println("New Direction = " + chris.getOrientation());
 						break;
-					case "x": 
-						pressedx =true;
+					case "x":
+						pressedx = true;
 						break;
 					default:
 						System.out.println("press n,s,e,w or x");
 					}
-					
+
 				}
-				if(pressedx){
+				if (pressedx) {
 					break;
 				}
 			}
-		}catch(GameException e){
+		} catch (GameException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			input.close();
 		}
-	
+
 	}
 }

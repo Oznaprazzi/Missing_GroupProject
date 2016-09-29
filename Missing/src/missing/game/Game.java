@@ -41,11 +41,8 @@ import missing.helper.SignalException;
  * 
  * 
  */
+@SuppressWarnings("serial")
 public class Game implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8190730673024776187L;
 
 	/**
 	 * This class stores information of all the available spawn area for the
@@ -53,10 +50,6 @@ public class Game implements Serializable {
 	 * create pre-defined set of points.
 	 */
 	public static class Spawn implements Serializable {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 8627976199088194793L;
 		public Point worldLocation;
 		public Point tileLocation;
 
@@ -107,6 +100,9 @@ public class Game implements Serializable {
 	 */
 	public void movePlayer(int id, Direction direction) throws GameException {
 		Player player = avatars[id]; // retrieve player's piece
+		if (player.isDead()) {
+			throw new GameException("You are currently dead");
+		}
 		int[] dCoords = getCoordChange(direction);
 		movePlayer(player, dCoords[0], dCoords[1], direction);
 	}
@@ -127,6 +123,9 @@ public class Game implements Serializable {
 	 */
 	public void turnPlayer(int id, Direction direction) throws GameException {
 		Player player = avatars[id];
+		if (player.isDead()) {
+			throw new GameException("You are currently dead!");
+		}
 		switch (direction) {
 		case EAST:
 			turnPlayer(player, 1);
@@ -151,11 +150,23 @@ public class Game implements Serializable {
 	 */
 	public void performAction(int id) throws GameException, SignalException {
 		Player player = avatars[id];
+		if (player.isDead()) {
+			throw new GameException("You are currently dead!");
+		}
 		// get the item in front of the player
-		TileObject object = getObjectInFront(player);
+		TileObject object = getObjectInFront(id);
 		// Check if it is a valid approach
 		if (validApproach(player, object)) {
-			object.performAction(player);
+			try {
+				object.performAction(player);
+			} catch (SignalException e) {
+				// catch dead player
+				if (e.getMessage().contains("DEAD")) {
+					removeDeadPlayer(e.getMessage());
+				} else {
+					throw new SignalException(e.getMessage());
+				}
+			}
 		}
 	}
 
@@ -171,6 +182,9 @@ public class Game implements Serializable {
 	 */
 	public boolean validMove(int id, Direction direction) throws GameException {
 		Player player = avatars[id];
+		if (player.isDead()) {
+			return false;
+		}
 		int[] dCoords = getCoordChange(direction);
 		Point[] tLoc = getNewLocations(player, dCoords[0], dCoords[1], direction);
 		return validMove(tLoc[0], tLoc[1]);
@@ -180,11 +194,12 @@ public class Game implements Serializable {
 	 * Retrieves the tilObject in front of the defined player parameter by
 	 * analysing the defined player's orientation.
 	 * 
-	 * @param obj
+	 * @param id
 	 * @return
 	 * @throws GameException
 	 */
-	public TileObject getObjectInFront(Player player) throws GameException {
+	public TileObject getObjectInFront(int id) throws GameException {
+		Player player = avatars[id];
 		// retrieve the dx and dy values which represents moving forward
 		int[] dCoords = getCoordChange(player.getOrientation());
 		// retrieve the world location and tile location values of item in front
@@ -208,6 +223,18 @@ public class Game implements Serializable {
 	}
 
 	// Helper methods
+
+	/**
+	 * Converts the player to a pile object and removes that player from the
+	 * map.
+	 * 
+	 * @param id
+	 */
+	private void removeDeadPlayer(String signal) {
+		String[] message = signal.split(" ");
+		int id = Integer.parseInt(message[1]);
+		convertPlayerToPile(id);
+	}
 
 	/**
 	 * This method changes the player's orientation based on the rotation

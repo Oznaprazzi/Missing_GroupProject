@@ -22,6 +22,7 @@ import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * Represents a soil object in the game. This object gives the player some dirt.
@@ -43,7 +44,7 @@ public class Soil extends Source {
 	}
 
 	@Override
-	public void performAction(Player p) throws GameException {
+	public void performAction(Player p) throws GameException, SignalException {
 		if (resource == null) {
 			throw new GameException("There is no dirt in this soil");
 		}
@@ -59,6 +60,7 @@ public class Soil extends Source {
 		} else {
 			numDirtTaking = 1; // doesnt have shovel, so can only take one dirt
 			p.setHealth(p.getHealth() - 1);
+			checkIfDead(p);
 		} // should reduce health if they are breaking it with their hands
 		if (numDirtTaking > resource.getAmount())
 			numDirtTaking = resource.getAmount();

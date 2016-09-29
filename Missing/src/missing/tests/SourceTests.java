@@ -36,6 +36,7 @@ import missing.game.items.nonmovable.Rock;
 import missing.game.items.nonmovable.Soil;
 import missing.game.items.nonmovable.Tree;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * these are tests for all the items which extend source
@@ -49,7 +50,7 @@ public class SourceTests {
 	 */
 	@Test
 	public void treeTest_1() {
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Tree tree = new Tree(worldLocation, tileLocation);
@@ -57,6 +58,7 @@ public class SourceTests {
 			tree.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean isTrue = (player.getPocket().size() == 1) || player.getPocket().size() == 2;
 		assertTrue(isTrue); // checks that player has 1
@@ -69,7 +71,7 @@ public class SourceTests {
 	 */
 	@Test
 	public void treeTest_2() {
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Tree tree = new Tree(worldLocation, tileLocation);
@@ -77,6 +79,7 @@ public class SourceTests {
 			tree.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean isWood = player.getPocket().get(0) instanceof Wood;
 		assertTrue(isWood); // checks that player has 1 wood in pocket
@@ -88,7 +91,7 @@ public class SourceTests {
 	 */
 	@Test
 	public void treeTest_3() {
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Tree tree = new Tree(worldLocation, tileLocation);
@@ -96,6 +99,7 @@ public class SourceTests {
 			tree.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean isWood = player.getPocket().get(0) instanceof Wood;
 
@@ -107,13 +111,13 @@ public class SourceTests {
 		assertEquals(isWood, true); // checks that player has 1 wood in pocket
 
 	}
-	
-	
+
 	/**
-	 * Tests that when a player breaks the tree, he gets 1 wood*/
+	 * Tests that when a player breaks the tree, he gets 1 wood
+	 */
 	@Test
-	public void treeTest_4(){
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+	public void treeTest_4() {
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Tree tree = new Tree(worldLocation, tileLocation);
@@ -121,29 +125,33 @@ public class SourceTests {
 			tree.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean has1Wood = false;
-		if(player.getPocket().get(0) instanceof Wood){
+		if (player.getPocket().get(0) instanceof Wood) {
 			has1Wood = player.getPocket().get(0).getAmount() == 1;
 		}
 		assertTrue(has1Wood); // checks that player has 1 wood in pocket
 	}
-	
+
 	/**
-	 * Creates an axe, player and tree. Adds the axe to the players pocekt, then cuts down the tree
-	 * Tests that when a player breaks the tree with an axe, he gets 3 wood*/
+	 * Creates an axe, player and tree. Adds the axe to the players pocekt, then
+	 * cuts down the tree Tests that when a player breaks the tree with an axe,
+	 * he gets 3 wood
+	 */
 	@Test
-	public void treeTest_5(){
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+	public void treeTest_5() {
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Tree tree = new Tree(worldLocation, tileLocation);
-		for(int i=0; i<2; i++){
-			resources.add(new Wood(worldLocation,tileLocation)); //adds 2 wood
+		for (int i = 0; i < 2; i++) {
+			resources.add(new Wood(worldLocation, tileLocation)); // adds 2 wood
 		}
-		for(int i=0; i<3; i++){
-			resources.add(new Stone(worldLocation,tileLocation)); //adds 3 stone
+		for (int i = 0; i < 3; i++) {
+			resources.add(new Stone(worldLocation, tileLocation)); // adds 3
+																	// stone
 		}
 		try {
 			Tool axe = new Tool(ToolType.AXE, resources, worldLocation, tileLocation);
@@ -151,9 +159,10 @@ public class SourceTests {
 			tree.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean has3Wood = false;
-		if(player.getPocket().get(1) instanceof Wood){
+		if (player.getPocket().get(1) instanceof Wood) {
 			has3Wood = player.getPocket().get(1).getAmount() == 3;
 		}
 		assertTrue(has3Wood); // checks that player has 1 wood in pocket
@@ -165,7 +174,7 @@ public class SourceTests {
 	 */
 	@Test
 	public void rockTest_1() {
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Rock rock = new Rock(worldLocation, tileLocation);
@@ -174,6 +183,8 @@ public class SourceTests {
 			rock.performAction(player);// player takes Stone from that rock
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
+
 		}
 		boolean isTrue = (player.getPocket().size() == 1);
 		assertTrue(isTrue); // checks that player has 1
@@ -186,7 +197,7 @@ public class SourceTests {
 	 */
 	@Test
 	public void rockTest_2() {
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Rock rock = new Rock(worldLocation, tileLocation);
@@ -195,18 +206,19 @@ public class SourceTests {
 			rock.performAction(player);// player takes Stone from that rock
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean isTrue = (player.getPocket().get(0) instanceof Stone);
 		assertTrue(isTrue); // checks that player has 1
 							// item in pocket
 	}
-	
-	
+
 	/**
-	 * Tests that when a player breaks the Rock, he gets 1 stone*/
+	 * Tests that when a player breaks the Rock, he gets 1 stone
+	 */
 	@Test
-	public void rockTest_3(){
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+	public void rockTest_3() {
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Rock rock = new Rock(worldLocation, tileLocation);
@@ -214,29 +226,33 @@ public class SourceTests {
 			rock.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean has1Stone = false;
-		if(player.getPocket().get(0) instanceof Stone){
+		if (player.getPocket().get(0) instanceof Stone) {
 			has1Stone = player.getPocket().get(0).getAmount() == 1;
 		}
 		assertTrue(has1Stone); // checks that player has 1 wood in pocket
 	}
-	
+
 	/**
-	 * Creates an pickaxe, player and rock. Adds the pickaxe to the players pocket, then hits the rock
-	 * Tests that when a player hits the rock with a pickaxe, he gets 5 stone*/
+	 * Creates an pickaxe, player and rock. Adds the pickaxe to the players
+	 * pocket, then hits the rock Tests that when a player hits the rock with a
+	 * pickaxe, he gets 5 stone
+	 */
 	@Test
-	public void rockTest_4(){
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+	public void rockTest_4() {
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Rock rock = new Rock(worldLocation, tileLocation);
-		for(int i=0; i<2; i++){
-			resources.add(new Wood(worldLocation,tileLocation)); //adds 2 wood
+		for (int i = 0; i < 2; i++) {
+			resources.add(new Wood(worldLocation, tileLocation)); // adds 2 wood
 		}
-		for(int i=0; i<3; i++){
-			resources.add(new Stone(worldLocation,tileLocation)); //adds 3 stone
+		for (int i = 0; i < 3; i++) {
+			resources.add(new Stone(worldLocation, tileLocation)); // adds 3
+																	// stone
 		}
 		try {
 			Tool pickaxe = new Tool(ToolType.PICKAXE, resources, worldLocation, tileLocation);
@@ -244,22 +260,22 @@ public class SourceTests {
 			rock.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean has5Stone = false;
-		if(player.getPocket().get(1) instanceof Stone){
+		if (player.getPocket().get(1) instanceof Stone) {
 			has5Stone = player.getPocket().get(1).getAmount() == 5;
 		}
 		assertTrue(has5Stone); // checks that player has 1 wood in pocket
 	}
-	
-	
+
 	/**
 	 * Creates a soil and performs its action, then asserts that the player has
 	 * 1 item in its pocket
 	 */
 	@Test
 	public void soilTest_1() {
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Soil soil = new Soil(worldLocation, tileLocation);
@@ -268,19 +284,20 @@ public class SourceTests {
 			soil.performAction(player);// player takes dirt from that soil
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean isTrue = (player.getPocket().size() == 1);
 		assertTrue(isTrue); // checks that player has 1
 							// item in pocket
 	}
-	
+
 	/**
 	 * Creates a soil and performs its action, then asserts that the player has
 	 * 1 dirt in its pocket
 	 */
 	@Test
 	public void soilTest_2() {
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Soil soil = new Soil(worldLocation, tileLocation);
@@ -289,17 +306,19 @@ public class SourceTests {
 			soil.performAction(player);// player takes Stone from that rock
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean isTrue = (player.getPocket().get(0) instanceof Dirt);
 		assertTrue(isTrue); // checks that player has 1
 							// item in pocket
 	}
-	
+
 	/**
-	 * Tests that when a player breaks the soil, he gets 1 Dirt*/
+	 * Tests that when a player breaks the soil, he gets 1 Dirt
+	 */
 	@Test
-	public void soilTest_3(){
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+	public void soilTest_3() {
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Soil soil = new Soil(worldLocation, tileLocation);
@@ -307,29 +326,33 @@ public class SourceTests {
 			soil.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean has1Stone = false;
-		if(player.getPocket().get(0) instanceof Dirt){
+		if (player.getPocket().get(0) instanceof Dirt) {
 			has1Stone = player.getPocket().get(0).getAmount() == 1;
 		}
 		assertTrue(has1Stone); // checks that player has 1 dirt in pocket
 	}
-	
+
 	/**
-	 * Creates a shovel, player and soil. Adds the shovel to the players pocket, then digs the soil
-	 * Tests that when a player digs the soil with a shovel, he gets 5 Dirt*/
+	 * Creates a shovel, player and soil. Adds the shovel to the players pocket,
+	 * then digs the soil Tests that when a player digs the soil with a shovel,
+	 * he gets 5 Dirt
+	 */
 	@Test
-	public void soilTest_4(){
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+	public void soilTest_4() {
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Soil soil = new Soil(worldLocation, tileLocation);
-		for(int i=0; i<2; i++){
-			resources.add(new Wood(worldLocation,tileLocation)); //adds 2 wood
+		for (int i = 0; i < 2; i++) {
+			resources.add(new Wood(worldLocation, tileLocation)); // adds 2 wood
 		}
-		for(int i=0; i<1; i++){
-			resources.add(new Stone(worldLocation,tileLocation)); //adds 1 stone
+		for (int i = 0; i < 1; i++) {
+			resources.add(new Stone(worldLocation, tileLocation)); // adds 1
+																	// stone
 		}
 		try {
 			Tool shovel = new Tool(ToolType.SHOVEL, resources, worldLocation, tileLocation);
@@ -337,21 +360,22 @@ public class SourceTests {
 			soil.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
 			fail(e.getMessage());
+		} catch (SignalException e) {
 		}
 		boolean has5Dirt = false;
-		if(player.getPocket().get(1) instanceof Dirt){
+		if (player.getPocket().get(1) instanceof Dirt) {
 			has5Dirt = player.getPocket().get(1).getAmount() == 5;
 		}
 		assertTrue(has5Dirt); // checks that player has 5 Dirt in pocket
 	}
-	
+
 	/**
-	 * Creates a fishArea and performs its action, then asserts that the if the player 
-	 * ends up with 2 items in their pocket, the second is a fish
+	 * Creates a fishArea and performs its action, then asserts that the if the
+	 * player ends up with 2 items in their pocket, the second is a fish
 	 */
 	@Test
 	public void fishAreaTest_1() {
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		ArrayList<Resource> resources = new ArrayList<Resource>();
@@ -359,7 +383,7 @@ public class SourceTests {
 			resources.add(new Wood(worldLocation, tileLocation)); // adds 2 wood
 		}
 		for (int i = 0; i < 3; i++) {
-			resources.add(new Dirt(worldLocation, tileLocation)); // adds 3 dirt														
+			resources.add(new Dirt(worldLocation, tileLocation)); // adds 3 dirt
 		}
 		FishArea fishArea = new FishArea(worldLocation, tileLocation);
 
@@ -370,22 +394,23 @@ public class SourceTests {
 		} catch (GameException e) {
 			fail(e.getMessage());
 		}
-		
-		if(player.getPocket().size()==2){
+
+		if (player.getPocket().size() == 2) {
 			boolean isFish = false;
-			if(player.getPocket().get(1) instanceof Food){
+			if (player.getPocket().get(1) instanceof Food) {
 				isFish = ((Food) player.getPocket().get(1)).getFoodType() == FoodType.FISH;
 			}
 			assertTrue(isFish);
 		}
 	}
-	
+
 	/**
-	 * Creates a fishArea and performs its action, this should fail as no fishing rod has been created
+	 * Creates a fishArea and performs its action, this should fail as no
+	 * fishing rod has been created
 	 */
 	@Test
 	public void fishArea_Invalid_Test_1() {
-		Player player = new Player("Chris", new Point(1, 1), new Point(0, 1));
+		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		FishArea fishArea = new FishArea(worldLocation, tileLocation);
@@ -399,6 +424,5 @@ public class SourceTests {
 		assertTrue(fail);
 
 	}
-
 
 }
