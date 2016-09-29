@@ -35,6 +35,7 @@ import missing.game.world.World;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.ui.panels.GamePanel;
+import missing.ui.frames.*;
 
 @SuppressWarnings("serial")
 public class TestWindow extends JFrame implements KeyListener {
@@ -65,7 +66,7 @@ public class TestWindow extends JFrame implements KeyListener {
 	/* Holds the gamePanel renderer. */
 	private GamePanel gamePanel;
 	/* Holds the BagFrame renderer*/
-	private BagFrame bagFrame;
+	private BagFrameTest bagFrame;
 	
 	public TestWindow(Game game, World w, Player p) {
 		super("Test Panel");
@@ -296,7 +297,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		});
 		
 		btnPlayersBag.addActionListener(e->{
-			bagFrame = new BagFrame(curPlayer.getBag());
+			bagFrame = new BagFrameTest(curPlayer.getBag());
 			bagFrame.setVisible(true);
 		});
 	}
