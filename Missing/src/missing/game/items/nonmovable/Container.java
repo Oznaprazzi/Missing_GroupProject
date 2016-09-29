@@ -104,7 +104,7 @@ public class Container extends NonMovable {
 	 */
 	private Movable findItem(Movable item) {
 		for (Movable m : items) {
-			if (item.equals(m)) {
+			if(item.getName().equals(m.getName())) {
 				return m;
 			}
 		}

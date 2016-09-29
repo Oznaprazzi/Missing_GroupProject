@@ -10,6 +10,7 @@
  * 19/9/16		Chris Rabe	added javadocs and rearranged methods
  * 20/9/16		Jian Wei	added creation of shovel
  * 22/9/16		Jian Wei	added creation of fishing rod
+ * 29/9/16		Casey Huang	created setInfo method and updated second constructor to add in set info.
  * */
 package missing.game.items.movable;
 
@@ -48,6 +49,7 @@ public class Tool extends Craftable {
 		super(worldLocation, tileLocation, null);
 		this.toolType = toolType;
 		this.durability = durability;
+		setInfo(this.toolType);
 	}
 
 	// Getters
@@ -58,6 +60,33 @@ public class Tool extends Craftable {
 
 	public int getDurability() {
 		return durability;
+	}
+	
+	/**
+	 * Sets the information for given tool type
+	 * @param type
+	 */
+	public void setInfo(ToolType type){
+		switch(type){
+		case AXE:
+			name = "Axe";
+			description = "Can be used to chop trees.";
+			break;
+		case PICKAXE:
+			name = "Pickaxe";
+			description = "Can be used to mine rocks.";
+			break;
+		case SHOVEL:
+			name = "Shovel";
+			description = "Can dig stuff";
+			break;
+		case FISHINGROD:
+			name = "Fishing Rod";
+			description = "Can get fish";
+			break;
+		default:
+			return;
+		}
 	}
 
 	// Creating the tool

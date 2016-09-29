@@ -65,7 +65,7 @@ public class GUIInitialiser {
 		tmp[0] = new SplashView(control);
 		tmp[1] = new MenuView(control);
 		tmp[2] = new MapPanel(control);
-		tmp[3] = new GamePanel(control);
+		tmp[3] = new GameView(control);
 		tmp[4] = new PlayGameView(control);
 		tmp[5] = new HostGameView(control);
 		tmp[6] = new JoinGameView(control);

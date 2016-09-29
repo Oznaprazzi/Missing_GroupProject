@@ -21,9 +21,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import missing.datastorage.initialisers.GUIInitialiser;
+import missing.game.Game;
 import missing.game.world.World;
 import missing.helper.GameException;
 import missing.ui.assets.GGame;
+import missing.ui.views.GameView;
 
 /**
  * 
@@ -162,7 +164,12 @@ public class VControl extends JFrame {
 	public GGame getGGame() {
 		return gGame;
 	}
-	public void setGGame(GGame gGame){
+	public void updateGGame(Game game) throws GameException{
+		this.gGame = new GGame(game, views[3]);
+		((GameView)views[3]).updateGamePanel(this);
+	}
+	
+	public void setGGame(GGame gGame) {
 		this.gGame = gGame;
 		views[3].initialise();
 	}
@@ -180,10 +187,11 @@ public class VControl extends JFrame {
 	@Override
 	public void repaint(){
 		super.repaint();
-//		this.views[cur].repaint();
 	}
 	
 	public static void main(String[] args) {
 		new VControl(); // Run to test views
 	}
+
+	
 }
