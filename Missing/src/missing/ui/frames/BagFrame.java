@@ -33,7 +33,7 @@ public class BagFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public BagFrame(Bag bag) {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setSize(442, 409);
 		contentPane = new JPanel();
