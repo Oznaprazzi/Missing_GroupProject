@@ -42,7 +42,7 @@ public class FurnitureTests {
 		fireplace.setFood(food);
 		try {
 			player.addToPocket(food);
-			fireplace.performAction(player); // player takes wood from tree
+			fireplace.performAction(player); 
 		} catch (GameException e) {
 			fail(e.getMessage());
 		}
