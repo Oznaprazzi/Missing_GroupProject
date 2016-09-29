@@ -38,7 +38,6 @@ public class Bush extends Foliage {
 
 	@Override
 	public void performAction(Player player) throws GameException {
-		// TODO Auto-generated method stub
 		int playerChance = (int) (random() * 100);
 		if (playerChance < BERRY_CHANCE) {
 			Food berry = new Food(worldLocation, tileLocation, FoodType.BERRY);
