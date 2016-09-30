@@ -107,7 +107,7 @@ public class CreatePlayerView extends View{
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		imgPanel.setBackground(Color.gray.darker());
 		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
-//		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 0;
 		gbc_panel_1.gridy = 2;
 
