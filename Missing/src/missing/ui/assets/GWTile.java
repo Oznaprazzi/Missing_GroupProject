@@ -117,7 +117,9 @@ public class GWTile {
 			g.drawImage(GameAssets.getRockImage(), x+(rockSize/2) ,y+(rockSize/2), rockSize,rockSize,null);
 		}
 		
-		
+		if(tile.getObject() instanceof Player){
+			drawPlayer(g,x,y,tile.getObject());
+		}
 	
 		/*If the tile is not enterable and there is an object image for it.*/
 		if(!tile.isEnterable() && tile.getObject() != null){
