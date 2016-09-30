@@ -6,6 +6,7 @@
  * Date				Author			Modification
  * 23 Sep 16		Edward Kelly	created class
  * 24 Sep 16		Edward Kelly	added function to start server
+ * 30 Sep 16		Edward Kelly	merged with CreatePlayerView
  */
 package missing.ui.views.playgamemenu;
 
@@ -42,13 +43,13 @@ public class HostGameView extends View{
 	/** Holds gameInfo and button panels */
 	private JPanel centrePanel;
 	/** The player's name */
-	private String playerName;
+//	private String playerName;
 	/** Number of players to be in game */
 	private int numPlayers;
 	/** Port game is hosted on */
 	private int port;
 	/** Text entry for playerName */
-	private TextField playerNameEntry;
+//	private TextField playerNameEntry;
 	/** Text entry for numPlayers */
 	private TextField numPlayersEntry;
 	/** Text entry for port */
@@ -112,21 +113,21 @@ public class HostGameView extends View{
 		gameInfoPanel = new JPanel(layout);
 		
 		// Create labels
-		JLabel playerNameLabel = MenuFactory.createLabel("Player Name");
+//		JLabel playerNameLabel = MenuFactory.createLabel("Player Name");
 		JLabel numPlayerLabel = MenuFactory.createLabel("Number of Players");
 		JLabel portLabel = MenuFactory.createLabel("Port");
-		playerNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+//		playerNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		numPlayerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		portLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		//Create text fields
-		playerNameEntry = MenuFactory.createTextField(200);
+//		playerNameEntry = MenuFactory.createTextField(200);
 		numPlayersEntry = MenuFactory.createTextField(200);
 		portEntry = MenuFactory.createTextField(200);
 		
 		// Add to panel
-		gameInfoPanel.add(playerNameLabel);
-		gameInfoPanel.add(playerNameEntry);
+//		gameInfoPanel.add(playerNameLabel);
+//		gameInfoPanel.add(playerNameEntry);
 		gameInfoPanel.add(numPlayerLabel);
 		gameInfoPanel.add(numPlayersEntry);
 		gameInfoPanel.add(portLabel);
@@ -148,14 +149,8 @@ public class HostGameView extends View{
 		JButton btnStartServer = MenuFactory.createButton("Start Server");
 		btnStartServer.addActionListener(e -> {
 			if (this.setInputs()){
-				// Valid numPlayers and port have been entered
-				try {
-					//Start server
-					NetworkingHelper.runServer(numPlayers, port, controller, playerName);
-				} catch (IOException | IllegalArgumentException e1) {
-					JOptionPane.showMessageDialog(this, "Could not connect to server at " + NetworkingHelper.getIPAddress() + " : " +port);
-				}
-				controller.changeView(controller.getClientWaitingView());
+				controller.setIsHost(true);
+				controller.changeView(controller.getCreatePlayerView());
 			}
 		});
 		// Create Back button
@@ -176,11 +171,11 @@ public class HostGameView extends View{
 	 */
 	private boolean setInputs(){
 		try {
-			playerName = playerNameEntry.getText();
-			if (playerName == null){
-				JOptionPane.showMessageDialog(this, "Please enter a name");
-				return false;
-			}
+//			playerName = playerNameEntry.getText();
+//			if (playerName == null){
+//				JOptionPane.showMessageDialog(this, "Please enter a name");
+//				return false;
+//			}
 			numPlayers = Integer.parseInt(numPlayersEntry.getText());
 			port = Integer.parseInt(portEntry.getText());
 			return true;
@@ -189,7 +184,12 @@ public class HostGameView extends View{
 		}
 		return false;
 	}
-	
+	public int getNumPlayers(){
+		return numPlayers;
+	}
+	public int getPort(){
+		return port;
+	}
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

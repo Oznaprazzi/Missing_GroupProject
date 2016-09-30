@@ -25,6 +25,7 @@ import missing.ui.panels.GamePanel;
 import missing.ui.panels.MapPanel;
 import missing.ui.views.*;
 import missing.ui.views.playgamemenu.ClientWaitingView;
+import missing.ui.views.playgamemenu.CreatePlayerView;
 import missing.ui.views.playgamemenu.HostGameView;
 import missing.ui.views.playgamemenu.JoinGameView;
 import missing.ui.views.playgamemenu.LobbyView;
@@ -60,7 +61,7 @@ public class GUIInitialiser {
 
 	public static View[] createViews(VControl control) {
 		// TODO append new views at end, increase views variable
-		int views = 9;
+		int views = 10;
 		View[] tmp = new View[views];
 		tmp[0] = new SplashView(control);
 		tmp[1] = new MenuView(control);
@@ -71,6 +72,7 @@ public class GUIInitialiser {
 		tmp[6] = new JoinGameView(control);
 		tmp[7] = new LobbyView(control);
 		tmp[8] = new ClientWaitingView(control);
+		tmp[9] = new CreatePlayerView(control);
 		return tmp;
 	}
 }

@@ -9,6 +9,7 @@
  * 28 Sep 16		Edward Kelly	fixed minimize bug
  * 28 Sep 16		Edward Kelly	integrated GameView
  * 29 Sep 16		Edward Kelly	now receives instructions instead of game
+ * 30 Sep 16		Edward Kelly	now sends player image number
  */
 package missing.networking;
 
@@ -49,11 +50,14 @@ public class Client extends Thread implements KeyListener {
 	private VControl vControl;
 	/** Name of player for this client */
 	private String playerName;
+	/** Number that represents player image for this client */
+	private int imageNumber;
 
-	public Client(Socket s, VControl vControl, String playerName) {
+	public Client(Socket s, VControl vControl, String playerName, int imageNumber) {
 		this.socket = s;
 		this.vControl = vControl;
 		this.playerName = playerName;
+		this.imageNumber = imageNumber;
 	}
 
 	// Getters and Setters
@@ -87,6 +91,7 @@ public class Client extends Thread implements KeyListener {
 			String request = (String) in.readObject();
 			if (request.equals("name")) {
 				out.println(playerName);
+				out.println(imageNumber);
 			}
 
 			// Set initial game state

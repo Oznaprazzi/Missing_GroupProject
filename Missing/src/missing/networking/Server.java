@@ -11,6 +11,7 @@
  * 28 Sep 16	Edward Kelly	added random spawns
  * 28 Sep 16	Edward Kelly	added support for rotate
  * 29 Sep 16	Edward Kelly	now sends instructions instead of whole game
+ * 30 Sep 16	Edward Kelly	now creates players can have character images
  */
 package missing.networking;
 
@@ -46,7 +47,11 @@ public class Server extends Thread {
 	private BufferedReader[] ins;
 	/** Outputs to clients */
 	private ObjectOutputStream[] outs;
+	/** Names of all players */
 	private String[] playerNames;
+	/** Player image numbers for each player */
+	private int[] playerImageNumbers;
+	
 
 	public Server(Socket[] sockets) {
 		this.socket = sockets;
@@ -60,6 +65,7 @@ public class Server extends Thread {
 		for (int i = 0; i < socket.length; i++) {
 			int index = random.nextInt(spawns.size());
 			players[i] = new Player(i, playerNames[i], spawns.get(index).worldLocation, spawns.get(index).tileLocation);
+			players[i].setImageID(playerImageNumbers[i]);
 			spawns.remove(index);
 		}
 		game = new Game(players);
@@ -72,6 +78,7 @@ public class Server extends Thread {
 			outs = new ObjectOutputStream[socket.length];
 
 			playerNames = new String[socket.length];
+			playerImageNumbers = new int[socket.length];
 			// add input and output streams for each client socket
 			for (int i = 0; i < socket.length; i++) {
 				ins[i] = new BufferedReader(new InputStreamReader(socket[i].getInputStream()));
@@ -79,6 +86,7 @@ public class Server extends Thread {
 				// set playerName
 				outs[i].writeObject("name");
 				playerNames[i] = ins[i].readLine();
+				playerImageNumbers[i] = Integer.parseInt(ins[i].readLine());
 			}
 			try {
 				setUpGame();

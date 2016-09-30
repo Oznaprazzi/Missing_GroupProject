@@ -12,6 +12,8 @@
  * 18 Sep 16		Linus Go			added get game view method.
  * 19 Sep 16 		Casey Huang			created getGGame method
  * 23 Sep 16		Edward Kelly		added GGame and playerID
+ * 24 Sep 16		Edward Kelly		added play game menu views
+ * 30 Sep 16		Edward Kelly		added CreatePlayerView
  */
 package missing.ui.controller;
 
@@ -73,6 +75,7 @@ public class VControl extends JFrame {
 	private int prev = 0;
 	private GGame gGame;
 	private int playerID;
+	private boolean isHost;
 
 	public VControl() {
 		super("Missing: The Game");
@@ -109,6 +112,9 @@ public class VControl extends JFrame {
 	}
 	public int getClientWaitingView(){
 		return 8;
+	}
+	public int getCreatePlayerView(){
+		return 9;
 	}
 
 	public int getPrevious() {
@@ -204,6 +210,12 @@ public class VControl extends JFrame {
 	}
 	public View getView(int viewIndex){
 		return views[viewIndex];
+	}
+	public void setIsHost(boolean isHost){
+		this.isHost = isHost;
+	}
+	public boolean isHost(){
+		return isHost;
 	}
 	@Override
 	public void repaint(){
