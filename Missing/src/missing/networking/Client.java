@@ -121,23 +121,30 @@ public class Client extends Thread implements KeyListener {
 								game.movePlayer(movingPlayer, direction);
 							}
 						} catch (GameException e) {
-							e.printStackTrace();
+							if (clientID == movingPlayer){
+								vControl.displayGameException(e.getMessage());
+							}
 						}
 					} else if (input.equals("turn")) {
 						try {
 							game.turnPlayer(movingPlayer, direction);
 						} catch (GameException e) {
-							e.printStackTrace();
+							if (clientID == movingPlayer){
+								vControl.displayGameException(e.getMessage());
+							}
 						}
 					} else if (input.equals("perform")) {
-						// TODO will need to change once performAction fully
-						// implemented
+						// only receive actions from other players
+						// actions for this player handled locally in handleAction
 						try {
 							game.performAction(movingPlayer);
 						} catch (GameException | SignalException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							// do nothing, message only displayed for
+							// player that performed he action
 						}
+					} else if (input.equals("disconnect")) {
+						game.convertPlayerToPile(movingPlayer);
+						System.out.println(movingPlayer + " disconnected");
 					}
 					try {
 						vControl.updateGGame(game);
@@ -146,12 +153,6 @@ public class Client extends Thread implements KeyListener {
 						e.printStackTrace();
 					}
 					vControl.repaint();
-				} else if (input.getClass() == GameException.class) {
-					System.out.println(((GameException) input).toString());
-					// TODO: forward to controller
-				} else if (input.getClass() == SignalException.class) {
-					System.out.println(((SignalException) input).toString());
-					// TODO: forward to controller
 				}
 			}
 			socket.close();
@@ -191,7 +192,7 @@ public class Client extends Thread implements KeyListener {
 				out.println("E");
 				break;
 			case KeyEvent.VK_F :
-				sendAction();
+				handleAction();
 				break;
 		}
 		if (moveDirection != null) {
@@ -200,16 +201,17 @@ public class Client extends Thread implements KeyListener {
 					out.println(moveDirection.toString());
 				}
 			} catch (GameException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				vControl.displayGameException(e1.getMessage());
 			}
 		}
 	}
 	
-	private void sendAction(){
+	private void handleAction(){
 		try {
 			game.performAction(clientID);
 			out.println("F");
+			vControl.updateGGame(game);
+			vControl.repaint();
 		} catch(SignalException | GameException e){
 			if (e.getClass() == SignalException.class){
 				if (e.getMessage().equals("CONTAINER")){
@@ -220,6 +222,8 @@ public class Client extends Thread implements KeyListener {
 					//TODO: get other player from exception
 					// request trade with other player
 				}
+			} else if(e.getClass() == GameException.class){
+				vControl.displayGameException(e.getMessage());
 			}
 		}
 	}
