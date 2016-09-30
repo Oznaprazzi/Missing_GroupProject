@@ -41,7 +41,8 @@ public class Player extends Character {
 	private List<Movable> pocket;
 	private Bag bag;
 	private boolean isDead;
-	private int id;
+	private int id; // client ID
+	private int imageID; // sprite ID
 
 	public Player(int id, String name, Point worldLocation, Point tileLocation) {
 		super(name, String.format("%s's avatar.", name), worldLocation, tileLocation, Direction.SOUTH, Direction.ALL);
@@ -54,6 +55,14 @@ public class Player extends Character {
 	}
 
 	// Getters and setters...
+
+	public int getImageID() {
+		return imageID;
+	}
+
+	public void setImageID(int imageID) {
+		this.imageID = imageID;
+	}
 
 	public int getId() {
 		return id;
