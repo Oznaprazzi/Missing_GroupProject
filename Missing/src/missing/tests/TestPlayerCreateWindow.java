@@ -40,28 +40,28 @@ public class TestPlayerCreateWindow extends JFrame{
 	/*Dimensions for the Game Panels width and height */
 	private final int panelWd = 800;
 	private final int panelHt = 600;
-	
+
 	private List<Image> imgList;
-	
+
 	private int imgIndex = 0;
-		
+
 	/*Image rectangle dimensions*/
 	private final int RECT_SIZE = 100;
-	private final int RECT_LEFT = (this.getWidth()/2)-75;
+	private final int RECT_LEFT = (this.getWidth()/2) + 350;
 	private final int RECT_TOP = 0;
-	
+
 	private TextField textField;
 	private JPanel imgPanel;
 	private JButton btnBack;
 	private JButton btnNext;
 	private JButton btnCreatePlayer;
-	
+
 	/*Stores the playerName and the image Number chosen */
 	private String playerName;
 	private int imageNumber;
-	
+
 	/*Swing components for this window */
-	
+
 	public TestPlayerCreateWindow() {
 		super("Test Panel");
 		setVisible(true);
@@ -71,18 +71,17 @@ public class TestPlayerCreateWindow extends JFrame{
 		setResizable(false);
 		pack();
 	}
-	
+
 	private void initializeList(){
 		imgList = new LinkedList<Image>();
-		imgList.add(GameAssets.getPlayerImage("boy")); //linus
-		imgList.add(GameAssets.getPlayerImage("girl")); //casey
-		//imgList.add();								//eddy
-		//imgList.add(2);								//chris
-		//imgList.add(1);								//jian wei
-		//imgList.add(3);								//other
+
+		for(int i = 0; i <= 5; ++i){
+			imgList.add(GameAssets.getPlayerImage(i, "south"));
+		}
+
 	}
-	
-	
+
+
 	/**
 	 * Helper method to initialize the Windows GUI components.
 	 */
@@ -113,7 +112,7 @@ public class TestPlayerCreateWindow extends JFrame{
 			public void paint(Graphics g){
 				drawImage(g);
 			}
-			
+
 		};
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		imgPanel.setBackground(Color.gray.darker());
@@ -121,33 +120,33 @@ public class TestPlayerCreateWindow extends JFrame{
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 0;
 		gbc_panel_1.gridy = 2;
-		
+
 		panel.add(imgPanel, gbc_panel_1);
-		
+
 		btnBack = MenuFactory.createButton("<--");
 		GridBagConstraints gbc_btnBack = new GridBagConstraints();
 		gbc_btnBack.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBack.gridx = 0;
 		gbc_btnBack.gridy = 8;
 		panel.add(btnBack, gbc_btnBack);
-		
+
 		btnNext = MenuFactory.createButton("-->");
 		GridBagConstraints gbc_btnNext = new GridBagConstraints();
 		gbc_btnNext.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNext.gridx = 0;
 		gbc_btnNext.gridy = 9;
 		panel.add(btnNext, gbc_btnNext);
-		
+
 		JLabel lblPlayerName = MenuFactory.createLabel("Enter your name:");
 		lblPlayerName.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		GridBagConstraints gbc_lblPlayerName = new GridBagConstraints();
 		gbc_lblPlayerName.anchor = GridBagConstraints.WEST;
 		gbc_lblPlayerName.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPlayerName.gridx = 0;
 		gbc_lblPlayerName.gridy = 10;
 		panel.add(lblPlayerName, gbc_lblPlayerName);
-		
+
 		textField = MenuFactory.createTextField(1);
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
@@ -156,7 +155,7 @@ public class TestPlayerCreateWindow extends JFrame{
 		gbc_textField.gridy = 11;
 		panel.add(textField, gbc_textField);
 		textField.setColumns(10);
-		
+
 		btnCreatePlayer = MenuFactory.createButton("Ok, put me in!");
 		GridBagConstraints gbc_btnCreatePlayer = new GridBagConstraints();
 		gbc_btnCreatePlayer.anchor = GridBagConstraints.NORTH;
@@ -187,36 +186,38 @@ public class TestPlayerCreateWindow extends JFrame{
 	 * Used to set up the action listeners.
 	 */
 	private void setupActionListeners() {
-	
-	btnBack.addActionListener(e->{
-		if(imgIndex <= 0) {
-			return;
-		}
-		imgIndex--;
-		drawImage(imgPanel.getGraphics());
-		imgPanel.repaint();
-		repaint();
-	});
-	
-	btnNext.addActionListener(e->{
-		if(imgIndex >= imgList.size()-1){
-			return;
-		}
-		imgIndex++;
-		drawImage(imgPanel.getGraphics());
-		imgPanel.repaint();
-		repaint();
-	});
-	
-	btnCreatePlayer.addActionListener(e->{
-		if(textField.getText().isEmpty())
-			JOptionPane.showMessageDialog(null, "Please give your character a name first!.");
-		else
-			JOptionPane.showMessageDialog(null, "Successfully created a player.");
-		playerName = textField.getText();
-		imageNumber = imgIndex;
-		textField.setText(null);
-	});
+
+		btnBack.addActionListener(e->{
+			if(imgIndex == 0){
+				imgIndex = 5;
+			}else{
+				imgIndex--;
+			}
+			drawImage(imgPanel.getGraphics());
+			imgPanel.repaint();
+			repaint();
+		});
+
+		btnNext.addActionListener(e->{
+			if(imgIndex == imgList.size()-1){
+				imgIndex = 0;
+			}else{
+				imgIndex++;
+			}
+			drawImage(imgPanel.getGraphics());
+			imgPanel.repaint();
+			repaint();
+		});
+
+		btnCreatePlayer.addActionListener(e->{
+			if(textField.getText().isEmpty())
+				JOptionPane.showMessageDialog(null, "Please give your character a name first!.");
+			else
+				JOptionPane.showMessageDialog(null, "Successfully created a player.");
+			playerName = textField.getText();
+			imageNumber = imgIndex;
+			//textField.setText(null);
+		});
 	}
 	/**
 	 * Returns the Player Name that the player has chosen.
@@ -225,7 +226,7 @@ public class TestPlayerCreateWindow extends JFrame{
 	public String getPlayerName(){
 		return this.playerName;
 	}
-	
+
 	/**
 	 * Returns the imageIndex of the players chosen image.
 	 * @return int - imageNumber
@@ -233,8 +234,8 @@ public class TestPlayerCreateWindow extends JFrame{
 	public int getImageIndex(){
 		return this.imageNumber;
 	}
-	
-	
+
+
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(panelWd, panelHt);
@@ -245,6 +246,6 @@ public class TestPlayerCreateWindow extends JFrame{
 	}
 
 
-	
+
 
 }

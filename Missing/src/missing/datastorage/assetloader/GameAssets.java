@@ -80,7 +80,7 @@ public class GameAssets {
 	private static BufferedImage berriesImage;
 
 	private static BufferedImage bagBackgroundImage;
-	
+
 	// Getters for File Assets
 
 	public static InputStream getWorldFile(int x, int y) {
@@ -90,14 +90,12 @@ public class GameAssets {
 	// getters for the image assets
 
 	public static BufferedImage getPlayerImage(int index, String direction) {
-		if (playerImage == null) {
-			try {
-					playerImage = ImageIO
-							.read(GameAssets.class.getResource(STORAGE_PATH + "/img/player"+direction+String.valueOf(index)+".png"));
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			playerImage = ImageIO
+					.read(GameAssets.class.getResource(STORAGE_PATH + "/img/player"+direction+String.valueOf(index)+".png"));
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return playerImage;
 	}
