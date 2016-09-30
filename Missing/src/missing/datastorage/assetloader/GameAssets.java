@@ -35,13 +35,7 @@ public class GameAssets {
 
 	// Image assets
 
-	private static BufferedImage playerEastImage;
-
-	private static BufferedImage playerWestImage;
-
-	private static BufferedImage playerSouthImage;
-
-	private static BufferedImage playerNorthImage;
+	private static BufferedImage playerImage;
 
 	private static BufferedImage sandImage;
 
@@ -95,85 +89,17 @@ public class GameAssets {
 
 	// getters for the image assets
 
-	public static BufferedImage getPlayerNorthImage(String gender) {
-		if (playerNorthImage == null) {
+	public static BufferedImage getPlayerImage(int index, String direction) {
+		if (playerImage == null) {
 			try {
-				if (gender.equalsIgnoreCase("girl")) {
-					playerNorthImage = ImageIO
-							.read(GameAssets.class.getResource(STORAGE_PATH + "/img/" + gender + "playernorth.png"));
-				} else {
-					playerNorthImage = ImageIO
-							.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playernorth.png"));
-				}
+					playerImage = ImageIO
+							.read(GameAssets.class.getResource(STORAGE_PATH + "/img/player"+direction+String.valueOf(index)+".png"));
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		return playerNorthImage;
-	}
-
-	public static BufferedImage getPlayerSouthImage(String gender) {
-		if (playerSouthImage == null) {
-			try {
-				if (gender.equalsIgnoreCase("girl")) {
-					playerSouthImage = ImageIO
-							.read(GameAssets.class.getResource(STORAGE_PATH + "/img/" + gender + "playersouth.png"));
-				} else {
-					playerSouthImage = ImageIO
-							.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playersouth.png"));
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return playerSouthImage;
-	}
-	
-	public static BufferedImage getPlayerImage(String gender){ //TODO change parameter to int
-		try {
-			if (gender.equalsIgnoreCase("girl")) {
-				return ImageIO
-						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/" + gender + "playersouth.png"));
-			} else {
-				return ImageIO
-						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playersouth.png"));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public static BufferedImage getPlayerEastImage(String gender) {
-		if (playerEastImage == null) {
-			try {
-				if (gender.equalsIgnoreCase("girl")) {
-					playerEastImage = ImageIO
-							.read(GameAssets.class.getResource(STORAGE_PATH + "/img/" + gender + "playereast.png"));
-				} else {
-					playerEastImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playereast.png"));
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return playerEastImage;
-	}
-
-	public static BufferedImage getPlayerWestImage(String gender) {
-		if (playerWestImage == null) {
-			try {
-				if (gender.equalsIgnoreCase("girl")) {
-					playerWestImage = ImageIO
-							.read(GameAssets.class.getResource(STORAGE_PATH + "/img/" + gender + "playerwest.png"));
-				} else {
-					playerWestImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playerwest.png"));
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return playerWestImage;
+		return playerImage;
 	}
 
 	public static BufferedImage getSandImage() {
