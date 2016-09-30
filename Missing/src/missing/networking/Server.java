@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -44,7 +46,7 @@ public class Server extends Thread {
 	private BufferedReader[] ins;
 	/** Outputs to clients */
 	private ObjectOutputStream[] outs;
-	String[] playerNames;
+	private String[] playerNames;
 
 	public Server(Socket[] sockets) {
 		this.socket = sockets;
@@ -71,9 +73,9 @@ public class Server extends Thread {
 
 			playerNames = new String[socket.length];
 			// add input and output streams for each client socket
-			for (int i = 0; i < ins.length; i++) {
+			for (int i = 0; i < socket.length; i++) {
 				ins[i] = new BufferedReader(new InputStreamReader(socket[i].getInputStream()));
-				outs[i] = new ObjectOutputStream(socket[i].getOutputStream());
+				outs[i] = (new ObjectOutputStream(socket[i].getOutputStream()));
 				// set playerName
 				outs[i].writeObject("name");
 				playerNames[i] = ins[i].readLine();
@@ -99,6 +101,7 @@ public class Server extends Thread {
 				try {
 					// listen for inputs
 					for (int playerID = 0; playerID < ins.length; playerID++) {
+						if (ins[playerID] == null)continue;
 						if (!ins[playerID].ready())
 							continue;
 						// new input from client.
@@ -127,12 +130,14 @@ public class Server extends Thread {
 							// player wants to perform action
 							instruction = "perform";
 						}
+						//send instructions to clients to update game
 						this.sendInstruction(instruction, playerID, direction);
 
 					}
 				} catch (IOException e) {
 					// TODO implement disconnects properly
 					e.printStackTrace();
+					System.out.println();
 				}
 			}
 
@@ -150,18 +155,35 @@ public class Server extends Thread {
 		}
 		System.out.println("Server stopped");
 	}
-
-	private void sendInstruction(String action, int playerID, Direction direction) {
+	
+	private void sendInstruction(String action, int playerID, Direction direction) throws IOException{
+		boolean disconnect = false;
+		int disconnectedPlayer = -1;
 		for (int playerNum = 0; playerNum < outs.length; playerNum++) {
+			if (outs[playerNum] == null)continue;
+			// action already performed in client
+			if (action.equals("perform") && playerNum == playerID)continue;
 			try {
 				outs[playerNum].reset();
 				outs[playerNum].writeObject(action);
 				outs[playerNum].writeObject(playerID);
 				outs[playerNum].writeObject(direction);
 				outs[playerNum].flush();
-			} catch (IOException e) {
+			} catch (IOException e){
+				if (e.getClass() == SocketException.class){
+					System.out.println("disconnect");
+					outs[playerNum] = null;
+					ins[playerNum] = null;
+					socket[playerNum].close();
+					socket[playerNum] = null;
+					disconnectedPlayer = playerNum;
+					disconnect = true;
+				}
 				e.printStackTrace();
 			}
+		}
+		if (disconnect){
+			sendInstruction("disconnect", disconnectedPlayer, null);
 		}
 	}
 

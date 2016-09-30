@@ -18,6 +18,7 @@ package missing.ui.controller;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import missing.datastorage.initialisers.GUIInitialiser;
@@ -168,6 +169,9 @@ public class VControl extends JFrame {
 		//TODO: similar to displayContainerItems
 	}
 
+	public void displayGameException(String msg){
+		JOptionPane.showMessageDialog(views[3], msg);
+	}
 	// Helper methods
 
 	private void initialiseGUI() {
