@@ -44,8 +44,7 @@ public class TestPlayerCreateWindow extends JFrame{
 	private List<Image> imgList;
 	
 	private int imgIndex = 0;
-	
-	
+		
 	/*Image rectangle dimensions*/
 	private final int RECT_SIZE = 100;
 	private final int RECT_LEFT = (this.getWidth()/2)-75;
@@ -57,8 +56,11 @@ public class TestPlayerCreateWindow extends JFrame{
 	private JButton btnNext;
 	private JButton btnCreatePlayer;
 	
-	/*Swing components for this window */
+	/*Stores the playerName and the image Number chosen */
+	private String playerName;
+	private int imageNumber;
 	
+	/*Swing components for this window */
 	
 	public TestPlayerCreateWindow() {
 		super("Test Panel");
@@ -72,10 +74,12 @@ public class TestPlayerCreateWindow extends JFrame{
 	
 	private void initializeList(){
 		imgList = new LinkedList<Image>();
-		imgList.add(GameAssets.getPlayerImage("boy"));
-		imgList.add(GameAssets.getPlayerImage("girl"));
-		System.out.println(imgList.size());
-		System.out.println(imgList.toString());
+		imgList.add(GameAssets.getPlayerImage("boy")); //linus
+		imgList.add(GameAssets.getPlayerImage("girl")); //casey
+		//imgList.add();								//eddy
+		//imgList.add(2);								//chris
+		//imgList.add(1);								//jian wei
+		//imgList.add(3);								//other
 	}
 	
 	
@@ -170,7 +174,6 @@ public class TestPlayerCreateWindow extends JFrame{
 		panel.add(layeredPane, gbc_layeredPane);
 
 	}
-	
 	/**
 	 * Private method to allow you to draw stuff onto the current graphics context.
 	 * @param g
@@ -178,11 +181,8 @@ public class TestPlayerCreateWindow extends JFrame{
 	private void drawImage(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		g.drawImage(imgList.get(imgIndex), (getWidth()/2-75), 0 , RECT_SIZE,RECT_SIZE, null);
+		g.drawImage(imgList.get(imgIndex), RECT_LEFT, RECT_TOP, RECT_SIZE,RECT_SIZE, null);
 	}
-	
-	
-	
 	/**
 	 * Used to set up the action listeners.
 	 */
@@ -209,15 +209,32 @@ public class TestPlayerCreateWindow extends JFrame{
 	});
 	
 	btnCreatePlayer.addActionListener(e->{
-		JOptionPane.showMessageDialog(null, "Created your player.");
-		drawImage(imgPanel.getGraphics());
-		imgPanel.repaint();
-		repaint();
+		if(textField.getText().isEmpty())
+			JOptionPane.showMessageDialog(null, "Please give your character a name first!.");
+		else
+			JOptionPane.showMessageDialog(null, "Successfully created a player.");
+		playerName = textField.getText();
+		imageNumber = imgIndex;
+		textField.setText(null);
 	});
-
 	}
-
-
+	/**
+	 * Returns the Player Name that the player has chosen.
+	 * @return
+	 */
+	public String getPlayerName(){
+		return this.playerName;
+	}
+	
+	/**
+	 * Returns the imageIndex of the players chosen image.
+	 * @return int - imageNumber
+	 */
+	public int getImageIndex(){
+		return this.imageNumber;
+	}
+	
+	
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(panelWd, panelHt);
