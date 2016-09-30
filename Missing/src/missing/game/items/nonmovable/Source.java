@@ -9,33 +9,36 @@
  *	7 Sep 16 			Casey Huang				Created Source class and added javaDoc comments
  *	7 Sep 16			Chris Rabe				added resource field
  *  29 Sep 16			Jian Wei				Added timer
+ *  30 Sep 16			Chris Rabe				created refresh time field
  *  
  */
 package missing.game.items.nonmovable;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
 import missing.game.characters.Player;
 import missing.game.items.movable.Resource;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * Represents a Source item that a player can collect
  *
  */
-public abstract class Source extends Interactable{
+@SuppressWarnings("serial")
+public abstract class Source extends Interactable {
 	protected static final int MAX_RESOURCE = 10;
+	protected static final int REFRESH_TIME_MS = 30000;
 
 	/** Represents the resource which can be collected */
 	protected Resource resource;
-	public Resource getResource(){
+
+	public Resource getResource() {
 		return resource;
 	}
-	
+
 	public Timer timer;
 
 	/**
@@ -56,8 +59,8 @@ public abstract class Source extends Interactable{
 	 * For player to perform an action on this Interactable item.
 	 * 
 	 * @throws GameException
+	 * @throws SignalException 
 	 */
-	public abstract void performAction(Player p) throws GameException;
+	public abstract void performAction(Player p) throws GameException, SignalException;
 
-	
 }

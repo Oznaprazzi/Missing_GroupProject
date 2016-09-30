@@ -5,7 +5,8 @@
  * 	Date				Author				Changes
  * 	17 Sep 16			Chris Rabe			created Rock.java
  * 	20 Sep 16			Jian Wei			updated performAction to include pickaxe use
- * 29 Sep 16	Jian Wei		Added timer action performed, started timer in performAction
+ * 	29 Sep 16			Jian Wei			Added timer action performed, started timer in performAction
+ * 	30 Sep 16			Chris Rabe			added a null check
  */
 package missing.game.items.nonmovable;
 
@@ -18,24 +19,24 @@ import javax.swing.Timer;
 import missing.game.characters.Player;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
-import missing.game.items.movable.Wood;
 import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * Represents a Rock item which players can mine to get the stone resource.
  */
+@SuppressWarnings("serial")
 public class Rock extends Source {
-	// TODO Potential for adding ores
 
 	public Rock(Point worldLocation, Point tileLocation) {
 		super("Rock", "An extremely hard area.", worldLocation, tileLocation,
 				new Stone(worldLocation, tileLocation, MAX_RESOURCE));
-		timer = new Timer(30000, new ActionListener() {
+		timer = new Timer(REFRESH_TIME_MS, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (resource == null) {
-					int newAmount =MAX_RESOURCE;
+					int newAmount = MAX_RESOURCE;
 					resource = new Stone(worldLocation, tileLocation, newAmount);
 				}
 			}
@@ -43,7 +44,10 @@ public class Rock extends Source {
 	}
 
 	@Override
-	public void performAction(Player p) throws GameException {
+	public void performAction(Player p) throws GameException, SignalException {
+		if (resource == null) {
+			throw new GameException("There are no stones in this rock.");
+		}
 		int numStoneTaking = 0;// amount of wood they are trying to take from
 		// this tree
 		Tool playersTool = p.getTool(ToolType.PICKAXE); // gets the axe from the
@@ -51,16 +55,15 @@ public class Rock extends Source {
 		if (playersTool != null) { // if the player has an axe
 			numStoneTaking = 5;
 			if (playersTool.useTool())
-				p.getPocket().remove(playersTool); // uses the tool, if true is
-			// returned, the tool has
-			// broken, so we need to
-			// remove it
+				// the tool has broken, so we need to remove it
+				p.getPocket().remove(playersTool);
 		} else {
 			numStoneTaking = 1; // doesnt have axe, so can only take one wood
 			p.setHealth(p.getHealth() - 1);
+			checkIfDead(p);
 		} // should reduce health if they are breaking it with their hands
-		if(numStoneTaking > resource.getAmount()){
-			numStoneTaking = resource.getAmount(); 
+		if (numStoneTaking > resource.getAmount()) {
+			numStoneTaking = resource.getAmount();
 		}
 		resource = new Stone(worldLocation, tileLocation, numStoneTaking);
 		resource.setStored(true);
@@ -72,23 +75,4 @@ public class Rock extends Source {
 		}
 		// Add ores here...
 	}
-	
-	/*public void run(){
-		try {
-			for(int i = resource.getAmount(); i<MAX_RESOURCE; i++){
-				int increase = i+1;
-				resource.setAmount(increase); //increases the ammount of the resource
-				System.out.println("amount = "+increase);
-				Thread.sleep(1000);
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void start(){
-		thread = new Thread(this, "Rock thread");
-		thread.start();
-	}
-*/
 }

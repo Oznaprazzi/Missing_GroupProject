@@ -40,16 +40,45 @@ public class Player extends Character {
 	private int currentItemSize;
 	private List<Movable> pocket;
 	private Bag bag;
+	private boolean isDead;
+	private int id; // client ID
+	private int imageID; // sprite ID
 
-	public Player(String name, Point worldLocation, Point tileLocation) {
+	public Player(int id, String name, Point worldLocation, Point tileLocation) {
 		super(name, String.format("%s's avatar.", name), worldLocation, tileLocation, Direction.SOUTH, Direction.ALL);
 		this.health = 100;
 		this.currentItemSize = 0;
 		this.pocket = new ArrayList<Movable>();
 		bag = new Bag();
+		this.isDead = false;
+		this.id = id;
 	}
 
 	// Getters and setters...
+
+	public int getImageID() {
+		return imageID;
+	}
+
+	public void setImageID(int imageID) {
+		this.imageID = imageID;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
+	}
 
 	public int getHealth() {
 		return health;
@@ -234,6 +263,13 @@ public class Player extends Character {
 	 */
 	@Override
 	public void performAction(Player player) throws GameException, SignalException {
-		throw new SignalException("TRADE");
+		this.health--;
+		System.out.println(String.format("W(%d,%d)T(%d,%d):%d", this.getWorldLocation().x, this.getWorldLocation().y,
+				this.getTileLocation().x, this.getTileLocation().y, this.health));
+		if (health == 0) {
+			this.setDead(true);
+			throw new SignalException(String.format("DEAD %d", id));
+		}
 	}
+
 }

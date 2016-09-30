@@ -11,7 +11,8 @@
  *	7 Sep 16			Chris Rabe				updated constructor
  *	7 Sep 16			Chris Rabe				added a chance for apples to be given
  *  20 Sep 16			Jian Wei				extended the playerAction method to include using an axe
- *  29 Sep 16	Jian Wei		Added timer action performed, started timer in performAction
+ *  29 Sep 16			Jian Wei				Added timer action performed, started timer in performAction
+ *  30 Sep 16			Chris Rabe				made null check for resource
  */
 package missing.game.items.nonmovable;
 
@@ -26,18 +27,18 @@ import static java.lang.Math.random;
 import missing.game.characters.Player;
 import missing.game.items.movable.Wood;
 import missing.game.items.movable.Food;
-import missing.game.items.movable.Resource;
 import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * Represents a Tree item that a player can cut down to get the wood resource.
  * It also has a 50% chance to get an apple from the tree.
  */
+@SuppressWarnings("serial")
 public class Tree extends Source {
-	// TODO Add timer for refreshing resources
 	// TODO Do null check before storing resource inside player's pocket
 
 	private static final int APPLE_CHANCE = 50;
@@ -45,11 +46,11 @@ public class Tree extends Source {
 	public Tree(Point worldLocation, Point tileLocation) {
 		super("Tree", "A tall majestic tree.", worldLocation, tileLocation,
 				new Wood(worldLocation, tileLocation, MAX_RESOURCE));
-		timer = new Timer(30000, new ActionListener() {
+		timer = new Timer(REFRESH_TIME_MS, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (resource == null) {
-					int newAmount =MAX_RESOURCE;
+					int newAmount = MAX_RESOURCE;
 					resource = new Wood(worldLocation, tileLocation, newAmount);
 				}
 			}
@@ -57,23 +58,27 @@ public class Tree extends Source {
 	}
 
 	@Override
-	public void performAction(Player p) throws GameException {
-		int numWoodTaking = 0;// amount of wood they are trying to take from
-								// this tree
-		Tool playersTool = p.getTool(ToolType.AXE); // gets the axe from the
-													// player's pocket
+	public void performAction(Player p) throws GameException, SignalException {
+		if (resource == null) {
+			throw new GameException("There is no wood in this tree.");
+		}
+		// amount of wood they are trying to take from this tree
+		int numWoodTaking = 0;
+		// gets the axe from the player's pocket
+		Tool playersTool = p.getTool(ToolType.AXE);
 		if (playersTool != null) { // if the player has an axe
 			numWoodTaking = 3;
 			if (playersTool.useTool())
-				p.getPocket().remove(playersTool); // uses the tool, if true is
-													// returned, the tool has
-													// broken, so we need to
-													// remove it
+				// the tool has broken, so we need to remove it
+				p.getPocket().remove(playersTool);
 		} else {
 			numWoodTaking = 1; // doesnt have axe, so can only take one wood
 			p.setHealth(p.getHealth() - 1);
+			checkIfDead(p);
 		} // should reduce health if they are breaking it with their hands
-		if(numWoodTaking> resource.getAmount()) numWoodTaking = resource.getAmount();
+		if (numWoodTaking > resource.getAmount()) {
+			numWoodTaking = resource.getAmount();
+		}
 		resource = new Wood(worldLocation, tileLocation, numWoodTaking);
 		resource.setStored(true);
 		p.addToPocket(resource);
@@ -90,24 +95,6 @@ public class Tree extends Source {
 			apple.setStored(true);
 			p.addToPocket(apple);
 		}
-		
+
 	}
-/*	public void run(){
-		try {
-			for(int i = resource.getAmount(); i<MAX_RESOURCE; i++){
-				int increase = i+1;
-				resource.setAmount(increase); //increases the ammount of the resource
-				System.out.println("amount = "+increase);
-				Thread.sleep(1000);
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void start(){
-		thread = new Thread(this, "Rock thread");
-		thread.start();
-	}
-*/
 }
