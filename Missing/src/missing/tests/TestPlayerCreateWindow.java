@@ -13,15 +13,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import missing.datastorage.assetloader.GameAssets;
 import missing.game.Game;
 import missing.game.characters.Player;
 import missing.game.world.World;
@@ -37,11 +41,13 @@ public class TestPlayerCreateWindow extends JFrame{
 	private final int panelWd = 800;
 	private final int panelHt = 600;
 	
-	/*Current Image */
-	private Image currentImg;
+	private List<Image> imgList;
+	
+	private int imgIndex = 0;
+	
 	
 	/*Image rectangle dimensions*/
-	private final int RECT_SIZE = 150;
+	private final int RECT_SIZE = 100;
 	private final int RECT_LEFT = (this.getWidth()/2)-75;
 	private final int RECT_TOP = 0;
 	
@@ -50,8 +56,6 @@ public class TestPlayerCreateWindow extends JFrame{
 	private JButton btnBack;
 	private JButton btnNext;
 	private JButton btnCreatePlayer;
-	
-	private Color testColor = Color.yellow;
 	
 	/*Swing components for this window */
 	
@@ -65,6 +69,16 @@ public class TestPlayerCreateWindow extends JFrame{
 		setResizable(false);
 		pack();
 	}
+	
+	private void initializeList(){
+		imgList = new LinkedList<Image>();
+		imgList.add(GameAssets.getPlayerImage("boy"));
+		imgList.add(GameAssets.getPlayerImage("girl"));
+		System.out.println(imgList.size());
+		System.out.println(imgList.toString());
+	}
+	
+	
 	/**
 	 * Helper method to initialize the Windows GUI components.
 	 */
@@ -88,7 +102,8 @@ public class TestPlayerCreateWindow extends JFrame{
 		gbc_lblCurrentPlayer.gridx = 0;
 		gbc_lblCurrentPlayer.gridy = 0;
 		panel.add(lblCurrentPlayer, gbc_lblCurrentPlayer);
-		
+
+		initializeList();
 		imgPanel = new JPanel(){
 			@Override
 			public void paint(Graphics g){
@@ -161,8 +176,9 @@ public class TestPlayerCreateWindow extends JFrame{
 	 * @param g
 	 */
 	private void drawImage(Graphics g){
-		g.setColor(testColor);
-		g.fillRect((this.getWidth()/2)-75, 0, RECT_SIZE,RECT_SIZE);
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		g.drawImage(imgList.get(imgIndex), (getWidth()/2-75), 0 , RECT_SIZE,RECT_SIZE, null);
 	}
 	
 	
@@ -172,28 +188,29 @@ public class TestPlayerCreateWindow extends JFrame{
 	 */
 	private void setupActionListeners() {
 	
-	this.btnBack.addActionListener(e->{
-		drawImage(this.getGraphics());
+	btnBack.addActionListener(e->{
+		if(imgIndex <= 0) {
+			return;
+		}
+		imgIndex--;
+		drawImage(imgPanel.getGraphics());
 		imgPanel.repaint();
 		repaint();
 	});
 	
-	this.btnNext.addActionListener(e->{
-		Random r = new Random();
-		int rC = r.nextInt(255);
-		int gC = r.nextInt(255);
-		int bC = r.nextInt(255);
-		testColor = new Color(rC,gC,bC);
+	btnNext.addActionListener(e->{
+		if(imgIndex >= imgList.size()-1){
+			return;
+		}
+		imgIndex++;
+		drawImage(imgPanel.getGraphics());
 		imgPanel.repaint();
 		repaint();
 	});
 	
-	this.btnCreatePlayer.addActionListener(e->{
-		Random r = new Random();
-		int rC = r.nextInt(255);
-		int gC = r.nextInt(255);
-		int bC = r.nextInt(255);
-		testColor = new Color(rC,gC,bC);
+	btnCreatePlayer.addActionListener(e->{
+		JOptionPane.showMessageDialog(null, "Created your player.");
+		drawImage(imgPanel.getGraphics());
 		imgPanel.repaint();
 		repaint();
 	});

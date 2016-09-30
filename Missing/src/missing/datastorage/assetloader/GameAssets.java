@@ -128,6 +128,21 @@ public class GameAssets {
 		}
 		return playerSouthImage;
 	}
+	
+	public static BufferedImage getPlayerImage(String gender){ //TODO change parameter to int
+		try {
+			if (gender.equalsIgnoreCase("girl")) {
+				return ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/" + gender + "playersouth.png"));
+			} else {
+				return ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/playersouth.png"));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public static BufferedImage getPlayerEastImage(String gender) {
 		if (playerEastImage == null) {
