@@ -86,6 +86,8 @@ public class Game implements Serializable {
 
 	// Methods for interacting with the game
 
+	// TODO create a method which checks if the current client is dead
+
 	/**
 	 * Moves the player to a certain direction.
 	 * 

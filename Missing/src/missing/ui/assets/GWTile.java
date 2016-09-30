@@ -94,6 +94,10 @@ public class GWTile {
 		default:
 			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
 		}
+		/*Draws the player. */
+		if(tile.isOccupied() && tile.getObject() instanceof Player){
+			drawPlayer(g,x,y,tile.getObject());
+		}
 		
 		/*Draw the Items onto the tile. */
 		if(tile.getObject() instanceof Tree){
@@ -113,7 +117,9 @@ public class GWTile {
 			g.drawImage(GameAssets.getRockImage(), x+(rockSize/2) ,y+(rockSize/2), rockSize,rockSize,null);
 		}
 		
-		
+		if(tile.getObject() instanceof Player){
+			drawPlayer(g,x,y,tile.getObject());
+		}
 	
 		/*If the tile is not enterable and there is an object image for it.*/
 		if(!tile.isEnterable() && tile.getObject() != null){
