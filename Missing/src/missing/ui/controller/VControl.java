@@ -19,6 +19,7 @@ package missing.ui.controller;
 
 import java.awt.Dimension;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,7 +40,20 @@ import missing.ui.views.GameView;
  */
 @SuppressWarnings("serial")
 public class VControl extends JFrame {
-
+	
+	/*The control buttons*/
+	private JButton moveLeftBtn;
+	private JButton moveRightBtn;
+	private JButton moveDownBtn;
+	private JButton moveUpBtn;
+	
+	private JButton viewMapBtn;
+	private JButton viewBagBtn;
+	private JButton turnLeftBtn;
+	private JButton turnRightBtn;
+	
+	
+	
 	/**
 	 * Views are essentially JPanels with different content. This abstract class
 	 * should be extended by other classes.
@@ -182,7 +196,8 @@ public class VControl extends JFrame {
 
 	private void initialiseGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		add(new JPanel());
+		JPanel panel = new JPanel();
+		getContentPane().add(panel);
 		getContentPane().add(views[cur]);
 		pack();
 		setVisible(true);

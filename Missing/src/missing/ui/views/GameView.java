@@ -8,6 +8,8 @@
  */
 package missing.ui.views;
 
+import javax.swing.JButton;
+
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.panels.GamePanel;
@@ -30,6 +32,7 @@ public class GameView extends View{
 		gamePanel = new GamePanel(controller);
 		gamePanel.initialise();
 		this.add(gamePanel);
+		this.add(new JButton("Test Button!"));
 		
 	}
 	

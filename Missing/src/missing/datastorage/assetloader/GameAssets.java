@@ -11,6 +11,7 @@
  *  27 Sep 16       Casey Huang			Added more images
  *  27 Sep 16		Linus Go			added player images.
  *  27 Sep 16		Casey Huang			Added girl player images.
+ *  1 Oct 16		Linus Go			Added tombstone images.
  */
 
 package missing.datastorage.assetloader;
@@ -38,7 +39,9 @@ public class GameAssets {
 	private static BufferedImage playerImage;
 
 	private static BufferedImage sandImage;
-
+	
+	private static BufferedImage tombStoneImage;
+	
 	private static BufferedImage waterImage;
 
 	private static BufferedImage grassImage;
@@ -110,7 +113,20 @@ public class GameAssets {
 		}
 		return sandImage;
 	}
-
+	
+	public static BufferedImage getTombStoneImage(){
+		if(tombStoneImage == null){
+			try{
+				tombStoneImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/tombstone.png"));
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		return tombStoneImage;
+	};
+	
+	
+	
 	public static BufferedImage getWaterImage() {
 		if (waterImage == null) {
 			try {
