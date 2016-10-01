@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
+import missing.ui.menustyle.MenuFactory;
 
 /**
  * This class represents the MenuView - that is the main menu that appears once
@@ -56,23 +57,15 @@ public class MenuView extends View {
 	private void initialiseLayout() {
 		setLayout(null); // use the absolute layout.
 
-		btnSinglePlayer = new JButton("Single Player");
+		btnSinglePlayer = MenuFactory.createButton("Play Game");
 		btnSinglePlayer.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnSinglePlayer.setBackground(Color.YELLOW);
 		btnSinglePlayer.setBounds(buttonX, 87, buttonWd, buttonHt);
 		add(btnSinglePlayer);
 		btnSinglePlayer.addActionListener(e -> {
-			controller.changeView(controller.getMapView()); // change to main												// Menu
+			controller.changeView(controller.getPlayGameView()); // change to main Menu
 		});
 		
-		btnMultiPlayer = new JButton("Multi Player");
-		btnMultiPlayer.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnMultiPlayer.setBackground(Color.YELLOW);
-		btnMultiPlayer.setBounds(buttonX, 156, buttonWd, buttonHt);
-		add(btnMultiPlayer);
-		btnMultiPlayer.addActionListener(e -> {
-		 //TODO : fill me once multiplayer is implemented.
-		});
 
 		btnAbout = new JButton("About \"Missing\"");
 		btnAbout.setFont(new Font("Tahoma", Font.PLAIN, 20));
