@@ -1,4 +1,4 @@
-/*	File: XMLLoader.java
+/*	File: XMLImporter.java
  * 	Author
  * 	Chris Rabe			300334207
  * 	
@@ -48,7 +48,7 @@ import missing.helper.GameException;
 /**
  * This class encapsulates all the parsing and loading logic.
  */
-public class XMLLoader {
+public class XMLImporter {
 
 	public static List<Item> getItemsFromFile(String filename) throws GameException {
 		List<Item> tmp = new ArrayList<Item>();
