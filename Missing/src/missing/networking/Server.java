@@ -138,6 +138,9 @@ public class Server extends Thread {
 						} else if (input.equals("F")) {
 							// player wants to perform action
 							instruction = "perform";
+						} else if (input.equals("disconnect")) {
+							// player wants to perform action
+							instruction = "disconnect";
 						}
 						//send instructions to clients to update game
 						this.sendInstruction(instruction, playerID, direction);
@@ -169,9 +172,10 @@ public class Server extends Thread {
 		boolean disconnect = false;
 		int disconnectedPlayer = -1;
 		for (int playerNum = 0; playerNum < outs.length; playerNum++) {
-			if (outs[playerNum] == null)continue;
+			if (outs[playerNum] == null)continue; //disconnected player
 			// action already performed in client
 			if (action.equals("perform") && playerNum == playerID)continue;
+			if (action.equals("disconnect") && playerNum == playerID)continue;
 			try {
 				outs[playerNum].reset();
 				outs[playerNum].writeObject(action);

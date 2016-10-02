@@ -61,6 +61,7 @@ public class Client extends Thread implements KeyListener {
 		this.vControl = vControl;
 		this.playerName = playerName;
 		this.imageNumber = imageNumber;
+		vControl.setClient(this);
 	}
 
 	// Getters and Setters
@@ -167,20 +168,16 @@ public class Client extends Thread implements KeyListener {
 			socket.close();
 		} catch (IOException | ClassNotFoundException e) {
 			if (e.getClass() == SocketException.class) {
+				// host disconnected, send to main menu
 				vControl.displayException("Host has disconnected, game ended");
-				vControl.dispatchEvent(new WindowEvent(vControl, WindowEvent.WINDOW_CLOSING));
+				vControl.dispose();
+				vControl = new VControl();
 			} else{
 				e.printStackTrace();
 			}
 		} finally {
 			try {
 				socket.close();
-//				Thread newGame = new Thread(){
-//					public void run(){
-//						new VControl();
-//					}
-//				};
-//				newGame.start();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -225,6 +222,11 @@ public class Client extends Thread implements KeyListener {
 		}
 	}
 	
+	/**
+	 * Performs an action in the game. If action needs
+	 * to be applied to all clients games the action is
+	 * sent to the server
+	 */
 	private void handleAction(){
 		try {
 			game.performAction(clientID);
@@ -244,6 +246,19 @@ public class Client extends Thread implements KeyListener {
 			} else if(e.getClass() == GameException.class){
 				vControl.displayException(e.getMessage());
 			}
+		}
+	}
+	
+	/**
+	 * Disconnects client from server and closes socket
+	 */
+	public void disconnectClient(){
+		out.println("disconnect");
+		try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	@Override

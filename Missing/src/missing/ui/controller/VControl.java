@@ -15,6 +15,7 @@
  * 24 Sep 16		Edward Kelly		added play game menu views
  * 30 Sep 16		Edward Kelly		added CreatePlayerView
  * 1 Oct 16			Edward Kelly		added displayException & displayTimedMessage
+ * 2 Oct 16			Edward Kelly		added close confirmation and client disconnect
  */
 package missing.ui.controller;
 
@@ -35,6 +36,7 @@ import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
 import missing.game.world.World;
 import missing.helper.GameException;
+import missing.networking.Client;
 import missing.ui.assets.GGame;
 import missing.ui.views.GameView;
 
@@ -97,12 +99,24 @@ public class VControl extends JFrame {
 	private GGame gGame;
 	private int playerID;
 	private boolean isHost;
+	private Client client;
 
 	public VControl() {
 		super("Missing: The Game");
 		this.views = GUIInitialiser.createViews(this);
 		initialiseGUI();
 		views[cur].initialise();
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		// Asks for confirmation when closing the game
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+			       int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?","Quit game",JOptionPane.YES_NO_OPTION);
+			       if(result == JOptionPane.YES_OPTION){
+			    	   closeVControl();
+			       }	
+		    }
+		});
 	}
 
 	// View Control Methods
@@ -168,15 +182,15 @@ public class VControl extends JFrame {
 		// Redraw the whole frame
 		revalidate();
 	}
-
-	// TODO Change this once we have a client control
-	public World getWorld() {
-		try {
-			return new World();
-		} catch (GameException e) {
-			e.printStackTrace();
-			return null;
+	
+	/**
+	 * Disconnects client from game and closes window
+	 */
+	private void closeVControl(){
+		if (client!=null){
+			client.disconnectClient();
 		}
+		System.exit(0);
 	}
 	
 	/**
@@ -268,6 +282,9 @@ public class VControl extends JFrame {
 	}
 	public boolean isHost(){
 		return isHost;
+	}
+	public void setClient(Client client){
+		this.client = client;
 	}
 	@Override
 	public void repaint(){
