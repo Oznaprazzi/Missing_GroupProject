@@ -52,8 +52,6 @@ public class TestWindow extends JFrame implements KeyListener {
 	private JLabel lblPlayerOrientation;
 	private JLabel lblPlayerTilePos;
 	private JLabel lblPlayerWorldPos;
-	private JButton btnTurnL;
-	private JButton btnTurnR;
 	private JButton btnUp;
 	private JButton btnDown;
 	private JButton btnLeft;
@@ -71,7 +69,6 @@ public class TestWindow extends JFrame implements KeyListener {
 	private BagFrameTest bagFrame;
 	private JLabel lblHealthField;
 	private JTextField healthField;
-	private JButton btnDoAction;
 	
 	public TestWindow(Game game, World w, Player p) {
 		super("Test Panel");
@@ -95,9 +92,9 @@ public class TestWindow extends JFrame implements KeyListener {
 		GridBagLayout gbl_panel = new GridBagLayout();
 
 		gbl_panel.columnWidths = new int[] { 89, 0 };
-		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
 
 		JLabel lblCurrentPlayer = new JLabel("Current Player");
@@ -117,20 +114,6 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_txtName.gridy = 1;
 		panel.add(nameField, gbc_txtName);
 		nameField.setColumns(10);
-		
-		btnTurnL = new JButton("TL");
-		GridBagConstraints gbc_btnTurnL = new GridBagConstraints();
-		gbc_btnTurnL.insets = new Insets(0, 0, 5, 0);
-		gbc_btnTurnL.gridx = 0;
-		gbc_btnTurnL.gridy = 3;
-		panel.add(btnTurnL, gbc_btnTurnL);
-		
-		btnTurnR = new JButton("TR");
-		GridBagConstraints gbc_btnTurnR = new GridBagConstraints();
-		gbc_btnTurnR.insets = new Insets(0, 0, 5, 0);
-		gbc_btnTurnR.gridx = 0;
-		gbc_btnTurnR.gridy = 4;
-		panel.add(btnTurnR, gbc_btnTurnR);
 		
 		lblHealthField = new JLabel("Player Health");
 		lblHealthField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -197,15 +180,9 @@ public class TestWindow extends JFrame implements KeyListener {
 		gbc_orientationField.gridx = 0;
 		gbc_orientationField.gridy = 12;
 		panel.add(playerOrientation, gbc_orientationField);
-		
-		btnDoAction = new JButton("Do Action");
-		GridBagConstraints gbc_btnDoAction = new GridBagConstraints();
-		gbc_btnDoAction.insets = new Insets(0, 0, 5, 0);
-		gbc_btnDoAction.gridx = 0;
-		gbc_btnDoAction.gridy = 13;
-		panel.add(btnDoAction, gbc_btnDoAction);
-		
+				
 		btnViewMap = new JButton("View Map");
+		btnViewMap.setFocusable(false);
 		GridBagConstraints gbc_btnViewMap = new GridBagConstraints();
 		gbc_btnViewMap.insets = new Insets(0, 0, 5, 0);
 		gbc_btnViewMap.gridx = 0;
@@ -213,33 +190,46 @@ public class TestWindow extends JFrame implements KeyListener {
 		panel.add(btnViewMap, gbc_btnViewMap);
 		
 		btnPlayersBag = new JButton("Players Bag");
+		btnPlayersBag.setFocusable(false);
 		GridBagConstraints gbc_btnPlayersBag = new GridBagConstraints();
 		gbc_btnPlayersBag.insets = new Insets(0, 0, 5, 0);
 		gbc_btnPlayersBag.gridx = 0;
 		gbc_btnPlayersBag.gridy = 15;
 		panel.add(btnPlayersBag, gbc_btnPlayersBag);
 		
+		JButton btnPlayersHand = new JButton("Players Hand");
+		btnPlayersHand.setFocusable(false);
+		GridBagConstraints gbc_btnPlayersHand = new GridBagConstraints();
+		gbc_btnPlayersHand.insets = new Insets(0, 0, 5, 0);
+		gbc_btnPlayersHand.gridx = 0;
+		gbc_btnPlayersHand.gridy = 16;
+		panel.add(btnPlayersHand, gbc_btnPlayersHand);
+		
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setLayout(null);
 		GridBagConstraints gbc_layeredPane = new GridBagConstraints();
 		gbc_layeredPane.fill = GridBagConstraints.BOTH;
 		gbc_layeredPane.gridx = 0;
-		gbc_layeredPane.gridy = 16;
+		gbc_layeredPane.gridy = 17;
 		panel.add(layeredPane, gbc_layeredPane);
 
 		btnUp = new JButton("Up");
+		btnUp.setFocusable(false);
 		btnUp.setBounds(65, 30, 70, 70);
 		layeredPane.add(btnUp);
 
 		btnLeft = new JButton("Left");
+		btnLeft.setFocusable(false);
 		btnLeft.setBounds(30, 100, 70, 70);
 		layeredPane.add(btnLeft);
 
 		btnRight = new JButton("Right");
+		btnRight.setFocusable(false);
 		btnRight.setBounds(100, 100, 70, 70);
 		layeredPane.add(btnRight);
 
 		btnDown = new JButton("Down");
+		btnDown.setFocusable(false);
 		btnDown.setBounds(65, 170, 70, 70);
 		layeredPane.add(btnDown);
 
@@ -304,38 +294,11 @@ public class TestWindow extends JFrame implements KeyListener {
 			}
 		});
 		
-		btnTurnL.addActionListener(e->{
-			try{
-				rotateEvent(0, Direction.WEST);
-			}catch(GameException ex){
-				ex.printStackTrace();
-			}
-		});
-		
-		btnTurnR.addActionListener(e->{
-			try{
-				rotateEvent(0, Direction.EAST);
-			}catch(GameException ex){
-				ex.printStackTrace();
-			}
-		});
-		
 		btnPlayersBag.addActionListener(e->{
 			bagFrame = new BagFrameTest(curPlayer.getBag());
 			bagFrame.setVisible(true);
-		});
-		
-		this.btnDoAction.addActionListener(e->{
-			try {
-			 performActionEvent(0);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		
-		});
+		});	
 	}
-
-
 	/*These events are moving events that should be called whenever a button or key is being pressed */
 	
 	/**
@@ -387,7 +350,6 @@ public class TestWindow extends JFrame implements KeyListener {
 		repaintGamePanel();
 	}
 	
-	
 	private void performActionEvent(int playerID) throws GameException{
 		try {
 			gameinstance.performAction(playerID);
@@ -404,7 +366,6 @@ public class TestWindow extends JFrame implements KeyListener {
 		gamePanel.repaint();
 
 	}
-	
 	
 	private void updateTextBarPositions(){
 		tilePos.setText("x: " + curPlayer.getTileLocation().getX() + " y: " + curPlayer.getTileLocation().getY());
