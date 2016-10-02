@@ -31,6 +31,12 @@
 	</node>
 	<node worldLocation="1,0">
 		<items>
+			<fisharea>
+				<location>
+					<x>5</x>
+					<y>4</y>
+				</location>
+			</fisharea>
 			<bush>
 				<location>
 					<x>1</x>
@@ -139,6 +145,12 @@
 	</node>
 	<node worldLocation="0,1">
 		<items>
+			<fisharea>
+				<location>
+					<x>2</x>
+					<y>3</y>
+				</location>
+			</fisharea>
 			<tree>
 				<location>
 					<x>8</x>
@@ -728,6 +740,18 @@
 	</node>
 	<node worldLocation="1,3">
 		<items>
+			<fisharea>
+				<location>
+					<x>4</x>
+					<y>1</y>
+				</location>
+			</fisharea>
+			<fisharea>
+				<location>
+					<x>5</x>
+					<y>3</y>
+				</location>
+			</fisharea>
 			<tree>
 				<location>
 					<x>5</x>
@@ -886,6 +910,18 @@
 	</node>
 	<node worldLocation="3,3">
 		<items>
+			<fisharea>
+				<location>
+					<x>6</x>
+					<y>2</y>
+				</location>
+			</fisharea>
+			<fisharea>
+				<location>
+					<x>5</x>
+					<y>5</y>
+				</location>
+			</fisharea>
 			<tree>
 				<location>
 					<x>5</x>
