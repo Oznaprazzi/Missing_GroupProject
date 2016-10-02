@@ -10,15 +10,18 @@
  * 28 Sep 16		Edward Kelly	integrated GameView
  * 29 Sep 16		Edward Kelly	now receives instructions instead of game
  * 30 Sep 16		Edward Kelly	now sends player image number
+ * 2 Oct 16			Edward Kelly	disconnects handled
  */
 package missing.networking;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 
 import missing.game.Game;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
@@ -127,7 +130,7 @@ public class Client extends Thread implements KeyListener {
 							}
 						} catch (GameException e) {
 							if (clientID == movingPlayer){
-								vControl.displayGameException(e.getMessage());
+								vControl.displayException(e.getMessage());
 							}
 						}
 					} else if (input.equals("turn")) {
@@ -135,7 +138,7 @@ public class Client extends Thread implements KeyListener {
 							game.turnPlayer(movingPlayer, direction);
 						} catch (GameException e) {
 							if (clientID == movingPlayer){
-								vControl.displayGameException(e.getMessage());
+								vControl.displayException(e.getMessage());
 							}
 						}
 					} else if (input.equals("perform")) {
@@ -148,8 +151,9 @@ public class Client extends Thread implements KeyListener {
 							// player that performed he action
 						}
 					} else if (input.equals("disconnect")) {
+						// a player disconnected
 						game.convertPlayerToPile(movingPlayer);
-						System.out.println(movingPlayer + " disconnected");
+						vControl.displayTimedMessage(game.getAvatars()[movingPlayer].getName() + " disconnected");
 					}
 					try {
 						vControl.updateGGame(game);
@@ -162,11 +166,21 @@ public class Client extends Thread implements KeyListener {
 			}
 			socket.close();
 		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-			System.out.println("Server has gone offline");
+			if (e.getClass() == SocketException.class) {
+				vControl.displayException("Host has disconnected, game ended");
+				vControl.dispatchEvent(new WindowEvent(vControl, WindowEvent.WINDOW_CLOSING));
+			} else{
+				e.printStackTrace();
+			}
 		} finally {
 			try {
 				socket.close();
+//				Thread newGame = new Thread(){
+//					public void run(){
+//						new VControl();
+//					}
+//				};
+//				newGame.start();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -206,7 +220,7 @@ public class Client extends Thread implements KeyListener {
 					out.println(moveDirection.toString());
 				}
 			} catch (GameException e1) {
-				vControl.displayGameException(e1.getMessage());
+				vControl.displayException(e1.getMessage());
 			}
 		}
 	}
@@ -228,7 +242,7 @@ public class Client extends Thread implements KeyListener {
 					// request trade with other player
 				}
 			} else if(e.getClass() == GameException.class){
-				vControl.displayGameException(e.getMessage());
+				vControl.displayException(e.getMessage());
 			}
 		}
 	}

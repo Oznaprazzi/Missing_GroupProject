@@ -14,14 +14,21 @@
  * 23 Sep 16		Edward Kelly		added GGame and playerID
  * 24 Sep 16		Edward Kelly		added play game menu views
  * 30 Sep 16		Edward Kelly		added CreatePlayerView
+ * 1 Oct 16			Edward Kelly		added displayException & displayTimedMessage
  */
 package missing.ui.controller;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
@@ -174,8 +181,38 @@ public class VControl extends JFrame {
 	public void displayPileItems(){
 		//TODO: similar to displayContainerItems
 	}
-
-	public void displayGameException(String msg){
+	
+	/**
+	 * Displays a message momentarily on the screen.
+	 * Used when a player disconnects
+	 * @param msg message to be displayed
+	 */
+	public void displayTimedMessage(String msg){
+		JDialog dialog = new JDialog(this);
+		Timer timer = new Timer(3000, new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				dialog.setVisible(false);
+				dialog.dispose();
+			}
+		});
+		timer.setRepeats(false);
+		timer.start();
+		JLabel label = new JLabel(msg);
+		dialog.add(label);
+		dialog.setUndecorated(true);
+		dialog.pack();
+		dialog.setLocationRelativeTo(views[3]);
+		dialog.setFocusable(false);
+		dialog.setFocusableWindowState(false);
+		dialog.getContentPane().setBackground(Color.YELLOW);
+		dialog.setVisible(true);
+	}
+	
+	/**
+	 * Displays a message dialog
+	 * @param msg message to be displayed
+	 */
+	public void displayException(String msg){
 		JOptionPane.showMessageDialog(views[3], msg);
 	}
 	// Helper methods
@@ -222,9 +259,6 @@ public class VControl extends JFrame {
 		super.repaint();
 	}
 	
-	public static void main(String[] args) {
-		new VControl(); // Run to test views
-	}
 
 	
 }

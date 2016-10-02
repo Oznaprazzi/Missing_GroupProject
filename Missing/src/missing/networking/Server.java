@@ -12,6 +12,7 @@
  * 28 Sep 16	Edward Kelly	added support for rotate
  * 29 Sep 16	Edward Kelly	now sends instructions instead of whole game
  * 30 Sep 16	Edward Kelly	now creates players can have character images
+ * 2 Oct 16		Edward Kelly	disconnects handled
  */
 package missing.networking;
 
@@ -186,8 +187,9 @@ public class Server extends Thread {
 					socket[playerNum] = null;
 					disconnectedPlayer = playerNum;
 					disconnect = true;
+				} else{
+					e.printStackTrace();
 				}
-				e.printStackTrace();
 			}
 		}
 		if (disconnect){
