@@ -21,12 +21,9 @@ import missing.game.world.nodes.WorldTile.TileObject;
  * world. This should be extended to a more specialised subclass.
  *
  */
+@SuppressWarnings("serial")
 public abstract class Item implements TileObject, Serializable {
 
-	/**
-	 * 
-	 */
-	protected static final long serialVersionUID = 1810088706552886396L;
 	/** name of item, used when displaying details of item */
 	protected String name;
 	/** description of item, used when displaying details of item */
@@ -59,21 +56,6 @@ public abstract class Item implements TileObject, Serializable {
 		this.tileLocation = tileLocation;
 		this.orientation = Direction.SOUTH;
 		this.approach = Direction.ALL;
-	}
-
-	/**
-	 * Checks if this item is on the tile at the given x, y location
-	 * 
-	 * @param x
-	 *            x coordinate of tile
-	 * @param y
-	 *            y coordinate of tile
-	 * @return returns true if item on tile, false if not
-	 */
-	public boolean on(int x, int y) {
-		if (x == tileLocation.x && y == tileLocation.y)
-			return true;
-		return false;
 	}
 
 	// Getters and Setters
