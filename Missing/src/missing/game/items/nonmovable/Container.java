@@ -1,6 +1,7 @@
 /*	File: Container.java
  * 	Author
  * 	Chris Rabe			300334207
+ *  Casey Huang 		300316284
  * 
  * 	Date				Author					Changes
  * 	19 Sep 16			Chris Rabe				created container class
@@ -9,6 +10,7 @@
  *  27 Sep 16			Casey Huang				Added item.increase() when adding item to container
  *  27 Sep 16			Casey Huang				Added findItem method to be able to increase the amount of the same 
  *  											item the player is carrying
+ *  3 Oct 16			Casey Huang				Added removeItem(Movable item) method particularly for pocket
  */
 
 package missing.game.items.nonmovable;
@@ -29,12 +31,12 @@ import missing.helper.SignalException;
 public class Container extends NonMovable {
 
 	private List<Movable> items;
-	protected int size;
+	protected int size = 25;
 
-	public Container(Point worldLocation, Point tileLocation) {
+	public Container(Point worldLocation, Point tileLocation, int size) {
 		super("Container", "Something to store items in.", worldLocation, tileLocation);
 		this.items = new ArrayList<Movable>();
-		this.size = 25;
+		this.size = size;
 	}
 
 	// Getters and Setters...
@@ -93,6 +95,27 @@ public class Container extends NonMovable {
 			m.decreaseCount();
 		}
 		return item;
+	}
+
+	/**
+	 * Removes the item from the container at the specified index. When calling
+	 * this method, the index MUST match the item which the player wants.
+	 * 
+	 * @param index
+	 * @return
+	 * @throws GameException
+	 */
+	public Movable removeItem(Movable item) throws GameException {
+		// search for the first occurence of the item
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).equals(item)) {
+				Movable tmp = items.get(i);
+				items.remove(i);
+				return tmp;
+			}
+		}
+		// didn't find item if reaches here
+		throw new GameException("Item not found.");
 	}
 
 	/**

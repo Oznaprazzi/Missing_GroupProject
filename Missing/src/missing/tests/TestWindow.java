@@ -321,7 +321,7 @@ public class TestWindow extends JFrame implements KeyListener {
 		});
 		
 		btnPlayersBag.addActionListener(e->{
-			bagFrame = new BagFrameTest(curPlayer.getBag());
+			bagFrame = new BagFrameTest(curPlayer.getBag(), curPlayer.getPocket());
 			bagFrame.setVisible(true);
 		});
 		

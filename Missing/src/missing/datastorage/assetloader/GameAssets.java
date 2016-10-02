@@ -363,7 +363,7 @@ public class GameAssets {
 		return bagBackgroundImage;
 	}
 
-	public static BufferedImage getPileOfItemsImageImage() {
+	public static BufferedImage getPileOfItemsImage() {
 		if (pileOfItemsImage == null) {
 			try {
 				pileOfItemsImage = ImageIO

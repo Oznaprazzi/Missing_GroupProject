@@ -2,6 +2,7 @@
  * 	Authors				ID
  * 	Chris Rabe			300334207
  * 	Jian Wei Chong		300352789
+ *  Casey Huang			300316284
  * 
  * 	Date				Author				Changes
  * 	7 Sep 16			Chris Rabe			created player class
@@ -11,6 +12,7 @@
  *  26 Sep 16 			Casey Huang			added item's count when item added to bag
  *  27 Sep 16			Casey Huang			removed item count from both pocket and bag - moved this
  *  										to container class.
+ *  3 Oct 16			Casey Huang			Updated methods associated with pocket
  */
 
 package missing.game.characters;
@@ -24,6 +26,7 @@ import missing.game.items.movable.Movable;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.nonmovable.Bag;
+import missing.game.items.nonmovable.Pocket;
 import missing.helper.GameException;
 import missing.helper.SignalException;
 
@@ -37,8 +40,7 @@ public class Player extends Character {
 	private final int MAX_ITEM_SIZE = 10;
 
 	private int health;
-	private int currentItemSize;
-	private List<Movable> pocket;
+	private Pocket pocket;
 	private Bag bag;
 	private boolean isDead;
 	private int id; // client ID
@@ -47,8 +49,7 @@ public class Player extends Character {
 	public Player(int id, String name, Point worldLocation, Point tileLocation) {
 		super(name, String.format("%s's avatar.", name), worldLocation, tileLocation, Direction.SOUTH, Direction.ALL);
 		this.health = 100;
-		this.currentItemSize = 0;
-		this.pocket = new ArrayList<Movable>();
+		this.pocket = new Pocket();
 		bag = new Bag();
 		this.isDead = false;
 		this.id = id;
@@ -90,19 +91,11 @@ public class Player extends Character {
 		}
 	}
 
-	public int getCurrentItemSize() {
-		return currentItemSize;
-	}
-
-	public void setCurrentItemSize(int currentItemSize) {
-		this.currentItemSize = currentItemSize;
-	}
-
-	public List<Movable> getPocket() {
+	public Pocket getPocket() {
 		return pocket;
 	}
 
-	public void setPocket(List<Movable> pocket) {
+	public void setPocket(Pocket pocket) {
 		this.pocket = pocket;
 	}
 
@@ -124,7 +117,7 @@ public class Player extends Character {
 	 * @return
 	 */
 	public boolean has(Movable item) {
-		return pocket.contains(item);
+		return pocket.getItems().contains(item);
 	}
 
 	/**
@@ -135,12 +128,7 @@ public class Player extends Character {
 	 * @throws GameException
 	 */
 	public void addToPocket(Movable item) throws GameException {
-		int newSize = this.currentItemSize + item.getSize();
-		if (newSize > MAX_ITEM_SIZE) {
-			throw new GameException("Item cannot fit inside pocket.");
-		}
-		this.currentItemSize = newSize;
-		pocket.add(item);
+		pocket.addItem(item);
 	}
 
 	/**
@@ -151,16 +139,10 @@ public class Player extends Character {
 	 * @throws GameException
 	 */
 	public Movable removeFromPocket(int index) throws GameException {
-		if (pocket.isEmpty()) {
+		if (pocket.getItems().isEmpty()) {
 			throw new GameException("Pocket is empty");
 		}
-		if (index >= pocket.size() || index < 0) {
-			throw new GameException("Index must be within bounds of the pocket.");
-		}
-		Movable tmp = pocket.get(index);
-		this.currentItemSize -= tmp.getSize();
-		pocket.remove(index);
-		return tmp;
+		return pocket.removeItem(index);
 	}
 
 	/**
@@ -172,20 +154,10 @@ public class Player extends Character {
 	 * @throws GameException
 	 */
 	public Movable removeFromPocket(Movable item) throws GameException {
-		if (pocket.isEmpty()) {
+		if (pocket.getItems().isEmpty()) {
 			throw new GameException("Pocket is empty.");
 		}
-		// search for the first occurence of the item
-		for (int i = 0; i < pocket.size(); i++) {
-			if (pocket.get(i).equals(item)) {
-				Movable tmp = pocket.get(i);
-				pocket.remove(i);
-				this.currentItemSize -= tmp.getSize();
-				return tmp;
-			}
-		}
-		// didn't find item if reaches here
-		throw new GameException("Item not found.");
+		return pocket.removeItem(item);
 	}
 
 	/** Adds the specified item into the bag */
@@ -221,7 +193,7 @@ public class Player extends Character {
 	public Tool getTool(ToolType type) {
 		// Get all the tools with the given type inside the player's pocket
 		ArrayList<Tool> tools = new ArrayList<Tool>();
-		for (Movable item : getPocket()) {
+		for (Movable item : getPocket().getItems()) {
 			if (item instanceof Tool) {
 				if (((Tool) item).getType().equals(type)) {
 					tools.add((Tool) item); // add all the tools of that type
@@ -249,7 +221,7 @@ public class Player extends Character {
 	 * @return
 	 */
 	public Food getFood() {
-		for (Movable i : pocket) {
+		for (Movable i : pocket.getItems()) {
 			if (i instanceof Food) {
 				return (Food) i;
 			}
