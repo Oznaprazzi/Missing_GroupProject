@@ -179,6 +179,12 @@
 	</node>
 	<node worldLocation="1,1">
 		<items>
+			<fireplace>
+				<location>
+					<x>3</x>
+					<y>2</y>
+				</location>
+			</fireplace>
 			<tree>
 				<location>
 					<x>1</x>
@@ -406,6 +412,12 @@
 	</node>
 	<node worldLocation="1,2">
 		<items>
+			<fireplace>
+				<location>
+					<x>1</x>
+					<y>2</y>
+				</location>
+			</fireplace>
 			<tree>
 				<location>
 					<x>1</x>
@@ -560,6 +572,12 @@
 	</node>
 	<node worldLocation="2,2">
 		<items>
+			<fireplace>
+				<location>
+					<x>6</x>
+					<y>3</y>
+				</location>
+			</fireplace>
 			<bush>
 				<location>
 					<x>6</x>
