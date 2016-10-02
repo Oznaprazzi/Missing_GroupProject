@@ -11,14 +11,15 @@
  * 20/9/16		Jian Wei	added creation of shovel
  * 22/9/16		Jian Wei	added creation of fishing rod
  * 29/9/16		Casey Huang	created setInfo method and updated second constructor to add in set info.
- * */
+ * 2/10/16		Chris Rabe	restructured tool class
+ */
 package missing.game.items.movable;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 import missing.game.characters.Player;
-import missing.game.items.Item;
 import missing.helper.GameException;
 
 /**
@@ -29,45 +30,68 @@ import missing.helper.GameException;
 @SuppressWarnings("serial")
 public class Tool extends Craftable {
 
+	private final int MAX_DURABILITY = 10;
+
 	public static enum ToolType {
 		AXE, PICKAXE, SHOVEL, FISHINGROD
 	}
 
-	// number of times tool can be used before it breaks
-	private int durability = 10;
+	/** Number of times tool can be used before i breaks */
+	private int durability;
+	private ToolType type;
 
-	private ToolType toolType;
-
-	public Tool(ToolType toolType, List<Resource> items, Point worldLocation, Point tileLocation) throws GameException {
-		super(worldLocation, tileLocation, items);
-		if (!createTool(toolType))
-			// if creating the tool was unsuccessful
-			throw new GameException("You had the wrong items");
+	public Tool(Point worldLocation, Point tileLocation, ToolType type) {
+		super(worldLocation, tileLocation, null);
+		this.durability = MAX_DURABILITY;
+		setInfo(type);
+		this.type = type;
+		ingredients = setIngredients(type);
 	}
 
-	public Tool(Point worldLocation, Point tileLocation, ToolType toolType, int durability) {
-		super(worldLocation, tileLocation, null);
-		this.toolType = toolType;
+	public Tool(Point worldLocation, Point tileLocation, ToolType type, int durability) {
+		this(worldLocation, tileLocation, type);
 		this.durability = durability;
-		setInfo(this.toolType);
 	}
 
 	// Getters
 
-	public ToolType getType() {
-		return toolType;
-	}
-
 	public int getDurability() {
 		return durability;
 	}
-	
+
+	public void setDurability(int durability) {
+		this.durability = durability;
+	}
+
+	public ToolType getType() {
+		return type;
+	}
+
+	public void setType(ToolType type) {
+		this.type = type;
+	}
+
+	// Methods
+
+	/**
+	 * This decreases the durability of the tool. Returns true if it has no more
+	 * durability
+	 */
+	public boolean useTool() {
+		durability--;
+		if (durability == 0) {
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Sets the information for given tool type
+	 * 
 	 * @param type
 	 */
-	public void setInfo(ToolType type){
-		switch(type){
+	public void setInfo(ToolType type) {
+		switch (type) {
 		case AXE:
 			name = "Axe";
 			description = "Can be used to chop trees.";
@@ -89,151 +113,31 @@ public class Tool extends Craftable {
 		}
 	}
 
-	// Creating the tool
-
-	/**
-	 * Determines what type of tool is being created, then tries to create that
-	 * tool. if valid, return true
-	 */
-	public boolean createTool(ToolType type) {
-		switch (type) {
-		case AXE:
-			toolType = type;
-			if (createAxe()) {
-				name = "Axe";
-				description = "Can be used to chop trees.";
-				return true;
-			}
-			return false;
-		case PICKAXE:
-			toolType = type;
-			if (createPickaxe()) {
-				name = "Pickaxe";
-				description = "Can be used to mine rocks.";
-				return true;
-			}
-			return false;
-
-		case SHOVEL:
-			toolType = type;
-			if (createShovel()) {
-				name = "Shovel";
-				description = "Can dig stuff";
-				return true;
-			}
-			return false;
-		case FISHINGROD:
-			toolType = type;
-			if (createFishingRod()) {
-				name = "Fishing Rod";
-				description = "Can get fish";
-				return true;
-			}
-			return false;
-		default:
-			return false;
-		}
-	}
-
-	// Methods
-
-	/**
-	 * This decreases the durability of the tool. Returns true if it has no more
-	 * durability
-	 */
-	public boolean useTool() {
-		durability--;
-		if (durability == 0) {
-			return true;
-		}
-		return false;
-		// TODO: verify that what they are trying to do requires that tool
-	}
-
 	// Helper methods
 
-	/**
-	 * checks that there are 2 wood and 3 stone inside the resources list, which
-	 * are the required resources to create an Axe
-	 */
-	private boolean createAxe() {
-		int woodCount = 0;
-		int stoneCount = 0;
-
-		for (Item item : ingredients) {
-			if (item instanceof Wood)
-				woodCount++;
-			else if (item instanceof Stone)
-				stoneCount++;
+	private List<Resource> setIngredients(ToolType type) {
+		List<Resource> tmp = new ArrayList<Resource>();
+		switch (type) {
+		case AXE:
+			tmp.add(new Wood(worldLocation, tileLocation, 2));
+			tmp.add(new Stone(worldLocation, tileLocation, 3));
+			break;
+		case FISHINGROD:
+			tmp.add(new Wood(worldLocation, tileLocation, 2));
+			tmp.add(new Dirt(worldLocation, tileLocation, 3));
+			break;
+		case PICKAXE:
+			tmp.add(new Wood(worldLocation, tileLocation, 2));
+			tmp.add(new Stone(worldLocation, tileLocation, 3));
+			break;
+		case SHOVEL:
+			tmp.add(new Wood(worldLocation, tileLocation, 2));
+			tmp.add(new Stone(worldLocation, tileLocation, 1));
+			break;
+		default:
+			break;
 		}
-		if (woodCount != 2)
-			return false;
-		if (stoneCount != 3)
-			return false;
-		return true;
-	}
-
-	/**
-	 * checks that there are 2 wood and 3 stone inside the resources list which
-	 * are the required resources to create an Pickaxe
-	 */
-	private boolean createPickaxe() {
-		int woodCount = 0;
-		int stoneCount = 0;
-
-		for (Item item : ingredients) {
-			if (item instanceof Wood)
-				woodCount++;
-			else if (item instanceof Stone)
-				stoneCount++;
-		}
-		if (woodCount != 2)
-			return false;
-		if (stoneCount != 3)
-			return false;
-		return true;
-	}
-
-	/**
-	 * checks that there are 2 wood and 1 stone inside the resources list which
-	 * are the required resources to create a Shovel
-	 */
-	private boolean createShovel() {
-		int woodCount = 0;
-		int stoneCount = 0;
-
-		for (Item item : ingredients) {
-			if (item instanceof Wood)
-				woodCount++;
-			else if (item instanceof Stone)
-				stoneCount++;
-		}
-		if (woodCount != 2)
-			return false;
-		if (stoneCount != 1)
-			return false;
-		return true;
-	}
-
-	/**
-	 * checks that there are 2 wood and 3 dirt inside the resources list which
-	 * are the required resources to create a fishing rod
-	 */
-	private boolean createFishingRod() {
-		int woodCount = 0;
-		int dirtCount = 0;
-
-		for (Item item : ingredients) {
-			if (item instanceof Wood)
-				woodCount++;
-			else if (item instanceof Dirt)
-				dirtCount++;
-		}
-		if (woodCount != 2)
-			return false;
-		if (dirtCount != 3)
-			return false;
-		return true;
+		return tmp;
 	}
 
 	/**

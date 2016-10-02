@@ -154,7 +154,7 @@ public class SourceTests {
 																	// stone
 		}
 		try {
-			Tool axe = new Tool(ToolType.AXE, resources, worldLocation, tileLocation);
+			Tool axe = new Tool(worldLocation, tileLocation, ToolType.AXE);
 			player.addToPocket(axe);
 			tree.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
@@ -255,7 +255,7 @@ public class SourceTests {
 																	// stone
 		}
 		try {
-			Tool pickaxe = new Tool(ToolType.PICKAXE, resources, worldLocation, tileLocation);
+			Tool pickaxe = new Tool(worldLocation, tileLocation, ToolType.PICKAXE);
 			player.addToPocket(pickaxe);
 			rock.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
@@ -355,7 +355,7 @@ public class SourceTests {
 																	// stone
 		}
 		try {
-			Tool shovel = new Tool(ToolType.SHOVEL, resources, worldLocation, tileLocation);
+			Tool shovel = new Tool(worldLocation, tileLocation, ToolType.SHOVEL);
 			player.addToPocket(shovel);
 			soil.performAction(player);// player takes wood from tree
 		} catch (GameException e) {
@@ -388,7 +388,7 @@ public class SourceTests {
 		FishArea fishArea = new FishArea(worldLocation, tileLocation);
 
 		try {
-			Tool fishingRod = new Tool(ToolType.FISHINGROD, resources, worldLocation, tileLocation);
+			Tool fishingRod = new Tool(worldLocation, tileLocation, ToolType.FISHINGROD);
 			player.addToPocket(fishingRod);
 			fishArea.performAction(player);// player takes dirt from that soil
 		} catch (GameException e) {

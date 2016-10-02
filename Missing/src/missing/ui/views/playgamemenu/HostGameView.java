@@ -20,6 +20,7 @@ import java.awt.TextField;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -52,6 +53,8 @@ public class HostGameView extends View{
 //	private TextField playerNameEntry;
 	/** Text entry for numPlayers */
 	private TextField numPlayersEntry;
+	
+	private JComboBox numPlayersBox;
 	/** Text entry for port */
 	private TextField portEntry;
 	
@@ -122,14 +125,21 @@ public class HostGameView extends View{
 		
 		//Create text fields
 //		playerNameEntry = MenuFactory.createTextField(200);
-		numPlayersEntry = MenuFactory.createTextField(200);
+		String[] choices = {"1","2","3","4","5"};
+		numPlayersBox = new JComboBox<String>(choices);
+	
+		//numPlayersEntry = MenuFactory.createTextField(200);
+		
+		
+		
 		portEntry = MenuFactory.createTextField(200);
 		
 		// Add to panel
 //		gameInfoPanel.add(playerNameLabel);
 //		gameInfoPanel.add(playerNameEntry);
 		gameInfoPanel.add(numPlayerLabel);
-		gameInfoPanel.add(numPlayersEntry);
+		//gameInfoPanel.add(numPlayersEntry);
+		gameInfoPanel.add(numPlayersBox);
 		gameInfoPanel.add(portLabel);
 		gameInfoPanel.add(portEntry);
 		gameInfoPanel.setOpaque(false);
@@ -176,7 +186,8 @@ public class HostGameView extends View{
 //				JOptionPane.showMessageDialog(this, "Please enter a name");
 //				return false;
 //			}
-			numPlayers = Integer.parseInt(numPlayersEntry.getText());
+			numPlayers = Integer.valueOf((String) this.numPlayersBox.getSelectedItem());
+			//numPlayers = Integer.parseInt(numPlayersEntry.getText());
 			port = Integer.parseInt(portEntry.getText());
 			return true;
 		} catch (NumberFormatException e){
