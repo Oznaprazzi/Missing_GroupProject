@@ -45,7 +45,7 @@ public class Tool extends Craftable {
 		this.durability = MAX_DURABILITY;
 		setInfo(type);
 		this.type = type;
-		ingredients = setIngredients(type);
+		//ingredients = setIngredients(type);
 	}
 
 	public Tool(Point worldLocation, Point tileLocation, ToolType type, int durability) {
