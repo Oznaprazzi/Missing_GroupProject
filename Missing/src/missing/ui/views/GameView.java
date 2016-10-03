@@ -57,6 +57,8 @@ public class GameView extends View {
 	private JTextField worldPos;
 	private JTextField healthField;
 	private JTextField playerOrientation;
+	
+	private static final int DPAD_BTN_SIZE = 30;
 
 	public GameView(VControl controller) {
 		super(controller);
@@ -203,21 +205,22 @@ public class GameView extends View {
 		gbc_layeredPane.gridx = 0;
 		gbc_layeredPane.gridy = 16;
 		ctrlPanel.add(layeredPane, gbc_layeredPane);
-
-		btnUp = new JButton("Up");
-		btnUp.setBounds(65, 30, 70, 70);
+		
+		System.out.printf("wd: %d, ht: %d", layeredPane.getWidth(), layeredPane.getHeight());
+		btnUp = new JButton("U");
+		btnUp.setBounds(0+DPAD_BTN_SIZE, 30, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
 		layeredPane.add(btnUp);
 
-		btnLeft = new JButton("Left");
-		btnLeft.setBounds(30, 100, 70, 70);
+		btnLeft = new JButton("L");
+		btnLeft.setBounds(0, 100, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
 		layeredPane.add(btnLeft);
 
-		btnRight = new JButton("Right");
-		btnRight.setBounds(100, 100, 70, 70);
+		btnRight = new JButton("R");
+		btnRight.setBounds(DPAD_BTN_SIZE*3, 100, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
 		layeredPane.add(btnRight);
 
-		btnDown = new JButton("Down");
-		btnDown.setBounds(65, 170, 70, 70);
+		btnDown = new JButton("D");
+		btnDown.setBounds(0+DPAD_BTN_SIZE, 100, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
 		layeredPane.add(btnDown);
 		this.add(gamePanel, BorderLayout.CENTER);
 		this.add(ctrlPanel, BorderLayout.EAST);
