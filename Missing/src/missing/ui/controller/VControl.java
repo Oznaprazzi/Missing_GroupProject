@@ -16,8 +16,12 @@
  * 30 Sep 16		Edward Kelly		added CreatePlayerView
  * 1 Oct 16			Edward Kelly		added displayException & displayTimedMessage
  * 2 Oct 16			Edward Kelly		added close confirmation and client disconnect
+<<<<<<< HEAD
  * 3 Oct 16			Edward Kelly		added displayDead method
  * 3 Oct 16			Edward Kelly		integrated MapView
+=======
+ * 3 Oct 16			Linus Go			added JMenuChooser and some items.
+>>>>>>> branch 'master' of https://gitlab.ecs.vuw.ac.nz/rabechri/Missing.git
  */
 package missing.ui.controller;
 
@@ -25,23 +29,28 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.JDialog;
-import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import missing.datastorage.assetloader.XMLHandler;
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
-import missing.game.world.World;
 import missing.helper.GameException;
 import missing.networking.Client;
 import missing.ui.assets.GGame;
 import missing.ui.views.GameView;
 import missing.ui.views.MapView;
+import javax.swing.JMenu;
 
 /**
  * 
@@ -53,16 +62,6 @@ import missing.ui.views.MapView;
 @SuppressWarnings("serial")
 public class VControl extends JFrame {
 	
-	/*The control buttons*/
-	private JButton moveLeftBtn;
-	private JButton moveRightBtn;
-	private JButton moveDownBtn;
-	private JButton moveUpBtn;
-	
-	private JButton viewMapBtn;
-	private JButton viewBagBtn;
-	private JButton turnLeftBtn;
-	private JButton turnRightBtn;
 	
 	
 	
@@ -103,14 +102,135 @@ public class VControl extends JFrame {
 	private int playerID;
 	private boolean isHost;
 	private Client client;
-
+	
+	/*JMenuBar stuff */
+	private JMenuBar menuBar;
+	private JMenuItem saveGame;
+	private JMenuItem loadGame;
+	private JMenuItem exitItem;
+	private JMenuItem helpItem;
+	private JMenuItem credits;
+	private JFileChooser fc;
+	
+	
 	public VControl() {
 		super("Missing: The Game");
 		this.views = GUIInitialiser.createViews(this);
+		initializeMenu();
 		initialiseGUI();
+		setupMenuListeners();
 		views[cur].initialise();
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		// Asks for confirmation when closing the game
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit game",
+						JOptionPane.YES_NO_OPTION);
+				if (result == JOptionPane.YES_OPTION) {
+					closeVControl();
+				}
+			}
+		});
 	}
+	/**
+	 * Helper method. Initializes the JMenu and all of the Items inside.
+	 */
+	private void initializeMenu(){
+		menuBar = new JMenuBar();
+		
+		JMenu fileMenu = new JMenu("File");
+			saveGame = new JMenuItem("Save Game", KeyEvent.VK_S);
+			loadGame = new JMenuItem("Load Game", KeyEvent.VK_L);
+			exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
+			/*Ensure that the VControl doesn't lose focus. */
+			saveGame.setFocusable(false);
+			loadGame.setFocusable(false);
+			exitItem.setFocusable(false);
+			fileMenu.add(saveGame);
+			fileMenu.add(loadGame);
+			fileMenu.add(exitItem);
+		menuBar.add(fileMenu);
+			
+		
+		
+		JMenu helpMenu = new JMenu("Help");
+			helpItem = new JMenuItem("Game Instructions", KeyEvent.VK_G);
+			credits = new JMenuItem("Credits", KeyEvent.VK_C);
+			/*Ensure that VControl doesn't lose focus. */
+			helpItem.setFocusable(false);
+			credits.setFocusable(false);
+			
+			helpMenu.add(helpItem);
+			helpMenu.add(credits);
+		menuBar.add(helpMenu);
+		
+	this.setJMenuBar(menuBar);
+	}
+	
+	private void setupMenuListeners(){
+		
+		saveGame.addActionListener(e->{
+			//TODO: linus needs to implement this later - Linus
+		});
+		
+		loadGame.addActionListener(e->{
+				fc = new JFileChooser("Load");
+				boolean success = false;
+				File theFile = null;
+				String xmlFile = "";
+				
+				
+				while(true){
+				int rVal = fc.showOpenDialog(this);
+				
+				
+				
+				if(rVal == JFileChooser.APPROVE_OPTION){
+				theFile = fc.getSelectedFile();
+				xmlFile = theFile.getName();
+				
+				// Sanity Checks
+				if (xmlFile == null) {
+					JOptionPane.showMessageDialog(null, "XML File must be specified.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+					//System.exit(1);
+				}
+				if (!xmlFile.endsWith(".xml")) {
+					JOptionPane.showMessageDialog(null, "File must end with XML.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+					//System.exit(1);
+				}
+			}else if(rVal == JFileChooser.CANCEL_OPTION){
+					JOptionPane.showMessageDialog(null, "User did not specify an XML file.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
+				}
+				
+				if(xmlFile != null && xmlFile.endsWith(".xml"))
+					break;
+			
+		}
+				XMLHandler.filename = xmlFile;
+				JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");
+				
+			
+		});
+		
+		exitItem.addActionListener(e->{
+			int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Exit Confirmation",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
+			if(choice == 0) System.exit(0);
+			return;
+		});
+		
+		helpItem.addActionListener(e->{
+			
+		});
+		
+		credits.addActionListener(e->{
+			
+		});
+	}
+	
 	// View Control Methods
 
 	public int getMenuView() {
@@ -124,23 +244,28 @@ public class VControl extends JFrame {
 	public int getGameView() {
 		return 3;
 	}
-	
+
 	public int getPlayGameView() {
 		return 4;
 	}
+
 	public int getHostGameView() {
 		return 5;
 	}
+
 	public int getJoinGameView() {
 		return 6;
 	}
+
 	public int getLobbyView() {
 		return 7;
 	}
-	public int getClientWaitingView(){
+
+	public int getClientWaitingView() {
 		return 8;
 	}
-	public int getCreatePlayerView(){
+
+	public int getCreatePlayerView() {
 		return 9;
 	}
 
@@ -155,7 +280,7 @@ public class VControl extends JFrame {
 	 * @param index
 	 */
 	public void changeView(int index) {
-		//TODO: change GGame view
+		// TODO: change GGame view
 		if (index < 0 || index >= views.length) {
 			return;
 		}
@@ -178,43 +303,45 @@ public class VControl extends JFrame {
 		// Redraw the whole frame
 		revalidate();
 	}
-	
+
 	/**
 	 * Disconnects client from game and closes window
 	 */
-	private void closeVControl(){
-		if (client!=null){
+	private void closeVControl() {
+		if (client != null) {
 			client.disconnectClient();
 		}
 		System.exit(0);
 	}
-	
+
 	/**
-	 * Called if the player performed an action on a Container
-	 * Displays the items in that Container
+	 * Called if the player performed an action on a Container Displays the
+	 * items in that Container
 	 */
-	public void displayContainerItems(){
-		//TODO: implement. get container items in square in front of player
+	public void displayContainerItems() {
+		// TODO: implement. get container items in square in front of player
 		// will probably call another method, maybe in GameView
 	}
-	
+
 	/**
-	 * Called if the player performed an action on a Pile
-	 * Displays the items in that Pile
+	 * Called if the player performed an action on a Pile Displays the items in
+	 * that Pile
 	 */
-	public void displayPileItems(){
-		//TODO: similar to displayContainerItems
+	public void displayPileItems() {
+		// TODO: similar to displayContainerItems
 	}
-	
+
 	/**
-	 * Displays a message momentarily on the screen.
-	 * Used when a player disconnects
-	 * @param msg message to be displayed
+	 * Displays a message momentarily on the screen. Used when a player
+	 * disconnects
+	 * 
+	 * @param msg
+	 *            message to be displayed
 	 */
-	public void displayTimedMessage(String msg){
+	public void displayTimedMessage(String msg) {
 		JDialog dialog = new JDialog(this);
-		Timer timer = new Timer(3000, new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		Timer timer = new Timer(3000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				dialog.setVisible(false);
 				dialog.dispose();
 			}
@@ -222,7 +349,7 @@ public class VControl extends JFrame {
 		timer.setRepeats(false);
 		timer.start();
 		JLabel label = new JLabel(msg);
-		dialog.add(label);
+		dialog.getContentPane().add(label);
 		dialog.setUndecorated(true);
 		dialog.pack();
 		dialog.setLocationRelativeTo(views[3]);
@@ -231,10 +358,12 @@ public class VControl extends JFrame {
 		dialog.getContentPane().setBackground(Color.YELLOW);
 		dialog.setVisible(true);
 	}
-	
+
 	/**
 	 * Displays a message dialog
-	 * @param msg message to be displayed
+	 * 
+	 * @param msg
+	 *            message to be displayed
 	 */
 	public void displayException(String msg){
 		JOptionPane.showMessageDialog(views[cur], msg);
@@ -251,13 +380,14 @@ public class VControl extends JFrame {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		// Asks for confirmation when closing the game
 		addWindowListener(new java.awt.event.WindowAdapter() {
-		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-			       int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?","Quit game",JOptionPane.YES_NO_OPTION);
-			       if(result == JOptionPane.YES_OPTION){
-			    	   closeVControl();
-			       }	
-		    }
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit game",
+						JOptionPane.YES_NO_OPTION);
+				if (result == JOptionPane.YES_OPTION) {
+					closeVControl();
+				}
+			}
 		});
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
@@ -281,7 +411,7 @@ public class VControl extends JFrame {
 		views[this.getGameView()].initialise();
 		views[this.getMapView()].initialise();
 	}
-	
+
 	public int getPlayerID() {
 		return playerID;
 	}
@@ -289,23 +419,26 @@ public class VControl extends JFrame {
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
 	}
-	public View getView(int viewIndex){
+
+	public View getView(int viewIndex) {
 		return views[viewIndex];
 	}
-	public void setIsHost(boolean isHost){
+
+	public void setIsHost(boolean isHost) {
 		this.isHost = isHost;
 	}
-	public boolean isHost(){
+
+	public boolean isHost() {
 		return isHost;
 	}
-	public void setClient(Client client){
+
+	public void setClient(Client client) {
 		this.client = client;
 	}
+
 	@Override
-	public void repaint(){
+	public void repaint() {
 		super.repaint();
 	}
-	
 
-	
 }

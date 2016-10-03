@@ -7,6 +7,7 @@
  * Date				Author			Modification
  * ** Sep 16		Linus Go		Created class
  * 30 Sep 16		Edward Kelly	merged with server/client and join/host views
+ * 3 Oct 16			Linus Go		Tidied up player chooser and stopped erroneous input being entered.
  */
 package missing.ui.views.playgamemenu;
 
@@ -46,8 +47,8 @@ public class CreatePlayerView extends View{
 	private int imgIndex = 0;
 
 	/*Image rectangle dimensions*/
-	private final int RECT_SIZE = 100;
-	private final int RECT_LEFT = (this.getWidth()/2) + 350;
+	private final int RECT_SIZE = 250;
+	private final int RECT_LEFT = 375;
 	private final int RECT_TOP = 0;
 
 	private TextField textField;
@@ -89,7 +90,7 @@ public class CreatePlayerView extends View{
 		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gbl_panel);
 
-		JLabel lblCurrentPlayer = MenuFactory.createLabel("Create your Player!");
+		JLabel lblCurrentPlayer = MenuFactory.createHeading("Create your Player!");
 		GridBagConstraints gbc_lblCurrentPlayer = new GridBagConstraints();
 		gbc_lblCurrentPlayer.insets = new Insets(0, 0, 5, 0);
 		gbc_lblCurrentPlayer.gridx = 0;
@@ -113,25 +114,25 @@ public class CreatePlayerView extends View{
 
 		add(imgPanel, gbc_panel_1);
 
-		btnBack = MenuFactory.createButton("<--");
+		btnBack = MenuFactory.createButton("Previous");
 		GridBagConstraints gbc_btnBack = new GridBagConstraints();
 		gbc_btnBack.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBack.gridx = 0;
 		gbc_btnBack.gridy = 8;
 		add(btnBack, gbc_btnBack);
 
-		btnNext = MenuFactory.createButton("-->");
+		btnNext = MenuFactory.createButton("Next");
 		GridBagConstraints gbc_btnNext = new GridBagConstraints();
 		gbc_btnNext.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNext.gridx = 0;
 		gbc_btnNext.gridy = 9;
 		add(btnNext, gbc_btnNext);
 
-		JLabel lblPlayerName = MenuFactory.createLabel("Enter your name:");
+		JLabel lblPlayerName = MenuFactory.createLabel("What is your Survivors name?");
 		lblPlayerName.setHorizontalAlignment(SwingConstants.CENTER);
 
 		GridBagConstraints gbc_lblPlayerName = new GridBagConstraints();
-		gbc_lblPlayerName.anchor = GridBagConstraints.WEST;
+		gbc_lblPlayerName.anchor = GridBagConstraints.CENTER;
 		gbc_lblPlayerName.insets = new Insets(0, 0, 5, 0);
 		gbc_lblPlayerName.gridx = 0;
 		gbc_lblPlayerName.gridy = 10;
@@ -140,7 +141,7 @@ public class CreatePlayerView extends View{
 		textField = MenuFactory.createTextField(1);
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField.fill = GridBagConstraints.CENTER;
 		gbc_textField.gridx = 0;
 		gbc_textField.gridy = 11;
 		add(textField, gbc_textField);
@@ -171,6 +172,7 @@ public class CreatePlayerView extends View{
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.drawImage(imgList.get(imgIndex), RECT_LEFT, RECT_TOP, RECT_SIZE,RECT_SIZE, null);
+		//g.drawImage(GameAssets.getBackdropImage(), 0,0, getWidth(), getHeight(), null);
 	}
 
 	/**
@@ -201,8 +203,9 @@ public class CreatePlayerView extends View{
 		});
 
 		btnCreatePlayer.addActionListener(e->{
-			if(textField.getText().isEmpty())
-				JOptionPane.showMessageDialog(null, "Please give your character a name first!.");
+			//SANITY check: does the textField have numbers or is empty?
+			if(textField.getText().isEmpty() || textField.getText().matches(".*\\d+.*"))
+				JOptionPane.showMessageDialog(null, "Please give your character a VALID name first!");
 			else{
 				playerName = textField.getText();
 				imageNumber = imgIndex;
@@ -234,7 +237,10 @@ public class CreatePlayerView extends View{
 			}
 		});
 	}
-
+	
+	
+	
+	
 	/**
 	 * Returns the Player Name that the player has chosen.
 	 * @return

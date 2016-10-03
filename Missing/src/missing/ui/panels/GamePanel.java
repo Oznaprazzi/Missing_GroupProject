@@ -56,10 +56,14 @@ public class GamePanel extends JPanel {
 	 */
 	public GamePanel(VControl controller) {
 		this.controller = controller;
+		this.setFocusable(true);
+		initialise();
 	}
-	public void setController(VControl controller){
+
+	public void setController(VControl controller) {
 		this.controller = controller;
 	}
+
 	/******
 	 * Testing constructors! TODO: remove this/alter in the final release.
 	 *********/
@@ -90,15 +94,15 @@ public class GamePanel extends JPanel {
 		curPoint = currentPlayer.getWorldLocation();
 		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
 	}
-	
+
 	public void initialise() {
 		graphicWorld = controller.getGGame().getGWorld();
 		currentPlayer = controller.getGGame().getGame().getAvatars()[controller.getPlayerID()];
 		curPoint = currentPlayer.getWorldLocation();
 		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
-		
+
 	}
-	
+
 	public Dimension getPreferredSize() {
 		return new Dimension(600, 600);
 	}
@@ -118,7 +122,8 @@ public class GamePanel extends JPanel {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		if (curGWNode==null)return;
+		if (curGWNode == null)
+			return;
 		curGWNode.setNodeSize(Math.min(this.getWidth(), this.getHeight()));
 		try {
 			curGWNode.draw(g, 0, 0, false, null);// player doesnt matter for game view

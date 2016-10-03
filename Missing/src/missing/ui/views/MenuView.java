@@ -90,11 +90,8 @@ public class MenuView extends View{
 			int option = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Exit Confirmation",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			
-			if(option == 0){
-			System.exit(0);
-			}else{
-				return;
-			}
+			if(option == 0) System.exit(0);
+			return;
 			});
 		
 		buttonPanel.add(btnHostGame);
