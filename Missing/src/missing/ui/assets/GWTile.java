@@ -21,6 +21,7 @@ package missing.ui.assets;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
@@ -28,9 +29,11 @@ import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Fireplace;
+import missing.game.items.nonmovable.FishArea;
 import missing.game.items.nonmovable.Rock;
 import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile;
+import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 
@@ -99,7 +102,7 @@ public class GWTile {
 			drawPlayer(g,x,y,tile.getObject());
 		}
 		
-		/*Draw the Items onto the tile. */
+		/*Draws all of the nonmovable items onto the pile. */
 		if(tile.getObject() instanceof Tree){
 			int number = (int) (Math.random() * 2) + 1;
 			g.drawImage(GameAssets.getTreeImage(number), x, y, size, size, null);
@@ -107,7 +110,8 @@ public class GWTile {
 			int bushSize = size/2;
 			g.drawImage(GameAssets.getBushImage(), x+(bushSize/2) ,y+(bushSize/2) ,bushSize,bushSize, null);
 		}else if(tile.getObject() instanceof Fireplace){
-			g.drawImage(GameAssets.getFireplaceImage(), x ,y ,size,size, null);
+			int fpSize = size/2;
+			g.drawImage(GameAssets.getFireplaceImage(), x+(fpSize/2) ,y+(fpSize/2) ,fpSize,fpSize, null);
 		}else if(tile.getObject() instanceof Wood){
 			g.drawImage(GameAssets.getWoodImage(), x ,y ,size,size, null);
 		}else if(tile.getObject() instanceof Dirt){
@@ -115,9 +119,14 @@ public class GWTile {
 		}else if(tile.getObject() instanceof Rock){
 			int rockSize = (size/2);
 			g.drawImage(GameAssets.getRockImage(), x+(rockSize/2) ,y+(rockSize/2), rockSize,rockSize,null);
-		}
-		
-		if(tile.getObject() instanceof Player){
+		}else if(tile.getObject() instanceof FishArea){
+			g.drawImage(GameAssets.getFishingAreaImage(),x,y,size,size,null);
+			
+		}else if(tile.getObject() instanceof Pile){
+			g.setColor(Color.green);
+			g.fillRect(x, y, size, size);
+			g.drawImage(GameAssets.getPileOfItemsImage(), x,y,size,size,null);
+		}if(tile.getObject() instanceof Player){
 			drawPlayer(g,x,y,tile.getObject());
 		}
 	
