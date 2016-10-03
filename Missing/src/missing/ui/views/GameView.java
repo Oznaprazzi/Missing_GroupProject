@@ -32,6 +32,7 @@ import missing.ui.panels.GamePanel;
  * displayed when playing the game
  *
  */
+@SuppressWarnings("serial")
 public class GameView extends View {
 	private GamePanel gamePanel;
 
@@ -57,9 +58,6 @@ public class GameView extends View {
 	private JTextField healthField;
 	private JTextField playerOrientation;
 
-	private int playerID;
-
-	// TODO:
 	public GameView(VControl controller) {
 		super(controller);
 	}
@@ -232,36 +230,39 @@ public class GameView extends View {
 	private void addActionListeners() {
 		System.out.println("added action listeners");
 		btnUp.addActionListener(e -> {
+			controller.requestFocus();
 		});
 
 		btnDown.addActionListener(e -> {
-
+			controller.requestFocus();
 		});
 
 		btnLeft.addActionListener(e -> {
+			controller.requestFocus();
 		});
 
 		btnRight.addActionListener(e -> {
-
+			controller.requestFocus();
 		});
 
 		btnTurnL.addActionListener(e -> {
-
+			controller.requestFocus();
 		});
 
 		btnTurnR.addActionListener(e -> {
-
+			controller.requestFocus();
 		});
 
 		btnDoAction.addActionListener(e -> {
-
+			controller.requestFocus();
 		});
 
 		btnPlayersBag.addActionListener(e -> {
-
+			controller.requestFocus();
 		});
 
 		btnViewMap.addActionListener(e -> {
+			controller.requestFocus();
 			controller.changeView(controller.getMapView());
 		});
 	}
