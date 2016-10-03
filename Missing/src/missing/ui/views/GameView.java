@@ -6,6 +6,7 @@
  * Date				Author			Modification
  * 28 Sep 16		Edward Kelly	created class
  * 1 Oct 16			Linus Go		migrated buttons from TestWindow into this.
+ * 3 Oct 16			Edward Kelly	now resizes game panel
  */
 package missing.ui.views;
 
@@ -65,6 +66,7 @@ public class GameView extends View {
 
 	@Override
 	public void initialise() {
+		setLayout(new BorderLayout());
 		gamePanel = new GamePanel(controller);
 		ctrlPanel = new JPanel();
 
@@ -219,18 +221,17 @@ public class GameView extends View {
 		btnDown = new JButton("Down");
 		btnDown.setBounds(65, 170, 70, 70);
 		layeredPane.add(btnDown);
-
-		this.add(gamePanel);
-		this.add(ctrlPanel);
+		this.add(gamePanel, BorderLayout.CENTER);
+		this.add(ctrlPanel, BorderLayout.EAST);
+		this.addActionListeners();
 	}
 
 	/**
 	 * Action Listeners for the various Buttons.
 	 */
 	private void addActionListeners() {
-		
+		System.out.println("added action listeners");
 		btnUp.addActionListener(e -> {
-
 		});
 
 		btnDown.addActionListener(e -> {
@@ -260,6 +261,9 @@ public class GameView extends View {
 
 		});
 
+		btnViewMap.addActionListener(e -> {
+			controller.changeView(controller.getMapView());
+		});
 	}
 
 	/**
