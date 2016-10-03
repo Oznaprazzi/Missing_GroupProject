@@ -194,15 +194,14 @@ public class VControl extends JFrame {
 					JOptionPane.showMessageDialog(null, "File must end with XML.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
 					//System.exit(1);
 				}
-				
-				if(rVal == JFileChooser.CANCEL_OPTION){
+			}else if(rVal == JFileChooser.CANCEL_OPTION){
 					JOptionPane.showMessageDialog(null, "User did not specify an XML file.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
 					System.exit(1);
 				}
 				
 				if(xmlFile != null && xmlFile.endsWith(".xml"))
 					break;
-			}
+			
 		}
 				XMLHandler.filename = xmlFile;
 				JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");
