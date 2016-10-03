@@ -188,6 +188,12 @@ public class HostGameView extends View{
 //			}
 			numPlayers = Integer.valueOf((String) this.numPlayersBox.getSelectedItem());
 			//numPlayers = Integer.parseInt(numPlayersEntry.getText());
+			//firstly.. is it a valid port range?
+			if(!(Integer.parseInt(portEntry.getText()) >= 1024 && Integer.parseInt(portEntry.getText()) <= 65535)){
+				JOptionPane.showMessageDialog(this, "You must enter a valid port number between 1024 and 65535.");
+				return false;
+			}
+			
 			port = Integer.parseInt(portEntry.getText());
 			return true;
 		} catch (NumberFormatException e){

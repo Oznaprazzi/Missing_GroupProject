@@ -171,7 +171,15 @@ public class JoinGameView extends View{
 //				JOptionPane.showMessageDialog(this, "Please enter a name");
 //				return false;
 //			}
+			
+		
 			IPAddress = (IPEntry.getText());
+			
+			if(!(Integer.parseInt(portEntry.getText()) >= 1024 && Integer.parseInt(portEntry.getText()) <= 65535)){
+				JOptionPane.showMessageDialog(this, "You must enter a valid port number between 1024 and 65535.");
+				return false;
+			}
+			
 			port = Integer.parseInt(portEntry.getText());
 			return true;
 		} catch (NumberFormatException e){

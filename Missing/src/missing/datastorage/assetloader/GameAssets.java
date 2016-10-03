@@ -40,6 +40,8 @@ public class GameAssets {
 	private static BufferedImage playerImage;
 
 	private static BufferedImage sandImage;
+		
+	private static BufferedImage nightBackdropImage;
 	
 	private static BufferedImage tombStoneImage;
 	
@@ -104,6 +106,17 @@ public class GameAssets {
 			e.printStackTrace();
 		}
 		return playerImage;
+	}
+	
+	public static BufferedImage getBackdropImage(){
+		try {
+			nightBackdropImage = ImageIO
+					.read(GameAssets.class.getResource(STORAGE_PATH + "/img/landscapebackground.jpeg"));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return nightBackdropImage;
 	}
 
 	public static BufferedImage getSandImage() {
