@@ -164,6 +164,7 @@ public class Game implements Serializable {
 			} catch (SignalException e) {
 				// catch dead player
 				if (e.getMessage().contains("DEAD")) {
+					System.out.println("Dead player");
 					removeDeadPlayer(e.getMessage());
 				}
 				throw new SignalException(e.getMessage());
