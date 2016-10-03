@@ -28,17 +28,14 @@ import missing.helper.GameException;
 @SuppressWarnings("serial")
 public abstract class Craftable extends Usable {
 
-	//protected List<Resource> ingredients;
-
 	/**
 	 * Creates instance of Craftable class.
 	 * 
 	 * @param worldLocation
 	 * @param tileLocation
 	 */
-	public Craftable(Point worldLocation, Point tileLocation, List<Resource> ingredients) {
+	public Craftable(Point worldLocation, Point tileLocation) {
 		super(null, null, worldLocation, tileLocation, 1, 1);
-		//this.ingredients = ingredients;
 	}
 
 	/**

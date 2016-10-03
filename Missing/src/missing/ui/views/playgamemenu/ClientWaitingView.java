@@ -13,7 +13,6 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -25,6 +24,7 @@ import missing.ui.menustyle.MenuFactory;
  * The view displayed to clients after they have connected to server
  * and are waiting for game to start
  */
+@SuppressWarnings("serial")
 public class ClientWaitingView extends View {
 
 	public ClientWaitingView(VControl controller) {

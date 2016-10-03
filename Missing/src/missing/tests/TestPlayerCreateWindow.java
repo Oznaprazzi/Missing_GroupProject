@@ -9,13 +9,8 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,16 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import missing.datastorage.assetloader.GameAssets;
-import missing.game.Game;
-import missing.game.characters.Player;
-import missing.game.world.World;
-import missing.game.world.nodes.WorldTile.TileObject.Direction;
-import missing.helper.GameException;
 import missing.ui.menustyle.MenuFactory;
-import missing.ui.panels.GamePanel;
 import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")

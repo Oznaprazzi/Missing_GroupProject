@@ -20,7 +20,6 @@ package missing.game.characters;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.List;
 
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Movable;
@@ -36,9 +35,6 @@ import missing.helper.SignalException;
  */
 @SuppressWarnings("serial")
 public class Player extends Character {
-
-	/** Represents the maximum number of items which the player could have. */
-	private final int MAX_ITEM_SIZE = 10;
 
 	private int health;
 	private Pocket pocket;

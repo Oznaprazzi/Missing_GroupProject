@@ -17,7 +17,6 @@ package missing.networking;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -28,7 +27,6 @@ import missing.game.Game;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
-import missing.ui.assets.GGame;
 import missing.ui.controller.VControl;
 
 /**

@@ -17,7 +17,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.TextField;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,7 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import missing.networking.NetworkingHelper;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
@@ -35,6 +33,7 @@ import missing.ui.menustyle.MenuFactory;
  * Displays the view for entering details for hosting a game
  *
  */
+@SuppressWarnings("serial")
 public class HostGameView extends View{
 	
 	/** Displays components for entering info for game */
@@ -52,9 +51,9 @@ public class HostGameView extends View{
 	/** Text entry for playerName */
 //	private TextField playerNameEntry;
 	/** Text entry for numPlayers */
-	private TextField numPlayersEntry;
+//	private TextField numPlayersEntry;
 	
-	private JComboBox numPlayersBox;
+	private JComboBox<String> numPlayersBox;
 	/** Text entry for port */
 	private TextField portEntry;
 	

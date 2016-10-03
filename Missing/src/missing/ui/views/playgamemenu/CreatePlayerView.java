@@ -11,9 +11,7 @@
  */
 package missing.ui.views.playgamemenu;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -37,6 +35,7 @@ import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
 
+@SuppressWarnings("serial")
 public class CreatePlayerView extends View{
 	/*Dimensions for the Game Panels width and height */
 	private final int panelWd = 800;

@@ -20,7 +20,6 @@ import missing.game.items.Item;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
 import missing.game.items.nonmovable.Bush;
-import missing.game.items.nonmovable.Tree;
 import missing.helper.GameException;
 
 public class FoliageTests {

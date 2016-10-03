@@ -35,8 +35,6 @@ public abstract class Movable extends Item {
 	private int amount;
 	/** Represents whether the item is stored inside the player. */
 	private boolean stored;
-	/** Represents the number of items the player holds*/
-	private int count = 0;
 	/**
 	 * Creates a new instance of a Movable item
 	 * 
@@ -62,7 +60,7 @@ public abstract class Movable extends Item {
 	}
 	
 	public int getCount(){
-		return this.count;
+		return this.amount;
 	}
 
 	public int getAmount() {
@@ -71,14 +69,6 @@ public abstract class Movable extends Item {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
-	}
-	
-	public void increaseCount(){
-		this.count++;
-	}
-	
-	public void decreaseCount(){
-		this.count--;
 	}
 
 	public boolean isStored() {
@@ -106,8 +96,6 @@ public abstract class Movable extends Item {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
 		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())

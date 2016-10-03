@@ -10,12 +10,10 @@ package missing.tests;
 import static org.junit.Assert.*;
 
 import java.awt.Point;
-import java.util.ArrayList;
 
 import org.junit.Test;
 
 import missing.game.characters.Player;
-import missing.game.items.movable.Resource;
 import missing.game.items.nonmovable.Rock;
 import missing.game.items.nonmovable.Soil;
 import missing.game.items.nonmovable.Tree;
@@ -29,7 +27,6 @@ public class DyingTests {
 	@Test
 	public void deathByTree_1(){
 		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
-		ArrayList<Resource> resources = new ArrayList<Resource>();
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Tree tree = new Tree(worldLocation, tileLocation);
@@ -39,9 +36,6 @@ public class DyingTests {
 				tree.performAction(player);
 				
 			} catch (GameException | SignalException e) {
-				// TODO Auto-generated catch block
-				//System.out.println("exception thrown");
-				//e.printStackTrace();
 				playerIsDead = true;
 			}
 			assert(player.getHealth()==0);
@@ -53,7 +47,6 @@ public class DyingTests {
 	@Test
 	public void deathByRock_1(){
 		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
-		ArrayList<Resource> resources = new ArrayList<Resource>();
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Rock rock = new Rock(worldLocation, tileLocation);
@@ -63,9 +56,6 @@ public class DyingTests {
 				rock.performAction(player);
 				
 			} catch (GameException | SignalException e) {
-				// TODO Auto-generated catch block
-				//System.out.println("exception thrown");
-				//e.printStackTrace();
 				playerIsDead = true;
 			}
 			assert(player.getHealth()==0);
@@ -77,7 +67,6 @@ public class DyingTests {
 	@Test
 	public void deathBySoil_1(){
 		Player player = new Player(0, "Chris", new Point(1, 1), new Point(0, 1));
-		ArrayList<Resource> resources = new ArrayList<Resource>();
 		Point worldLocation = new Point(1, 1);
 		Point tileLocation = new Point(1, 1);
 		Soil soil = new Soil(worldLocation, tileLocation);
@@ -86,9 +75,6 @@ public class DyingTests {
 			try {
 				soil.performAction(player);
 			} catch (GameException | SignalException e) {
-				// TODO Auto-generated catch block
-				//System.out.println("exception thrown");
-				//e.printStackTrace();
 				playerIsDead = true;
 			}
 			assert(player.getHealth()==0);

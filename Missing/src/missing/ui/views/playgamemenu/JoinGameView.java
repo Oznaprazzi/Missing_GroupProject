@@ -25,7 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import missing.networking.NetworkingHelper;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
@@ -33,6 +32,7 @@ import missing.ui.menustyle.MenuFactory;
  * Displays the view for entering details for joining a game
  *
  */
+@SuppressWarnings("serial")
 public class JoinGameView extends View{
 	/** Displays components for entering info for the game */
 	private JPanel gameInfoPanel;

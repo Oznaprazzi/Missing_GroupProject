@@ -21,6 +21,7 @@ import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
 
+@SuppressWarnings("serial")
 public class LobbyView extends View{
 	private JPanel playerTablePanel;
 	private JPanel buttonsPanel;

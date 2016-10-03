@@ -21,7 +21,7 @@ import missing.helper.GameException;
 import missing.ui.assets.GWTile;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
-import missing.ui.panels.GamePanel;
+
 import missing.ui.views.*;
 import missing.ui.views.playgamemenu.ClientWaitingView;
 import missing.ui.views.playgamemenu.CreatePlayerView;

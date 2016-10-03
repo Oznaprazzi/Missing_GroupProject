@@ -31,11 +31,18 @@ import missing.helper.SignalException;
 public class Container extends NonMovable {
 
 	private List<Movable> items;
+	private int currentSize;
 	protected int size = 25;
 
-	public Container(Point worldLocation, Point tileLocation, int size) {
+	public Container(Point worldLocation, Point tileLocation) {
 		super("Container", "Something to store items in.", worldLocation, tileLocation);
 		this.items = new ArrayList<Movable>();
+		this.size = 25;
+		this.currentSize = 0;
+	}
+
+	public Container(Point worldLocation, Point tileLocation, int size) {
+		this(worldLocation, tileLocation);
 		this.size = size;
 	}
 
@@ -67,13 +74,18 @@ public class Container extends NonMovable {
 	 * @throws GameException
 	 */
 	public void addItem(Movable item) throws GameException {
-		if (items.size() < size) {
-			this.items.add(item);
-			Movable m = findItem(item);
-			m.increaseCount();
+		int newSize = currentSize + item.getCount();
+		if (newSize < size) {
+			this.currentSize = newSize;
+			Movable i = findItem(item);
+			if (i == null) {
+				items.add(item);
+			} else {
+				i.setAmount(i.getAmount() + item.getAmount()); // increase count
+			}
 			return;
 		}
-		throw new GameException("No more space left.");
+		throw new GameException("Not enough space left.");
 	}
 
 	/**
@@ -90,10 +102,7 @@ public class Container extends NonMovable {
 		}
 		Movable item = items.get(index);
 		items.remove(index);
-		Movable m = findItem(item);
-		if (m.getCount() > 0) {
-			m.decreaseCount();
-		}
+		this.currentSize -= item.getAmount();
 		return item;
 	}
 
@@ -107,31 +116,30 @@ public class Container extends NonMovable {
 	 */
 	public Movable removeItem(Movable item) throws GameException {
 		// search for the first occurence of the item
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i).equals(item)) {
-				Movable tmp = items.get(i);
-				items.remove(i);
-				return tmp;
-			}
+		Movable tmp = findItem(item);
+		if (tmp != null) {
+			items.remove(tmp);
+			this.currentSize -= tmp.getAmount();
+			return tmp;
 		}
 		// didn't find item if reaches here
 		throw new GameException("Item not found.");
 	}
 
 	/**
-	 * Checks if item is already in the container and returns that item, else it
-	 * will just return the item
+	 * This method returns the first occurence of the item passed in the method.
+	 * It returns null if the item is not found.
 	 * 
 	 * @param item
 	 * @return
 	 */
 	private Movable findItem(Movable item) {
 		for (Movable m : items) {
-			if(item.getName().equals(m.getName())) {
+			if (item.getName().equals(m.getName())) {
 				return m;
 			}
 		}
-		return item;
+		return null;
 	}
 
 	@Override

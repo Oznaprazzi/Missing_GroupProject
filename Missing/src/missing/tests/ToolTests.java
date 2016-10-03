@@ -19,10 +19,8 @@ import missing.game.characters.Player;
 import missing.game.items.movable.Craftable;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Stone;
-import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.movable.Wood;
-import missing.game.items.nonmovable.Tree;
 import missing.helper.GameException;
 
 public class ToolTests {
@@ -42,7 +40,7 @@ public class ToolTests {
 		try{
 			player.addToPocket(wood);
 			player.addToPocket(stone);
-			Tool pickAxe = Craftable.createTool(ToolType.PICKAXE, player);
+			Craftable.createTool(ToolType.PICKAXE, player);
 			assertTrue(stone.getAmount() == (sAmt - 3)); //asserts stone has lost 3
 			assertTrue(wood.getAmount() == (wAmt - 2)); //asserts 2 wood was used
 		}catch(GameException e){
@@ -65,7 +63,7 @@ public class ToolTests {
 		try{
 			player.addToPocket(wood);
 			player.addToPocket(stone);
-			Tool pickAxe = Craftable.createTool(ToolType.PICKAXE, player);
+			Craftable.createTool(ToolType.PICKAXE, player);
 		}catch(GameException e){
 			notEnoughWood = true;
 		}
@@ -86,7 +84,7 @@ public class ToolTests {
 		try{
 			player.addToPocket(wood);
 			player.addToPocket(stone);
-			Tool pickAxe = Craftable.createTool(ToolType.AXE, player);
+			Craftable.createTool(ToolType.AXE, player);
 			assertTrue(stone.getAmount() == (sAmt - 3)); //asserts stone has lost 3
 			assertTrue(wood.getAmount() == (wAmt - 2)); //asserts 2 wood was used
 		}catch(GameException e){
@@ -109,7 +107,7 @@ public class ToolTests {
 		try{
 			player.addToPocket(wood);
 			player.addToPocket(stone);
-			Tool Axe = Craftable.createTool(ToolType.AXE, player);
+			Craftable.createTool(ToolType.AXE, player);
 		}catch(GameException e){
 			notEnoughWood = true;
 		}
@@ -130,7 +128,7 @@ public class ToolTests {
 		try{
 			player.addToPocket(wood);
 			player.addToPocket(stone);
-			Tool shovel = Craftable.createTool(ToolType.SHOVEL, player);
+			Craftable.createTool(ToolType.SHOVEL, player);
 			assertTrue(stone.getAmount() == (sAmt - 1)); //asserts stone has lost 1
 			assertTrue(wood.getAmount() == (wAmt - 2)); //asserts 2 wood was used
 		}catch(GameException e){
@@ -153,7 +151,7 @@ public class ToolTests {
 		try{
 			player.addToPocket(wood);
 			player.addToPocket(stone);
-			Tool shovel = Craftable.createTool(ToolType.SHOVEL, player);
+			Craftable.createTool(ToolType.SHOVEL, player);
 		}catch(GameException e){
 			notEnoughWood = true;
 		}
@@ -174,7 +172,7 @@ public class ToolTests {
 		try{
 			player.addToPocket(wood);
 			player.addToPocket(dirt);
-			Tool rod = Craftable.createTool(ToolType.FISHINGROD, player);
+			Craftable.createTool(ToolType.FISHINGROD, player);
 			assertTrue(dirt.getAmount() == (dAmt - 3)); //asserts 3 dirt was used
 			assertTrue(wood.getAmount() == (wAmt - 2)); //asserts 2 wood was used
 		}catch(GameException e){
@@ -197,7 +195,7 @@ public class ToolTests {
 		try{
 			player.addToPocket(wood);
 			player.addToPocket(dirt);
-			Tool rod = Craftable.createTool(ToolType.FISHINGROD, player);
+			Craftable.createTool(ToolType.FISHINGROD, player);
 		}catch(GameException e){
 			notEnoughWood = true;
 		}

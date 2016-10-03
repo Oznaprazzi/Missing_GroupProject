@@ -16,8 +16,6 @@
 package missing.game.items.movable;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 import missing.game.characters.Player;
 import missing.helper.GameException;
@@ -41,11 +39,10 @@ public class Tool extends Craftable {
 	private ToolType type;
 
 	public Tool(Point worldLocation, Point tileLocation, ToolType type) {
-		super(worldLocation, tileLocation, null);
+		super(worldLocation, tileLocation);
 		this.durability = MAX_DURABILITY;
 		setInfo(type);
 		this.type = type;
-		//ingredients = setIngredients(type);
 	}
 
 	public Tool(Point worldLocation, Point tileLocation, ToolType type, int durability) {
@@ -114,31 +111,6 @@ public class Tool extends Craftable {
 	}
 
 	// Helper methods
-
-	private List<Resource> setIngredients(ToolType type) {
-		List<Resource> tmp = new ArrayList<Resource>();
-		switch (type) {
-		case AXE:
-			tmp.add(new Wood(worldLocation, tileLocation, 2));
-			tmp.add(new Stone(worldLocation, tileLocation, 3));
-			break;
-		case FISHINGROD:
-			tmp.add(new Wood(worldLocation, tileLocation, 2));
-			tmp.add(new Dirt(worldLocation, tileLocation, 3));
-			break;
-		case PICKAXE:
-			tmp.add(new Wood(worldLocation, tileLocation, 2));
-			tmp.add(new Stone(worldLocation, tileLocation, 3));
-			break;
-		case SHOVEL:
-			tmp.add(new Wood(worldLocation, tileLocation, 2));
-			tmp.add(new Stone(worldLocation, tileLocation, 1));
-			break;
-		default:
-			break;
-		}
-		return tmp;
-	}
 
 	/**
 	 * This method does not do anything because when the player is collecting

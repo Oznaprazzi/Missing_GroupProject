@@ -36,7 +36,6 @@ import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
 import missing.ui.panels.GamePanel;
-import missing.ui.frames.*;
 import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
@@ -345,6 +344,8 @@ public class TestWindow extends JFrame implements KeyListener {
 		case WEST:
 		gameinstance.turnPlayer(playerID, Direction.WEST);
 		break;
+		default:
+			break;
 		}
 		updateTextBarPositions();
 		repaintGamePanel();

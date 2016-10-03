@@ -10,14 +10,11 @@
 package missing.ui.views;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,6 +25,7 @@ import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
 
+@SuppressWarnings("serial")
 public class MenuView extends View{
 	
 	
