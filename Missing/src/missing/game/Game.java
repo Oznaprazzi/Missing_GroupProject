@@ -235,6 +235,7 @@ public class Game implements Serializable {
 	private void removeDeadPlayer(String signal) {
 		String[] message = signal.split(" ");
 		int id = Integer.parseInt(message[1]);
+		System.out.println("id: " + id);
 		convertPlayerToPile(id);
 	}
 
