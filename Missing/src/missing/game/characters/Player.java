@@ -11,6 +11,7 @@
  *  26 Sep 16 			Casey Huang			added item's count when item added to bag
  *  27 Sep 16			Casey Huang			removed item count from both pocket and bag - moved this
  *  										to container class.
+ *  3 Oct 16			Jian Wei			Fixed bug in setHealth method so it can be set to 0
  */
 
 package missing.game.characters;
@@ -85,7 +86,7 @@ public class Player extends Character {
 	}
 
 	public void setHealth(int health) {
-		if (health > 0 && health < 100) {
+		if (health >= 0 && health < 100) {
 			this.health = health;
 		}
 	}
