@@ -82,6 +82,7 @@ public class MapView extends View {
 		
 		JButton backBtn = new JButton("Back");
 		backBtn.addActionListener(e->{
+			controller.requestFocus();
 			controller.changeView(controller.getGameView());
 		});
 		mapButtonsPanel .add(backBtn);
