@@ -313,7 +313,7 @@ public class VControl extends JFrame {
 		}
 		System.exit(0);
 	}
-
+	
 	/**
 	 * Called if the player performed an action on a Container Displays the
 	 * items in that Container
@@ -435,7 +435,9 @@ public class VControl extends JFrame {
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
+	public void disconnectClient(){
+		client.disconnectClient();
+	}
 	@Override
 	public void repaint() {
 		super.repaint();
