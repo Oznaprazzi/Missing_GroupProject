@@ -22,10 +22,9 @@ public class Bag extends Container {
 	private final int MAX_CAPACITY = 50;
 
 	public Bag() {
-		super(null, null);
+		super(null, null, 20);
 		name = "Bag";
 		description = "Bag full of items.";
-		size = 20;
 	}
 
 	/**

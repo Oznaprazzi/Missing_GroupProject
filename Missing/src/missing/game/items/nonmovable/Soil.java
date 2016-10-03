@@ -56,7 +56,7 @@ public class Soil extends Source {
 			numDirtTaking = 5;
 			if (playersTool.useTool())
 				// the tool has broken, so we need to remove it
-				p.getPocket().remove(playersTool);
+				p.getPocket().removeItem(playersTool);
 		} else {
 			numDirtTaking = 1; // doesnt have shovel, so can only take one dirt
 			p.setHealth(p.getHealth() - 1);

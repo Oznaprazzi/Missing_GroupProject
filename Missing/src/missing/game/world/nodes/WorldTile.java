@@ -12,6 +12,7 @@
  *  18 Sep 16		Chris Rabe			can now receive distributed item
  *  23 Sep 16		Casey Huang			put if statement after item is assigned in getDistributedObject method
  *  27 Sep 16		Chris Rabe			created Pile class
+ *  3 Oct 16		Chris Rabe			modified Pile class constructor
  */
 package missing.game.world.nodes;
 
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import missing.game.characters.Player;
+import missing.game.items.nonmovable.FishArea;
 import missing.game.items.nonmovable.NonMovable;
 import missing.helper.GameException;
 import missing.helper.SignalException;
@@ -32,12 +34,8 @@ import missing.helper.SignalException;
  * characteristics.
  *
  */
-public class WorldTile implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 442814278555588205L;
+@SuppressWarnings("serial")
+public class WorldTile implements Serializable {
 
 	/**
 	 * This interface represents all objects which can be stored inside the
@@ -52,7 +50,7 @@ public class WorldTile implements Serializable{
 		 * approached in all directions (this should not be used if this
 		 * enumeration is used to represent where the item is facing)
 		 */
-		public static enum Direction{
+		public static enum Direction {
 			NORTH, SOUTH, EAST, WEST, ALL
 		}
 
@@ -97,73 +95,27 @@ public class WorldTile implements Serializable{
 	 * WorldTile class because it is a class created for additional
 	 * functionality.
 	 */
-	public static class Pile implements TileObject {
+	public static class Pile extends NonMovable {
 
-		private Point worldLocation;
-		private Point tileLocation;
-
-		private TileObject player = null;
-		private List<TileObject> items = null;
+		private TileObject player;
+		private List<TileObject> items;
 
 		public Pile(TileObject object) {
+			super("Pile", "A pile of objects", object.getWorldLocation(), object.getTileLocation());
 			items = new ArrayList<TileObject>();
 			if (object instanceof Player) {
 				this.player = object;
 			} else {
 				this.items.add(object);
 			}
-			this.worldLocation = object.getWorldLocation();
-			this.tileLocation = object.getTileLocation();
 		}
 
-		public Pile(Point worldLocation, Point tileLocation, TileObject player, List<TileObject> items) {
-			this.worldLocation = worldLocation;
-			this.tileLocation = tileLocation;
-			this.player = player;
+		public Pile(Point worldLocation, Point tileLocation, List<TileObject> items) {
+			super("Pile", "A pile of objects", worldLocation, tileLocation);
 			this.items = items;
 		}
 
 		// Implemented Methods
-
-		@Override
-		public String getName() {
-			return "Pile";
-		}
-
-		@Override
-		public String getDescription() {
-			return "A pile of items";
-		}
-
-		@Override
-		public Point getTileLocation() {
-			return tileLocation;
-		}
-
-		@Override
-		public void setTileLocation(Point tileLocation) {
-			this.tileLocation = tileLocation;
-		}
-
-		@Override
-		public Point getWorldLocation() {
-			return worldLocation;
-		}
-
-		@Override
-		public void setWorldLocation(Point worldLocation) {
-			this.worldLocation = worldLocation;
-		}
-
-		@Override
-		public Direction getOrientation() {
-			return Direction.SOUTH;
-		}
-
-		@Override
-		public Direction getApproach() {
-			return Direction.ALL;
-		}
 
 		@Override
 		public void performAction(Player player) throws GameException, SignalException {
@@ -334,7 +286,7 @@ public class WorldTile implements Serializable{
 		// Sanity check - must have pile
 		if (object instanceof Pile) {
 			Pile pile = (Pile) object;
-			pile.addAllItems(player.getPocket());
+			pile.addAllItems(player.getPocket().getItems());
 			pile.addAllItems(player.getBag().getItems());
 		} else {
 			createPile();
@@ -350,6 +302,10 @@ public class WorldTile implements Serializable{
 	 * @param item
 	 */
 	public void getDistributedObject(TileObject item) {
+		if (type == TileType.WATER && item instanceof FishArea) {
+			this.object = item;
+			return;
+		}
 		if (!this.isEnterable() || this.isOccupied()) {
 			return;
 		}

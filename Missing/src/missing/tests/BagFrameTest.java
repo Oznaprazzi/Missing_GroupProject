@@ -11,6 +11,8 @@ package missing.tests;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,7 +28,8 @@ import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Bush;
-import missing.ui.canvas.BagCanvas;
+import missing.game.items.nonmovable.Pocket;
+import missing.ui.canvas.HandCanvas;
 
 public class BagFrameTest extends JFrame {
 
@@ -40,8 +43,8 @@ public class BagFrameTest extends JFrame {
 			public void run() {
 				try {
 					Bag bag = addItemsToBag();
-
-					BagFrameTest frame = new BagFrameTest(bag);
+					Pocket pocket = addItemsToPocket();
+					BagFrameTest frame = new BagFrameTest(bag, pocket);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +56,7 @@ public class BagFrameTest extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BagFrameTest(Bag bag) {
+	public BagFrameTest(Bag bag, Pocket pocket) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setSize(442, 409);
@@ -62,7 +65,7 @@ public class BagFrameTest extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		BagCanvas panel = new BagCanvas(bag);
+		HandCanvas panel = new HandCanvas(bag, pocket);
 		contentPane.add(panel, BorderLayout.CENTER);
 	}
 
@@ -97,5 +100,30 @@ public class BagFrameTest extends JFrame {
 			e.printStackTrace();
 		}
 		return bag;
+	}
+
+	public static Pocket addItemsToPocket() {
+		Pocket pocket = new Pocket();
+		Movable wood = new Wood(new Point(0, 0), new Point(0,0));
+		Movable wood2 = new Wood(new Point(0, 0), new Point(0,0));
+		Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
+		Movable food2 = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
+		Movable food3 = new Food(new Point(0, 0), new Point(0,0), FoodType.BERRY);
+		Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
+		Movable dirt = new Dirt(new Point(0, 0), new Point(0,0));
+		Movable stone = new Stone(new Point(0, 0), new Point(0,0));
+		try{
+			pocket.addItem(wood);
+			pocket.addItem(wood2);
+			pocket.addItem(food);
+			pocket.addItem(food2);
+			pocket.addItem(food3);
+			pocket.addItem(food4);
+			pocket.addItem(dirt);
+			pocket.addItem(stone);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return pocket;
 	}
 }

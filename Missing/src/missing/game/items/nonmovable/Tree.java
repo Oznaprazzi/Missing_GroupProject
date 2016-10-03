@@ -70,7 +70,7 @@ public class Tree extends Source {
 			numWoodTaking = 3;
 			if (playersTool.useTool())
 				// the tool has broken, so we need to remove it
-				p.getPocket().remove(playersTool);
+				p.getPocket().removeItem(playersTool);
 		} else {
 			numWoodTaking = 1; // doesnt have axe, so can only take one wood
 			p.setHealth(p.getHealth() - 1);

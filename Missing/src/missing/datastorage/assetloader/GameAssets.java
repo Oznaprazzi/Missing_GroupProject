@@ -12,6 +12,7 @@
  *  27 Sep 16		Linus Go			added player images.
  *  27 Sep 16		Casey Huang			Added girl player images.
  *  1 Oct 16		Linus Go			Added tombstone images.
+ *  3 Oct 16		Casey Huang			Added pileofitems image.
  */
 
 package missing.datastorage.assetloader;
@@ -83,6 +84,8 @@ public class GameAssets {
 	private static BufferedImage berriesImage;
 
 	private static BufferedImage bagBackgroundImage;
+	
+	private static BufferedImage pileOfItemsImage;
 
 	// Getters for File Assets
 
@@ -360,4 +363,16 @@ public class GameAssets {
 		return bagBackgroundImage;
 	}
 
+	public static BufferedImage getPileOfItemsImage() {
+		if (pileOfItemsImage == null) {
+			try {
+				pileOfItemsImage = ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/pileofitems.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return pileOfItemsImage;
+	}
+	
 }
