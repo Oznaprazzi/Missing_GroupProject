@@ -170,29 +170,44 @@ public class VControl extends JFrame {
 		});
 		
 		loadGame.addActionListener(e->{
-			fc = new JFileChooser("Load");
+				fc = new JFileChooser("Load");
+				boolean success = false;
+				File theFile = null;
+				String xmlFile = "";
+				
+				
+				while(true){
 				int rVal = fc.showOpenDialog(this);
-	
+				
+				
+				
 				if(rVal == JFileChooser.APPROVE_OPTION){
-				File theFile = fc.getSelectedFile();
-				String xmlFile = theFile.getName();
+				theFile = fc.getSelectedFile();
+				xmlFile = theFile.getName();
 				
 				// Sanity Checks
 				if (xmlFile == null) {
-					System.out.println("XML File must be specified.");
-					System.exit(1);
+					JOptionPane.showMessageDialog(null, "XML File must be specified.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+					//System.exit(1);
 				}
 				if (!xmlFile.endsWith(".xml")) {
-					System.out.println("Please load an XML file.");
+					JOptionPane.showMessageDialog(null, "File must end with XML.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+					//System.exit(1);
+				}
+				
+				if(rVal == JFileChooser.CANCEL_OPTION){
+					JOptionPane.showMessageDialog(null, "User did not specify an XML file.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
 					System.exit(1);
 				}
 				
+				if(xmlFile != null && xmlFile.endsWith(".xml"))
+					break;
+			}
+		}
 				XMLHandler.filename = xmlFile;
 				JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");
-				}else{
-					System.err.println("open command cancelled by user.");
-				}
-	
+				
+			
 		});
 		
 		exitItem.addActionListener(e->{
