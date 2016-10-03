@@ -16,6 +16,7 @@
  * 30 Sep 16		Edward Kelly		added CreatePlayerView
  * 1 Oct 16			Edward Kelly		added displayException & displayTimedMessage
  * 2 Oct 16			Edward Kelly		added close confirmation and client disconnect
+ * 3 Oct 16			Linus Go			added JMenuChooser and some items.
  */
 package missing.ui.controller;
 
@@ -23,14 +24,20 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import missing.datastorage.assetloader.XMLHandler;
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
 import missing.helper.GameException;
@@ -38,6 +45,7 @@ import missing.networking.Client;
 import missing.ui.assets.GGame;
 import missing.ui.views.GameView;
 import missing.ui.views.MapView;
+import javax.swing.JMenu;
 
 /**
  * 
@@ -48,7 +56,10 @@ import missing.ui.views.MapView;
  */
 @SuppressWarnings("serial")
 public class VControl extends JFrame {
-
+	
+	
+	
+	
 	/**
 	 * Views are essentially JPanels with different content. This abstract class
 	 * should be extended by other classes.
@@ -86,11 +97,23 @@ public class VControl extends JFrame {
 	private int playerID;
 	private boolean isHost;
 	private Client client;
-
+	
+	/*JMenuBar stuff */
+	private JMenuBar menuBar;
+	private JMenuItem saveGame;
+	private JMenuItem loadGame;
+	private JMenuItem exitItem;
+	private JMenuItem helpItem;
+	private JMenuItem credits;
+	private JFileChooser fc;
+	
+	
 	public VControl() {
 		super("Missing: The Game");
 		this.views = GUIInitialiser.createViews(this);
+		initializeMenu();
 		initialiseGUI();
+		setupMenuListeners();
 		views[cur].initialise();
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		// Asks for confirmation when closing the game
@@ -105,7 +128,90 @@ public class VControl extends JFrame {
 			}
 		});
 	}
+	/**
+	 * Helper method. Initializes the JMenu and all of the Items inside.
+	 */
+	private void initializeMenu(){
+		menuBar = new JMenuBar();
+		
+		JMenu fileMenu = new JMenu("File");
+			saveGame = new JMenuItem("Save Game", KeyEvent.VK_S);
+			loadGame = new JMenuItem("Load Game", KeyEvent.VK_L);
+			exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
+			/*Ensure that the VControl doesn't lose focus. */
+			saveGame.setFocusable(false);
+			loadGame.setFocusable(false);
+			exitItem.setFocusable(false);
+			fileMenu.add(saveGame);
+			fileMenu.add(loadGame);
+			fileMenu.add(exitItem);
+		menuBar.add(fileMenu);
+			
+		
+		
+		JMenu helpMenu = new JMenu("Help");
+			helpItem = new JMenuItem("Game Instructions", KeyEvent.VK_G);
+			credits = new JMenuItem("Credits", KeyEvent.VK_C);
+			/*Ensure that VControl doesn't lose focus. */
+			helpItem.setFocusable(false);
+			credits.setFocusable(false);
+			
+			helpMenu.add(helpItem);
+			helpMenu.add(credits);
+		menuBar.add(helpMenu);
+		
+	this.setJMenuBar(menuBar);
+	}
+	
+	private void setupMenuListeners(){
+		
+		saveGame.addActionListener(e->{
+			//TODO: linus needs to implement this later - Linus
+		});
+		
+		loadGame.addActionListener(e->{
+			fc = new JFileChooser("Load");
+				int rVal = fc.showOpenDialog(this);
+	
+				if(rVal == JFileChooser.APPROVE_OPTION){
+				File theFile = fc.getSelectedFile();
+				String xmlFile = theFile.getName();
+				
+				// Sanity Checks
+				if (xmlFile == null) {
+					System.out.println("XML File must be specified.");
+					System.exit(1);
+				}
+				if (!xmlFile.endsWith(".xml")) {
+					System.out.println("Please load an XML file.");
+					System.exit(1);
+				}
+				
+				XMLHandler.filename = xmlFile;
+				JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");
+				}else{
+					System.err.println("open command cancelled by user.");
+				}
+	
+		});
+		
+		exitItem.addActionListener(e->{
+			int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Exit Confirmation",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
+			if(choice == 0) System.exit(0);
+			return;
+		});
+		
+		helpItem.addActionListener(e->{
+			
+		});
+		
+		credits.addActionListener(e->{
+			
+		});
+	}
+	
 	// View Control Methods
 
 	public int getMenuView() {
@@ -220,7 +326,7 @@ public class VControl extends JFrame {
 		timer.setRepeats(false);
 		timer.start();
 		JLabel label = new JLabel(msg);
-		dialog.add(label);
+		dialog.getContentPane().add(label);
 		dialog.setUndecorated(true);
 		dialog.pack();
 		dialog.setLocationRelativeTo(views[3]);
