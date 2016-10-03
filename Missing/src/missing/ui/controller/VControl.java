@@ -39,6 +39,7 @@ import missing.helper.GameException;
 import missing.networking.Client;
 import missing.ui.assets.GGame;
 import missing.ui.views.GameView;
+import missing.ui.views.MapView;
 
 /**
  * 
@@ -106,17 +107,6 @@ public class VControl extends JFrame {
 		this.views = GUIInitialiser.createViews(this);
 		initialiseGUI();
 		views[cur].initialise();
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		// Asks for confirmation when closing the game
-		addWindowListener(new java.awt.event.WindowAdapter() {
-		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-			       int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?","Quit game",JOptionPane.YES_NO_OPTION);
-			       if(result == JOptionPane.YES_OPTION){
-			    	   closeVControl();
-			       }	
-		    }
-		});
 	}
 
 	// View Control Methods
@@ -246,7 +236,17 @@ public class VControl extends JFrame {
 	// Helper methods
 
 	private void initialiseGUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		// Asks for confirmation when closing the game
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+			       int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?","Quit game",JOptionPane.YES_NO_OPTION);
+			       if(result == JOptionPane.YES_OPTION){
+			    	   closeVControl();
+			       }	
+		    }
+		});
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
 		getContentPane().add(views[cur]);
@@ -259,12 +259,15 @@ public class VControl extends JFrame {
 	}
 	public void updateGGame(Game game) throws GameException{
 		this.gGame = new GGame(game, views[3]);
-		((GameView)views[3]).updateGamePanel(this);
+		((GameView)views[this.getGameView()]).updateGamePanel(this);
+		((MapView)views[this.getMapView()]).updateMapPanel(this);
+		
 	}
 	
 	public void setGGame(GGame gGame) {
 		this.gGame = gGame;
-		views[3].initialise();
+		views[this.getGameView()].initialise();
+		views[this.getMapView()].initialise();
 	}
 	
 	public int getPlayerID() {

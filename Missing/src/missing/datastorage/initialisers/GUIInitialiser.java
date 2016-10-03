@@ -22,7 +22,6 @@ import missing.ui.assets.GWTile;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.panels.GamePanel;
-import missing.ui.panels.MapPanel;
 import missing.ui.views.*;
 import missing.ui.views.playgamemenu.ClientWaitingView;
 import missing.ui.views.playgamemenu.CreatePlayerView;
@@ -65,7 +64,7 @@ public class GUIInitialiser {
 		View[] tmp = new View[views];
 		tmp[0] = new SplashView(control);
 		tmp[1] = new MenuView(control);
-		tmp[2] = new MapPanel(control);
+		tmp[2] = new MapView(control);
 		tmp[3] = new GameView(control);
 		tmp[4] = new PlayGameView(control);
 		tmp[5] = new HostGameView(control);

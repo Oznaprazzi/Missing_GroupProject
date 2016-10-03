@@ -1,39 +1,27 @@
-/*	File: MapPanel.java
- * 	Author
- * 	Casey Huang		300316284
- *  Edward Kelly	300334192
- *  
- * 	Date			Author				Changes
- * 	19 Sep 16		Casey Huang			created MapPanel class
- * 	19 Sep 16		Casey Huang			renamed MapView to MapPanel
- *  23 Sep 16		Edward Kelly		removed World param from constructor
- */
 package missing.ui.panels;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 
+import javax.swing.JPanel;
+
 import missing.helper.GameException;
-import missing.ui.controller.VControl;
-import missing.ui.controller.VControl.View;
+import missing.ui.assets.GWorld;
 
-@SuppressWarnings("serial")
-public class MapPanel extends View {
-
-	public MapPanel(VControl controller) {
-		super(controller);
+public class MapPanel extends JPanel{
+	
+	
+	private GWorld gWorld;
+	public MapPanel(GWorld gWorld){
+		this.gWorld = gWorld;
 	}
+	
 
-	@Override
-	public void initialise() {
-
+	public void updateGWorld(GWorld gWorld){
+		this.gWorld = gWorld;
 	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-	}
-
+	
 	/**
 	 * When called, this method will draw the splash screen message onto the
 	 * screen.
@@ -45,15 +33,9 @@ public class MapPanel extends View {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		try {
-			controller.getGGame().getGWorld().draw(g);
+			gWorld.draw(g);
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void setFocus() {
-		// TODO Auto-generated method stub
-
 	}
 }
