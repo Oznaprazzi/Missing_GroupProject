@@ -20,6 +20,7 @@ package missing.ui.assets;
 import java.awt.Graphics;
 
 import missing.datastorage.initialisers.GUIInitialiser;
+import missing.game.characters.Player;
 import missing.game.world.nodes.WorldNode;
 import missing.helper.GameException;
 
@@ -66,14 +67,13 @@ public class GWNode {
 	 * Draws the array of tiles that are contained in this Node object.
 	 * 
 	 * @param g
-	 * 
-	 * @param y
-	 * 
 	 * @param x
-	 * 
+	 * @param y
+	 * @param inMapView whether the MapView is currently displayed
+	 * @param player the local player
 	 * @throws GameException
 	 */
-	public void draw(Graphics g, int x, int y) throws GameException {
+	public void draw(Graphics g, int x, int y, boolean inMapView, Player player) throws GameException {
 		// calculate size of each tile relative to the node
 		int tileSize = nodeSize / TILE_SIZE;
 		// draw each tile in the appropriate coordinates
@@ -82,7 +82,7 @@ public class GWNode {
 			for (int j = 0; j < tiles.length; j++) {
 				int tileX = x + (j * tileSize);
 				tiles[i][j].setSize(tileSize);
-				tiles[i][j].draw(g, tileX, tileY);
+				tiles[i][j].draw(g, tileX, tileY, inMapView, player);
 			}
 		}
 	}

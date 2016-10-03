@@ -16,6 +16,8 @@
  * 30 Sep 16		Edward Kelly		added CreatePlayerView
  * 1 Oct 16			Edward Kelly		added displayException & displayTimedMessage
  * 2 Oct 16			Edward Kelly		added close confirmation and client disconnect
+ * 3 Oct 16			Edward Kelly		added displayDead method
+ * 3 Oct 16			Edward Kelly		integrated MapView
  */
 package missing.ui.controller;
 
@@ -166,6 +168,10 @@ public class VControl extends JFrame {
 		// Remove and replace the view
 		getContentPane().removeAll();
 		getContentPane().add(views[cur]);
+		if (gGame!=null){
+			gGame.setView(views[index]);
+			gGame.setPlayer(gGame.getGame().getAvatars()[playerID]);
+		}
 		// Setting the focus allows event listeners to be activated
 		views[index].repaint();
 		views[index].setFocus();
@@ -231,7 +237,13 @@ public class VControl extends JFrame {
 	 * @param msg message to be displayed
 	 */
 	public void displayException(String msg){
-		JOptionPane.showMessageDialog(views[3], msg);
+		JOptionPane.showMessageDialog(views[cur], msg);
+	}
+	
+	public void displayDead(){
+		JOptionPane.showMessageDialog(views[cur], "YOU DIED");
+		((MapView)views[this.getMapView()]).setSpectator(true);
+		this.changeView(this.getMapView());
 	}
 	// Helper methods
 
@@ -258,14 +270,14 @@ public class VControl extends JFrame {
 		return gGame;
 	}
 	public void updateGGame(Game game) throws GameException{
-		this.gGame = new GGame(game, views[3]);
+		this.gGame = new GGame(game, views[cur]);
 		((GameView)views[this.getGameView()]).updateGamePanel(this);
 		((MapView)views[this.getMapView()]).updateMapPanel(this);
 		
 	}
 	
-	public void setGGame(GGame gGame) {
-		this.gGame = gGame;
+	public void setGGame(Game game) throws GameException {
+		this.gGame = new GGame(game, views[cur]);
 		views[this.getGameView()].initialise();
 		views[this.getMapView()].initialise();
 	}

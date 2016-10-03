@@ -121,7 +121,7 @@ public class GamePanel extends JPanel {
 		if (curGWNode==null)return;
 		curGWNode.setNodeSize(Math.min(this.getWidth(), this.getHeight()));
 		try {
-			curGWNode.draw(g, 0, 0);
+			curGWNode.draw(g, 0, 0, false, null);// player doesnt matter for game view
 		} catch (GameException e) {
 			e.printStackTrace();
 		}

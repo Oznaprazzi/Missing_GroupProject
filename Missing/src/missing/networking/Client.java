@@ -11,6 +11,7 @@
  * 29 Sep 16		Edward Kelly	now receives instructions instead of game
  * 30 Sep 16		Edward Kelly	now sends player image number
  * 2 Oct 16			Edward Kelly	disconnects handled
+ * 3 Oct 16			Edward Kelly	implemented dieing
  */
 package missing.networking;
 
@@ -104,7 +105,7 @@ public class Client extends Thread implements KeyListener {
 			game = (Game) in.readObject();
 			try {
 				vControl.addKeyListener(this);
-				vControl.setGGame(new GGame(game, vControl.getView(vControl.getGameView())));
+				vControl.setGGame(game);
 				vControl.changeView(vControl.getGameView());
 				vControl.requestFocusInWindow();
 
@@ -120,6 +121,12 @@ public class Client extends Thread implements KeyListener {
 					break;
 				}
 				if (input.getClass() == String.class) {
+					if (input.equals("die")) {
+						System.out.println("got die");
+						// player died
+						vControl.displayDead();
+						continue;
+					}
 					// received instruction
 					// player to be changed
 					int movingPlayer = (Integer) (in.readObject());
@@ -134,7 +141,8 @@ public class Client extends Thread implements KeyListener {
 								vControl.displayException(e.getMessage());
 							}
 						}
-					} else if (input.equals("turn")) {
+					} 
+					else if (input.equals("turn")) {
 						try {
 							game.turnPlayer(movingPlayer, direction);
 						} catch (GameException e) {
@@ -142,7 +150,8 @@ public class Client extends Thread implements KeyListener {
 								vControl.displayException(e.getMessage());
 							}
 						}
-					} else if (input.equals("perform")) {
+					} 
+					else if (input.equals("perform")) {
 						// only receive actions from other players
 						// actions for this player handled locally in handleAction
 						try {
@@ -151,11 +160,12 @@ public class Client extends Thread implements KeyListener {
 							// do nothing, message only displayed for
 							// player that performed he action
 						}
-					} else if (input.equals("disconnect")) {
+					} 
+					else if (input.equals("disconnect")) {
 						// a player disconnected
 						game.convertPlayerToPile(movingPlayer);
 						vControl.displayTimedMessage(game.getAvatars()[movingPlayer].getName() + " disconnected");
-					}
+					} 
 					try {
 						vControl.updateGGame(game);
 					} catch (GameException e) {
@@ -235,13 +245,27 @@ public class Client extends Thread implements KeyListener {
 			vControl.repaint();
 		} catch(SignalException | GameException e){
 			if (e.getClass() == SignalException.class){
+				System.out.println(e.getMessage());
 				if (e.getMessage().equals("CONTAINER")){
 					vControl.displayContainerItems();
 				} else if (e.getMessage().equals("PILE")){
 					vControl.displayPileItems();
-				} else if (e.getMessage().equals("TRADE")){
-					//TODO: get other player from exception
-					// request trade with other player
+				} else if (e.getMessage().contains("DEAD")){
+					String[] msg = e.getMessage().split(" ");
+					int id = Integer.parseInt(msg[1]);
+					if (id==clientID){
+						// this player died
+						vControl.displayDead();
+					} else {
+						// killed another player
+						out.println("kill "+id);
+						try {
+							vControl.updateGGame(game);
+						} catch (GameException e1) {
+							vControl.displayException(e.getMessage());
+						}
+						vControl.repaint();
+					}
 				}
 			} else if(e.getClass() == GameException.class){
 				vControl.displayException(e.getMessage());

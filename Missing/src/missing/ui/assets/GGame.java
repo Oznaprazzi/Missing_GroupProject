@@ -7,12 +7,14 @@
  * 19 Sep 16		Casey Huang			created GGame class
  * 19 Sep 16		Linus Go			added the fields
  * 19 Sep 16		Casey Huang			created getGame method
+ * 3 Oct 16			Edward Kelly		added setView and setPlayer methods
  */
 package missing.ui.assets;
 
 import java.awt.Point;
 
 import missing.game.Game;
+import missing.game.characters.Player;
 import missing.helper.GameException;
 import missing.ui.controller.VControl.View;
 
@@ -29,7 +31,7 @@ public class GGame {
 		this.game = game;
 		gworld = new GWorld(game.getWorld(), theView, new Point(0, 0));
 	}
-
+	
 	// Methods
 	public GWorld getGWorld() {
 		return gworld;
@@ -41,5 +43,13 @@ public class GGame {
 	
 	public void setGame(Game game){
 		this.game = game;
+	}
+	
+	public void setView(View view){
+		gworld.setView(view);
+	}
+	
+	public void setPlayer(Player player){
+		gworld.setPlayer(player);
 	}
 }

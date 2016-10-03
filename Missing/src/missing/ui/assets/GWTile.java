@@ -15,6 +15,8 @@
  *  18 Sep 16		Casey Huang			attempted scaling implementation
  *  19 Sep 16 		Casey Huang			made drawIsometricTile @deprecated
  *  27 Sep 16		Casey Huang			Added tree number to obtaining tree image
+ *  3 Oct 16		Edward Kelly		add inMapView and player to draw params
+ *  3 Oct 16		Edward Kelly 		added logic for drawing map/spectator views
  */
 
 package missing.ui.assets;
@@ -69,18 +71,18 @@ public class GWTile {
 		return tile;
 	}
 
+
 	/**
 	 * Draw the tile at the specified x and y position onto this graphics
 	 * context.
-	 * 
 	 * @param g
-	 *            - Graphics
 	 * @param x
-	 *            - x position
 	 * @param y
-	 *            - y position
+	 * @param inMapView whether the MapView is currently displayed
+	 * @param player the local player
+	 * @throws GameException
 	 */
-	public void draw(Graphics g, int x, int y) throws GameException {
+	public void draw(Graphics g, int x, int y, boolean inMapView, Player player) throws GameException {
 		switch (tile.getType()) {
 		case SAND:
 			g.drawImage(GameAssets.getSandImage(), x, y, size, size, null);
@@ -99,7 +101,15 @@ public class GWTile {
 		}
 		/*Draws the player. */
 		if(tile.isOccupied() && tile.getObject() instanceof Player){
-			drawPlayer(g,x,y,tile.getObject());
+				curPlayer = (Player)(tile.getObject());
+				if (player == null || player.isDead() || !inMapView){
+					// draw all players in node if not in mapview
+					drawPlayer(g,x,y,tile.getObject());
+				}
+				else if (((Player)tile.getObject()).getId() == player.getId()){
+					// only draw own player if in mapview
+					drawPlayer(g,x,y,tile.getObject());
+				}
 		}
 		
 		/*Draws all of the nonmovable items onto the pile. */
@@ -126,8 +136,6 @@ public class GWTile {
 			g.setColor(Color.green);
 			g.fillRect(x, y, size, size);
 			g.drawImage(GameAssets.getPileOfItemsImage(), x,y,size,size,null);
-		}if(tile.getObject() instanceof Player){
-			drawPlayer(g,x,y,tile.getObject());
 		}
 	
 		/*If the tile is not enterable and there is an object image for it.*/
