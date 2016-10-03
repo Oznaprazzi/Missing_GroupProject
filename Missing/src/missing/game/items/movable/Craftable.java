@@ -3,8 +3,9 @@
  * Authors    		ID
  * Jian Wei Chong	300352789
  * 
- * Date 		Author		Modification
- * 18/9/16		Jian Wei	created the class
+ * Date 		Author					Modification
+ * 18/09/16		Jian Wei				created the class
+ * 03/10/16		Casey Huang				
  * 
  * */
 
@@ -67,7 +68,7 @@ public abstract class Craftable extends Usable {
 	private static Tool createShovel(Player player) throws GameException {
 		int woodLeft = 2;
 		int stoneLeft = 1;
-		List<Movable> items = player.getPocket();
+		List<Movable> items = player.getPocket().getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && stoneLeft == 0) {
@@ -117,7 +118,7 @@ public abstract class Craftable extends Usable {
 	private static Tool createPickaxe(Player player) throws GameException {
 		int woodLeft = 2;
 		int stoneLeft = 3;
-		List<Movable> items = player.getPocket();
+		List<Movable> items = player.getPocket().getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && stoneLeft == 0) {
@@ -167,7 +168,7 @@ public abstract class Craftable extends Usable {
 	private static Tool createRod(Player player) throws GameException {
 		int woodLeft = 2;
 		int dirtLeft = 3;
-		List<Movable> items = player.getPocket();
+		List<Movable> items = player.getPocket().getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && dirtLeft == 0) {
@@ -217,7 +218,7 @@ public abstract class Craftable extends Usable {
 	private static Tool createAxe(Player player) throws GameException {
 		int woodLeft = 2;
 		int stoneLeft = 3;
-		List<Movable> items = player.getPocket();
+		List<Movable> items = player.getPocket().getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && stoneLeft == 0) {

@@ -35,8 +35,8 @@ public class FoliageTests {
 		Bush bush = new Bush(worldLocation, tileLocation);
 		try{
 			bush.performAction(player);
-			if(player.getPocket().size() == 1){
-				Item item = player.getPocket().get(0);
+			if(player.getPocket().getItems().size() == 1){
+				Item item = player.getPocket().getItems().get(0);
 				assert(item instanceof Food);
 				assert(((Food) item).getFoodType() == FoodType.BERRY);
 			}
@@ -56,16 +56,16 @@ public class FoliageTests {
 		Bush bush = new Bush(worldLocation, tileLocation);
 		try{
 			bush.performAction(player);
-			if(player.getPocket().size() == 1){
-				Item item = player.getPocket().get(0);
+			if(player.getPocket().getItems().size() == 1){
+				Item item = player.getPocket().getItems().get(0);
 				assert(item instanceof Food);
 				assert(((Food) item).getFoodType() == FoodType.BERRY);
 			}
 			TimeUnit.SECONDS.sleep(11);
 			bush.performAction(player);
-			if(player.getPocket().size() == 1 ||player.getPocket().size() == 2){
-				int last = player.getPocket().size() - 1;
-				Item item = player.getPocket().get(last);
+			if(player.getPocket().getItems().size() == 1 ||player.getPocket().getItems().size() == 2){
+				int last = player.getPocket().getItems().size() - 1;
+				Item item = player.getPocket().getItems().get(last);
 				assert(item instanceof Food);
 				assert(((Food) item).getFoodType() == FoodType.BERRY);
 			}
@@ -87,8 +87,8 @@ public class FoliageTests {
 		boolean exception = false;
 		try{
 			bush.performAction(player);
-			if(player.getPocket().size() == 1){
-				Item item = player.getPocket().get(0);
+			if(player.getPocket().getItems().size() == 1){
+				Item item = player.getPocket().getItems().get(0);
 				assert(item instanceof Food);
 				assert(((Food) item).getFoodType() == FoodType.BERRY);
 			}

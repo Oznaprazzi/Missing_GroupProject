@@ -65,8 +65,8 @@ public class SourceTimerTests {
 		} catch (SignalException e) {
 		}
 		boolean has5Stone = false;
-		if (player.getPocket().get(1) instanceof Stone) {
-			has5Stone = player.getPocket().get(1).getAmount() == 5;
+		if (player.getPocket().getItems().get(1) instanceof Stone) {
+			has5Stone = player.getPocket().getItems().get(1).getAmount() == 5;
 		}
 		assertTrue(has5Stone); // checks that player has 1 wood in pocket
 
@@ -113,8 +113,8 @@ public class SourceTimerTests {
 		} catch (SignalException e) {
 		}
 		boolean has5dirt = false;
-		if (player.getPocket().get(1) instanceof Dirt) {
-			has5dirt = player.getPocket().get(1).getAmount() == 5;
+		if (player.getPocket().getItems().get(1) instanceof Dirt) {
+			has5dirt = player.getPocket().getItems().get(1).getAmount() == 5;
 		}
 		assertTrue(has5dirt); // checks that player has 1 wood in pocket
 
@@ -161,8 +161,8 @@ public class SourceTimerTests {
 		} catch (SignalException e) {
 		}
 		boolean has5wood = false;
-		if (player.getPocket().get(1) instanceof Wood) {
-			has5wood = player.getPocket().get(1).getAmount() == 3;
+		if (player.getPocket().getItems().get(1) instanceof Wood) {
+			has5wood = player.getPocket().getItems().get(1).getAmount() == 3;
 		}
 		assertTrue(has5wood); // checks that player has 1 wood in pocket
 

@@ -28,6 +28,6 @@ public class XMLHandler {
 		if (filename == null) {
 			throw new GameException("No file loaded!");
 		}
-		return XMLLoader.getItemsFromFile(filename);
+		return XMLImporter.getItemsFromFile(filename);
 	}
 }

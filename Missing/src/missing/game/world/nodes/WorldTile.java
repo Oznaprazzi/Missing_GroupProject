@@ -286,7 +286,7 @@ public class WorldTile implements Serializable {
 		// Sanity check - must have pile
 		if (object instanceof Pile) {
 			Pile pile = (Pile) object;
-			pile.addAllItems(player.getPocket());
+			pile.addAllItems(player.getPocket().getItems());
 			pile.addAllItems(player.getBag().getItems());
 		} else {
 			createPile();

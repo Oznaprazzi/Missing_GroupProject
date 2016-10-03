@@ -46,7 +46,7 @@ public class FurnitureTests {
 		} catch (GameException e) {
 			fail(e.getMessage());
 		}
-		assertEquals(player.getPocket().size(), 1); // checks that player has 1
+		assertEquals(player.getPocket().getItems().size(), 1); // checks that player has 1
 													// item in pocket
 	}
 
