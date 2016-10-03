@@ -206,21 +206,20 @@ public class GameView extends View {
 		gbc_layeredPane.gridy = 16;
 		ctrlPanel.add(layeredPane, gbc_layeredPane);
 		
-		System.out.printf("wd: %d, ht: %d", layeredPane.getWidth(), layeredPane.getHeight());
 		btnUp = new JButton("U");
-		btnUp.setBounds(0+DPAD_BTN_SIZE, 30, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
+		btnUp.setBounds(32, 30, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
 		layeredPane.add(btnUp);
 
 		btnLeft = new JButton("L");
-		btnLeft.setBounds(0, 100, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
+		btnLeft.setBounds(82-DPAD_BTN_SIZE, 100, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
 		layeredPane.add(btnLeft);
 
 		btnRight = new JButton("R");
-		btnRight.setBounds(DPAD_BTN_SIZE*3, 100, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
+		btnRight.setBounds(82, 100, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
 		layeredPane.add(btnRight);
 
 		btnDown = new JButton("D");
-		btnDown.setBounds(0+DPAD_BTN_SIZE, 100, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
+		btnDown.setBounds(32, 100, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
 		layeredPane.add(btnDown);
 		this.add(gamePanel, BorderLayout.CENTER);
 		this.add(ctrlPanel, BorderLayout.EAST);
