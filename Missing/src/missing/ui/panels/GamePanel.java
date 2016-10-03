@@ -56,6 +56,7 @@ public class GamePanel extends JPanel {
 	 */
 	public GamePanel(VControl controller) {
 		this.controller = controller;
+		initialise();
 	}
 	public void setController(VControl controller){
 		this.controller = controller;

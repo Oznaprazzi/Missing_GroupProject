@@ -25,7 +25,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,7 +33,6 @@ import javax.swing.Timer;
 
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
-import missing.game.world.World;
 import missing.helper.GameException;
 import missing.networking.Client;
 import missing.ui.assets.GGame;
@@ -49,20 +47,7 @@ import missing.ui.views.GameView;
  */
 @SuppressWarnings("serial")
 public class VControl extends JFrame {
-	
-	/*The control buttons*/
-	private JButton moveLeftBtn;
-	private JButton moveRightBtn;
-	private JButton moveDownBtn;
-	private JButton moveUpBtn;
-	
-	private JButton viewMapBtn;
-	private JButton viewBagBtn;
-	private JButton turnLeftBtn;
-	private JButton turnRightBtn;
-	
-	
-	
+
 	/**
 	 * Views are essentially JPanels with different content. This abstract class
 	 * should be extended by other classes.
@@ -109,13 +94,14 @@ public class VControl extends JFrame {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		// Asks for confirmation when closing the game
 		addWindowListener(new java.awt.event.WindowAdapter() {
-		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-			       int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?","Quit game",JOptionPane.YES_NO_OPTION);
-			       if(result == JOptionPane.YES_OPTION){
-			    	   closeVControl();
-			       }	
-		    }
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit game",
+						JOptionPane.YES_NO_OPTION);
+				if (result == JOptionPane.YES_OPTION) {
+					closeVControl();
+				}
+			}
 		});
 	}
 
@@ -132,23 +118,28 @@ public class VControl extends JFrame {
 	public int getGameView() {
 		return 3;
 	}
-	
+
 	public int getPlayGameView() {
 		return 4;
 	}
+
 	public int getHostGameView() {
 		return 5;
 	}
+
 	public int getJoinGameView() {
 		return 6;
 	}
+
 	public int getLobbyView() {
 		return 7;
 	}
-	public int getClientWaitingView(){
+
+	public int getClientWaitingView() {
 		return 8;
 	}
-	public int getCreatePlayerView(){
+
+	public int getCreatePlayerView() {
 		return 9;
 	}
 
@@ -163,7 +154,7 @@ public class VControl extends JFrame {
 	 * @param index
 	 */
 	public void changeView(int index) {
-		//TODO: change GGame view
+		// TODO: change GGame view
 		if (index < 0 || index >= views.length) {
 			return;
 		}
@@ -182,43 +173,45 @@ public class VControl extends JFrame {
 		// Redraw the whole frame
 		revalidate();
 	}
-	
+
 	/**
 	 * Disconnects client from game and closes window
 	 */
-	private void closeVControl(){
-		if (client!=null){
+	private void closeVControl() {
+		if (client != null) {
 			client.disconnectClient();
 		}
 		System.exit(0);
 	}
-	
+
 	/**
-	 * Called if the player performed an action on a Container
-	 * Displays the items in that Container
+	 * Called if the player performed an action on a Container Displays the
+	 * items in that Container
 	 */
-	public void displayContainerItems(){
-		//TODO: implement. get container items in square in front of player
+	public void displayContainerItems() {
+		// TODO: implement. get container items in square in front of player
 		// will probably call another method, maybe in GameView
 	}
-	
+
 	/**
-	 * Called if the player performed an action on a Pile
-	 * Displays the items in that Pile
+	 * Called if the player performed an action on a Pile Displays the items in
+	 * that Pile
 	 */
-	public void displayPileItems(){
-		//TODO: similar to displayContainerItems
+	public void displayPileItems() {
+		// TODO: similar to displayContainerItems
 	}
-	
+
 	/**
-	 * Displays a message momentarily on the screen.
-	 * Used when a player disconnects
-	 * @param msg message to be displayed
+	 * Displays a message momentarily on the screen. Used when a player
+	 * disconnects
+	 * 
+	 * @param msg
+	 *            message to be displayed
 	 */
-	public void displayTimedMessage(String msg){
+	public void displayTimedMessage(String msg) {
 		JDialog dialog = new JDialog(this);
-		Timer timer = new Timer(3000, new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		Timer timer = new Timer(3000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				dialog.setVisible(false);
 				dialog.dispose();
 			}
@@ -235,12 +228,14 @@ public class VControl extends JFrame {
 		dialog.getContentPane().setBackground(Color.YELLOW);
 		dialog.setVisible(true);
 	}
-	
+
 	/**
 	 * Displays a message dialog
-	 * @param msg message to be displayed
+	 * 
+	 * @param msg
+	 *            message to be displayed
 	 */
-	public void displayException(String msg){
+	public void displayException(String msg) {
 		JOptionPane.showMessageDialog(views[3], msg);
 	}
 	// Helper methods
@@ -257,16 +252,17 @@ public class VControl extends JFrame {
 	public GGame getGGame() {
 		return gGame;
 	}
-	public void updateGGame(Game game) throws GameException{
+
+	public void updateGGame(Game game) throws GameException {
 		this.gGame = new GGame(game, views[3]);
-		((GameView)views[3]).updateGamePanel(this);
+		((GameView) views[3]).updateGamePanel(this);
 	}
-	
+
 	public void setGGame(GGame gGame) {
 		this.gGame = gGame;
 		views[3].initialise();
 	}
-	
+
 	public int getPlayerID() {
 		return playerID;
 	}
@@ -274,23 +270,26 @@ public class VControl extends JFrame {
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
 	}
-	public View getView(int viewIndex){
+
+	public View getView(int viewIndex) {
 		return views[viewIndex];
 	}
-	public void setIsHost(boolean isHost){
+
+	public void setIsHost(boolean isHost) {
 		this.isHost = isHost;
 	}
-	public boolean isHost(){
+
+	public boolean isHost() {
 		return isHost;
 	}
-	public void setClient(Client client){
+
+	public void setClient(Client client) {
 		this.client = client;
 	}
+
 	@Override
-	public void repaint(){
+	public void repaint() {
 		super.repaint();
 	}
-	
 
-	
 }
