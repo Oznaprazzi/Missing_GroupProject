@@ -130,10 +130,7 @@ public class GWTile {
 			g.drawImage(GameAssets.getRockImage(), x+(rockSize/2) ,y+(rockSize/2), rockSize,rockSize,null);
 		}else if(tile.getObject() instanceof FishArea){
 			g.drawImage(GameAssets.getFishingAreaImage(),x,y,size,size,null);
-			
 		}else if(tile.getObject() instanceof Pile){
-			g.setColor(Color.green);
-			g.fillRect(x, y, size, size);
 			g.drawImage(GameAssets.getPileOfItemsImage(), x,y,size,size,null);
 		}
 	
