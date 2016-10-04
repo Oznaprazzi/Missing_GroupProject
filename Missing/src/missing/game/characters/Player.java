@@ -233,8 +233,6 @@ public class Player extends Character {
 	@Override
 	public void performAction(Player player) throws GameException, SignalException {
 		this.health--;
-		System.out.println(String.format("W(%d,%d)T(%d,%d):%d", this.getWorldLocation().x, this.getWorldLocation().y,
-				this.getTileLocation().x, this.getTileLocation().y, this.health));
 		if (health == 0) {
 			this.setDead(true);
 			throw new SignalException(String.format("DEAD %d", id));

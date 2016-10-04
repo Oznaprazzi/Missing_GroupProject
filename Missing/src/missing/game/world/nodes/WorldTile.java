@@ -240,7 +240,9 @@ public class WorldTile implements Serializable {
 			// now check if we can revert the pile to an object only
 			if (pile.getItems().isEmpty()) {
 				this.object = null;
+				System.out.println("No more pile");
 			} else if (pile.getItems().size() == 1) {
+				System.out.println("only one item here");
 				this.object = pile.getItems().get(0);
 			}
 		}
@@ -286,8 +288,12 @@ public class WorldTile implements Serializable {
 		// Sanity check - must have pile
 		if (object instanceof Pile) {
 			Pile pile = (Pile) object;
+			if (player.isDead()) {
+				pile.setPlayer(null);
+			}
 			pile.addAllItems(player.getPocket().getItems());
 			pile.addAllItems(player.getBag().getItems());
+			this.object = pile;
 		} else {
 			createPile();
 			convertPlayerToPile(player);
