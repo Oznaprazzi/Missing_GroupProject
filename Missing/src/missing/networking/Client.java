@@ -257,18 +257,20 @@ public class Client extends Thread implements KeyListener {
 				} else if (e.getMessage().contains("DEAD")){
 					String[] msg = e.getMessage().split(" ");
 					int id = Integer.parseInt(msg[1]);
-					if (id==clientID){
-						// this player died
-						vControl.displayDead();
-					}
 					out.println("F");
 					try {
 						vControl.updateGGame(game);
+						System.out.println("updated after killed by tree");
 					} catch (GameException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					vControl.repaint();
+					if (id==clientID){
+						// this player died
+						vControl.displayDead();
+					}
+					System.out.println("repainted killed by tree");
 				}
 			} else if(e.getClass() == GameException.class){
 				vControl.displayException(e.getMessage());
