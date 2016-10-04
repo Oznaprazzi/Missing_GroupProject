@@ -68,6 +68,7 @@ public class Game implements Serializable {
 		this.world = new World();
 		this.spawns = WorldInitialiser.getSpawnPoints();
 		distributeItems(XMLHandler.getItemsFromFile());
+		distributePlayers(avatars);
 	}
 
 	// Getters
@@ -391,6 +392,7 @@ public class Game implements Serializable {
 		Point oldTLoc = player.getTileLocation();
 		WorldTile tile = world.getWorldNodes()[oldWLoc.y][oldWLoc.x].getWorldTiles()[oldTLoc.y][oldTLoc.x];
 		if (player.isInsidePile()) {
+			player.setInsidePile(false);
 			tile.removePlayerFromPile();
 		} else {
 			tile.setObject(null);
@@ -550,4 +552,11 @@ public class Game implements Serializable {
 		}
 	}
 
+	private void distributePlayers(Player[] avatars) {
+		for (Player p : avatars) {
+			Point worldLocation = p.getWorldLocation();
+			Point tileLocation = p.getTileLocation();
+			world.distributeToNode(worldLocation, tileLocation, p);
+		}
+	}
 }

@@ -86,6 +86,7 @@ public abstract class NonMovable extends Item {
 	 */
 	protected void checkIfDead(Player player) throws SignalException {
 		if (player.getHealth() == 0) {
+			player.setDead(true);
 			throw new SignalException(String.format("DEAD %d", player.getId()));
 		}
 	}
