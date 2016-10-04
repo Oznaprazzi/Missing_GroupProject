@@ -15,6 +15,9 @@
  *  3 Oct 16			Jian Wei			Fixed bug in setHealth method so it can be set to 0
  *  3 Oct 16			Casey Huang			Updated methods associated with pocket
  *  4 oct 16			Jian Wei			added a Money field
+ *  4 Oct 16			Chris Rabe			created a flag which indicates if the player is inside a pile
+ *  5 Oct 16			Chris Rabe			buffed player damage to other players - now takes away 10 health
+
  */
 
 package missing.game.characters;
@@ -58,7 +61,7 @@ public class Player extends Character {
 	}
 
 	// Getters and setters...
-	
+
 	public boolean isInsidePile() {
 		return insidePile;
 	}
@@ -253,7 +256,7 @@ public class Player extends Character {
 	 */
 	@Override
 	public void performAction(Player player) throws GameException, SignalException {
-		this.health--;
+		this.health -= 10;
 		if (health <= 0) {
 			this.setDead(true);
 			throw new SignalException(String.format("DEAD %d", id));

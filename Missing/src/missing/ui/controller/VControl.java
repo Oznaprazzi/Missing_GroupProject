@@ -93,7 +93,7 @@ public class VControl extends JFrame {
 	}
 
 	/** Size of each view */
-	public static final Dimension VIEW_SIZE = new Dimension(750, 600);
+	public static final Dimension VIEW_SIZE = new Dimension(1000, 1000);
 
 	private View[] views;
 	private int cur = 0;
@@ -164,7 +164,6 @@ public class VControl extends JFrame {
 		
 		loadGame.addActionListener(e->{
 				fc = new JFileChooser("Load");
-				boolean success = false;
 				File theFile = null;
 				String xmlFile = "";
 				

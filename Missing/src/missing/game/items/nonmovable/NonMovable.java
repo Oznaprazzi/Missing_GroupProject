@@ -6,6 +6,7 @@
  * 	Date				Author					Changes
 	7 Sep 16			Edward Kelly			Created NonMovable class
 	7 Sep 16 			Casey Huang				Created width and height fields and generated getters and setters for them.
+	5 Oct 16			Chris Rabe				fixed checking if the player died
  */
 package missing.game.items.nonmovable;
 
@@ -85,7 +86,7 @@ public abstract class NonMovable extends Item {
 	 * @throws SignalException
 	 */
 	protected void checkIfDead(Player player) throws SignalException {
-		if (player.getHealth() == 0) {
+		if (player.getHealth() <= 0) {
 			player.setDead(true);
 			throw new SignalException(String.format("DEAD %d", player.getId()));
 		}
