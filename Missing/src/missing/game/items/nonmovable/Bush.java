@@ -18,7 +18,6 @@ import javax.swing.Timer;
 
 import missing.game.characters.Player;
 import missing.game.items.movable.Food;
-import missing.game.items.movable.Wood;
 import missing.game.items.movable.Food.FoodType;
 import missing.helper.GameException;
 
