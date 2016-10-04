@@ -40,7 +40,9 @@ public class CreatePlayerView extends View{
 	/*Dimensions for the Game Panels width and height */
 	private final int panelWd = 800;
 	private final int panelHt = 600;
-
+	
+	private int wd, ht;
+	
 	private List<Image> imgList;
 
 	private int imgIndex = 0;
@@ -49,6 +51,7 @@ public class CreatePlayerView extends View{
 	private final int RECT_SIZE = 250;
 	private final int RECT_LEFT = 375;
 	private final int RECT_TOP = 0;
+	
 
 	private TextField textField;
 	private JPanel imgPanel;
@@ -78,7 +81,7 @@ public class CreatePlayerView extends View{
 	}
 	@Override
 	public void initialise() {
-
+	
 		setSize(panelWd, panelHt);
 		setBackground(Color.black);
 		GridBagLayout gbl_panel = new GridBagLayout();
@@ -104,6 +107,8 @@ public class CreatePlayerView extends View{
 			}
 
 		};
+		
+		
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		imgPanel.setBackground(Color.gray.darker());
 		gbc_panel_1.insets = new Insets(0, 0, 5, 0);

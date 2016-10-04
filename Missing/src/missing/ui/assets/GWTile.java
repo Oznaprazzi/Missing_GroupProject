@@ -181,6 +181,16 @@ public class GWTile {
 		default:
 			break;
 		}
+		/*Dimensions for the bar. */
+		final int barHeight = size/10;
+		final int barWidth = size;
+		System.out.println(curPlayer.getHealth());
+		int healthWidth = (curPlayer.getHealth()/2);
+		g.setColor(Color.red);
+		g.fillRect(x, y, barWidth, barHeight);
+		
+		g.setColor(Color.green);
+		g.fillRect(x, y, healthWidth, barHeight);
 		}
 	}
 	
