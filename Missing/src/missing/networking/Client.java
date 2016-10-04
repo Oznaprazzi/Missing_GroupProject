@@ -113,18 +113,13 @@ public class Client extends Thread implements KeyListener {
 			}
 
 			// listen for updates from server
+			boolean playerDied = false;
 			while (true) {
 				Object input = in.readObject();
 				if (input == null) {
 					break;
 				}
 				if (input.getClass() == String.class) {
-					if (input.equals("die")) {
-						System.out.println("got die");
-						// player died
-						vControl.displayDead();
-						continue;
-					}
 					// received instruction
 					// player to be changed
 					int movingPlayer = (Integer) (in.readObject());
@@ -155,8 +150,15 @@ public class Client extends Thread implements KeyListener {
 						try {
 							game.performAction(movingPlayer);
 						} catch (GameException | SignalException e) {
-							// do nothing, message only displayed for
-							// player that performed he action
+							if (e.getClass()==SignalException.class){
+								if (e.getMessage().contains("DEAD")){
+									String[] msg = e.getMessage().split(" ");
+									int id = Integer.parseInt(msg[1]);
+									if (clientID==id){
+										playerDied = true;							
+									}
+								}
+							}
 						}
 					} 
 					else if (input.equals("disconnect")) {
@@ -171,6 +173,10 @@ public class Client extends Thread implements KeyListener {
 						e.printStackTrace();
 					}
 					vControl.repaint();
+					if (playerDied){
+						vControl.displayDead();
+						playerDied = false;
+					}
 				}
 			}
 			socket.close();
@@ -254,16 +260,15 @@ public class Client extends Thread implements KeyListener {
 					if (id==clientID){
 						// this player died
 						vControl.displayDead();
-					} else {
-						// killed another player
-						out.println("kill "+id);
-						try {
-							vControl.updateGGame(game);
-						} catch (GameException e1) {
-							vControl.displayException(e.getMessage());
-						}
-						vControl.repaint();
 					}
+					out.println("F");
+					try {
+						vControl.updateGGame(game);
+					} catch (GameException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					vControl.repaint();
 				}
 			} else if(e.getClass() == GameException.class){
 				vControl.displayException(e.getMessage());

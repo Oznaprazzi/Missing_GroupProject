@@ -233,6 +233,7 @@ public class WorldTile implements Serializable {
 	 * This method assumes that the current object field is an instance of Pile.
 	 */
 	public void removePlayerFromPile() {
+		System.out.println("Removing player from pile");
 		// Sanity check - must have pile
 		if (object instanceof Pile) {
 			Pile pile = (Pile) object;
@@ -244,6 +245,8 @@ public class WorldTile implements Serializable {
 			} else if (pile.getItems().size() == 1) {
 				System.out.println("only one item here");
 				this.object = pile.getItems().get(0);
+			} else {
+				this.object = pile;
 			}
 		}
 	}
@@ -257,6 +260,7 @@ public class WorldTile implements Serializable {
 		if (object instanceof Pile) {
 			Pile pile = (Pile) object;
 			pile.setPlayer(player);
+			this.object = pile;
 		} else {
 			createPile();
 			addPlayerToPile(player);
@@ -272,6 +276,7 @@ public class WorldTile implements Serializable {
 		if (object instanceof Pile) {
 			Pile pile = (Pile) object;
 			pile.addItem(item);
+			this.object = pile;
 		} else {
 			createPile();
 			addObjectToPile(item);
