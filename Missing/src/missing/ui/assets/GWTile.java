@@ -27,6 +27,8 @@ import java.awt.Graphics;
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
+import missing.game.items.movable.Food;
+import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Fireplace;
@@ -132,8 +134,20 @@ public class GWTile {
 			g.drawImage(GameAssets.getFishingAreaImage(),x,y,size,size,null);
 		}else if(tile.getObject() instanceof Pile){
 			g.drawImage(GameAssets.getPileOfItemsImage(), x,y,size,size,null);
-		}
-	
+		}else if(tile.getObject() instanceof Food){
+				Food theFood = (Food) tile.getObject();
+				if(theFood.getFoodType() == FoodType.APPLE){
+					g.drawImage(GameAssets.getAppleImage(), x, y, size ,size, null);
+				}else if(theFood.getFoodType() == FoodType.BERRY){
+					g.drawImage(GameAssets.getBerriesImage(), x, y, size, size, null);
+				}else if(theFood.getFoodType() == FoodType.FISH){
+					g.drawImage(GameAssets.getFishImage(), x, y, size, size, null);
+				}
+			}
+		
+		
+		
+		
 		/*If the tile is not enterable and there is an object image for it.*/
 		if(!tile.isEnterable() && tile.getObject() != null){
 			g.setColor(Color.green);
@@ -167,6 +181,16 @@ public class GWTile {
 		default:
 			break;
 		}
+		/*Dimensions for the bar. */
+		final int barHeight = size/10;
+		final int barWidth = size;
+		System.out.println(curPlayer.getHealth());
+		int healthWidth = (curPlayer.getHealth()/2);
+		g.setColor(Color.red);
+		g.fillRect(x, y, barWidth, barHeight);
+		
+		g.setColor(Color.green);
+		g.fillRect(x, y, healthWidth, barHeight);
 		}
 	}
 	

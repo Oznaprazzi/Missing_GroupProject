@@ -27,6 +27,7 @@ public class GameViewTests {
 		// Create an array of players
 		// one at worldnode 1,1 and at tile position 1,1
 		Player p = new Player(0, "Chris", new Point(1,1), new Point(1,1));
+		p.setHealth(50); //test the player when he is on one health.
 		//p.setHealth(1); //test the player when he is on one health.
 		Player[] avatars = { p};
 		try {
