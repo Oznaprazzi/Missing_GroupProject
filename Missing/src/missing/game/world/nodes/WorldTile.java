@@ -13,6 +13,7 @@
  *  23 Sep 16		Casey Huang			put if statement after item is assigned in getDistributedObject method
  *  27 Sep 16		Chris Rabe			created Pile class
  *  3 Oct 16		Chris Rabe			modified Pile class constructor
+ *  4 Oct 16		Chris Rabe			fixed pile bug not returning pile object if player is inside a pile
  */
 package missing.game.world.nodes;
 

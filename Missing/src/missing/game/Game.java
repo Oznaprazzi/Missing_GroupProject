@@ -12,6 +12,8 @@
  *  27 Sep 16			Chris Rabe				upgraded game logic
  *  27 Sep 16			Chris Rabe				implemented spawn points
  *  30 Sep 16			Chris Rabe				added null checks
+ *  4 Oct 16			Chris Rabe				fixed pile bugs
+ *  5 Oct 16			Chris Rabe				created killall method
  */
 
 package missing.game;
@@ -86,6 +88,15 @@ public class Game implements Serializable {
 	}
 
 	// Methods for interacting with the game
+
+	/**
+	 * Kills all the players in the game and converts all the players into pile
+	 * objects. This method should be called when the host client disconnects so
+	 * that it is possible to save the game state easily.
+	 */
+	public void killAll() {
+		// TODO fill this in
+	}
 
 	/**
 	 * Moves the player to a certain direction.

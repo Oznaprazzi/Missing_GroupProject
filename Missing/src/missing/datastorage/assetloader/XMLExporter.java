@@ -8,9 +8,14 @@
 
 package missing.datastorage.assetloader;
 
+import missing.game.Game;
+
 /**
  * This class encapsulates all the saving and exporting logic
  */
 public class XMLExporter {
 
+	public static void saveGame(Game game, String filename) {
+
+	}
 }
