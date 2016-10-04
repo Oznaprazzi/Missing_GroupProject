@@ -174,7 +174,6 @@ public class Game implements Serializable {
 			} catch (SignalException e) {
 				// catch dead player
 				if (e.getMessage().contains("DEAD")) {
-					System.out.println("Dead player");
 					removeDeadPlayer(e.getMessage());
 				}
 				throw new SignalException(e.getMessage());
@@ -194,7 +193,6 @@ public class Game implements Serializable {
 	 */
 	public boolean validMove(int id, Direction direction) throws GameException {
 		Player player = avatars[id];
-		System.out.println(String.format("Player %d : is dead : %b", id, player.isDead()));
 		if (player.isDead()) {
 			return false;
 		}
@@ -246,7 +244,6 @@ public class Game implements Serializable {
 	private void removeDeadPlayer(String signal) {
 		String[] message = signal.split(" ");
 		int id = Integer.parseInt(message[1]);
-		System.out.println("id: " + id);
 		convertPlayerToPile(id);
 	}
 

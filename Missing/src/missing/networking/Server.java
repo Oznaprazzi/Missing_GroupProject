@@ -115,7 +115,6 @@ public class Server extends Thread {
 							continue;
 						// new input from client.
 						String input = ins[playerID].readLine();
-						System.out.println("Server: " + input + " input received from player " + playerID);
 
 						// move that player in given direction
 						if (input.equals("NORTH") || input.equals("SOUTH") || input.equals("EAST")
@@ -149,7 +148,6 @@ public class Server extends Thread {
 				} catch (IOException e) {
 					// TODO implement disconnects properly
 					e.printStackTrace();
-					System.out.println();
 				}
 			}
 
