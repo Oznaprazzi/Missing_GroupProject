@@ -23,6 +23,7 @@ package missing.ui.assets;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
@@ -52,14 +53,14 @@ public class GWTile {
 	private WorldTile tile;
 	/** The current size of this tile. */
 	private int size;
-	/** The current player, used just to obtain data about drawing position.*/
+	/** The current player, used just to obtain data about drawing position. */
 	private Player curPlayer;
 
 	public GWTile(WorldTile tile, int size) throws GameException {
 		this.tile = tile;
 		this.size = size;
 	}
-	
+
 	// Getters and Setters
 
 	public int getSize() {
@@ -69,20 +70,22 @@ public class GWTile {
 	public void setSize(int size) {
 		this.size = size;
 	}
-	
-	public WorldTile getWorldTile(){
+
+	public WorldTile getWorldTile() {
 		return tile;
 	}
-
 
 	/**
 	 * Draw the tile at the specified x and y position onto this graphics
 	 * context.
+	 * 
 	 * @param g
 	 * @param x
 	 * @param y
-	 * @param inMapView whether the MapView is currently displayed
-	 * @param player the local player
+	 * @param inMapView
+	 *            whether the MapView is currently displayed
+	 * @param player
+	 *            the local player
 	 * @throws GameException
 	 */
 	public void draw(Graphics g, int x, int y, boolean inMapView, Player player) throws GameException {
@@ -102,114 +105,165 @@ public class GWTile {
 		default:
 			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
 		}
-		/*Draws the player. */
-		if(tile.isOccupied() && tile.getObject() instanceof Player){
-				curPlayer = (Player)(tile.getObject());
-				if (player == null || player.isDead() || !inMapView){
-					// draw all players in node if not in mapview
-					drawPlayer(g,x,y,tile.getObject());
-				}
-				else if (((Player)tile.getObject()).getId() == player.getId()){
-					// only draw own player if in mapview
-					drawPlayer(g,x,y,tile.getObject());
-				}
+		/* Draws the player. */
+		if (tile.isOccupied() && tile.getObject() instanceof Player) {
+			curPlayer = (Player) (tile.getObject());
+			if (player == null || player.isDead() || !inMapView) {
+				// draw all players in node if not in mapview
+				drawPlayer(g, x, y, tile.getObject());
+			} else if (((Player) tile.getObject()).getId() == player.getId()) {
+				// only draw own player if in mapview
+				drawPlayer(g, x, y, tile.getObject());
+			}
 		}
-		
-		/*Draws all of the nonmovable items onto the pile. */
-		if(tile.getObject() instanceof Tree){
+
+		/* Draws all of the nonmovable items onto the pile. */
+		if (tile.getObject() instanceof Tree) {
 			int number = (int) (Math.random() * 2) + 1;
 			g.drawImage(GameAssets.getTreeImage(number), x, y, size, size, null);
-		}else if(tile.getObject() instanceof Bush){
-			int bushSize = size/2;
-			g.drawImage(GameAssets.getBushImage(), x+(bushSize/2) ,y+(bushSize/2) ,bushSize,bushSize, null);
-		}else if(tile.getObject() instanceof Fireplace){
-			int fpSize = size/2;
-			g.drawImage(GameAssets.getFireplaceImage(), x+(fpSize/2) ,y+(fpSize/2) ,fpSize,fpSize, null);
-		}else if(tile.getObject() instanceof Wood){
-			g.drawImage(GameAssets.getWoodImage(), x ,y ,size,size, null);
-		}else if(tile.getObject() instanceof Dirt){
-			g.drawImage(GameAssets.getDirtImage(), x, y, size,size,null);
-		}else if(tile.getObject() instanceof Rock){
-			int rockSize = (size/2);
-			g.drawImage(GameAssets.getRockImage(), x+(rockSize/2) ,y+(rockSize/2), rockSize,rockSize,null);
-		}else if(tile.getObject() instanceof FishArea){
-			g.drawImage(GameAssets.getFishingAreaImage(),x,y,size,size,null);
-		}else if(tile.getObject() instanceof Pile){
-			g.drawImage(GameAssets.getPileOfItemsImage(), x,y,size,size,null);
-		}else if(tile.getObject() instanceof Food){
-				Food theFood = (Food) tile.getObject();
-				if(theFood.getFoodType() == FoodType.APPLE){
-					g.drawImage(GameAssets.getAppleImage(), x, y, size ,size, null);
-				}else if(theFood.getFoodType() == FoodType.BERRY){
-					g.drawImage(GameAssets.getBerriesImage(), x, y, size, size, null);
-				}else if(theFood.getFoodType() == FoodType.FISH){
-					g.drawImage(GameAssets.getFishImage(), x, y, size, size, null);
-				}
+		} else if (tile.getObject() instanceof Bush) {
+			int bushSize = size / 2;
+			g.drawImage(GameAssets.getBushImage(), x + (bushSize / 2), y + (bushSize / 2), bushSize, bushSize, null);
+		} else if (tile.getObject() instanceof Fireplace) {
+			int fpSize = size / 2;
+			g.drawImage(GameAssets.getFireplaceImage(), x + (fpSize / 2), y + (fpSize / 2), fpSize, fpSize, null);
+		} else if (tile.getObject() instanceof Wood) {
+			g.drawImage(GameAssets.getWoodImage(), x, y, size, size, null);
+		} else if (tile.getObject() instanceof Dirt) {
+			g.drawImage(GameAssets.getDirtImage(), x, y, size, size, null);
+		} else if (tile.getObject() instanceof Rock) {
+			int rockSize = (size / 2);
+			g.drawImage(GameAssets.getRockImage(), x + (rockSize / 2), y + (rockSize / 2), rockSize, rockSize, null);
+		} else if (tile.getObject() instanceof FishArea) {
+			g.drawImage(GameAssets.getFishingAreaImage(), x, y, size, size, null);
+		} else if (tile.getObject() instanceof Pile) {
+			g.drawImage(GameAssets.getPileOfItemsImage(), x, y, size, size, null);
+		} else if (tile.getObject() instanceof Food) {
+			Food theFood = (Food) tile.getObject();
+			if (theFood.getFoodType() == FoodType.APPLE) {
+				g.drawImage(GameAssets.getAppleImage(), x, y, size, size, null);
+			} else if (theFood.getFoodType() == FoodType.BERRY) {
+				g.drawImage(GameAssets.getBerriesImage(), x, y, size, size, null);
+			} else if (theFood.getFoodType() == FoodType.FISH) {
+				g.drawImage(GameAssets.getFishImage(), x, y, size, size, null);
 			}
-		
-		
-		
-		
-		/*If the tile is not enterable and there is an object image for it.*/
-		if(!tile.isEnterable() && tile.getObject() != null){
+		}
+
+		/* If the tile is not enterable and there is an object image for it. */
+		if (!tile.isEnterable() && tile.getObject() != null) {
 			g.setColor(Color.green);
 			g.drawOval(x, y, size, size);
 		}
 	}
-	
+
 	/**
-	 * Draws the player based on his current Orientation. TODO: need to update this to show proper player animation.
+	 * Draws the player based on his current Orientation. TODO: need to update
+	 * this to show proper player animation.
+	 * 
 	 * @param g
 	 */
-	private void drawPlayer(Graphics g, int x, int y, TileObject tileobj){
+	private void drawPlayer(Graphics g, int x, int y, TileObject tileobj) {
 		g.setColor(Color.red);
-		int pSize = size/2;
-		
-		if(tileobj instanceof Player){
+		int pSize = size / 2;
+
+		if (tileobj instanceof Player) {
 			curPlayer = ((Player) tileobj);
-		switch(tileobj.getOrientation()){
-		case NORTH:
-			g.drawImage(GameAssets.getPlayerImage(curPlayer.getImageID(), "north"), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
-			break;
-		case SOUTH:
-			g.drawImage(GameAssets.getPlayerImage(curPlayer.getImageID(), "south"), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
-			break;
-		case EAST:
-			g.drawImage(GameAssets.getPlayerImage(curPlayer.getImageID(), "east"), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
-			break;
-		case WEST:
-			g.drawImage(GameAssets.getPlayerImage(curPlayer.getImageID(), "west"), x+(pSize/2),y+(pSize/2),pSize,pSize,null);
-			break;
-		default:
-			break;
-		}
-		/*Dimensions for the bar. */
-		drawHealthBar(x,y,curPlayer,g);
+			switch (tileobj.getOrientation()) {
+			case NORTH:
+				g.drawImage(GameAssets.getPlayerImage(curPlayer.getImageID(), "north"), x + (pSize / 2),
+						y + (pSize / 2), pSize, pSize, null);
+				break;
+			case SOUTH:
+				g.drawImage(GameAssets.getPlayerImage(curPlayer.getImageID(), "south"), x + (pSize / 2),
+						y + (pSize / 2), pSize, pSize, null);
+				break;
+			case EAST:
+				g.drawImage(GameAssets.getPlayerImage(curPlayer.getImageID(), "east"), x + (pSize / 2), y + (pSize / 2),
+						pSize, pSize, null);
+				break;
+			case WEST:
+				g.drawImage(GameAssets.getPlayerImage(curPlayer.getImageID(), "west"), x + (pSize / 2), y + (pSize / 2),
+						pSize, pSize, null);
+				break;
+			default:
+				break;
+			}
+			/* Dimensions for the bar. */
+			drawHealthBar(x, y, g);
 		}
 	}
-	
+
 	/**
-	 * Helper method for drawing the health of a tile object.
+	 * Helper method for drawing the health of a player.
+	 * This works by dividing the health into a scale of 8 sub sections.
+	 * If the health falls within that certain range, it will draw a certain
+	 * 
 	 * @param x
-	 * @param y
-	 * @param obj
+	 * @param ys
 	 * @param g
 	 */
-	private void drawHealthBar(int x, int y, TileObject obj, Graphics g){
-		/*Dimensions for the bar. */
-		final int barHeight = size/10;
-		final int barWidth = (int) (size*0.9); //make it 90% width of the tile.
-		System.out.println(barWidth);
-		int healthWidth = 0;
-		if(obj instanceof Player)
-			healthWidth = (curPlayer.getHealth() / 2); //width of the healthbar.
-		
-		System.out.println(healthWidth);
-		g.setColor(Color.red);
-		g.fillRect(x, y, barWidth, barHeight);
-		
-		g.setColor(Color.green);
-		g.fillRect(x, y, healthWidth, barHeight);
+	private void drawHealthBar(int x, int y, Graphics g) {
+
+		/* Dimensions for the bar. */
+		final int barHeight = size / 10;
+		final int barWidth = size;
+		int curHealth = curPlayer.getHealth();
+		Color fill = null;
+		int sqsize = size / 8;
+		/* Divide the health bar into 8 sub sections. */
+		for (int i = 0; i != 8; i++) {
+			if(curHealth >= 88 && curHealth <= 100){ //case 8
+				fill = Color.green;
+			}else if(curHealth >= 76 && curHealth <= 87){ //case 7
+				if(i >= 0 && i < 7){
+					fill = Color.green;
+				}else{
+					fill = Color.red;	
+				}
+			}else if(curHealth >= 63 && curHealth <= 75){ //case 6
+				if(i >= 0 && i < 6){
+					fill = Color.green;
+				}else
+				fill = Color.red;
+			}else if(curHealth >= 50 && curHealth <= 62){ //case 5
+				if(i >= 0 && i < 5){
+					fill = Color.green;
+				}else
+				fill = Color.red;
+			}else if(curHealth >= 38 && curHealth <= 49){ //case 4
+				if(i >= 0 && i < 4){
+					fill = Color.green;
+				}else
+				fill = Color.red;
+			}else if(curHealth >= 25 && curHealth <= 37){ //case 3
+				if(i >= 0 && i < 3){
+					fill = Color.green;
+				}else
+				fill = Color.red;
+			
+			}else if(curHealth >= 13 && curHealth <= 36){ //case 2
+				if(i >= 0 && i < 2){
+					fill = Color.green;
+				}else
+				fill = Color.red;
+			}else if(curHealth >= 1 && curHealth <= 35){ //case 1
+				if(i == 0){
+					fill = Color.green;
+				}else
+				fill = Color.red;
+			}else{  //0 - player dead.
+				fill = Color.red;
+			}
+			
+			/* Now draw all of the squares with a specified fill color.. */
+			g.setColor(fill);
+			g.fillRect(x, y, sqsize, barHeight);
+			g.setColor(Color.black);
+			g.drawRect(x, y, sqsize, barHeight);
+			x = x +  sqsize;	
+		}
+			
+		}
 	}
-	
-}
+
+
