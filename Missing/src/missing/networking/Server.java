@@ -180,7 +180,6 @@ public class Server extends Thread {
 			outs[killedPlayer].reset();
 			outs[killedPlayer].writeObject("die");
 			outs[killedPlayer].flush();
-			System.out.println("wrote die");
 		} catch (IOException e) {
 			if (e.getClass() == SocketException.class){
 				System.out.println("disconnect");

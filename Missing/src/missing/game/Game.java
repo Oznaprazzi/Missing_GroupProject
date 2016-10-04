@@ -86,8 +86,6 @@ public class Game implements Serializable {
 
 	// Methods for interacting with the game
 
-	// TODO create a method which checks if the current client is dead
-
 	/**
 	 * Moves the player to a certain direction.
 	 * 
@@ -184,6 +182,7 @@ public class Game implements Serializable {
 	 */
 	public boolean validMove(int id, Direction direction) throws GameException {
 		Player player = avatars[id];
+		System.out.println(String.format("Player %d : is dead : %b", id, player.isDead()));
 		if (player.isDead()) {
 			return false;
 		}
@@ -395,6 +394,7 @@ public class Game implements Serializable {
 			System.out.println("Pile found");
 			tile.removePlayerFromPile();
 		} else {
+			System.out.println("no more pile 2");
 			tile.setObject(null);
 		}
 		// Now we move the player...
