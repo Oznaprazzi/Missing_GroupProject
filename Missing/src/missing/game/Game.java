@@ -394,7 +394,7 @@ public class Game implements Serializable {
 			System.out.println("Pile found");
 			tile.removePlayerFromPile();
 		} else {
-			System.out.println("no more pile 2");
+			System.out.println(tile.getObject().getClass().getName());
 			tile.setObject(null);
 		}
 		// Now we move the player...
