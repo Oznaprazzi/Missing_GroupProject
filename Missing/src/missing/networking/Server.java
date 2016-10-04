@@ -141,12 +141,6 @@ public class Server extends Thread {
 						} else if (input.equals("disconnect")) {
 							// player wants to perform action
 							instruction = "disconnect";
-						} else if (input.contains("kill")) {
-							System.out.println("read kill");
-							// player killed someone
-							int killedPlayer = Integer.parseInt(input.split(" ")[1]);
-							killPlayer(killedPlayer);
-							continue;
 						}
 						//send instructions to clients to update game
 						this.sendInstruction(instruction, playerID, direction);
@@ -174,24 +168,6 @@ public class Server extends Thread {
 		System.out.println("Server stopped");
 	}
 	
-	private void killPlayer(int killedPlayer) throws IOException{
-		if (outs[killedPlayer] == null)return; //disconnected
-		try {
-			outs[killedPlayer].reset();
-			outs[killedPlayer].writeObject("die");
-			outs[killedPlayer].flush();
-		} catch (IOException e) {
-			if (e.getClass() == SocketException.class){
-				System.out.println("disconnect");
-				outs[killedPlayer] = null;
-				ins[killedPlayer] = null;
-				socket[killedPlayer].close();
-				socket[killedPlayer] = null;
-			} else{
-				e.printStackTrace();
-			}
-		}
-	}
 	
 	private void sendInstruction(String action, int playerID, Direction direction) throws IOException{
 		boolean disconnect = false;
