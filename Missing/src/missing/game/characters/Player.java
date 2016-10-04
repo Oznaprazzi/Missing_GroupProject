@@ -14,6 +14,7 @@
  *  										to container class.
  *  3 Oct 16			Jian Wei			Fixed bug in setHealth method so it can be set to 0
  *  3 Oct 16			Casey Huang			Updated methods associated with pocket
+ *  4 oct 16			Jian Wei			added a Money field
  */
 
 package missing.game.characters;
@@ -22,6 +23,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import missing.game.items.movable.Food;
+import missing.game.items.movable.Money;
 import missing.game.items.movable.Movable;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
@@ -43,6 +45,7 @@ public class Player extends Character {
 	private boolean insidePile;
 	private int id; // client ID
 	private int imageID; // sprite ID
+	private Money money;
 
 	public Player(int id, String name, Point worldLocation, Point tileLocation) {
 		super(name, String.format("%s's avatar.", name), worldLocation, tileLocation, Direction.SOUTH, Direction.ALL);
@@ -51,6 +54,7 @@ public class Player extends Character {
 		bag = new Bag();
 		this.isDead = false;
 		this.id = id;
+		this.money = new Money(null,null, tileLocation, tileLocation, 1, 1);
 	}
 
 	// Getters and setters...
@@ -111,6 +115,14 @@ public class Player extends Character {
 
 	public void setBag(Bag bag) {
 		this.bag = bag;
+	}
+	
+	public int getMoney(){
+		return money.getMoney();
+	}
+	
+	public void setMoney(int m){
+		money.setMoney(m);
 	}
 
 	// Methods for use
