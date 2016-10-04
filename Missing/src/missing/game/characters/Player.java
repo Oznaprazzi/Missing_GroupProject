@@ -40,6 +40,7 @@ public class Player extends Character {
 	private Pocket pocket;
 	private Bag bag;
 	private boolean isDead;
+	private boolean insidePile;
 	private int id; // client ID
 	private int imageID; // sprite ID
 
@@ -53,6 +54,14 @@ public class Player extends Character {
 	}
 
 	// Getters and setters...
+	
+	public boolean isInsidePile() {
+		return insidePile;
+	}
+
+	public void setInsidePile(boolean insidePile) {
+		this.insidePile = insidePile;
+	}
 
 	public int getImageID() {
 		return imageID;

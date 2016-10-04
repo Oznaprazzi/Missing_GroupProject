@@ -390,13 +390,10 @@ public class Game implements Serializable {
 		Point oldWLoc = player.getWorldLocation();
 		Point oldTLoc = player.getTileLocation();
 		WorldTile tile = world.getWorldNodes()[oldWLoc.y][oldWLoc.x].getWorldTiles()[oldTLoc.y][oldTLoc.x];
-		if (tile.getObject() instanceof Pile) {
-			System.out.println("Pile found");
+		if (player.isInsidePile()) {
+			player.setInsidePile(false);
 			tile.removePlayerFromPile();
 		} else {
-			if (tile.getObject() != null) {
-				System.out.println(tile.getObject().getClass().getName());
-			}
 			tile.setObject(null);
 		}
 		// Now we move the player...
@@ -408,6 +405,7 @@ public class Game implements Serializable {
 		player.setOrientation(direction);
 		// If there is an item, add the player to the pile
 		if (tile.isOccupied()) {
+			player.setInsidePile(true);
 			tile.addPlayerToPile(player);
 		} else {
 			tile.setObject(player);

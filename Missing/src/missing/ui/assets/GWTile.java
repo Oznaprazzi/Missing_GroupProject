@@ -24,6 +24,8 @@ package missing.ui.assets;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
@@ -182,17 +184,32 @@ public class GWTile {
 			break;
 		}
 		/*Dimensions for the bar. */
+		drawHealthBar(x,y,curPlayer,g);
+		}
+	}
+	
+	/**
+	 * Helper method for drawing the health of a tile object.
+	 * @param x
+	 * @param y
+	 * @param obj
+	 * @param g
+	 */
+	private void drawHealthBar(int x, int y, TileObject obj, Graphics g){
+		/*Dimensions for the bar. */
 		final int barHeight = size/10;
-		final int barWidth = size;
-		System.out.println(curPlayer.getHealth());
-		int healthWidth = (curPlayer.getHealth()/2);
+		final int barWidth = (int) (size*0.9); //make it 90% width of the tile.
+		System.out.println(barWidth);
+		int healthWidth = 0;
+		if(obj instanceof Player)
+			healthWidth = (curPlayer.getHealth() / 2); //width of the healthbar.
+		
+		System.out.println(healthWidth);
 		g.setColor(Color.red);
 		g.fillRect(x, y, barWidth, barHeight);
 		
 		g.setColor(Color.green);
 		g.fillRect(x, y, healthWidth, barHeight);
-		}
 	}
-	
 	
 }
