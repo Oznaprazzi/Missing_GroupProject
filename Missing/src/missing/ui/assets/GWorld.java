@@ -76,6 +76,8 @@ public class GWorld {
 		this.curView = view;
 		if (view.getClass()==MapView.class){
 			this.inMapView = true;
+		} else{
+			this.inMapView = false;
 		}
 	}
 	

@@ -134,7 +134,7 @@ public class Client extends Thread implements KeyListener {
 								vControl.displayException(e.getMessage());
 							}
 						}
-					} 
+					}
 					else if (input.equals("turn")) {
 						try {
 							game.turnPlayer(movingPlayer, direction);
@@ -163,8 +163,10 @@ public class Client extends Thread implements KeyListener {
 					} 
 					else if (input.equals("disconnect")) {
 						// a player disconnected
-						game.getAvatars()[movingPlayer].setDead(true);
-						game.convertPlayerToPile(movingPlayer);
+						if (!game.getAvatars()[movingPlayer].isDead()){
+							game.getAvatars()[movingPlayer].setDead(true);
+							game.convertPlayerToPile(movingPlayer);
+						}
 						vControl.displayTimedMessage(game.getAvatars()[movingPlayer].getName() + " disconnected");
 					} 
 					try {

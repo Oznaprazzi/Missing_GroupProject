@@ -120,18 +120,6 @@ public class VControl extends JFrame {
 		initialiseGUI();
 		setupMenuListeners();
 		views[cur].initialise();
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		// Asks for confirmation when closing the game
-		addWindowListener(new java.awt.event.WindowAdapter() {
-			@Override
-			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit game",
-						JOptionPane.YES_NO_OPTION);
-				if (result == JOptionPane.YES_OPTION) {
-					closeVControl();
-				}
-			}
-		});
 	}
 	/**
 	 * Helper method. Initializes the JMenu and all of the Items inside.
@@ -385,6 +373,12 @@ public class VControl extends JFrame {
 				int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit game",
 						JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
+					if (isHost){
+						//ask if want to save game
+						// JFileChooser choose save location
+						// game.killAllPlayers()
+						// saveGame(folder, game)
+					}
 					closeVControl();
 				}
 			}
@@ -401,6 +395,8 @@ public class VControl extends JFrame {
 	}
 	public void updateGGame(Game game) throws GameException{
 		this.gGame = new GGame(game, views[cur]);
+		gGame.setView(views[cur]);
+		gGame.setPlayer(gGame.getGame().getAvatars()[playerID]);
 		((GameView)views[this.getGameView()]).updateGamePanel(this);
 		((MapView)views[this.getMapView()]).updateMapPanel(this);
 		

@@ -264,7 +264,6 @@ public class GameView extends View {
 		});
 
 		btnViewMap.addActionListener(e -> {
-			controller.requestFocus();
 			controller.changeView(controller.getMapView());
 		});
 	}
