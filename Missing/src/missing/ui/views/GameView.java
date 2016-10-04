@@ -36,8 +36,7 @@ import missing.ui.panels.GamePanel;
 public class GameView extends View {
 	private GamePanel gamePanel;
 
-	private JButton btnTurnL;
-	private JButton btnTurnR;
+
 	private JButton btnUp;
 	private JButton btnDown;
 	private JButton btnLeft;
@@ -46,17 +45,11 @@ public class GameView extends View {
 	private JButton btnPlayersBag;
 	private JButton btnDoAction;
 	private JPanel ctrlPanel;
-
 	private JLabel lblHealthField;
-	private JLabel lblPlayerWorldPos;
-	private JLabel lblPlayerTilePos;
-	private JLabel lblPlayerOrientation;
-
 	private JTextField nameField;
-	private JTextField tilePos;
-	private JTextField worldPos;
 	private JTextField healthField;
-	private JTextField playerOrientation;
+
+	private final Color BACKGROUND_COLOR = Color.black;
 	
 	private static final int DPAD_BTN_SIZE = 30;
 
@@ -78,8 +71,13 @@ public class GameView extends View {
 		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 1.0, Double.MIN_VALUE };
 		ctrlPanel.setLayout(gbl_panel);
-		ctrlPanel.setBackground(Color.gray.darker());
+		
+		gamePanel.setBackground(BACKGROUND_COLOR);
+		this.setBackground(BACKGROUND_COLOR);
+		ctrlPanel.setBackground(BACKGROUND_COLOR);
+		
 		JLabel lblCurrentPlayer = new JLabel("Current Player");
+		lblCurrentPlayer.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblCurrentPlayer = new GridBagConstraints();
 		gbc_lblCurrentPlayer.insets = new Insets(0, 0, 5, 0);
 		gbc_lblCurrentPlayer.gridx = 0;
@@ -97,27 +95,28 @@ public class GameView extends View {
 		ctrlPanel.add(nameField, gbc_txtName);
 		nameField.setColumns(10);
 
-		btnTurnL = new JButton("TL");
-		GridBagConstraints gbc_btnTurnL = new GridBagConstraints();
-		gbc_btnTurnL.insets = new Insets(0, 0, 5, 0);
-		gbc_btnTurnL.gridx = 0;
-		gbc_btnTurnL.gridy = 3;
-		ctrlPanel.add(btnTurnL, gbc_btnTurnL);
+//		btnTurnL = new JButton("TL");
+//		GridBagConstraints gbc_btnTurnL = new GridBagConstraints();
+//		gbc_btnTurnL.insets = new Insets(0, 0, 5, 0);
+//		gbc_btnTurnL.gridx = 0;
+//		gbc_btnTurnL.gridy = 3;
+//		ctrlPanel.add(btnTurnL, gbc_btnTurnL);
 
-		btnTurnR = new JButton("TR");
-		GridBagConstraints gbc_btnTurnR = new GridBagConstraints();
-		gbc_btnTurnR.insets = new Insets(0, 0, 5, 0);
-		gbc_btnTurnR.gridx = 0;
-		gbc_btnTurnR.gridy = 4;
-		ctrlPanel.add(btnTurnR, gbc_btnTurnR);
+//		btnTurnR = new JButton("TR");
+//		GridBagConstraints gbc_btnTurnR = new GridBagConstraints();
+//		gbc_btnTurnR.insets = new Insets(0, 0, 5, 0);
+//		gbc_btnTurnR.gridx = 0;
+//		gbc_btnTurnR.gridy = 4;
+//		ctrlPanel.add(btnTurnR, gbc_btnTurnR);
 
 		lblHealthField = new JLabel("Player Health");
 		lblHealthField.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHealthField.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblHealthField = new GridBagConstraints();
 		gbc_lblHealthField.anchor = GridBagConstraints.WEST;
 		gbc_lblHealthField.insets = new Insets(0, 0, 5, 0);
 		gbc_lblHealthField.gridx = 0;
-		gbc_lblHealthField.gridy = 5;
+		gbc_lblHealthField.gridy = 2;
 		ctrlPanel.add(lblHealthField, gbc_lblHealthField);
 
 		healthField = new JTextField();
@@ -126,84 +125,91 @@ public class GameView extends View {
 		gbc_healthField.insets = new Insets(0, 0, 5, 0);
 		gbc_healthField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_healthField.gridx = 0;
-		gbc_healthField.gridy = 6;
+		gbc_healthField.gridy = 3;
 		ctrlPanel.add(healthField, gbc_healthField);
 
-		lblPlayerWorldPos = new JLabel("Player Tile Pos");
-		GridBagConstraints gbc_lblPlayerWorldPos = new GridBagConstraints();
-		gbc_lblPlayerWorldPos.insets = new Insets(0, 0, 5, 0);
-		gbc_lblPlayerWorldPos.gridx = 0;
-		gbc_lblPlayerWorldPos.gridy = 7;
-		ctrlPanel.add(lblPlayerWorldPos, gbc_lblPlayerWorldPos);
+//		lblPlayerWorldPos = new JLabel("Player Tile Pos");
+//		GridBagConstraints gbc_lblPlayerWorldPos = new GridBagConstraints();
+//		gbc_lblPlayerWorldPos.insets = new Insets(0, 0, 5, 0);
+//		gbc_lblPlayerWorldPos.gridx = 0;
+//		gbc_lblPlayerWorldPos.gridy = 7;
+//		ctrlPanel.add(lblPlayerWorldPos, gbc_lblPlayerWorldPos);
 
-		tilePos = new JTextField();
-		GridBagConstraints gbc_playerHealthfield = new GridBagConstraints();
-		gbc_playerHealthfield.insets = new Insets(0, 0, 5, 0);
-		gbc_playerHealthfield.fill = GridBagConstraints.HORIZONTAL;
-		gbc_playerHealthfield.gridx = 0;
-		gbc_playerHealthfield.gridy = 8;
-		ctrlPanel.add(tilePos, gbc_playerHealthfield);
-		tilePos.setColumns(10);
+//		tilePos = new JTextField();
+//		GridBagConstraints gbc_playerHealthfield = new GridBagConstraints();
+//		gbc_playerHealthfield.insets = new Insets(0, 0, 5, 0);
+//		gbc_playerHealthfield.fill = GridBagConstraints.HORIZONTAL;
+//		gbc_playerHealthfield.gridx = 0;
+//		gbc_playerHealthfield.gridy = 8;
+//		ctrlPanel.add(tilePos, gbc_playerHealthfield);
+//		tilePos.setColumns(10);
 
-		lblPlayerTilePos = new JLabel("Player World Pos");
-		GridBagConstraints gbc_lblPlayerTilePos = new GridBagConstraints();
-		gbc_lblPlayerTilePos.insets = new Insets(0, 0, 5, 0);
-		gbc_lblPlayerTilePos.gridx = 0;
-		gbc_lblPlayerTilePos.gridy = 9;
-		ctrlPanel.add(lblPlayerTilePos, gbc_lblPlayerTilePos);
+//		lblPlayerTilePos = new JLabel("Player World Pos");
+//		GridBagConstraints gbc_lblPlayerTilePos = new GridBagConstraints();
+//		gbc_lblPlayerTilePos.insets = new Insets(0, 0, 5, 0);
+//		gbc_lblPlayerTilePos.gridx = 0;
+//		gbc_lblPlayerTilePos.gridy = 9;
+//		ctrlPanel.add(lblPlayerTilePos, gbc_lblPlayerTilePos);
+//
+//		worldPos = new JTextField();
+//		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+//		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
+//		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+//		gbc_textField_1.gridx = 0;
+//		gbc_textField_1.gridy = 10;
+//		ctrlPanel.add(worldPos, gbc_textField_1);
+//		worldPos.setColumns(10);
 
-		worldPos = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 0;
-		gbc_textField_1.gridy = 10;
-		ctrlPanel.add(worldPos, gbc_textField_1);
-		worldPos.setColumns(10);
+//		lblPlayerOrientation = new JLabel("Player Orientation");
+//		GridBagConstraints gbc_lblPlayerOrientation = new GridBagConstraints();
+//		gbc_lblPlayerOrientation.insets = new Insets(0, 0, 5, 0);
+//		gbc_lblPlayerOrientation.gridx = 0;
+//		gbc_lblPlayerOrientation.gridy = 11;
+//		ctrlPanel.add(lblPlayerOrientation, gbc_lblPlayerOrientation);
 
-		lblPlayerOrientation = new JLabel("Player Orientation");
-		GridBagConstraints gbc_lblPlayerOrientation = new GridBagConstraints();
-		gbc_lblPlayerOrientation.insets = new Insets(0, 0, 5, 0);
-		gbc_lblPlayerOrientation.gridx = 0;
-		gbc_lblPlayerOrientation.gridy = 11;
-		ctrlPanel.add(lblPlayerOrientation, gbc_lblPlayerOrientation);
-
-		playerOrientation = new JTextField();
-		playerOrientation.setColumns(10);
-		GridBagConstraints gbc_orientationField = new GridBagConstraints();
-		gbc_orientationField.insets = new Insets(0, 0, 5, 0);
-		gbc_orientationField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_orientationField.gridx = 0;
-		gbc_orientationField.gridy = 12;
-		ctrlPanel.add(playerOrientation, gbc_orientationField);
+//		playerOrientation = new JTextField();
+//		playerOrientation.setColumns(10);
+//		GridBagConstraints gbc_orientationField = new GridBagConstraints();
+//		gbc_orientationField.insets = new Insets(0, 0, 5, 0);
+//		gbc_orientationField.fill = GridBagConstraints.HORIZONTAL;
+//		gbc_orientationField.gridx = 0;
+//		gbc_orientationField.gridy = 12;
+//		ctrlPanel.add(playerOrientation, gbc_orientationField);
 
 		btnDoAction = new JButton("Do Action");
+		btnDoAction.setBackground(Color.yellow);
 		GridBagConstraints gbc_btnDoAction = new GridBagConstraints();
 		gbc_btnDoAction.insets = new Insets(0, 0, 5, 0);
+		gbc_btnDoAction.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnDoAction.gridx = 0;
-		gbc_btnDoAction.gridy = 13;
+		gbc_btnDoAction.gridy = 4;
 		ctrlPanel.add(btnDoAction, gbc_btnDoAction);
 
 		btnViewMap = new JButton("View Map");
+		btnViewMap.setBackground(Color.yellow);
 		GridBagConstraints gbc_btnViewMap = new GridBagConstraints();
 		gbc_btnViewMap.insets = new Insets(0, 0, 5, 0);
+		gbc_btnViewMap.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnViewMap.gridx = 0;
-		gbc_btnViewMap.gridy = 14;
+		gbc_btnViewMap.gridy = 5;
 		ctrlPanel.add(btnViewMap, gbc_btnViewMap);
 
 		btnPlayersBag = new JButton("Players Bag");
+		btnPlayersBag.setBackground(Color.yellow);
 		GridBagConstraints gbc_btnPlayersBag = new GridBagConstraints();
 		gbc_btnPlayersBag.insets = new Insets(0, 0, 5, 0);
+		gbc_btnPlayersBag.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnPlayersBag.gridx = 0;
-		gbc_btnPlayersBag.gridy = 15;
+		gbc_btnPlayersBag.gridy = 6;
 		ctrlPanel.add(btnPlayersBag, gbc_btnPlayersBag);
 
+		/*
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setLayout(null);
 		GridBagConstraints gbc_layeredPane = new GridBagConstraints();
 		gbc_layeredPane.fill = GridBagConstraints.BOTH;
 		gbc_layeredPane.gridx = 0;
-		gbc_layeredPane.gridy = 16;
+		gbc_layeredPane.gridy = 7;
 		ctrlPanel.add(layeredPane, gbc_layeredPane);
 		
 		btnUp = new JButton("U");
@@ -221,6 +227,7 @@ public class GameView extends View {
 		btnDown = new JButton("D");
 		btnDown.setBounds(57-DPAD_BTN_SIZE/2, 30+DPAD_BTN_SIZE*2, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
 		layeredPane.add(btnDown);
+		*/
 		this.add(gamePanel, BorderLayout.CENTER);
 		this.add(ctrlPanel, BorderLayout.EAST);
 		this.addActionListeners();
@@ -231,7 +238,7 @@ public class GameView extends View {
 	 */
 	private void addActionListeners() {
 		System.out.println("added action listeners");
-		btnUp.addActionListener(e -> {
+		/*btnUp.addActionListener(e -> {
 			controller.requestFocus();
 		});
 
@@ -245,15 +252,15 @@ public class GameView extends View {
 
 		btnRight.addActionListener(e -> {
 			controller.requestFocus();
-		});
+		});*/
 
-		btnTurnL.addActionListener(e -> {
-			controller.requestFocus();
-		});
-
-		btnTurnR.addActionListener(e -> {
-			controller.requestFocus();
-		});
+//		btnTurnL.addActionListener(e -> {
+//			controller.requestFocus();
+//		});
+//
+//		btnTurnR.addActionListener(e -> {
+//			controller.requestFocus();
+//		});
 
 		btnDoAction.addActionListener(e -> {
 			controller.requestFocus();
@@ -264,7 +271,6 @@ public class GameView extends View {
 		});
 
 		btnViewMap.addActionListener(e -> {
-			controller.requestFocus();
 			controller.changeView(controller.getMapView());
 		});
 	}

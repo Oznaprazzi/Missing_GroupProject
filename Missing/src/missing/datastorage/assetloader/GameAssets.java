@@ -88,6 +88,12 @@ public class GameAssets {
 	private static BufferedImage bagBackgroundImage;
 	
 	private static BufferedImage pileOfItemsImage;
+	
+	private static BufferedImage logoImage;
+	
+	private static BufferedImage splashBackgroundImage;
+	
+	private static BufferedImage missingLogoImage;
 
 	// Getters for File Assets
 
@@ -388,4 +394,39 @@ public class GameAssets {
 		return pileOfItemsImage;
 	}
 	
+	public static BufferedImage getLogoImage() {
+		if (logoImage == null) {
+			try {
+				logoImage = ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/logo.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return logoImage;
+	}
+	
+	public static BufferedImage getSplashBackgroundImage() {
+		if (splashBackgroundImage == null) {
+			try {
+				splashBackgroundImage = ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/splashbackground.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return splashBackgroundImage;
+	}
+	
+	public static BufferedImage getMissingLogoImage() {
+		if (missingLogoImage == null) {
+			try {
+				missingLogoImage = ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/missinglogo.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return missingLogoImage;
+	}
 }
