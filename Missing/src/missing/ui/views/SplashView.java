@@ -11,30 +11,43 @@
  */
 package missing.ui.views;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
+import javax.swing.Timer;
+
+import missing.datastorage.assetloader.GameAssets;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 
 @SuppressWarnings("serial")
-public class SplashView extends View {
-	private String opening;
+public class SplashView extends View implements ActionListener{
+	private Timer timer = new Timer(100, this);
+	private long end = System.currentTimeMillis() + 1500;
+	private float alpha = 1f;
+	private BufferedImage image;
 
 	public SplashView(VControl controller) {
 		super(controller);
-		this.opening = "Team 3\u2122 Presents: Missing - The Game";
+		timer.start();
+		image = GameAssets.getLogoImage();
 	}
 
 	@Override
 	public void initialise() {
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(6000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		controller.changeView(controller.getMenuView()); // change to main Menu
+		
 	}
 
 	@Override
@@ -50,18 +63,34 @@ public class SplashView extends View {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		// Create black background
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, getWidth(), getHeight());
-		Font serif = new Font("Comic Sans MS", Font.BOLD, 50);
-		g.setFont(serif);
-		int width = g.getFontMetrics().stringWidth(opening);
-		int height = g.getFontMetrics().getHeight();
-		// Center the text
-		g.setColor(Color.WHITE);
-		int x = getPreferredSize().width / 2 - width / 2;
-		int y = getPreferredSize().height / 2 - height / 2;
-		g.drawString(opening, x, y);
+		super.paint(g);
+		g.drawImage(GameAssets.getSplashBackgroundImage(), 0, 0, null);
+		Graphics2D g2d = (Graphics2D) g;
+
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		g2d.drawImage(image, (this.getWidth()/2)-image.getWidth()/2, this.getHeight()/2 - image.getHeight()/2, null);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (System.currentTimeMillis() > end) {
+			if(image.equals(GameAssets.getLogoImage())){
+				alpha += -0.05f;
+				if (alpha <= 0) {
+					alpha = 0;
+					timer.restart();
+					image = GameAssets.getMissingLogoImage();
+				}
+			}
+			if(image.equals(GameAssets.getMissingLogoImage())){
+				if(alpha >= 0 && alpha < 1){
+					alpha += 0.05f;
+					if(alpha >= 1){
+						alpha = 1;
+					}
+				}
+			}
+			repaint();
+		}
 	}
 
 	@Override
