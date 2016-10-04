@@ -138,14 +138,14 @@ public class Food extends Health {
 		case APPLE:
 			name = "Apple";
 			description = "A tasty piece of apple.";
-			super.setAmount(5);
+			super.setAmount(2);
 			regenAmount = 15;
 			cooked = false;
 			break;
 		case BERRY:
 			name = "Berry";
 			description = "Yummy berries.";
-			super.setAmount(5);
+			super.setAmount(3);
 			regenAmount = 5;
 			cooked = false;
 			break;

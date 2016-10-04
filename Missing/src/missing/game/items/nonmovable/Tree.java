@@ -41,7 +41,7 @@ import missing.helper.SignalException;
 public class Tree extends Source {
 	// TODO Do null check before storing resource inside player's pocket
 
-	private static final int APPLE_CHANCE = 50;
+	private static final int APPLE_CHANCE = 20;
 
 	public Tree(Point worldLocation, Point tileLocation) {
 		super("Tree", "A tall majestic tree.", worldLocation, tileLocation,
@@ -50,7 +50,7 @@ public class Tree extends Source {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (resource == null) {
-					int newAmount = MAX_RESOURCE;
+					int newAmount = 1 + (int) (Math.random() * MAX_RESOURCE);
 					resource = new Wood(worldLocation, tileLocation, newAmount);
 				}
 			}

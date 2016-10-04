@@ -75,7 +75,7 @@ public class Container extends NonMovable {
 	 */
 	public void addItem(Movable item) throws GameException {
 		int newSize = currentSize + item.getCount();
-		if (newSize < size) {
+		if (newSize <= size) {
 			this.currentSize = newSize;
 			Movable i = findItem(item);
 			if (i == null) {
