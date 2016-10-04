@@ -103,12 +103,10 @@ public class GWTile {
 				curPlayer = (Player)(tile.getObject());
 				if (player == null || player.isDead() || !inMapView){
 					// draw all players in node if not in mapview
-					System.out.println("draw 1");
 					drawPlayer(g,x,y,tile.getObject());
 				}
 				else if (((Player)tile.getObject()).getId() == player.getId()){
 					// only draw own player if in mapview
-					System.out.println("draw 2");
 					drawPlayer(g,x,y,tile.getObject());
 				}
 		}
