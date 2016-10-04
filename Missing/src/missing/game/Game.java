@@ -391,6 +391,7 @@ public class Game implements Serializable {
 		Point oldTLoc = player.getTileLocation();
 		WorldTile tile = world.getWorldNodes()[oldWLoc.y][oldWLoc.x].getWorldTiles()[oldTLoc.y][oldTLoc.x];
 		if (player.isInsidePile()) {
+			player.setInsidePile(false);
 			tile.removePlayerFromPile();
 		} else {
 			tile.setObject(null);
