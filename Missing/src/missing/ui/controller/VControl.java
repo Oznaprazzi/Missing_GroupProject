@@ -179,7 +179,7 @@ public class VControl extends JFrame {
 					
 					if(rVal == JFileChooser.APPROVE_OPTION){
 						theFile = fc.getSelectedFile();
-						xmlFile = theFile.getName();
+						xmlFile = theFile.getAbsolutePath();
 						
 						// Sanity Checks
 						if (xmlFile == null) {
@@ -414,6 +414,7 @@ public class VControl extends JFrame {
 	private void saveGame(){
 		// JFileChooser choose save location 
 		fc = new JFileChooser("Choose save location");
+		fc.setCurrentDirectory(new File("."));
 		while (true){
 			int rVal = fc.showSaveDialog(this);
 			if(rVal == JFileChooser.APPROVE_OPTION){

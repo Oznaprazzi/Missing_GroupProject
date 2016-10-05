@@ -51,6 +51,7 @@ import missing.helper.GameException;
 public class XMLImporter {
 
 	public static List<Item> getItemsFromFile(String filename) throws GameException {
+		System.out.println("filename " +filename);
 		List<Item> tmp = new ArrayList<Item>();
 		// Create document
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
