@@ -35,7 +35,7 @@ public class XMLExporter {
 			WorldNode[][] nodes = game.getWorld().getWorldNodes();
 			for (int y = 0; y < nodes.length; y++) {
 				for (int x = 0; x < nodes[y].length; x++) {
-					writeNodes(new Point(x,y), doc);
+					writeNodes(new Point(x, y), nodes[y][x], root, doc);
 				}
 			}
 		} catch (ParserConfigurationException e) {
@@ -44,8 +44,9 @@ public class XMLExporter {
 		}
 	}
 
-	private static void writeNodes(Point point, Document doc) {
+	private static void writeNodes(Point point, WorldNode worldNode, Element root, Document doc) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 }
