@@ -115,7 +115,7 @@ public class Server extends Thread {
 							continue;
 						// new input from client.
 						String input = ins[playerID].readLine();
-
+						System.out.println("Server: received "+input+" input from player +"+playerID);
 						// move that player in given direction
 						if (input.equals("NORTH") || input.equals("SOUTH") || input.equals("EAST")
 								|| input.equals("WEST")) {
