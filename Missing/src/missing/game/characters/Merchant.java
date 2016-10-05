@@ -38,9 +38,8 @@ public class Merchant extends Character {
 	private HashMap<String, Movable> namesToItems = new HashMap<String, Movable>();
 	private HashMap<Movable, Integer> costs = new HashMap<Movable, Integer>();
 
-	public Merchant(String name, String description, Point worldLocation, Point tileLocation, Direction orientation,
-			Direction approach, MerchantType mType) {
-		super(name, description, worldLocation, tileLocation, orientation, approach);
+	public Merchant(Point worldLocation, Point tileLocation, MerchantType mType) {
+		super("Merchant", "You can buy stuff from him.", worldLocation, tileLocation, Direction.SOUTH, Direction.ALL);
 		this.mType = mType;
 		initialiseCosts();
 	}

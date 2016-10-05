@@ -164,10 +164,12 @@ public class VControl extends JFrame {
 		
 		loadGame.addActionListener(e->{
 				fc = new JFileChooser("Load");
+				// set up the file chooser
+				fc.setCurrentDirectory(new File("."));
+				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				
 				File theFile = null;
-				String xmlFile = "";
-				
-				
+				String xmlFile = "";				
 				while(true){
 				int rVal = fc.showOpenDialog(this);
 				

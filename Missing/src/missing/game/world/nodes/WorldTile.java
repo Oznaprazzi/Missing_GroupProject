@@ -342,6 +342,9 @@ public class WorldTile implements Serializable {
 			return false;
 		default:
 			if (object instanceof NonMovable) {
+				if (object instanceof Pile) {
+					return true;
+				}
 				return false;
 			} else {
 				return true;

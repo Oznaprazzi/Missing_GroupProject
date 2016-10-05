@@ -4,6 +4,7 @@
  * 	
  * 	Date				Author				Changes
  * 	17 Sep 16			Chris Rabe			created XMLParsingTests.java
+ * 	5 Oct 16			Chris Rabe			created tests for saving
  */
 
 package missing.tests;
@@ -72,6 +73,15 @@ public class XMLParsingTests {
 		}
 	}
 
+	public static void test_04() {
+		Game game = createGame("items.xml");
+		try {
+			XMLHandler.saveGame(game, "result");
+		} catch (GameException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static void printObjects(WorldNode worldNode) {
 		System.out.println(
 				String.format("WORLD NODE [%d, %d]", worldNode.getGameLocation().x, worldNode.getGameLocation().y));
@@ -104,9 +114,25 @@ public class XMLParsingTests {
 		return null;
 	}
 
+	private static Game createGame(String filename) {
+		// XMLHandler received file name...
+		String xmlFile = filename;
+		XMLHandler.filename = xmlFile;
+		// Create an array of players
+		// one at worldnode 1,1 and at tile position 1,1
+		Player[] avatars = { new Player(0, "Chris", new Point(1, 1), new Point(1, 1)) };
+		try {
+			return new Game(avatars);
+		} catch (GameException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public static void main(String[] args) {
 		// test_01();
 		// test_02();
-		test_03();
+		// test_03();
+		test_04();
 	}
 }

@@ -15,6 +15,7 @@
  *  4 Oct 16			Chris Rabe				fixed pile bugs
  *  5 Oct 16			Chris Rabe				created killall method
  *  5 Oct 16			Chris Rabe				implemented killall method
+ *  5 Oct 16			Chris Rabe				fixed item not disappearing on pickup
  */
 
 package missing.game;
@@ -177,6 +178,9 @@ public class Game implements Serializable {
 		if (validApproach(player, object)) {
 			try {
 				object.performAction(player);
+				if (object instanceof Movable) {
+					removeObjectFromTile(object);
+				}
 			} catch (SignalException e) {
 				// catch dead player
 				if (e.getMessage().contains("DEAD")) {
@@ -553,6 +557,13 @@ public class Game implements Serializable {
 		return 0 <= loc.y && loc.y < NODE_SIZE;
 	}
 
+	private void removeObjectFromTile(TileObject object) {
+		Point wLoc = object.getWorldLocation();
+		Point tLoc = object.getTileLocation();
+		WorldTile tile = world.getWorldNodes()[wLoc.y][wLoc.x].getWorldTiles()[tLoc.y][tLoc.x];
+		tile.setObject(null);
+	}
+
 	/**
 	 * Distributes the items inside the game world.
 	 * 
@@ -566,6 +577,11 @@ public class Game implements Serializable {
 		}
 	}
 
+	/**
+	 * Distributes the players into the game world.
+	 * 
+	 * @param avatars
+	 */
 	private void distributePlayers(Player[] avatars) {
 		for (Player p : avatars) {
 			Point worldLocation = p.getWorldLocation();

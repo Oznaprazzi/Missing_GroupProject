@@ -50,6 +50,11 @@ public class Tool extends Craftable {
 		this.durability = durability;
 	}
 
+	public Tool(Point worldLocation, Point tileLocation, ToolType type, int durability, int amount) {
+		this(worldLocation, tileLocation, type, durability);
+		super.setAmount(amount);
+	}
+
 	// Getters
 
 	public int getDurability() {
@@ -88,6 +93,7 @@ public class Tool extends Craftable {
 	 * @param type
 	 */
 	public void setInfo(ToolType type) {
+		super.setAmount(1);
 		switch (type) {
 		case AXE:
 			name = "Axe";

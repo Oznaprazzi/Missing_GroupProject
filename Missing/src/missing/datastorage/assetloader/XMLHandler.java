@@ -8,6 +8,7 @@
  * 	17 Sep 16		Chris Rabe			now uses the filename field to parse
  * 	29 Sep 16		Chris Rabe			added parsing for nonmovable and movable
  * 	3 Oct 16		Chris Rabe			moved all loading logic to XMLLoader
+ * 	5 Oct 16		Chris Rabe			implemented saving methods
  */
 
 package missing.datastorage.assetloader;
@@ -41,7 +42,10 @@ public class XMLHandler {
 		return XMLImporter.getItemsFromFile(filename);
 	}
 
-	public static void saveGame(Game game, String filename) {
+	public static void saveGame(Game game, String filename) throws GameException {
+		if (filename == null) {
+			throw new GameException("Filename must be specified");
+		}
 		// convert the game to an XML document
 		Document doc = XMLExporter.toDocument(game);
 		// write the document to a file
@@ -50,8 +54,10 @@ public class XMLHandler {
 		try {
 			Transformer transformer = tFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult res = new StreamResult(new File(docName));
+			File file = new File(docName);
+			StreamResult res = new StreamResult(file);
 			transformer.transform(source, res);
+			System.out.println(String.format("saved to %s", file.getAbsolutePath()));
 		} catch (TransformerException e) {
 			e.printStackTrace();
 		}
@@ -64,7 +70,7 @@ public class XMLHandler {
 	 * @return
 	 */
 	private static String extractName(String filename) {
-		String[] name = filename.split(".");
+		String[] name = filename.split("[.]");
 		String fName = String.format("%s.xml", name[0]);
 		return fName;
 	}

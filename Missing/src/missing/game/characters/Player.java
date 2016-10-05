@@ -57,7 +57,7 @@ public class Player extends Character {
 		bag = new Bag();
 		this.isDead = false;
 		this.id = id;
-		this.money = new Money(null,null, tileLocation, tileLocation, 1, 1);
+		this.money = new Money(tileLocation, tileLocation, 0);
 	}
 
 	// Getters and setters...
@@ -119,12 +119,12 @@ public class Player extends Character {
 	public void setBag(Bag bag) {
 		this.bag = bag;
 	}
-	
-	public int getMoney(){
+
+	public int getMoney() {
 		return money.getMoney();
 	}
-	
-	public void setMoney(int m){
+
+	public void setMoney(int m) {
 		money.setMoney(m);
 	}
 

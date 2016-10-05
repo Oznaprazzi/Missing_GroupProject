@@ -51,6 +51,11 @@ public class Food extends Health {
 		setInfo();
 	}
 
+	public Food(Point worldLocation, Point tileLocation, FoodType type, int amount) {
+		this(worldLocation, tileLocation, type);
+		super.setAmount(amount);
+	}
+
 	// Getters and Setters
 
 	public FoodType getFoodType() {

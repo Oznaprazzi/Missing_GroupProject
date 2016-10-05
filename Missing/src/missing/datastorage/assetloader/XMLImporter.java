@@ -160,7 +160,8 @@ public class XMLImporter {
 					Point location = parseLocation(locNode);
 					ToolType type = parseToolType(elem.getElementsByTagName("type").item(0).getTextContent());
 					int durability = Integer.parseInt(elem.getElementsByTagName("durability").item(0).getTextContent());
-					tmp.add(new Tool(worldLocation, location, type, durability));
+					int amount = Integer.parseInt(elem.getElementsByTagName("amount").item(0).getTextContent());
+					tmp.add(new Tool(worldLocation, location, type, durability, amount));
 				}
 			}
 		} catch (XPathExpressionException e) {
@@ -182,7 +183,8 @@ public class XMLImporter {
 					Node locNode = elem.getElementsByTagName("location").item(0);
 					Point location = parseLocation(locNode);
 					FoodType type = parseFoodType(elem.getElementsByTagName("type").item(0).getTextContent());
-					tmp.add(new Food(worldLocation, location, type));
+					int amount = Integer.parseInt(elem.getElementsByTagName("amount").item(0).getTextContent());
+					tmp.add(new Food(worldLocation, location, type, amount));
 				}
 			}
 		} catch (XPathExpressionException e) {
@@ -272,7 +274,7 @@ public class XMLImporter {
 					Element elem = (Element) stone;
 					Node locNode = elem.getElementsByTagName("location").item(0);
 					Point location = parseLocation(locNode);
-					List<Item> items = parseNonMovable(worldLocation, doc, xPath, itemsExpression);
+					List<Item> items = parseMovable(worldLocation, doc, xPath, itemsExpression);
 					List<TileObject> objects = toTileObject(items);
 					tmp.add(new Pile(worldLocation, location, objects));
 				}
