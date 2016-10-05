@@ -59,7 +59,7 @@ public class Merchant extends Character {
 			throw new GameException("the merchant doesn't have this item");
 		int costOfItem = costs.get(i);
 		if (player.getMoney() < costOfItem) {
-			throw new GameException("player doesn't have enough moolah");
+			throw new GameException("player doesn't have enough money");
 		}
 		player.setMoney(player.getMoney() - costOfItem); // deducts the cost
 															// from the players
