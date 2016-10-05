@@ -16,12 +16,10 @@
  * 30 Sep 16		Edward Kelly		added CreatePlayerView
  * 1 Oct 16			Edward Kelly		added displayException & displayTimedMessage
  * 2 Oct 16			Edward Kelly		added close confirmation and client disconnect
-<<<<<<< HEAD
  * 3 Oct 16			Edward Kelly		added displayDead method
  * 3 Oct 16			Edward Kelly		integrated MapView
-=======
  * 3 Oct 16			Linus Go			added JMenuChooser and some items.
->>>>>>> branch 'master' of https://gitlab.ecs.vuw.ac.nz/rabechri/Missing.git
+ * 6 Oct 16			Edward Kelly		implemented calls to XMLHandler.saveGame()
  */
 package missing.ui.controller;
 
@@ -159,7 +157,11 @@ public class VControl extends JFrame {
 	private void setupMenuListeners(){
 		
 		saveGame.addActionListener(e->{
-			//TODO: linus needs to implement this later - Linus
+			if (gGame==null){
+				JOptionPane.showMessageDialog(this, "You must load or start a game to save", "No Game to Save", JOptionPane.WARNING_MESSAGE);
+			}
+			else
+				saveGame();
 		});
 		
 		loadGame.addActionListener(e->{
@@ -171,32 +173,32 @@ public class VControl extends JFrame {
 				File theFile = null;
 				String xmlFile = "";				
 				while(true){
-				int rVal = fc.showOpenDialog(this);
-				
-				
-				
-				if(rVal == JFileChooser.APPROVE_OPTION){
-				theFile = fc.getSelectedFile();
-				xmlFile = theFile.getName();
-				
-				// Sanity Checks
-				if (xmlFile == null) {
-					JOptionPane.showMessageDialog(null, "XML File must be specified.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
-					//System.exit(1);
-				}
-				if (!xmlFile.endsWith(".xml")) {
-					JOptionPane.showMessageDialog(null, "File must end with XML.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
-					//System.exit(1);
-				}
-			}else if(rVal == JFileChooser.CANCEL_OPTION){
-					JOptionPane.showMessageDialog(null, "User did not specify an XML file.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
-					System.exit(1);
-				}
-				
-				if(xmlFile != null && xmlFile.endsWith(".xml"))
-					break;
+					int rVal = fc.showOpenDialog(this);
+					
+					
+					
+					if(rVal == JFileChooser.APPROVE_OPTION){
+						theFile = fc.getSelectedFile();
+						xmlFile = theFile.getName();
+						
+						// Sanity Checks
+						if (xmlFile == null) {
+							JOptionPane.showMessageDialog(null, "XML File must be specified.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+							//System.exit(1);
+						}
+						if (!xmlFile.endsWith(".xml")) {
+							JOptionPane.showMessageDialog(null, "File must end with XML.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+							//System.exit(1);
+						}
+					}else if(rVal == JFileChooser.CANCEL_OPTION){
+						JOptionPane.showMessageDialog(null, "User did not specify an XML file.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+						System.exit(1);
+					}
+					
+					if(xmlFile != null && xmlFile.endsWith(".xml"))
+						break;
 			
-		}
+				}
 				XMLHandler.filename = xmlFile;
 				JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");
 				
@@ -207,8 +209,17 @@ public class VControl extends JFrame {
 			int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Exit Confirmation",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-			if(choice == 0) System.exit(0);
-			return;
+			if(choice == 0) {
+				if (isHost && gGame!=null){
+					//ask if want to save game
+					choice = JOptionPane.showConfirmDialog(null, "Would you like to save the game?", "Save game",
+							JOptionPane.YES_NO_OPTION);
+					if (choice == JOptionPane.YES_OPTION) {
+						saveGame();
+					}
+				}
+				closeVControl();
+			}
 		});
 		
 		helpItem.addActionListener(e->{
@@ -358,6 +369,10 @@ public class VControl extends JFrame {
 		JOptionPane.showMessageDialog(views[cur], msg);
 	}
 	
+	/**
+	 * Displays to player that they died and sets to
+	 * spectator mode
+	 */
 	public void displayDead(){
 		JOptionPane.showMessageDialog(views[cur], "YOU DIED");
 		((MapView)views[this.getMapView()]).setSpectator(true);
@@ -374,11 +389,13 @@ public class VControl extends JFrame {
 				int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit game",
 						JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
-					if (isHost){
+					if (isHost && gGame!=null){
 						//ask if want to save game
-						// JFileChooser choose save location
-						// game.killAllPlayers()
-						// saveGame(folder, game)
+						result = JOptionPane.showConfirmDialog(null, "Would you like to save the game?", "Save game",
+								JOptionPane.YES_NO_OPTION);
+						if (result == JOptionPane.YES_OPTION) {
+							saveGame();
+						}
 					}
 					closeVControl();
 				}
@@ -390,10 +407,40 @@ public class VControl extends JFrame {
 		pack();
 		setVisible(true);
 	}
-
+	
+	/**
+	 * Displays GUI to save game and calls XMLHandler.saveGame()
+	 */
+	private void saveGame(){
+		// JFileChooser choose save location 
+		fc = new JFileChooser("Choose save location");
+		while (true){
+			int rVal = fc.showSaveDialog(this);
+			if(rVal == JFileChooser.APPROVE_OPTION){
+				String fileName = fc.getSelectedFile().getAbsolutePath();//TODO: may change to getName()
+				if (fileName == null){
+					JOptionPane.showMessageDialog(this, "Please give a filename", "No Filename", JOptionPane.WARNING_MESSAGE);
+					continue;
+				}
+				System.out.println(fileName);
+				// create tmpgame in case save fails
+				Game tmpGame = gGame.getGame();
+				tmpGame.killAll();
+				try {
+					XMLHandler.saveGame(tmpGame, fileName);
+					JOptionPane.showMessageDialog(this, "Game saved", "Game Saved", JOptionPane.INFORMATION_MESSAGE);
+					break;
+				} catch (GameException e) {
+					JOptionPane.showMessageDialog(this, e.getMessage(), "File Saving Error", JOptionPane.ERROR_MESSAGE);
+					break;
+				}
+			} else break;
+		}
+	}
 	public GGame getGGame() {
 		return gGame;
 	}
+	/** Updates the current GGame. Called by client */
 	public void updateGGame(Game game) throws GameException{
 		this.gGame = new GGame(game, views[cur]);
 		gGame.setView(views[cur]);
@@ -407,6 +454,13 @@ public class VControl extends JFrame {
 		this.gGame = new GGame(game, views[cur]);
 		views[this.getGameView()].initialise();
 		views[this.getMapView()].initialise();
+	}
+	/**
+	 * Calls Client.handleAction(). This method is called
+	 * by performAction button in GameView
+	 */
+	public void performAction() {
+		client.handleAction();
 	}
 
 	public int getPlayerID() {
@@ -432,6 +486,7 @@ public class VControl extends JFrame {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+	/** Disconnects client from game */
 	public void disconnectClient(){
 		client.disconnectClient();
 	}

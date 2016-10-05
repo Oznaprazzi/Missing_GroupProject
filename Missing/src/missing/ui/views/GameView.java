@@ -8,6 +8,7 @@
  * 1 Oct 16			Linus Go		migrated buttons from TestWindow into this.
  * 3 Oct 16			Edward Kelly	now resizes game panel
  * 5 Oct 16			Linus Go		added bag and pocket drawing code.
+ * 6 Oct 16			Edward Kelly	added call for performaction
  */
 package missing.ui.views;
 
@@ -160,7 +161,7 @@ public class GameView extends View {
 
 		btnDoAction.addActionListener(e -> {
 			controller.requestFocus();
-			//TODO EDDY: need to implement.
+			controller.performAction();
 		});
 
 		btnPlayersBag.addActionListener(e -> {
@@ -171,6 +172,8 @@ public class GameView extends View {
 		});
 
 		btnViewMap.addActionListener(e -> {
+			// don't want controller to request focus because 
+			// shouldn't be able to move in MapView
 			controller.changeView(controller.getMapView());
 		});
 	}

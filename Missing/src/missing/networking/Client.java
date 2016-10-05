@@ -244,7 +244,7 @@ public class Client extends Thread implements KeyListener {
 	 * to be applied to all clients games the action is
 	 * sent to the server
 	 */
-	private void handleAction(){
+	public void handleAction(){
 		try {
 			game.performAction(clientID);
 			out.println("F");
@@ -285,7 +285,9 @@ public class Client extends Thread implements KeyListener {
 	 * Disconnects client from server and closes socket
 	 */
 	public void disconnectClient(){
-		out.println("disconnect");
+		try{
+			out.println("disconnect");
+		} catch(NullPointerException e){}
 		try {
 			socket.close();
 		} catch (IOException e) {
