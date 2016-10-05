@@ -70,6 +70,7 @@ public class HandCanvas extends Canvas {
 
 	@Override
 	public void paint(Graphics g) {
+		System.out.println("inside hand canvas.");
 		g.drawImage(GameAssets.getBagBackgroundImage(), 0, 0, null);
 		Font serif = new Font("Calisto MT", Font.BOLD, 20);
 		g.setFont(serif);

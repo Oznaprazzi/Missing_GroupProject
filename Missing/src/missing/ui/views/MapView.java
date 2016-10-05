@@ -68,6 +68,7 @@ public class MapView extends View {
 		spectatorButtonsPanel.setOpaque(false);
 		
 		JButton exitBtn = new JButton("Main Menu");
+		exitBtn.setBackground(Color.yellow);
 		exitBtn.addActionListener(e->{
 			new VControl();
 //			controller.disconnectClient();
@@ -82,6 +83,7 @@ public class MapView extends View {
 		mapButtonsPanel.setOpaque(false);
 		
 		JButton backBtn = new JButton("Back");
+		backBtn.setBackground(Color.yellow);
 		backBtn.addActionListener(e->{
 			controller.requestFocus();
 			controller.changeView(controller.getGameView());

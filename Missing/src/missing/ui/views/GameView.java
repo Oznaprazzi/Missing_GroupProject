@@ -29,6 +29,7 @@ import missing.game.characters.Player;
 import missing.tests.BagFrameTest;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
+import missing.ui.frames.HandJFrame;
 import missing.ui.panels.GamePanel;
 
 /**
@@ -51,7 +52,7 @@ public class GameView extends View {
 	private JTextField nameField;
 	private JTextField healthField;
 	
-	private BagFrameTest bagFrame;
+	private HandJFrame bagFrame;
 	private final Color BACKGROUND_COLOR = Color.black;
 	private Player currentPlayer;
 	private int id;
@@ -167,7 +168,7 @@ public class GameView extends View {
 		btnPlayersBag.addActionListener(e -> {
 			controller.requestFocus();
 			
-			bagFrame = new BagFrameTest(currentPlayer.getBag(), currentPlayer.getPocket());
+			bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
 			bagFrame.setVisible(true);
 		});
 
