@@ -7,6 +7,7 @@
  * 28 Sep 16		Edward Kelly	created class
  * 1 Oct 16			Linus Go		migrated buttons from TestWindow into this.
  * 3 Oct 16			Edward Kelly	now resizes game panel
+ * 5 Oct 16			Linus Go		added bag and pocket drawing code.
  */
 package missing.ui.views;
 
@@ -23,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import missing.game.characters.Player;
+import missing.tests.BagFrameTest;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.panels.GamePanel;
@@ -34,31 +37,32 @@ import missing.ui.panels.GamePanel;
  */
 @SuppressWarnings("serial")
 public class GameView extends View {
+	
 	private GamePanel gamePanel;
-
-
-	private JButton btnUp;
-	private JButton btnDown;
-	private JButton btnLeft;
-	private JButton btnRight;
+	
 	private JButton btnViewMap;
 	private JButton btnPlayersBag;
 	private JButton btnDoAction;
+	
 	private JPanel ctrlPanel;
 	private JLabel lblHealthField;
+	
 	private JTextField nameField;
 	private JTextField healthField;
-
-	private final Color BACKGROUND_COLOR = Color.black;
 	
-	private static final int DPAD_BTN_SIZE = 30;
-
+	private BagFrameTest bagFrame;
+	private final Color BACKGROUND_COLOR = Color.black;
+	private Player currentPlayer;
+	private int id;
+	
 	public GameView(VControl controller) {
 		super(controller);
+		id = controller.getPlayerID();
 	}
 
 	@Override
 	public void initialise() {
+		currentPlayer = controller.getGGame().getGame().getAvatars()[id];
 		setLayout(new BorderLayout());
 		gamePanel = new GamePanel(controller);
 		ctrlPanel = new JPanel();
@@ -85,7 +89,8 @@ public class GameView extends View {
 		ctrlPanel.add(lblCurrentPlayer, gbc_lblCurrentPlayer);
 
 		nameField = new JTextField();
-		nameField.setText("" + controller.getPlayerID());// curPlayer.getName());
+		nameField.setEditable(false);
+		nameField.setText("" + currentPlayer.getName());// curPlayer.getName());
 
 		GridBagConstraints gbc_txtName = new GridBagConstraints();
 		gbc_txtName.fill = GridBagConstraints.HORIZONTAL;
@@ -94,20 +99,6 @@ public class GameView extends View {
 		gbc_txtName.gridy = 1;
 		ctrlPanel.add(nameField, gbc_txtName);
 		nameField.setColumns(10);
-
-//		btnTurnL = new JButton("TL");
-//		GridBagConstraints gbc_btnTurnL = new GridBagConstraints();
-//		gbc_btnTurnL.insets = new Insets(0, 0, 5, 0);
-//		gbc_btnTurnL.gridx = 0;
-//		gbc_btnTurnL.gridy = 3;
-//		ctrlPanel.add(btnTurnL, gbc_btnTurnL);
-
-//		btnTurnR = new JButton("TR");
-//		GridBagConstraints gbc_btnTurnR = new GridBagConstraints();
-//		gbc_btnTurnR.insets = new Insets(0, 0, 5, 0);
-//		gbc_btnTurnR.gridx = 0;
-//		gbc_btnTurnR.gridy = 4;
-//		ctrlPanel.add(btnTurnR, gbc_btnTurnR);
 
 		lblHealthField = new JLabel("Player Health");
 		lblHealthField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -121,60 +112,13 @@ public class GameView extends View {
 
 		healthField = new JTextField();
 		healthField.setColumns(10);
+		healthField.setText("" +currentPlayer.getHealth());
 		GridBagConstraints gbc_healthField = new GridBagConstraints();
 		gbc_healthField.insets = new Insets(0, 0, 5, 0);
 		gbc_healthField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_healthField.gridx = 0;
 		gbc_healthField.gridy = 3;
 		ctrlPanel.add(healthField, gbc_healthField);
-
-//		lblPlayerWorldPos = new JLabel("Player Tile Pos");
-//		GridBagConstraints gbc_lblPlayerWorldPos = new GridBagConstraints();
-//		gbc_lblPlayerWorldPos.insets = new Insets(0, 0, 5, 0);
-//		gbc_lblPlayerWorldPos.gridx = 0;
-//		gbc_lblPlayerWorldPos.gridy = 7;
-//		ctrlPanel.add(lblPlayerWorldPos, gbc_lblPlayerWorldPos);
-
-//		tilePos = new JTextField();
-//		GridBagConstraints gbc_playerHealthfield = new GridBagConstraints();
-//		gbc_playerHealthfield.insets = new Insets(0, 0, 5, 0);
-//		gbc_playerHealthfield.fill = GridBagConstraints.HORIZONTAL;
-//		gbc_playerHealthfield.gridx = 0;
-//		gbc_playerHealthfield.gridy = 8;
-//		ctrlPanel.add(tilePos, gbc_playerHealthfield);
-//		tilePos.setColumns(10);
-
-//		lblPlayerTilePos = new JLabel("Player World Pos");
-//		GridBagConstraints gbc_lblPlayerTilePos = new GridBagConstraints();
-//		gbc_lblPlayerTilePos.insets = new Insets(0, 0, 5, 0);
-//		gbc_lblPlayerTilePos.gridx = 0;
-//		gbc_lblPlayerTilePos.gridy = 9;
-//		ctrlPanel.add(lblPlayerTilePos, gbc_lblPlayerTilePos);
-//
-//		worldPos = new JTextField();
-//		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-//		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-//		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-//		gbc_textField_1.gridx = 0;
-//		gbc_textField_1.gridy = 10;
-//		ctrlPanel.add(worldPos, gbc_textField_1);
-//		worldPos.setColumns(10);
-
-//		lblPlayerOrientation = new JLabel("Player Orientation");
-//		GridBagConstraints gbc_lblPlayerOrientation = new GridBagConstraints();
-//		gbc_lblPlayerOrientation.insets = new Insets(0, 0, 5, 0);
-//		gbc_lblPlayerOrientation.gridx = 0;
-//		gbc_lblPlayerOrientation.gridy = 11;
-//		ctrlPanel.add(lblPlayerOrientation, gbc_lblPlayerOrientation);
-
-//		playerOrientation = new JTextField();
-//		playerOrientation.setColumns(10);
-//		GridBagConstraints gbc_orientationField = new GridBagConstraints();
-//		gbc_orientationField.insets = new Insets(0, 0, 5, 0);
-//		gbc_orientationField.fill = GridBagConstraints.HORIZONTAL;
-//		gbc_orientationField.gridx = 0;
-//		gbc_orientationField.gridy = 12;
-//		ctrlPanel.add(playerOrientation, gbc_orientationField);
 
 		btnDoAction = new JButton("Do Action");
 		btnDoAction.setBackground(Color.yellow);
@@ -203,31 +147,6 @@ public class GameView extends View {
 		gbc_btnPlayersBag.gridy = 6;
 		ctrlPanel.add(btnPlayersBag, gbc_btnPlayersBag);
 
-		/*
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setLayout(null);
-		GridBagConstraints gbc_layeredPane = new GridBagConstraints();
-		gbc_layeredPane.fill = GridBagConstraints.BOTH;
-		gbc_layeredPane.gridx = 0;
-		gbc_layeredPane.gridy = 7;
-		ctrlPanel.add(layeredPane, gbc_layeredPane);
-		
-		btnUp = new JButton("U");
-		btnUp.setBounds(57-DPAD_BTN_SIZE/2, 30, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
-		layeredPane.add(btnUp);
-
-		btnLeft = new JButton("L");
-		btnLeft.setBounds(57-DPAD_BTN_SIZE, 30+DPAD_BTN_SIZE, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
-		layeredPane.add(btnLeft);
-
-		btnRight = new JButton("R");
-		btnRight.setBounds(57, 30+DPAD_BTN_SIZE, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
-		layeredPane.add(btnRight);
-
-		btnDown = new JButton("D");
-		btnDown.setBounds(57-DPAD_BTN_SIZE/2, 30+DPAD_BTN_SIZE*2, DPAD_BTN_SIZE, DPAD_BTN_SIZE);
-		layeredPane.add(btnDown);
-		*/
 		this.add(gamePanel, BorderLayout.CENTER);
 		this.add(ctrlPanel, BorderLayout.EAST);
 		this.addActionListeners();
@@ -237,37 +156,18 @@ public class GameView extends View {
 	 * Action Listeners for the various Buttons.
 	 */
 	private void addActionListeners() {
-		System.out.println("added action listeners");
-		/*btnUp.addActionListener(e -> {
-			controller.requestFocus();
-		});
-
-		btnDown.addActionListener(e -> {
-			controller.requestFocus();
-		});
-
-		btnLeft.addActionListener(e -> {
-			controller.requestFocus();
-		});
-
-		btnRight.addActionListener(e -> {
-			controller.requestFocus();
-		});*/
-
-//		btnTurnL.addActionListener(e -> {
-//			controller.requestFocus();
-//		});
-//
-//		btnTurnR.addActionListener(e -> {
-//			controller.requestFocus();
-//		});
+		currentPlayer = controller.getGGame().getGame().getAvatars()[id];
 
 		btnDoAction.addActionListener(e -> {
 			controller.requestFocus();
+			//TODO EDDY: need to implement.
 		});
 
 		btnPlayersBag.addActionListener(e -> {
 			controller.requestFocus();
+			
+			bagFrame = new BagFrameTest(currentPlayer.getBag(), currentPlayer.getPocket());
+			bagFrame.setVisible(true);
 		});
 
 		btnViewMap.addActionListener(e -> {
@@ -283,6 +183,7 @@ public class GameView extends View {
 	 */
 	public void updateGamePanel(VControl controller) {
 		this.controller = controller;
+		this.healthField.setText(""+ controller.getGGame().getGame().getAvatars()[id].getHealth());
 		gamePanel.setController(controller);
 		gamePanel.initialise();
 	}
