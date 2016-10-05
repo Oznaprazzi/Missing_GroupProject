@@ -14,6 +14,7 @@
  *  30 Sep 16			Chris Rabe				added null checks
  *  4 Oct 16			Chris Rabe				fixed pile bugs
  *  5 Oct 16			Chris Rabe				created killall method
+ *  5 Oct 16			Chris Rabe				implemented killall method
  */
 
 package missing.game;
@@ -95,7 +96,12 @@ public class Game implements Serializable {
 	 * that it is possible to save the game state easily.
 	 */
 	public void killAll() {
-		// TODO fill this in
+		for (Player p : avatars) {
+			if (!p.isDead()) {
+				p.setDead(true);
+				convertPlayerToPile(p.getId());
+			}
+		}
 	}
 
 	/**
