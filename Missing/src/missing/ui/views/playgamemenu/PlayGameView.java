@@ -1,10 +1,12 @@
 /*	File: PlayGameView.java
  * 	Authors:				ID:
  *  Edward Kelly			300334192
+ *  Casey Huang				300316284
  * 	
  * 	Date:			Author				Changes
  *  23 Sep 16		Edward Kelly		Created class
  *  25 Sep 16		Edward Kelly		Integrated with MenuComponent methods
+ *  6 Oct 16		Casey Huang			Added background
  */
 package missing.ui.views.playgamemenu;
 
@@ -19,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import missing.datastorage.assetloader.GameAssets;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
@@ -82,10 +85,7 @@ public class PlayGameView extends View{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int wd = super.getSize().width;
-		int ht = super.getSize().height;
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, wd, ht);
+		g.drawImage(GameAssets.getSplashBackgroundImage(), 0, 0, null);
 	}
 	
 	@Override
