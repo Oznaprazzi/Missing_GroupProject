@@ -117,6 +117,12 @@
 	</node>
 	<node worldLocation="3,0">
 		<items>
+			<soil>
+				<location>
+					<x>2</x>
+					<y>1</y>
+				</location>
+			</soil>
 			<tree>
 				<location>
 					<x>6</x>
@@ -280,6 +286,12 @@
 	</node>
 	<node worldLocation="2,1">
 		<items>
+			<soil>
+				<location>
+					<x>5</x>
+					<y>3</y>
+				</location>
+			</soil>
 			<tree>
 				<location>
 					<x>3</x>
@@ -736,6 +748,12 @@
 	</node>
 	<node worldLocation="0,3">
 		<items>
+			<soil>
+				<location>
+					<x>8</x>
+					<y>2</y>
+				</location>
+			</soil>
 			<tree>
 				<location>
 					<x>7</x>
