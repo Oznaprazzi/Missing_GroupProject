@@ -90,7 +90,7 @@ public class DayNightCycle extends TimerTask {
 				controller.repaint();
 			}
 		}
-		System.out.println("Alpha: "+alpha + ", Current Time: "+currentTime);
+//		System.out.println("Alpha: "+alpha + ", Current Time: "+currentTime);
 	}
 
 }

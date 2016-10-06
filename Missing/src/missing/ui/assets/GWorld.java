@@ -38,10 +38,11 @@ public class GWorld {
 	private World world;
 	private GWNode[][] gwNodes;
 	private boolean inMapView;
-
+	private int alpha;
 	/** This field indicates where the world will be drawn */
 	private Point padding;
 	private Player player;
+	
 
 	public GWorld(World world, View view, Point padding) throws GameException {
 		this.world = world;
@@ -66,6 +67,8 @@ public class GWorld {
 				gwNodes[i][j].draw(g, x, y, inMapView, player);
 			}
 		}
+		
+		
 	}
 
 	public GWNode[][] gwNodes() {
@@ -86,6 +89,7 @@ public class GWorld {
 	}
 	
 	public void setAlpha(int alpha) {
+		this.alpha = alpha;
 		for (int i = 0; i < gwNodes.length; i++) {
 			for (int j = 0; j < gwNodes[i].length; j++) {
 				gwNodes[i][j].setAlpha(alpha);

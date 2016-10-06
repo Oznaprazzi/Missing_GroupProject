@@ -14,12 +14,18 @@
  *  18 Sep 16		Casey Huang			attempted scaling implementation
  *  19 Sep 16		Casey Huang			made drawIsometricNode @deprecated.
  *  6 Oct 16 		Edward Kelly		added alpha field
+ *  7 Oct 16 		Edward Kelly		added light circle
  */
 
 package missing.ui.assets;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.characters.Player;
@@ -94,9 +100,23 @@ public class GWNode {
 			}
 		}
 		if (alpha != 0){
+			int haloAlpha = alpha;
+			if (alpha >150)haloAlpha = 150;
 			// only need to draw filter if not fully transparent
-			g.setColor(new Color(35, 35, 43, alpha));
-			g.fillRect(x, y, nodeSize, nodeSize);
+			Graphics2D g2d = (Graphics2D)g.create();
+			Area filter = new Area(new Rectangle(x, y, nodeSize, nodeSize));
+			if (player.getWorldLocation().equals(this.node.getGameLocation())&&!inMapView){
+				// draws light circle
+				Point playerTileLoc = player.getTileLocation();
+				int haloX = x + ((playerTileLoc.x-1) * tileSize);
+				int haloY = y + ((playerTileLoc.y-1) * tileSize);
+				Ellipse2D.Double halo = new Ellipse2D.Double(haloX, haloY, tileSize*3, tileSize*3);
+				g2d.setColor(new Color(35, 35, 43, haloAlpha));
+				g2d.fill(halo);				
+				filter.subtract(new Area(halo));
+			}
+			g2d.setColor(new Color(35, 35, 43, alpha));
+			g2d.fill(filter);
 		}
 	}
 
