@@ -2,11 +2,13 @@
  * 
  * Authors			ID
  * Edward Kelly 	300334192
+ * Casey Huang 		300316284
  * 
  * Date				Author			Modification
  * 23 Sep 16		Edward Kelly	created class
  * 24 Sep 16		Edward Kelly	added function to start server
  * 30 Sep 16		Edward Kelly	merged with CreatePlayerView
+ * 6 Oct 16			Casey Huang		Removed commented code and added background image
  */
 package missing.ui.views.playgamemenu;
 
@@ -25,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import missing.datastorage.assetloader.GameAssets;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
@@ -42,16 +45,10 @@ public class HostGameView extends View{
 	private JPanel buttonPanel;
 	/** Holds gameInfo and button panels */
 	private JPanel centrePanel;
-	/** The player's name */
-//	private String playerName;
 	/** Number of players to be in game */
 	private int numPlayers;
 	/** Port game is hosted on */
 	private int port;
-	/** Text entry for playerName */
-//	private TextField playerNameEntry;
-	/** Text entry for numPlayers */
-//	private TextField numPlayersEntry;
 	
 	private JComboBox<String> numPlayersBox;
 	/** Text entry for port */
@@ -115,29 +112,19 @@ public class HostGameView extends View{
 		gameInfoPanel = new JPanel(layout);
 		
 		// Create labels
-//		JLabel playerNameLabel = MenuFactory.createLabel("Player Name");
 		JLabel numPlayerLabel = MenuFactory.createLabel("Number of Players");
 		JLabel portLabel = MenuFactory.createLabel("Port");
-//		playerNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		numPlayerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		portLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		//Create text fields
-//		playerNameEntry = MenuFactory.createTextField(200);
 		String[] choices = {"1","2","3","4","5"};
 		numPlayersBox = new JComboBox<String>(choices);
-	
-		//numPlayersEntry = MenuFactory.createTextField(200);
-		
-		
 		
 		portEntry = MenuFactory.createTextField(200);
 		
 		// Add to panel
-//		gameInfoPanel.add(playerNameLabel);
-//		gameInfoPanel.add(playerNameEntry);
 		gameInfoPanel.add(numPlayerLabel);
-		//gameInfoPanel.add(numPlayersEntry);
 		gameInfoPanel.add(numPlayersBox);
 		gameInfoPanel.add(portLabel);
 		gameInfoPanel.add(portEntry);
@@ -180,14 +167,7 @@ public class HostGameView extends View{
 	 */
 	private boolean setInputs(){
 		try {
-//			playerName = playerNameEntry.getText();
-//			if (playerName == null){
-//				JOptionPane.showMessageDialog(this, "Please enter a name");
-//				return false;
-//			}
 			numPlayers = Integer.valueOf((String) this.numPlayersBox.getSelectedItem());
-			//numPlayers = Integer.parseInt(numPlayersEntry.getText());
-			//firstly.. is it a valid port range?
 			if(!(Integer.parseInt(portEntry.getText()) >= 1024 && Integer.parseInt(portEntry.getText()) <= 65535)){
 				JOptionPane.showMessageDialog(this, "You must enter a valid port number between 1024 and 65535.");
 				return false;
@@ -209,10 +189,8 @@ public class HostGameView extends View{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int wd = super.getSize().width;
-		int ht = super.getSize().height;
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, wd, ht);
+		
+		g.drawImage(GameAssets.getSplashBackgroundImage(), 0, 0, null);
 	}
 	
 	@Override

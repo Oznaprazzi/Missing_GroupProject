@@ -13,10 +13,12 @@
  *  18 Sep 16		Linus Go			added isometric draw method.
  *  18 Sep 16		Casey Huang			attempted scaling implementation
  *  19 Sep 16		Casey Huang			made drawIsometricNode @deprecated.
+ *  6 Oct 16 		Edward Kelly		added alpha field
  */
 
 package missing.ui.assets;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import missing.datastorage.initialisers.GUIInitialiser;
@@ -35,6 +37,9 @@ public class GWNode {
 	private WorldNode node;
 	private GWTile[][] tiles;
 	private int nodeSize;
+	
+	/** Used for darkness in day night cycles */
+	private int alpha;
 
 	public GWNode(WorldNode node, int nodeSize) throws GameException {
 		this.node = node;
@@ -59,6 +64,9 @@ public class GWNode {
 
 	public void setNodeSize(int nodeSize) {
 		this.nodeSize = nodeSize;
+	}
+	public void setAlpha(int alpha) {
+		this.alpha = alpha;
 	}
 
 	// Methods
@@ -85,5 +93,12 @@ public class GWNode {
 				tiles[i][j].draw(g, tileX, tileY, inMapView, player);
 			}
 		}
+		if (alpha != 0){
+			// only need to draw filter if not fully transparent
+			g.setColor(new Color(35, 35, 43, alpha));
+			g.fillRect(x, y, nodeSize, nodeSize);
+		}
 	}
+
+	
 }

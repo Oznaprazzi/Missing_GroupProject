@@ -84,4 +84,12 @@ public class GWorld {
 	public void setPlayer(Player player){
 		this.player = player;
 	}
+	
+	public void setAlpha(int alpha) {
+		for (int i = 0; i < gwNodes.length; i++) {
+			for (int j = 0; j < gwNodes[i].length; j++) {
+				gwNodes[i][j].setAlpha(alpha);
+			}
+		}
+	}
 }
