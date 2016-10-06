@@ -121,11 +121,11 @@ public class Player extends Character {
 	}
 
 	public int getMoney() {
-		return money.getMoney();
+		return money.getAmount();
 	}
 
 	public void setMoney(int m) {
-		money.setMoney(m);
+		money.setAmount(m);
 	}
 
 	// Methods for use

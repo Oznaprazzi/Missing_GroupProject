@@ -19,20 +19,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Movable;
-import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
-import missing.game.items.nonmovable.Bag;
-import missing.game.items.nonmovable.NonMovable;
-import missing.game.items.nonmovable.Pocket;
-import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
-import missing.ui.canvas.HandCanvas;
 import missing.ui.canvas.PileCanvas;
 
 /**

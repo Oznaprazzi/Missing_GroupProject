@@ -19,16 +19,6 @@ import java.awt.Point;
 @SuppressWarnings("serial")
 public class Money extends Movable {
 
-	private int money;
-
-	public int getMoney() {
-		return money;
-	}
-
-	public void setMoney(int m) {
-		money = m;
-	}
-
 	public Money(Point worldLocation, Point tileLocation, int amount) {
 		super("Money", "Used for spending", worldLocation, tileLocation, amount, 1);
 	}
