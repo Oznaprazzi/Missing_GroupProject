@@ -28,6 +28,9 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import missing.game.items.nonmovable.Shop.ShopType;
+import missing.game.world.nodes.WorldTile.TileObject.Direction;
+
 /**
  * This class contains static fields for the images and files and uses methods
  * for retrieving those fields.
@@ -112,8 +115,8 @@ public class GameAssets {
 
 	public static BufferedImage getPlayerImage(int index, String direction) {
 		try {
-			playerImage = ImageIO
-					.read(GameAssets.class.getResource(STORAGE_PATH + "/img/player"+direction+String.valueOf(index)+".png"));
+			playerImage = ImageIO.read(GameAssets.class
+					.getResource(STORAGE_PATH + "/img/player" + direction + String.valueOf(index) + ".png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -132,18 +135,16 @@ public class GameAssets {
 		return sandImage;
 	}
 
-	public static BufferedImage getTombStoneImage(){
-		if(tombStoneImage == null){
-			try{
+	public static BufferedImage getTombStoneImage() {
+		if (tombStoneImage == null) {
+			try {
 				tombStoneImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/tombstone.png"));
-			}catch(IOException e){
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		return tombStoneImage;
 	};
-
-
 
 	public static BufferedImage getWaterImage() {
 		if (waterImage == null) {
@@ -381,8 +382,7 @@ public class GameAssets {
 	public static BufferedImage getPileOfItemsImage() {
 		if (pileOfItemsImage == null) {
 			try {
-				pileOfItemsImage = ImageIO
-						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/pileofitems.png"));
+				pileOfItemsImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/pileofitems.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -393,8 +393,7 @@ public class GameAssets {
 	public static BufferedImage getLogoImage() {
 		if (logoImage == null) {
 			try {
-				logoImage = ImageIO
-						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/logo.png"));
+				logoImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/logo.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -417,8 +416,7 @@ public class GameAssets {
 	public static BufferedImage getMissingLogoImage() {
 		if (missingLogoImage == null) {
 			try {
-				missingLogoImage = ImageIO
-						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/missinglogo.png"));
+				missingLogoImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/missinglogo.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -429,8 +427,8 @@ public class GameAssets {
 	public static ImageIcon getButtonImage() {
 		if (buttonImage == null) {
 			try {
-				buttonImage = new ImageIcon(ImageIO
-						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/button.png")));
+				buttonImage = new ImageIcon(
+						ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/button.png")));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -438,9 +436,10 @@ public class GameAssets {
 		return buttonImage;
 	}
 
-	public static Font getFont(float size){
+	public static Font getFont(float size) {
 		try {
-			customFont= Font.createFont(Font.TRUETYPE_FONT, GameAssets.class.getResource(STORAGE_PATH + "/fonts/the_dark.ttf").openStream());   
+			customFont = Font.createFont(Font.TRUETYPE_FONT,
+					GameAssets.class.getResource(STORAGE_PATH + "/fonts/the_dark.ttf").openStream());
 			GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			genv.registerFont(customFont);
 			return customFont.deriveFont(size);
@@ -448,5 +447,9 @@ public class GameAssets {
 			e.printStackTrace();
 		}
 		return customFont.deriveFont(size);
+	}
+
+	public static BufferedImage getShopImage(ShopType type, Direction direction) {
+		return null;
 	}
 }
