@@ -14,6 +14,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +36,7 @@ import missing.game.items.nonmovable.Pocket;
 /**
  * Canvas used to display the Player's bag's items
  */
-public class HandCanvas extends Canvas {
+public class HandCanvas extends Canvas implements MouseListener {
 	/** Bag of items to display */
 	private Bag bag;
 	
@@ -59,13 +63,36 @@ public class HandCanvas extends Canvas {
 	private static final int rows = 2;
 
 	private static final int colunmns = 5;
+	
+	private Point clickPoint;
+	
+	private int clickIndex;
+
+	private List<Rectangle> gridRectangle; //array of rectangle locations.
+	
+	private List<Rectangle> gridRectanglePocket; //arraylist of rectangle locations.
+	//private List<Point> pointListPk;
 
 	public HandCanvas(Bag bag, Pocket pocket) {
 		this.bag = bag;
 		this.pocket = pocket;
 		bagSet = new ArrayList<Movable>();
 		pocketSet = new ArrayList<Movable>();
+		gridRectangle = new ArrayList<>();
+		gridRectanglePocket = new ArrayList<>();
 		convertListToSet();
+		addMouseListener(this);
+	}
+	/**
+	 * This helper method determines if the mouse click is within a cell, and if so, what cell it is.
+	 */
+	private void determineClickedItems() {
+		System.out.println("ArrayList of Rectangles");
+		System.out.println(gridRectangle.size());
+		for(Rectangle r : gridRectangle){
+			System.out.println(r.toString());
+		}
+		System.out.println("End ArrayList of Rectangles.");
 	}
 
 	@Override
@@ -77,6 +104,7 @@ public class HandCanvas extends Canvas {
 		g.setColor(Color.black);
 		g.drawString("Items in Bag:", 10, 40);
 		this.drawGrid(g, Y_OFFSET_BG);
+		determineClickedItems();
 		this.drawItems(g, Y_OFFSET_BG, bagSet);
 		g.setFont(serif);
 		g.setColor(Color.black);
@@ -139,11 +167,30 @@ public class HandCanvas extends Canvas {
 	 * @param g
 	 */
 	private void drawGrid(Graphics g, int y_offset) {
+		int count = 0;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < colunmns; j++) {
-				g.drawRect(X_OFFSET + j * size, y_offset + i * size, size, size);
+				int left = X_OFFSET + j * size;
+				int top = y_offset + i * size;
+				++count;
+				gridRectangle.add(new Rectangle(left, top, size, size));
+					drawCell(g, left, top, size, size, false);
+				
 			}
 		}
+	}
+	/**
+	 * Draws a Cell. Has a flag to determine if it is highlighted or not.
+	 * @param left
+	 * @param top
+	 * @param isHighlighted
+	 */
+	private void drawCell(Graphics g, int left, int top, int width, int height, boolean isHighlighted){
+		
+		if(isHighlighted){
+			g.setColor(Color.yellow);
+			g.drawRect(left,top,width,height);
+		}else{g.drawRect(left,top,width,height);}
 	}
 
 	/**
@@ -167,6 +214,54 @@ public class HandCanvas extends Canvas {
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(442, 409);
+	}
+	
+	/**
+	 * Returns the index of the arraylist that is being clicked.
+	 * @param e
+	 * @return
+	 */
+	public int indexofCell(MouseEvent e){
+		System.out.println("Mouse clicked at:");
+		System.out.printf("\n Mouse Clicked at %d, %d", e.getX(), e.getY());
+		clickPoint = e.getPoint();
+		
+		for(int i = 0 ; i != this.gridRectangle.size(); ++i){
+			if(gridRectangle.get(i).contains(clickPoint)){
+				System.out.println("You clicked inside me!");
+				System.out.println("rect: " + gridRectangle.get(i).toString());
+				System.out.println("index :" + i);
+				clickIndex = i;
+				return i;
+			}
+		}
+		System.out.println("You didn't click inside of me.");
+		return -1;
+		
+	}
+	
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		System.out.println("Index: " + indexofCell(e));
+		
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
 	}
 
 }

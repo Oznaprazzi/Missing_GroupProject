@@ -21,6 +21,7 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -45,17 +46,19 @@ public class GameView extends View {
 	private JButton btnViewMap;
 	private JButton btnPlayersBag;
 	private JButton btnDoAction;
+
+	private JTextField nameField;
+	private JList playersOnline;
 	
 	private JPanel ctrlPanel;
-	private JLabel lblHealthField;
-	
-	private JTextField nameField;
-	private JTextField healthField;
-	
 	private HandJFrame bagFrame;
+	
 	private final Color BACKGROUND_COLOR = Color.black;
+	
 	private Player currentPlayer;
 	private int id;
+	
+	private final double BTN_WEIGHT = 0.05;
 	
 	public GameView(VControl controller) {
 		super(controller);
@@ -102,56 +105,80 @@ public class GameView extends View {
 		ctrlPanel.add(nameField, gbc_txtName);
 		nameField.setColumns(10);
 
-		lblHealthField = new JLabel("Player Health");
-		lblHealthField.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHealthField.setForeground(Color.WHITE);
-		GridBagConstraints gbc_lblHealthField = new GridBagConstraints();
-		gbc_lblHealthField.anchor = GridBagConstraints.WEST;
-		gbc_lblHealthField.insets = new Insets(0, 0, 5, 0);
-		gbc_lblHealthField.gridx = 0;
-		gbc_lblHealthField.gridy = 2;
-		ctrlPanel.add(lblHealthField, gbc_lblHealthField);
-
-		healthField = new JTextField();
-		healthField.setColumns(10);
-		healthField.setText("" +currentPlayer.getHealth());
-		GridBagConstraints gbc_healthField = new GridBagConstraints();
-		gbc_healthField.insets = new Insets(0, 0, 5, 0);
-		gbc_healthField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_healthField.gridx = 0;
-		gbc_healthField.gridy = 3;
-		ctrlPanel.add(healthField, gbc_healthField);
-
 		btnDoAction = new JButton("Do Action");
 		btnDoAction.setBackground(Color.yellow);
+		btnDoAction.setFocusable(false);
 		GridBagConstraints gbc_btnDoAction = new GridBagConstraints();
 		gbc_btnDoAction.insets = new Insets(0, 0, 5, 0);
-		gbc_btnDoAction.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnDoAction.fill = GridBagConstraints.BOTH;
 		gbc_btnDoAction.gridx = 0;
-		gbc_btnDoAction.gridy = 4;
+		gbc_btnDoAction.gridy = 2;
+		gbc_btnDoAction.anchor = GridBagConstraints.NORTH;
+		gbc_btnDoAction.weighty = BTN_WEIGHT;
+
 		ctrlPanel.add(btnDoAction, gbc_btnDoAction);
 
 		btnViewMap = new JButton("View Map");
 		btnViewMap.setBackground(Color.yellow);
+		btnViewMap.setFocusable(false);
 		GridBagConstraints gbc_btnViewMap = new GridBagConstraints();
 		gbc_btnViewMap.insets = new Insets(0, 0, 5, 0);
-		gbc_btnViewMap.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnViewMap.fill = GridBagConstraints.BOTH;
 		gbc_btnViewMap.gridx = 0;
-		gbc_btnViewMap.gridy = 5;
+		gbc_btnViewMap.gridy = 3;
+		gbc_btnViewMap.anchor = GridBagConstraints.NORTH;
+
+		gbc_btnViewMap.weighty = BTN_WEIGHT;
 		ctrlPanel.add(btnViewMap, gbc_btnViewMap);
 
 		btnPlayersBag = new JButton("Players Bag");
 		btnPlayersBag.setBackground(Color.yellow);
+		btnPlayersBag.setFocusable(false);
 		GridBagConstraints gbc_btnPlayersBag = new GridBagConstraints();
 		gbc_btnPlayersBag.insets = new Insets(0, 0, 5, 0);
-		gbc_btnPlayersBag.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnPlayersBag.fill = GridBagConstraints.BOTH;
 		gbc_btnPlayersBag.gridx = 0;
-		gbc_btnPlayersBag.gridy = 6;
+		gbc_btnPlayersBag.gridy = 4;
+		gbc_btnPlayersBag.weighty = BTN_WEIGHT;
+		gbc_btnPlayersBag.anchor = GridBagConstraints.NORTH;
 		ctrlPanel.add(btnPlayersBag, gbc_btnPlayersBag);
-
+		
+		JLabel lblPlayersOnline = new JLabel("Players Online");
+		lblPlayersOnline.setForeground(Color.WHITE);
+		GridBagConstraints gbc_playersOnline = new GridBagConstraints();
+		gbc_playersOnline.insets = new Insets(0, 0, 5, 0);
+		gbc_playersOnline.gridx = 0;
+		gbc_playersOnline.gridy = 5;
+		ctrlPanel.add(lblPlayersOnline, gbc_playersOnline);
+		
+		this.playersOnline = getPlayerNames(); //Set the JTextField.
+		playersOnline.setFocusable(false);
+		GridBagConstraints gbc_players = new GridBagConstraints();
+		gbc_players.insets = new Insets(0, 0, 5, 0);
+		gbc_players.gridx = 0;
+		gbc_players.gridy = 6;
+		gbc_players.weighty = BTN_WEIGHT * 4;
+		gbc_players.fill = GridBagConstraints.BOTH;
+		ctrlPanel.add(playersOnline, gbc_players);
+		
 		this.add(gamePanel, BorderLayout.CENTER);
 		this.add(ctrlPanel, BorderLayout.EAST);
 		this.addActionListeners();
+
+	}
+	
+	/**
+	 * Helper method that grabs all of the players online and displays it onto
+	 * the JList. This should be called whenever the JList is updated or added/removed.
+	 */
+	private JList<String> getPlayerNames(){
+		Player[] players = controller.getGGame().getGame().getAvatars();
+		String[] names = new String[players.length];
+		
+		for(int i = 0; i != players.length; ++i){
+			names[i] = players[i].getName();
+		}
+		return new JList<String>(names);
 	}
 
 	/**
@@ -166,8 +193,8 @@ public class GameView extends View {
 		});
 
 		btnPlayersBag.addActionListener(e -> {
+			//TODO: need to fix. Currently only shows bag of first player.
 			controller.requestFocus();
-			
 			bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
 			bagFrame.setVisible(true);
 		});
@@ -187,9 +214,9 @@ public class GameView extends View {
 	 */
 	public void updateGamePanel(VControl controller) {
 		this.controller = controller;
-		this.healthField.setText(""+ controller.getGGame().getGame().getAvatars()[id].getHealth());
 		gamePanel.setController(controller);
 		gamePanel.initialise();
+		playersOnline = getPlayerNames();
 	}
 
 	@Override

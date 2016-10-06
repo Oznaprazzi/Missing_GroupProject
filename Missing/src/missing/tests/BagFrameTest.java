@@ -42,6 +42,7 @@ public class BagFrameTest extends JFrame {
 					Bag bag = addItemsToBag();
 					Pocket pocket = addItemsToPocket();
 					BagFrameTest frame = new BagFrameTest(bag, pocket);
+					frame.setResizable(false);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,9 +50,9 @@ public class BagFrameTest extends JFrame {
 			}
 		});
 	}
-
+	
 	/**
-	 * Create the frame.
+	 * Create a Test canvas contained within this window.
 	 */
 	public BagFrameTest(Bag bag, Pocket pocket) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -83,16 +84,14 @@ public class BagFrameTest extends JFrame {
 		try{
 			bag.addItem(wood);
 			bag.addItem(wood2);
-			bag.addItem(food);
-			bag.addItem(food2);
-			bag.addItem(food3);
-			bag.addItem(food4);
-			bag.addItem(dirt);
+			//bag.addItem(food);
+			//bag.addItem(food2);
+			/*bag.addItem(dirt);
 			bag.addItem(stone);
 			bag.addItem(axe);
 			bag.addItem(pickaxe);
 			bag.addItem(shovel);
-			bag.addItem(fishingrod);
+			bag.addItem(fishingrod);*/
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -110,14 +109,14 @@ public class BagFrameTest extends JFrame {
 		Movable dirt = new Dirt(new Point(0, 0), new Point(0,0));
 		Movable stone = new Stone(new Point(0, 0), new Point(0,0));
 		try{
-			pocket.addItem(wood);
+		/*	pocket.addItem(wood);
 			pocket.addItem(wood2);
 			pocket.addItem(food);
 			pocket.addItem(food2);
 			pocket.addItem(food3);
 			pocket.addItem(food4);
 			pocket.addItem(dirt);
-			pocket.addItem(stone);
+			pocket.addItem(stone);*/
 		}catch(Exception e){
 			e.printStackTrace();
 		}

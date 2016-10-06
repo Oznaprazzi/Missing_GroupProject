@@ -12,6 +12,8 @@ package missing.ui.frames;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,7 +29,7 @@ import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Pocket;
 import missing.ui.canvas.HandCanvas;
 
-public class HandJFrame extends JFrame {
+public class HandJFrame extends JFrame{
 
 	private JPanel contentPane;
 
@@ -38,6 +40,7 @@ public class HandJFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setSize(442, 409);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -46,5 +49,9 @@ public class HandJFrame extends JFrame {
 		HandCanvas panel = new HandCanvas(bag, pocket);
 		contentPane.add(panel, BorderLayout.CENTER);
 	}
+
+
+
+
 
 }

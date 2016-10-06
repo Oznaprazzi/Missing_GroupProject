@@ -165,44 +165,7 @@ public class VControl extends JFrame {
 		});
 		
 		loadGame.addActionListener(e->{
-				fc = new JFileChooser("Load");
-				// set up the file chooser
-				fc.setCurrentDirectory(new File("."));
-				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				
-				File theFile = null;
-				String xmlFile = "";				
-				while(true){
-					int rVal = fc.showOpenDialog(this);
-					
-					
-					
-					if(rVal == JFileChooser.APPROVE_OPTION){
-						theFile = fc.getSelectedFile();
-						xmlFile = theFile.getAbsolutePath();
-						
-						// Sanity Checks
-						if (xmlFile == null) {
-							JOptionPane.showMessageDialog(null, "XML File must be specified.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
-							//System.exit(1);
-						}
-						if (!xmlFile.endsWith(".xml")) {
-							JOptionPane.showMessageDialog(null, "File must end with XML.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
-							//System.exit(1);
-						}
-					}else if(rVal == JFileChooser.CANCEL_OPTION){
-						JOptionPane.showMessageDialog(null, "User did not specify an XML file.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
-						System.exit(1);
-					}
-					
-					if(xmlFile != null && xmlFile.endsWith(".xml"))
-						break;
-			
-				}
-				XMLHandler.filename = xmlFile;
-				JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");
-				
-			
+			loadGame();
 		});
 		
 		exitItem.addActionListener(e->{
@@ -230,6 +193,7 @@ public class VControl extends JFrame {
 			
 		});
 	}
+	
 	
 	// View Control Methods
 
@@ -438,6 +402,46 @@ public class VControl extends JFrame {
 			} else break;
 		}
 	}
+	/**
+	 * Displays GUI to load game and calls XMLHandler.filename to set the current XML file.
+	 */
+	private void loadGame() {
+		fc = new JFileChooser("Load");
+		// set up the file chooser
+		fc.setCurrentDirectory(new File("."));
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		
+		File theFile = null;
+		String xmlFile = "";				
+		while(true){
+			int rVal = fc.showOpenDialog(this);
+			
+			if(rVal == JFileChooser.APPROVE_OPTION){
+				theFile = fc.getSelectedFile();
+				xmlFile = theFile.getAbsolutePath();
+				
+				// Sanity Checks
+				if (xmlFile == null) {
+					JOptionPane.showMessageDialog(null, "XML File must be specified.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+					//System.exit(1);
+				}
+				if (!xmlFile.endsWith(".xml")) {
+					JOptionPane.showMessageDialog(null, "File must end with XML.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+					//System.exit(1);
+				}
+			}else if(rVal == JFileChooser.CANCEL_OPTION){
+				JOptionPane.showMessageDialog(null, "User did not specify an XML file.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+				System.exit(1);
+			}
+			
+			if(xmlFile != null && xmlFile.endsWith(".xml"))
+				break;
+	
+		}
+		XMLHandler.filename = xmlFile;
+		JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");		
+	}
+	
 	public GGame getGGame() {
 		return gGame;
 	}
@@ -463,6 +467,8 @@ public class VControl extends JFrame {
 	public void performAction() {
 		client.handleAction();
 	}
+	
+	
 
 	public int getPlayerID() {
 		return playerID;
