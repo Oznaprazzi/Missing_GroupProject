@@ -20,6 +20,7 @@
  * 3 Oct 16			Edward Kelly		integrated MapView
  * 3 Oct 16			Linus Go			added JMenuChooser and some items.
  * 6 Oct 16			Edward Kelly		implemented calls to XMLHandler.saveGame()
+ * 6 Oct 16 		Edward Kelly		implemented day night cycle
  */
 package missing.ui.controller;
 
@@ -40,6 +41,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import missing.ui.daynight.DayNightCycle;
 import missing.datastorage.assetloader.XMLHandler;
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
@@ -92,14 +94,21 @@ public class VControl extends JFrame {
 
 	/** Size of each view */
 	public static final Dimension VIEW_SIZE = new Dimension(1000, 1000);
-
+	/** How often clock ticks in minutes per second */
+	private final int CLOCK_TICK = 10;
 	private View[] views;
 	private int cur = 0;
 	private int prev = 0;
+	/** Graphical representation of game for this VControl */
 	private GGame gGame;
+	/** ID for player with this VControl */
 	private int playerID;
+	/** Whether the player with this VControl is the host */
 	private boolean isHost;
+	/** Client this VControl belongs to */
 	private Client client;
+	/** Darkness level of world */
+	private int alpha;
 	
 	/*JMenuBar stuff */
 	private JMenuBar menuBar;
@@ -444,6 +453,7 @@ public class VControl extends JFrame {
 	/** Updates the current GGame. Called by client */
 	public void updateGGame(Game game) throws GameException{
 		this.gGame = new GGame(game, views[cur]);
+		updateAlpha(this.alpha);
 		gGame.setView(views[cur]);
 		gGame.setPlayer(gGame.getGame().getAvatars()[playerID]);
 		((GameView)views[this.getGameView()]).updateGamePanel(this);
@@ -455,6 +465,25 @@ public class VControl extends JFrame {
 		this.gGame = new GGame(game, views[cur]);
 		views[this.getGameView()].initialise();
 		views[this.getMapView()].initialise();
+		startDayNightCycle();
+	}
+	
+	/**
+	 * Starts day and night cycle for game
+	 */
+	private void startDayNightCycle(){
+		java.util.Timer timer = new java.util.Timer();
+		DayNightCycle dnc = new DayNightCycle(this);
+		timer.scheduleAtFixedRate(dnc, 0, CLOCK_TICK*10);
+	}
+	
+	/**
+	 * Updates the alpha for MapView and GameView
+	 * @param alpha The transparency of the rect to be drawn over game
+	 */
+	public void updateAlpha(int alpha){
+		this.alpha = alpha;
+		this.gGame.setAlpha(alpha);
 	}
 	/**
 	 * Calls Client.handleAction(). This method is called

@@ -8,6 +8,7 @@
  * 19 Sep 16		Linus Go			added the fields
  * 19 Sep 16		Casey Huang			created getGame method
  * 3 Oct 16			Edward Kelly		added setView and setPlayer methods
+ * 6 Oct 16 		Edward Kelly		added setAlpha
  */
 package missing.ui.assets;
 
@@ -51,5 +52,9 @@ public class GGame {
 	
 	public void setPlayer(Player player){
 		gworld.setPlayer(player);
+	}
+
+	public void setAlpha(int alpha) {
+		this.gworld.setAlpha(alpha);
 	}
 }
