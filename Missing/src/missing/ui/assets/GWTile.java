@@ -23,9 +23,6 @@ package missing.ui.assets;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
@@ -37,6 +34,7 @@ import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Fireplace;
 import missing.game.items.nonmovable.FishArea;
 import missing.game.items.nonmovable.Rock;
+import missing.game.items.nonmovable.Soil;
 import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile;
 import missing.game.world.nodes.WorldTile.Pile;
@@ -55,6 +53,8 @@ public class GWTile {
 	private int size;
 	/** The current player, used just to obtain data about drawing position. */
 	private Player curPlayer;
+	/** draws any debugging images */
+	private final boolean DEBUG = false;
 
 	public GWTile(WorldTile tile, int size) throws GameException {
 		this.tile = tile;
@@ -147,12 +147,18 @@ public class GWTile {
 			} else if (theFood.getFoodType() == FoodType.FISH) {
 				g.drawImage(GameAssets.getFishImage(), x, y, size, size, null);
 			}
+		} else if (tile.getObject() instanceof Soil) {
+			g.drawImage(GameAssets.getSoilImage(), x, y, size, size, null);
 		}
 
-		/* If the tile is not enterable and there is an object image for it. */
-		if (!tile.isEnterable() && tile.getObject() != null) {
-			g.setColor(Color.green);
-			g.drawOval(x, y, size, size);
+		if (DEBUG) {
+			/*
+			 * If the tile is not enterable and there is an object image for it.
+			 */
+			if (!tile.isEnterable() && tile.getObject() != null) {
+				g.setColor(Color.green);
+				g.drawOval(x, y, size, size);
+			}
 		}
 	}
 
@@ -194,9 +200,9 @@ public class GWTile {
 	}
 
 	/**
-	 * Helper method for drawing the health of a player.
-	 * This works by dividing the health into a scale of 8 sub sections.
-	 * If the health falls within that certain range, it will draw a certain
+	 * Helper method for drawing the health of a player. This works by dividing
+	 * the health into a scale of 8 sub sections. If the health falls within
+	 * that certain range, it will draw a certain
 	 * 
 	 * @param x
 	 * @param ys
@@ -206,64 +212,61 @@ public class GWTile {
 
 		/* Dimensions for the bar. */
 		final int barHeight = size / 10;
-		final int barWidth = size;
 		int curHealth = curPlayer.getHealth();
 		Color fill = null;
 		int sqsize = size / 8;
 		/* Divide the health bar into 8 sub sections. */
 		for (int i = 0; i != 8; i++) {
-			if(curHealth >= 88 && curHealth <= 100){ //case 8
+			if (curHealth >= 88 && curHealth <= 100) { // case 8
 				fill = Color.green;
-			}else if(curHealth >= 76 && curHealth <= 87){ //case 7
-				if(i >= 0 && i < 7){
+			} else if (curHealth >= 76 && curHealth <= 87) { // case 7
+				if (i >= 0 && i < 7) {
 					fill = Color.green;
-				}else{
-					fill = Color.red;	
+				} else {
+					fill = Color.red;
 				}
-			}else if(curHealth >= 63 && curHealth <= 75){ //case 6
-				if(i >= 0 && i < 6){
+			} else if (curHealth >= 63 && curHealth <= 75) { // case 6
+				if (i >= 0 && i < 6) {
 					fill = Color.green;
-				}else
-				fill = Color.red;
-			}else if(curHealth >= 50 && curHealth <= 62){ //case 5
-				if(i >= 0 && i < 5){
+				} else
+					fill = Color.red;
+			} else if (curHealth >= 50 && curHealth <= 62) { // case 5
+				if (i >= 0 && i < 5) {
 					fill = Color.green;
-				}else
-				fill = Color.red;
-			}else if(curHealth >= 38 && curHealth <= 49){ //case 4
-				if(i >= 0 && i < 4){
+				} else
+					fill = Color.red;
+			} else if (curHealth >= 38 && curHealth <= 49) { // case 4
+				if (i >= 0 && i < 4) {
 					fill = Color.green;
-				}else
-				fill = Color.red;
-			}else if(curHealth >= 25 && curHealth <= 37){ //case 3
-				if(i >= 0 && i < 3){
+				} else
+					fill = Color.red;
+			} else if (curHealth >= 25 && curHealth <= 37) { // case 3
+				if (i >= 0 && i < 3) {
 					fill = Color.green;
-				}else
-				fill = Color.red;
-			
-			}else if(curHealth >= 13 && curHealth <= 36){ //case 2
-				if(i >= 0 && i < 2){
+				} else
+					fill = Color.red;
+
+			} else if (curHealth >= 13 && curHealth <= 36) { // case 2
+				if (i >= 0 && i < 2) {
 					fill = Color.green;
-				}else
-				fill = Color.red;
-			}else if(curHealth >= 1 && curHealth <= 35){ //case 1
-				if(i == 0){
+				} else
+					fill = Color.red;
+			} else if (curHealth >= 1 && curHealth <= 35) { // case 1
+				if (i == 0) {
 					fill = Color.green;
-				}else
-				fill = Color.red;
-			}else{  //0 - player dead.
+				} else
+					fill = Color.red;
+			} else { // 0 - player dead.
 				fill = Color.red;
 			}
-			
+
 			/* Now draw all of the squares with a specified fill color.. */
 			g.setColor(fill);
 			g.fillRect(x, y, sqsize, barHeight);
 			g.setColor(Color.black);
 			g.drawRect(x, y, sqsize, barHeight);
-			x = x +  sqsize;	
+			x = x + sqsize;
 		}
-			
-		}
+
 	}
-
-
+}

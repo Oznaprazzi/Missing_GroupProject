@@ -46,8 +46,6 @@ public class GameAssets {
 
 	private static BufferedImage sandImage;
 
-	private static BufferedImage nightBackdropImage;
-
 	private static BufferedImage tombStoneImage;
 
 	private static BufferedImage waterImage;
