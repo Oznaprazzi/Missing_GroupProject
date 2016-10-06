@@ -13,15 +13,20 @@
  *  27 Sep 16		Casey Huang			Added girl player images.
  *  1 Oct 16		Linus Go			Added tombstone images.
  *  3 Oct 16		Casey Huang			Added pileofitems image.
+ *  6 Oct 16 		Casey Huang			Added logo images and button image
  */
 
 package missing.datastorage.assetloader;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  * This class contains static fields for the images and files and uses methods
@@ -40,11 +45,9 @@ public class GameAssets {
 	private static BufferedImage playerImage;
 
 	private static BufferedImage sandImage;
-		
-	private static BufferedImage nightBackdropImage;
-	
+
 	private static BufferedImage tombStoneImage;
-	
+
 	private static BufferedImage waterImage;
 
 	private static BufferedImage grassImage;
@@ -86,14 +89,18 @@ public class GameAssets {
 	private static BufferedImage berriesImage;
 
 	private static BufferedImage bagBackgroundImage;
-	
+
 	private static BufferedImage pileOfItemsImage;
-	
+
 	private static BufferedImage logoImage;
-	
+
 	private static BufferedImage splashBackgroundImage;
-	
+
 	private static BufferedImage missingLogoImage;
+
+	private static ImageIcon buttonImage;
+
+	private static Font customFont;
 
 	// Getters for File Assets
 
@@ -113,17 +120,6 @@ public class GameAssets {
 		}
 		return playerImage;
 	}
-	
-	public static BufferedImage getBackdropImage(){
-		try {
-			nightBackdropImage = ImageIO
-					.read(GameAssets.class.getResource(STORAGE_PATH + "/img/landscapebackground.jpeg"));
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return nightBackdropImage;
-	}
 
 	public static BufferedImage getSandImage() {
 		if (sandImage == null) {
@@ -135,7 +131,7 @@ public class GameAssets {
 		}
 		return sandImage;
 	}
-	
+
 	public static BufferedImage getTombStoneImage(){
 		if(tombStoneImage == null){
 			try{
@@ -146,9 +142,9 @@ public class GameAssets {
 		}
 		return tombStoneImage;
 	};
-	
-	
-	
+
+
+
 	public static BufferedImage getWaterImage() {
 		if (waterImage == null) {
 			try {
@@ -393,7 +389,7 @@ public class GameAssets {
 		}
 		return pileOfItemsImage;
 	}
-	
+
 	public static BufferedImage getLogoImage() {
 		if (logoImage == null) {
 			try {
@@ -405,7 +401,7 @@ public class GameAssets {
 		}
 		return logoImage;
 	}
-	
+
 	public static BufferedImage getSplashBackgroundImage() {
 		if (splashBackgroundImage == null) {
 			try {
@@ -417,7 +413,7 @@ public class GameAssets {
 		}
 		return splashBackgroundImage;
 	}
-	
+
 	public static BufferedImage getMissingLogoImage() {
 		if (missingLogoImage == null) {
 			try {
@@ -428,5 +424,29 @@ public class GameAssets {
 			}
 		}
 		return missingLogoImage;
+	}
+
+	public static ImageIcon getButtonImage() {
+		if (buttonImage == null) {
+			try {
+				buttonImage = new ImageIcon(ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/button.png")));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return buttonImage;
+	}
+
+	public static Font getFont(float size){
+		try {
+			customFont= Font.createFont(Font.TRUETYPE_FONT, GameAssets.class.getResource(STORAGE_PATH + "/fonts/the_dark.ttf").openStream());   
+			GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			genv.registerFont(customFont);
+			return customFont.deriveFont(size);
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
+		return customFont.deriveFont(size);
 	}
 }

@@ -53,6 +53,8 @@ public class GameView extends View {
 	private JPanel ctrlPanel;
 	private HandJFrame bagFrame;
 	
+	private JLabel lblHealthField;
+	
 	private final Color BACKGROUND_COLOR = Color.black;
 	
 	private Player currentPlayer;

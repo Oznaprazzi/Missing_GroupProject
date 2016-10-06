@@ -4,6 +4,7 @@
  * 	
  * 	Date				Author					Changes
  * 	3 Oct 2016			Chris Rabe				created XMLLoader.java
+ * 	7 Oct 2016			Chris Rabe				can now parse shops
  */
 
 package missing.datastorage.assetloader;
@@ -39,6 +40,8 @@ import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Fireplace;
 import missing.game.items.nonmovable.FishArea;
 import missing.game.items.nonmovable.Rock;
+import missing.game.items.nonmovable.Shop;
+import missing.game.items.nonmovable.Shop.ShopType;
 import missing.game.items.nonmovable.Soil;
 import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile.TileObject;
@@ -51,7 +54,7 @@ import missing.helper.GameException;
 public class XMLImporter {
 
 	public static List<Item> getItemsFromFile(String filename) throws GameException {
-		System.out.println("filename " +filename);
+		System.out.println("filename " + filename);
 		List<Item> tmp = new ArrayList<Item>();
 		// Create document
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -133,7 +136,7 @@ public class XMLImporter {
 		List<Item> fishareas = parseFishArea(worldLocation, doc, xPath, expression);
 		List<Item> fireplace = parseFirePlace(worldLocation, doc, xPath, expression);
 		List<Item> piles = parsePiles(worldLocation, doc, xPath, expression);
-		// TODO Parse Shop
+		List<Item> shops = parseShops(worldLocation, doc, xPath, expression);
 		// Combine everything together
 		List<Item> tmp = new ArrayList<Item>();
 		tmp.addAll(trees);
@@ -143,6 +146,7 @@ public class XMLImporter {
 		tmp.addAll(fishareas);
 		tmp.addAll(fireplace);
 		tmp.addAll(piles);
+		tmp.addAll(shops);
 		return tmp;
 	}
 
@@ -262,6 +266,28 @@ public class XMLImporter {
 	}
 
 	// NonMovable Parsers
+
+	private static List<Item> parseShops(Point worldLocation, Document doc, XPath xPath, String expression) {
+		List<Item> tmp = new ArrayList<Item>();
+		expression += "/shop";
+		try {
+			NodeList shops = (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
+			for (int i = 0; i < shops.getLength(); i++) {
+				Node shop = shops.item(i);
+				if (shop.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) shop;
+					Node locNode = elem.getElementsByTagName("location").item(0);
+					Point location = parseLocation(locNode);
+					ShopType type = parseShopType(elem.getElementsByTagName("type").item(0).getTextContent());
+					tmp.add(new Shop(worldLocation, location, type));
+				}
+			}
+		} catch (XPathExpressionException e) {
+			System.out.println(e.getMessage());
+			System.exit(1);
+		}
+		return tmp;
+	}
 
 	private static List<Item> parsePiles(Point worldLocation, Document doc, XPath xPath, String expression) {
 		List<Item> tmp = new ArrayList<Item>();
@@ -468,6 +494,18 @@ public class XMLImporter {
 			return ToolType.SHOVEL;
 		case "FISHINGROD":
 			return ToolType.FISHINGROD;
+		}
+		throw new RuntimeException("Invalid type");
+	}
+
+	private static ShopType parseShopType(String type) {
+		switch (type) {
+		case "RESOURCE":
+			return ShopType.RESOURCE;
+		case "TOOLS":
+			return ShopType.TOOLS;
+		case "FOOD":
+			return ShopType.FOOD;
 		}
 		throw new RuntimeException("Invalid type");
 	}

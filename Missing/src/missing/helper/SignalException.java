@@ -21,8 +21,8 @@ package missing.helper;
  * Here is a list of signals which need to be checked:
  * <ul>
  * <li>CONTAINER - player interacting with container.</li>
- * <li>TRADE - player interacting with another player.</li>
- * <li>PILE - player interacting with a pile </li>
+ * <li>PILE - player interacting with a pile</li>
+ * <li>SHOP - player interacting with a shop</li>
  * </ul>
  */
 @SuppressWarnings("serial")

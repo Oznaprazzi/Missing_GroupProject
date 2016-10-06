@@ -7,6 +7,7 @@
  * Date				Author			Modification
  * 4 oct 16			Jian Wei		created the class, implemented initialiseCosts and buyitem, sellitem
  * 5 Oct 16			Chris Rabe		changed structure of the code so that only buy and sell methods are available
+ * 7 Oct 16			Chris Rabe		changed type of merchant to be based on shop type
  */
 package missing.game.characters;
 
@@ -17,10 +18,12 @@ import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Movable;
+import missing.game.items.movable.Resource;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.movable.Wood;
+import missing.game.items.nonmovable.Shop.ShopType;
 import missing.helper.GameException;
 import missing.helper.SignalException;
 
@@ -30,22 +33,25 @@ import missing.helper.SignalException;
 @SuppressWarnings("serial")
 public class Merchant extends Character {
 
-	public enum MerchantType {
-		GENERAL, FOOD, TOOLS // the 3 types of merchants
-	}
+	private HashMap<String, Movable> namesToItems;
+	private HashMap<Movable, Integer> costs;
 
-	private MerchantType mType;
-	private HashMap<String, Movable> namesToItems = new HashMap<String, Movable>();
-	private HashMap<Movable, Integer> costs = new HashMap<Movable, Integer>();
+	private ShopType type;
 
-	public Merchant(Point worldLocation, Point tileLocation, MerchantType mType) {
+	public Merchant(Point worldLocation, Point tileLocation, ShopType type) {
 		super("Merchant", "You can buy stuff from him.", worldLocation, tileLocation, Direction.SOUTH, Direction.ALL);
-		this.mType = mType;
-		initialiseCosts();
+		this.type = type;
+		namesToItems = new HashMap<String, Movable>();
+		costs = new HashMap<Movable, Integer>();
+		getCosts();
 	}
 
 	// Methods
 
+	/**
+	 * Since the merchant will always be inside the shop, this method does not
+	 * do anything. Please use buyItem and sellItem methods instead.
+	 */
 	@Override
 	public void performAction(Player player) throws GameException, SignalException {
 	}
@@ -59,11 +65,10 @@ public class Merchant extends Character {
 			throw new GameException("the merchant doesn't have this item");
 		int costOfItem = costs.get(i);
 		if (player.getMoney() < costOfItem) {
-			throw new GameException("player doesn't have enough moolah");
+			throw new GameException("player doesn't have enough money");
 		}
-		player.setMoney(player.getMoney() - costOfItem); // deducts the cost
-															// from the players
-															// money
+		// deduct from play money
+		player.setMoney(player.getMoney() - costOfItem);
 		Movable playerItem = i;
 		player.addToPocket(playerItem);
 	}
@@ -76,9 +81,8 @@ public class Merchant extends Character {
 			throw new GameException("cannot sell item you dont have");
 		int sellAmount = costs.get(findItemInMap(item));
 		p.setMoney(p.getMoney() + sellAmount);
-		item.setAmount(item.getAmount() - 1); // reduces the amount of the item,
-												// as the player is giving it to
-												// the merchant
+		// reduces amount of item
+		item.setAmount(item.getAmount() - 1);
 		if (item.getAmount() == 0)
 			p.removeFromPocket(item);
 
@@ -96,78 +100,87 @@ public class Merchant extends Character {
 	}
 
 	/** Fills up the map of trades. Initialises the cost of each item */
-	private void initialiseCosts() {
-		switch (mType) {
-		case GENERAL:
-			initialiseGeneralMerchantCosts();
+	private void getCosts() {
+		switch (type) {
+		case RESOURCE:
+			getResourcePrices();
+			break;
 		case FOOD:
-			initialiseFoodMerchantCosts();
+			getFoodPrices();
+			break;
 		case TOOLS:
-			initialiseToolsMerchantCosts();
+			getToolPrices();
+			break;
 		}
 	}
 
-	private void initialiseFoodMerchantCosts() {
-		Movable apple = new Food(null, null, FoodType.APPLE);
-		Movable berry = new Food(null, null, FoodType.BERRY);
-		Movable fish = new Food(null, null, FoodType.FISH);
-
-		namesToItems.put("apple", apple);
-		namesToItems.put("berry", berry);
-		namesToItems.put("fish", fish);
-
-		costs.put(apple, 1);
-		costs.put(berry, 1);
-		costs.put(fish, 1);
-
+	/**
+	 * Costs of tools:
+	 * 
+	 * <pre>
+	 * axe : 30 coins
+	 * pickaxe: 20 coins
+	 * fishingrod = 25 coins
+	 * </pre>
+	 */
+	private void getToolPrices() {
+		Tool axe = new Tool(null, null, ToolType.AXE);
+		Tool pickaxe = new Tool(null, null, ToolType.PICKAXE);
+		Tool rod = new Tool(null, null, ToolType.FISHINGROD);
+		// put those items into the map
+		namesToItems.put(axe.getName(), axe);
+		namesToItems.put(pickaxe.getName(), pickaxe);
+		namesToItems.put(rod.getName(), rod);
+		// map the items to cost
+		costs.put(axe, 30);
+		costs.put(pickaxe, 20);
+		costs.put(rod, 25);
 	}
 
-	private void initialiseToolsMerchantCosts() {
-		Movable axe = new Tool(null, null, ToolType.AXE);
-		Movable rod = new Tool(null, null, ToolType.FISHINGROD);
-		Movable pickaxe = new Tool(null, null, ToolType.PICKAXE);
-
-		namesToItems.put("axe", axe);
-		namesToItems.put("rod", rod);
-		namesToItems.put("pickaxe", pickaxe);
-
-		costs.put(axe, 1);
-		costs.put(rod, 1);
-		costs.put(pickaxe, 1);
+	/**
+	 * Costs of food:
+	 * 
+	 * <pre>
+	 * apple: 20 coins
+	 * berry: 10 coins
+	 * fish: 30 coins
+	 * </pre>
+	 * 
+	 */
+	private void getFoodPrices() {
+		Food apple = new Food(null, null, FoodType.APPLE);
+		Food berry = new Food(null, null, FoodType.BERRY);
+		Food fish = new Food(null, null, FoodType.FISH);
+		// put those items into the map
+		namesToItems.put(apple.getName(), apple);
+		namesToItems.put(berry.getName(), berry);
+		namesToItems.put(fish.getName(), fish);
+		// map the items to cost
+		costs.put(apple, 20);
+		costs.put(berry, 10);
+		costs.put(fish, 30);
 	}
 
-	private void initialiseGeneralMerchantCosts() {
-		// food
-		Movable apple = new Food(null, null, FoodType.APPLE);
-		Movable berry = new Food(null, null, FoodType.BERRY);
-		Movable fish = new Food(null, null, FoodType.FISH);
-		// tools
-		Movable axe = new Tool(null, null, ToolType.AXE);
-		Movable rod = new Tool(null, null, ToolType.FISHINGROD);
-		Movable pickaxe = new Tool(null, null, ToolType.PICKAXE);
-		// resources
-		Movable wood = new Wood(null, null);
-		Movable stone = new Stone(null, null);
-		Movable dirt = new Dirt(null, null);
-
-		namesToItems.put("apple", apple);
-		namesToItems.put("berry", berry);
-		namesToItems.put("fish", fish);
-		namesToItems.put("axe", axe);
-		namesToItems.put("rod", rod);
-		namesToItems.put("pickaxe", pickaxe);
-		namesToItems.put("wood", wood);
-		namesToItems.put("stone", stone);
-		namesToItems.put("dirt", dirt);
-
-		costs.put(apple, 1);
-		costs.put(berry, 1);
-		costs.put(fish, 1);
-		costs.put(axe, 1);
-		costs.put(rod, 1);
-		costs.put(pickaxe, 1);
-		costs.put(wood, 1);
-		costs.put(stone, 1);
-		costs.put(dirt, 1);
+	/**
+	 * Cost of resources:
+	 * 
+	 * <pre>
+	 * wood: 20 coins
+	 * stone: 30 coins
+	 * dirt: 40 coins
+	 * </pre>
+	 */
+	private void getResourcePrices() {
+		Resource wood = new Wood(null, null, 1);
+		Resource stone = new Stone(null, null, 1);
+		Resource dirt = new Dirt(null, null, 1);
+		// put those items into map
+		namesToItems.put(wood.getName(), wood);
+		namesToItems.put(stone.getName(), stone);
+		namesToItems.put(dirt.getName(), dirt);
+		// map the items to cost
+		costs.put(wood, 20);
+		costs.put(stone, 30);
+		costs.put(dirt, 40);
 	}
 }

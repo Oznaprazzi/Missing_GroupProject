@@ -8,6 +8,7 @@
  * ** Sep 16		Linus Go		Created class
  * 30 Sep 16		Edward Kelly	merged with server/client and join/host views
  * 3 Oct 16			Linus Go		Tidied up player chooser and stopped erroneous input being entered.
+ * 6 Oct 16			Casey Huang		Added background and changed Create your player to select player
  */
 package missing.ui.views.playgamemenu;
 
@@ -40,8 +41,6 @@ public class CreatePlayerView extends View{
 	/*Dimensions for the Game Panels width and height */
 	private final int panelWd = 800;
 	private final int panelHt = 600;
-	
-	private int wd, ht;
 	
 	private List<Image> imgList;
 
@@ -92,7 +91,7 @@ public class CreatePlayerView extends View{
 		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gbl_panel);
 
-		JLabel lblCurrentPlayer = MenuFactory.createHeading("Create your Player!");
+		JLabel lblCurrentPlayer = MenuFactory.createLabel2("Select Character");
 		GridBagConstraints gbc_lblCurrentPlayer = new GridBagConstraints();
 		gbc_lblCurrentPlayer.insets = new Insets(0, 0, 5, 0);
 		gbc_lblCurrentPlayer.gridx = 0;
@@ -103,14 +102,16 @@ public class CreatePlayerView extends View{
 		imgPanel = new JPanel(){
 			@Override
 			public void paint(Graphics g){
+				super.paint(g);
+			}
+			
+			@Override
+			public void paintComponent(Graphics g){
 				drawImage(g);
 			}
-
 		};
 		
-		
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		imgPanel.setBackground(Color.gray.darker());
 		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 0;
@@ -173,10 +174,14 @@ public class CreatePlayerView extends View{
 	 * @param g
 	 */
 	private void drawImage(Graphics g){
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, getWidth(), getHeight());
-		g.drawImage(imgList.get(imgIndex), RECT_LEFT, RECT_TOP, RECT_SIZE,RECT_SIZE, null);
-		//g.drawImage(GameAssets.getBackdropImage(), 0,0, getWidth(), getHeight(), null);
+		g.drawImage(imgList.get(imgIndex), RECT_LEFT, RECT_TOP, RECT_SIZE,RECT_SIZE, null);	
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		g.drawImage(GameAssets.getSplashBackgroundImage(), 0, 0, null);
 	}
 
 	/**

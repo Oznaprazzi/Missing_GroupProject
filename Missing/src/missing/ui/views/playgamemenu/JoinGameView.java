@@ -2,11 +2,13 @@
  * 
  * Authors			ID
  * Edward Kelly 	300334192
+ * Casey Huang		300316284
  * 
  * Date				Author			Modification
  * 24 Sep 16		Edward Kelly	created class
  * 24 Sep 16		Edward Kelly	added function to start client
  * 30 Sep 16		Edward Kelly	merged with CreatePlayerView
+ * 6 Oct 16			Casey Huang		Added background and removed commented code
  * 
  */
 package missing.ui.views.playgamemenu;
@@ -25,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import missing.datastorage.assetloader.GameAssets;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
@@ -40,14 +43,10 @@ public class JoinGameView extends View{
 	private JPanel buttonPanel;
 	/** Holds gameInfo and button panels */
 	private JPanel centrePanel;
-	/** The player's name */
-//	private String playerName;
 	/** IP address for game trying to join */
 	private String IPAddress;
 	/** Port game is hosted on */
 	private int port;
-	/** Text entry for playerName */
-//	private TextField playerNameEntry;
 	/** Entry field for IP address */
 	private TextField IPEntry;
 	/** Entry field for port */
@@ -111,19 +110,14 @@ public class JoinGameView extends View{
 		layout.setHgap(20);
 		gameInfoPanel = new JPanel(layout);
 		// Create labels
-//		JLabel playerNameLabel = MenuFactory.createLabel("Player Name");
 		JLabel IPLabel = MenuFactory.createLabel("IP Address");
 		JLabel portLabel = MenuFactory.createLabel("Port");
-//		playerNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		IPLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		portLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		// Create text fields
-//		playerNameEntry = MenuFactory.createTextField(150);
 		IPEntry = MenuFactory.createTextField(150);
 		portEntry = MenuFactory.createTextField(150);
 
-//		gameInfoPanel.add(playerNameLabel);
-//		gameInfoPanel.add(playerNameEntry);
 		gameInfoPanel.add(IPLabel);
 		gameInfoPanel.add(IPEntry);
 		gameInfoPanel.add(portLabel);
@@ -166,13 +160,6 @@ public class JoinGameView extends View{
 	 */
 	private boolean setInputs(){
 		try {
-//			playerName = playerNameEntry.getText();
-//			if (playerName == null){
-//				JOptionPane.showMessageDialog(this, "Please enter a name");
-//				return false;
-//			}
-			
-		
 			IPAddress = (IPEntry.getText());
 			
 			if(!(Integer.parseInt(portEntry.getText()) >= 1024 && Integer.parseInt(portEntry.getText()) <= 65535)){
@@ -197,10 +184,7 @@ public class JoinGameView extends View{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int wd = super.getSize().width;
-		int ht = super.getSize().height;
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, wd, ht);
+		g.drawImage(GameAssets.getSplashBackgroundImage(), 0, 0, null);
 	}
 	
 	@Override
