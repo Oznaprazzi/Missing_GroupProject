@@ -5,6 +5,7 @@
  * 	Date			Author				Changes
  * 	3 Oct 16		Chris Rabe			created XMLExporter
  * 	5 Oct 16		Chris Rabe			created methods for converting the game to XML Document
+ * 	7 Oct 16		Chris Rabe			can now turn shop objects into XML file
  */
 
 package missing.datastorage.assetloader;
@@ -30,6 +31,7 @@ import missing.game.items.movable.*;
 import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.nonmovable.*;
+import missing.game.items.nonmovable.Shop.ShopType;
 
 /**
  * This class encapsulates all the saving and exporting logic
@@ -117,8 +119,9 @@ public class XMLExporter {
 			return getPile((Pile) object, doc);
 		} else if (object instanceof Fireplace) {
 			return getFireplace((Fireplace) object, doc);
+		} else if (object instanceof Shop) {
+			return getShop((Shop) object, doc);
 		}
-		// TODO add shop
 		throw new RuntimeException("Unknown object type");
 	}
 
@@ -198,6 +201,15 @@ public class XMLExporter {
 		return tree;
 	}
 
+	private static Element getShop(Shop object, Document doc) {
+		Element shop = doc.createElement("shop");
+		Element loc = getLocation(object.getTileLocation(), doc);
+		Element type = getShopType(object.getType(), doc);
+		shop.appendChild(loc);
+		shop.appendChild(type);
+		return shop;
+	}
+
 	private static Element getSoil(Soil object, Document doc) {
 		Element soil = doc.createElement("soil");
 		Element loc = getLocation(object.getTileLocation(), doc);
@@ -268,6 +280,12 @@ public class XMLExporter {
 	private static Element getFoodType(FoodType foodType, Document doc) {
 		Element t = doc.createElement("type");
 		t.appendChild(doc.createTextNode(foodType.name()));
+		return t;
+	}
+
+	private static Element getShopType(ShopType type, Document doc) {
+		Element t = doc.createElement("type");
+		t.appendChild(doc.createTextNode(type.name()));
 		return t;
 	}
 

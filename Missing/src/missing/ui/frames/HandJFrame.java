@@ -10,23 +10,16 @@
 package missing.ui.frames;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import missing.game.items.Item;
-import missing.game.items.movable.Food;
-import missing.game.items.movable.Food.FoodType;
-import missing.game.items.movable.Movable;
-import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
-import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Pocket;
 import missing.ui.canvas.HandCanvas;
 
+@SuppressWarnings("serial")
 public class HandJFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -42,7 +35,7 @@ public class HandJFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		HandCanvas panel = new HandCanvas(bag, pocket);
 		contentPane.add(panel, BorderLayout.CENTER);
 	}
