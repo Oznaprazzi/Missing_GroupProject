@@ -95,7 +95,7 @@ public class VControl extends JFrame {
 	/** Size of each view */
 	public static final Dimension VIEW_SIZE = new Dimension(1000, 1000);
 	/** How often clock ticks in minutes per second */
-	private final int CLOCK_TICK = 10;
+	private final int CLOCK_TICK = 10; // 1 sec = 10 game minutes
 	private View[] views;
 	private int cur = 0;
 	private int prev = 0;

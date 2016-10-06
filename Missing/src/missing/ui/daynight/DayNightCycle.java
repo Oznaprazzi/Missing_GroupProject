@@ -15,24 +15,25 @@ import missing.ui.controller.VControl;
  * Units of time are in game minutes. Speed of game minutes
  * are determined by call frequency to run() method which is
  * specified by VControl.CLOCK_TICK.
- * @author Edward Kelly
  *
  */
 public class DayNightCycle extends TimerTask {
 	/** Darkness limit for alpha. Must be <= 255 */
-	private final int DARK_LIMIT = 150;
-	/** Start time of cycle */
-	private final int START_TIME = 200;
+	private final int DARK_LIMIT = 240;
+	/** Start time of cycle. Cannot be in getting lighter/darker times */
+	private final int START_TIME = 721;
 	/** Last minute of day */
 	private final int END_OF_DAY = 1440;
+	/** Time game spends getting darker/lighter */
+	private final int MORNING_EVENING_TIME = 480; // 8 hours
 	/** Time at which the world starts getting lighter */
-	private final int START_LIGHTER = 300; //5am
+	private final int START_LIGHTER = 240; //4am
 	/** Time at which the world stops getting lighter */
-	private final int END_LIGHTER = 600; //10am
+	private final int END_LIGHTER = START_LIGHTER + MORNING_EVENING_TIME; //12pm
 	/** Time at which the world starts getting darker */
-	private final int START_DARKER = 960; //4pm
+	private final int START_DARKER = 840; //2pm
 	/** Time at which the world stops getting darker */
-	private final int END_DARKER = 1260; //9pm
+	private final int END_DARKER = START_DARKER + MORNING_EVENING_TIME; //10pm
 	/** Number of game minutes time increases per clock tick */
 	private final int TIME_INC = 1;
 
@@ -47,7 +48,7 @@ public class DayNightCycle extends TimerTask {
 	
 	public DayNightCycle(VControl frame){
 		this.controller = frame;
-		this.alpha = DARK_LIMIT;
+		this.alpha = 0;
 		currentTime = START_TIME;
 		controller.updateAlpha((int)alpha);
 		controller.repaint();
@@ -89,6 +90,7 @@ public class DayNightCycle extends TimerTask {
 				controller.repaint();
 			}
 		}
+		System.out.println("Alpha: "+alpha + ", Current Time: "+currentTime);
 	}
 
 }
