@@ -41,13 +41,13 @@ import missing.game.items.nonmovable.Pocket;
 public class HandCanvas extends Canvas implements MouseListener {
 	/** Bag of items to display */
 	private Bag bag;
-	
+
 	/** Pocket of items to display */
 	private Pocket pocket;
 
 	/** Contains the number of unique items in the bag */
 	private ArrayList<Movable> bagSet;
-	
+
 	/** Contains the number of unique items in the pocket */
 	private ArrayList<Movable> pocketSet;
 
@@ -56,7 +56,7 @@ public class HandCanvas extends Canvas implements MouseListener {
 
 	/** Y position of bag grid. */
 	private static final int Y_OFFSET_BG = 60;
-	
+
 	/** Y position of pocket grid. */
 	private static final int Y_OFFSET_PK = 220;
 
@@ -65,17 +65,17 @@ public class HandCanvas extends Canvas implements MouseListener {
 	private static final int rows = 2;
 
 	private static final int colunmns = 5;
-	
+
 	private final int BOLDED_WIDTH = 3;
-	
+
 	private final int REG_WIDTH = 1;
-	
+
 	private Point clickPoint;
-	
+
 	private int clickIndex;
 
-	private List<Rectangle> gridRectangle; //array of rectangle locations.
-	
+	private List<Rectangle> gridRectangle; // array of rectangle locations.
+
 	private Movable selectedItem;
 
 	public HandCanvas(Bag bag, Pocket pocket) {
@@ -87,30 +87,68 @@ public class HandCanvas extends Canvas implements MouseListener {
 		convertListToSet();
 		addMouseListener(this);
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
-		System.out.println("inside hand canvas.");
 		g.drawImage(GameAssets.getBagBackgroundImage(), 0, 0, null);
 		Font serif = new Font("Calisto MT", Font.BOLD, 20);
 		g.setFont(serif);
 		g.setColor(Color.black);
 		g.drawString("Items in Bag:", 10, 40);
-		/*Firstly - draw the items inside the bag.. */
+		/* Firstly - draw the items inside the bag.. */
 		this.drawGrid(g, Y_OFFSET_BG);
 		this.drawItems(g, Y_OFFSET_BG, bagSet);
 		g.setFont(serif);
 		g.setColor(Color.black);
-		
-		/*Now - draw the items inside the pocket.. */
+
+		/* Now - draw the items inside the pocket.. */
 		g.drawString("Items in Pocket:", 10, 200);
 		this.drawGrid(g, Y_OFFSET_PK);
 		this.drawItems(g, Y_OFFSET_PK, pocketSet);
 
 	}
+
+	
+
 	/**
-	 * Draws a list of items onto the graphics pane, with a grid.
-	 * If an cell containing an item is clicked, it is selected and sets the selectedItem field.
+	 * Converts the bag of items into a set - no duplicates to account for count
+	 * of item and to only draw one item.
+	 */
+	private void convertListToSet() {
+		for (Movable m : bag.getItems()) {
+			if (!bagSet.contains(m)) {
+				bagSet.add(m);
+			}
+		}
+
+		for (Movable m : pocket.getItems()) {
+			if (!pocketSet.contains(m)) {
+				pocketSet.add(m);
+			}
+		}
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(442, 409);
+	}
+
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		this.clickIndex = indexofCell(e);
+		selectClickedItem();
+		this.repaint();
+	}
+	
+	
+	
+	
+	/**
+	 * Draws a list of items onto the graphics pane, with a grid. If an cell
+	 * containing an item is clicked, it is selected and sets the selectedItem
+	 * field.
+	 * 
 	 * @param g
 	 * @param y_offset
 	 * @param set
@@ -162,6 +200,10 @@ public class HandCanvas extends Canvas implements MouseListener {
 			}
 		}
 	}
+	
+	/*
+	 * START OF HELPER METHODS:
+	 */
 
 	/**
 	 * Draws the outline of where the items will be placed on the screen
@@ -173,109 +215,115 @@ public class HandCanvas extends Canvas implements MouseListener {
 			for (int j = 0; j < colunmns; j++) {
 				int left = X_OFFSET + j * size;
 				int top = y_offset + i * size;
-					gridRectangle.add(new Rectangle(left, top, size, size));
-					/*Draw the cell normally. */
-					drawCell(g,left,top,size,size,false);
-					/*Iterate through the rectangles - highlight it if index matches click index.*/
-					for(int k = 0 ; k != this.gridRectangle.size(); k++){
-						if(k == clickIndex){
-							Rectangle r = gridRectangle.get(k);
-							int l = (int) r.getX();
-							int t = (int) r.getY();
-							int size = (int) r.getWidth();
-							this.drawCell(this.getGraphics(), l, t, size, size, true);
-						}
+				gridRectangle.add(new Rectangle(left, top, size, size));
+				/* Draw the cell normally. */
+				drawCell(g, left, top, size, size, false);
+				/*
+				 * Iterate through the rectangles - highlight it if index
+				 * matches click index.
+				 */
+				for (int k = 0; k != this.gridRectangle.size(); k++) {
+					if (k == clickIndex) {
+						Rectangle r = gridRectangle.get(k);
+						int l = (int) r.getX();
+						int t = (int) r.getY();
+						int size = (int) r.getWidth();
+						this.drawCell(getGraphics(), l, t, size, size, true);
 					}
+				}
 			}
 		}
 	}
 
-	
-	
 	/**
 	 * Draws a Cell. Has a flag to determine if it is highlighted or not.
+	 * 
 	 * @param left
 	 * @param top
 	 * @param isHighlighted
 	 */
-	private void drawCell(Graphics g, int left, int top, int width, int height, boolean isHighlighted){
+	private void drawCell(Graphics g, int left, int top, int width, int height, boolean isHighlighted) {
 		Graphics2D gg = (Graphics2D) g;
-		if(isHighlighted){
+		if (isHighlighted) {
 			gg.setStroke(new BasicStroke(BOLDED_WIDTH));
 			gg.setColor(Color.yellow);
-			gg.drawRect(left,top,width,height);
-		}else{
+			gg.drawRect(left, top, width, height);
+		} else {
 			gg.setStroke(new BasicStroke(REG_WIDTH));
-			gg.drawRect(left,top,width,height);
+			gg.drawRect(left, top, width, height);
 		}
-	}
-
-	/**
-	 * Converts the bag of items into a set - no duplicates to account for count
-	 * of item and to only draw one item.
-	 */
-	private void convertListToSet() {
-		for (Movable m : bag.getItems()) {
-			if (!bagSet.contains(m)) {
-				bagSet.add(m);
-			}
-		}
-		
-		for(Movable m : pocket.getItems()){
-			if(!pocketSet.contains(m)){
-				pocketSet.add(m);
-			}
-		}
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(442, 409);
 	}
 	
 	/**
 	 * Returns the index of the rectangle ArrayList that is being clicked.
+	 * 
 	 * @param e
 	 * @return
 	 */
-	private int indexofCell(MouseEvent e){
+	private int indexofCell(MouseEvent e) {
 		clickPoint = e.getPoint();
-		for(int i = 0 ; i != this.gridRectangle.size(); ++i){
-			if(gridRectangle.get(i).contains(clickPoint)){
+		for (int i = 0; i != this.gridRectangle.size(); ++i) {
+			if (gridRectangle.get(i).contains(clickPoint)) {
 				return i;
 			}
 		}
 		return -1;
 	}
 	
-	
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		this.clickIndex = indexofCell(e);
+	/**
+	 * Helper method to assign the clickedItem field.
+	 */
+	private void selectClickedItem(){
 		
-		if(clickIndex <= bagSet.size() - 1){
-			if(this.bagSet.get(clickIndex) == null){
-				return;
+		
+		if(clickIndex != -1){
+			if(clickIndex >=0 && clickIndex <= 9){
+				
+			}else if(clickIndex >= 10 && clickIndex <= 19){
+				
 			}
-			this.selectedItem = this.bagSet.get(clickIndex);
-			System.out.println("selectedItem has been assigned.");
-		}else if(clickIndex >= 10 && clickIndex <= 19){
-			int pocketIndex = clickIndex - 10;
-			
-			if(this.pocketSet.get(pocketIndex) == null){
-				return;
-			}
-			
 		}
-	
-
 		
 		
 		
 		
-		this.repaint();
+		
+		
+		
+		
+		
+		
+		
+		/*
+		if (clickIndex != -1) {
+			if (clickIndex <= bagSet.size() - 1) {
+				if (this.bagSet.get(clickIndex) == null) {
+					return;
+				}
+				this.selectedItem = this.bagSet.get(clickIndex);
+				System.out.println("[BAG]selectedItem has been assigned.");
+			}
+		}*/
+			
+			
+			
+			/*pocketIndex = clickIndex - 10;
+			else if (pocketIndex >= 10 && pocketIndex <= 19) {
+				if (pocketIndex <= pocketSet.size() - 1) {
+					if (this.pocketSet.get(pocketIndex) == null) {
+						return;
+					}
+				}
+				this.selectedItem = this.pocketSet.get(pocketIndex);
+				System.out.println("[Pocket]selectedItem has been assigned.");
+			}
+		}*/
 	}
-
+	
+	/*
+	 * END OF HELPER METHODS.. 
+	 */
+	
 	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
