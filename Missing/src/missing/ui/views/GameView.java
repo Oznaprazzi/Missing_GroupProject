@@ -45,6 +45,8 @@ public class GameView extends View {
 	private JButton btnDoAction;
 
 	private JTextField nameField;
+	private JTextField timeField;
+	
 	private JList<String> playersOnline;
 
 	private JPanel ctrlPanel;
@@ -81,13 +83,34 @@ public class GameView extends View {
 		gamePanel.setBackground(BACKGROUND_COLOR);
 		this.setBackground(BACKGROUND_COLOR);
 		ctrlPanel.setBackground(BACKGROUND_COLOR);
+		
+		JLabel lblTime = new JLabel("Current Time");
+		lblTime.setForeground(Color.WHITE);
+		GridBagConstraints gbc_time = new GridBagConstraints();
+		gbc_time.insets = new Insets(0, 0, 5, 0);
+		gbc_time.gridx = 0;
+		gbc_time.gridy = 1;
+		ctrlPanel.add(lblTime, gbc_time);
 
+		timeField = new JTextField();
+		timeField.setEditable(false);
+		timeField.setFocusable(false);
+		
+		GridBagConstraints gbc_timeField = new GridBagConstraints();
+		gbc_timeField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_timeField.insets = new Insets(0, 0, 5, 0);
+		gbc_timeField.gridx = 0;
+		gbc_timeField.gridy = 2;
+		ctrlPanel.add(timeField, gbc_timeField);
+		timeField.setColumns(10);
+		
+		
 		JLabel lblCurrentPlayer = new JLabel("Current Player");
 		lblCurrentPlayer.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblCurrentPlayer = new GridBagConstraints();
 		gbc_lblCurrentPlayer.insets = new Insets(0, 0, 5, 0);
 		gbc_lblCurrentPlayer.gridx = 0;
-		gbc_lblCurrentPlayer.gridy = 0;
+		gbc_lblCurrentPlayer.gridy = 3;
 		ctrlPanel.add(lblCurrentPlayer, gbc_lblCurrentPlayer);
 
 		nameField = new JTextField();
@@ -98,7 +121,7 @@ public class GameView extends View {
 		gbc_txtName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtName.insets = new Insets(0, 0, 5, 0);
 		gbc_txtName.gridx = 0;
-		gbc_txtName.gridy = 1;
+		gbc_txtName.gridy = 4;
 		ctrlPanel.add(nameField, gbc_txtName);
 		nameField.setColumns(10);
 
@@ -109,7 +132,7 @@ public class GameView extends View {
 		gbc_btnDoAction.insets = new Insets(0, 0, 5, 0);
 		gbc_btnDoAction.fill = GridBagConstraints.BOTH;
 		gbc_btnDoAction.gridx = 0;
-		gbc_btnDoAction.gridy = 2;
+		gbc_btnDoAction.gridy = 5;
 		gbc_btnDoAction.anchor = GridBagConstraints.NORTH;
 		gbc_btnDoAction.weighty = BTN_WEIGHT;
 
@@ -122,7 +145,7 @@ public class GameView extends View {
 		gbc_btnViewMap.insets = new Insets(0, 0, 5, 0);
 		gbc_btnViewMap.fill = GridBagConstraints.BOTH;
 		gbc_btnViewMap.gridx = 0;
-		gbc_btnViewMap.gridy = 3;
+		gbc_btnViewMap.gridy = 6;
 		gbc_btnViewMap.anchor = GridBagConstraints.NORTH;
 
 		gbc_btnViewMap.weighty = BTN_WEIGHT;
@@ -135,7 +158,7 @@ public class GameView extends View {
 		gbc_btnPlayersBag.insets = new Insets(0, 0, 5, 0);
 		gbc_btnPlayersBag.fill = GridBagConstraints.BOTH;
 		gbc_btnPlayersBag.gridx = 0;
-		gbc_btnPlayersBag.gridy = 4;
+		gbc_btnPlayersBag.gridy = 7;
 		gbc_btnPlayersBag.weighty = BTN_WEIGHT;
 		gbc_btnPlayersBag.anchor = GridBagConstraints.NORTH;
 		ctrlPanel.add(btnPlayersBag, gbc_btnPlayersBag);
@@ -145,7 +168,7 @@ public class GameView extends View {
 		GridBagConstraints gbc_playersOnline = new GridBagConstraints();
 		gbc_playersOnline.insets = new Insets(0, 0, 5, 0);
 		gbc_playersOnline.gridx = 0;
-		gbc_playersOnline.gridy = 5;
+		gbc_playersOnline.gridy = 8;
 		ctrlPanel.add(lblPlayersOnline, gbc_playersOnline);
 		
 		this.playersOnline = getPlayerNames(); //Set the JTextField.
@@ -153,7 +176,7 @@ public class GameView extends View {
 		GridBagConstraints gbc_players = new GridBagConstraints();
 		gbc_players.insets = new Insets(0, 0, 5, 0);
 		gbc_players.gridx = 0;
-		gbc_players.gridy = 6;
+		gbc_players.gridy = 9;
 		gbc_players.weighty = BTN_WEIGHT * 4;
 		gbc_players.fill = GridBagConstraints.BOTH;
 		ctrlPanel.add(playersOnline, gbc_players);

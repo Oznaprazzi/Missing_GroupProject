@@ -8,11 +8,17 @@
  */
 package missing.ui.canvas;
 
+import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +38,10 @@ import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 
 /**
- * Canvas used to display the Pile of Items.
+ * Canvas used to display the Pile of Items. If an item of the grid is pressed,
+ * the cell is highlighted.
  */
-public class PileCanvas extends Canvas {
+public class PileCanvas extends Canvas implements MouseListener {
 
 	/** Pile of items to display */
 	private Pile pile;
@@ -53,12 +60,33 @@ public class PileCanvas extends Canvas {
 	private static final int rows = 5;
 
 	private static final int colunmns = 5;
+	
+	/*Fields  that determine stroke of the graphics rectangle */
+	private final int BOLDED_WIDTH = 3;
+	private final int REG_WIDTH = 1;
+	
+	/**
+	 * Stores all of the grids being drawn. Used to check if a click is inside a rectangle.
+	 */
+	private List<Rectangle> gridRectangle;
 
+	private Point clickPoint;
+	
+	/**
+	 * Stores the currently clicked on item. If it is null, there is nothing in that cell.
+	 */
+	private  Movable selectedItem;
+	
+	private int clickIndex = -1;
+	
+	
 	public PileCanvas(Pile pile) {
-		System.out.println("inside pile canvas.");
 		this.pile = pile;
 		pileSet = new ArrayList<TileObject>();
+		gridRectangle = new ArrayList<Rectangle>();
 		convertListToSet();
+		addMouseListener(this);
+
 	}
 
 	@Override
@@ -142,12 +170,70 @@ public class PileCanvas extends Canvas {
 	private void drawGrid(Graphics g, int y_offset) {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < colunmns; j++) {
-				g.setColor(Color.green.darker());
-				g.drawRect(X_OFFSET + j * size, y_offset + i * size, size, size);
+				g.setColor(Color.black.darker());
+				
+				int left = X_OFFSET + j * size;
+				int top = y_offset + i * size;
+				gridRectangle.add(new Rectangle(left, top, size, size));
+				drawCell(g, left, top, size, size, false);
+				
+				/*
+				 * Iterate through all the rectangles - Highlight it if it matches the index
+				 * of the clicked cell.
+				 */
+				for (int k = 0; k != this.gridRectangle.size(); k++) {
+					if (k == clickIndex) {
+						Rectangle r = gridRectangle.get(k);
+						int l = (int) r.getX();
+						int t = (int) r.getY();
+						int size = (int) r.getWidth();
+						this.drawCell(getGraphics(), l, t, size, size, true);
+					}
+				}
+
 			}
 		}
 	}
-
+	
+	/**
+	 * Returns the index of the rectangle ArrayList that is being clicked.
+	 * 
+	 * @param e
+	 * @return
+	 */
+	private int indexofCell(MouseEvent e) {
+		clickPoint = e.getPoint();
+		for (int i = 0; i != this.gridRectangle.size(); ++i) {
+			if (gridRectangle.get(i).contains(clickPoint)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	
+	
+	
+	/**
+	 * Draws a Cell. Has a flag to determine if it is highlighted or not.
+	 * 
+	 * @param left
+	 * @param top
+	 * @param isHighlighted
+	 */
+	private void drawCell(Graphics g, int left, int top, int width, int height, boolean isHighlighted) {
+		Graphics2D gg = (Graphics2D) g;
+		if (isHighlighted) {
+			gg.setStroke(new BasicStroke(BOLDED_WIDTH));
+			gg.setColor(Color.yellow);
+			gg.drawRect(left, top, width, height);
+		} else {
+			gg.setStroke(new BasicStroke(REG_WIDTH));
+			gg.drawRect(left, top, width, height);
+		}
+	}
+	
+	
 	/**
 	 * Converts the bag of items into a set - no duplicates to account for count
 	 * of item and to only draw one item.
@@ -164,5 +250,29 @@ public class PileCanvas extends Canvas {
 	public Dimension getPreferredSize() {
 		return new Dimension(442, 409);
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		clickIndex = indexofCell(e);
+		//selectedItem = selectClickedItem();
+		System.out.println(this.clickIndex);
+		this.repaint();
+	}
+
+	/*
+	 * EXTRA MOUSE METHODS - NOT BEING USED.
+	 */
+	
+	@Override
+	public void mousePressed(MouseEvent e) {}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
 
 }

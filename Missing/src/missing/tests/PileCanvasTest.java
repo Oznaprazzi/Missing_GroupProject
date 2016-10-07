@@ -37,7 +37,13 @@ import missing.ui.canvas.PileCanvas;
 public class PileCanvasTest extends JFrame {
 
 	private JPanel contentPane;
+	private PileCanvas panel;
+	
+	private JButton btnTransferAll;
+	private JButton btnTransferSelected;
 
+	
+	
 	/**
 	 * Run the test.
 	 */
@@ -60,21 +66,37 @@ public class PileCanvasTest extends JFrame {
 	 */
 	public PileCanvasTest(Pile pile) {
 		super("Pile of Items");
+		 btnTransferAll = new JButton("Transfer All Items");
+		 btnTransferSelected = new JButton("Transfer Selected Item");
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setBounds(100, 100, 450, 300);
 		setSize(442, 409);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
+		//contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		PileCanvas panel = new PileCanvas(pile);
+		contentPane.add(btnTransferAll);
+		contentPane.add(btnTransferSelected);
+		panel = new PileCanvas(pile);
 		contentPane.add(panel, BorderLayout.CENTER);
-		JButton btnTransferToPlayer = new JButton("Transfer Selection to Player");
-		contentPane.add(btnTransferToPlayer, BorderLayout.SOUTH);
-
+		addActionListeners();
 	}
-
+	
+	private void addActionListeners(){
+		btnTransferAll.addActionListener(e->{
+			
+		});
+		
+		btnTransferSelected.addActionListener(e->{
+			
+		});
+		
+	}
+	
+	
+	
 	public static Pile generatePile(){
 		List<TileObject> pileItems = new ArrayList<>();
 		//test that we can put in movable items.
@@ -92,7 +114,6 @@ public class PileCanvasTest extends JFrame {
 		//pileItems.add(tree);
 	
 		return new Pile(new Point(0,0), new Point(0,0), pileItems);
-
 	}
 
 	
