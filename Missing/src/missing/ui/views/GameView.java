@@ -215,7 +215,7 @@ public class GameView extends View {
 		gamePanel.setController(controller);
 		gamePanel.initialise();
 		playersOnline = getPlayerNames();
-	}
+	} 
 
 	@Override
 	public void setFocus() {
