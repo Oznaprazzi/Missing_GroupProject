@@ -18,14 +18,11 @@ import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import missing.datastorage.assetloader.GameAssets;
-import missing.ui.controller.VControl;
 
 /**
  * Used for creating components of the menu so a set style can be followed

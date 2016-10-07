@@ -23,8 +23,6 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
-
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
@@ -38,6 +36,7 @@ import missing.game.items.nonmovable.Pocket;
 /**
  * Canvas used to display the Player's bag's items
  */
+@SuppressWarnings("serial")
 public class HandCanvas extends Canvas implements MouseListener {
 	/** Bag of items to display */
 	private Bag bag;

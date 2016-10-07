@@ -8,7 +8,7 @@
 
 package missing.ui.assets;
 
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -17,21 +17,18 @@ import javax.swing.JPanel;
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.items.nonmovable.Shop;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
-import missing.ui.controller.VControl.View;
 
 /**
- * This contains the image which could be rendered based on the direction. It
- * also contains invisible JPanels which detects clicks.
+ * This node simply draws
  */
-@SuppressWarnings("serial")
-public class ShopNode extends JPanel {
+public class ShopNode {
 
 	private BufferedImage img;
 	private Shop shop;
 	private Direction direction;
-	private View parent;
+	private JPanel parent;
 
-	public ShopNode(View parent, Shop shop, Direction direction) {
+	public ShopNode(JPanel parent, Shop shop, Direction direction) {
 		if (img == null) {
 			img = GameAssets.getShopNodeImage(shop.getType(), direction);
 		}
@@ -58,20 +55,21 @@ public class ShopNode extends JPanel {
 		this.direction = direction;
 	}
 
-	@Override
-	public Dimension getPreferredSize() {
-		return parent.getPreferredSize();
-	}
+	// Methods
 
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-	}
-
-	@Override
-	public void paint(Graphics g) {
+	public void draw(Graphics g) {
 		if (img == null) {
-			g.drawRect(0, 0, getWidth(), getHeight());
+			g.setColor(Color.BLACK);
+			g.drawRect(0, 0, parent.getWidth(), parent.getHeight());
+		} else {
+			int size = Math.min(parent.getWidth(), parent.getHeight());
+			g.drawImage(img, 0, 0, size, size, null);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return String.format("ShopNode : %s : %s", direction.name());
+	}
+
 }

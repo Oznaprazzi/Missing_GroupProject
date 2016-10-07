@@ -123,6 +123,11 @@ public class Shop extends NonMovable {
 		throw new RuntimeException("Player cannot be null");
 	}
 
+	/**
+	 * When players interact with the shop, it throws a signal exception which
+	 * needs to be handled by updating the shop view and then changing the view
+	 * to the shop view.
+	 */
 	@Override
 	public void performAction(Player player) throws GameException, SignalException {
 		throw new SignalException("SHOP");

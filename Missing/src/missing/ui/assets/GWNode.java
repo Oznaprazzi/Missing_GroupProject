@@ -33,7 +33,6 @@ import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.characters.Player;
 import missing.game.items.nonmovable.Fireplace;
 import missing.game.world.nodes.WorldNode;
-import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 
 /**
