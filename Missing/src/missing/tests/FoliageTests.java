@@ -5,6 +5,7 @@
  * 
  * Date				Author			Modification
  * 30 Sep 16		Jian Wei		created the class, added bush test 1,2 and invalid 1
+ * 7 oct 16			Jian Wei		updated invalid 1 to put a 2 second delay in between bush.performAction
  * */
 package missing.tests;
 
@@ -74,7 +75,7 @@ public class FoliageTests {
 	}
 	
 	/**
-	 * Player gets one berry from bush, then tries to take another berry immediately. tests that a
+	 * Player gets one berry from bush, then tries to take another berry 2 seconds later. tests that a
 	 * gameException is thrown
 	 * */
 	@Test
@@ -91,8 +92,9 @@ public class FoliageTests {
 				assert(item instanceof Food);
 				assert(((Food) item).getFoodType() == FoodType.BERRY);
 			}
+			TimeUnit.SECONDS.sleep(2);
 			bush.performAction(player);
-		}catch(GameException  e){
+		}catch(GameException | InterruptedException  e){
 			exception = true;
 		}
 		assertTrue(exception);

@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
 		SourceTests.class,
 		FurnitureTests.class,
 		//SourceTimerTests.class,
+		FoliageTests.class,
 		ToolTests.class
 })
 public class CompleteItemsTests {
