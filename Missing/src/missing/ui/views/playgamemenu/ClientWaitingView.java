@@ -8,10 +8,12 @@
  * 27 Sep 16		Edward Kelly	created class
  * 6 Oct 16			Edward Kelly	added IPAddr label
  * 6 Oct 16			Casey Huang		Added background
+ * 7 Oct 16			Casey Huang		Added gif background
  */
 package missing.ui.views.playgamemenu;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -31,7 +33,9 @@ import missing.ui.menustyle.MenuFactory;
  */
 @SuppressWarnings("serial")
 public class ClientWaitingView extends View {
+	
 	JLabel IPAddr;
+	
 	public ClientWaitingView(VControl controller) {
 		super(controller);
 		initialise();
@@ -43,9 +47,10 @@ public class ClientWaitingView extends View {
 	public void initialise() {
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		JLabel connected = MenuFactory.createHeading("Connected to server");
-		JLabel waiting = MenuFactory.createHeading("Waiting for game to start...");
+		JLabel connected = MenuFactory.createHeading2("Connected to server");
+		JLabel waiting = MenuFactory.createHeading2("Waiting for game to start...");
 		IPAddr = MenuFactory.createLabel("");
+		
 		connected.setHorizontalAlignment(SwingConstants.CENTER);
 		waiting.setHorizontalAlignment(SwingConstants.CENTER);
 		add(connected);
@@ -64,9 +69,12 @@ public class ClientWaitingView extends View {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(GameAssets.getSplashBackgroundImage(), 0, 0, null);
+		g.drawImage(GameAssets.getServerBackgroundImage(), 0, 0, this);
 		if (controller.isHost()){
+			Font f = new Font("Courier New", Font.PLAIN, 20);
 			IPAddr.setText("Game hosted at IP: "+NetworkingHelper.getIPAddress());
+			IPAddr.setFont(f);
+			IPAddr.setForeground(Color.WHITE);
 		}
 	}
 

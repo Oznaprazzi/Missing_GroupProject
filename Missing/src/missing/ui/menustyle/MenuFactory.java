@@ -33,6 +33,7 @@ import missing.ui.controller.VControl;
  */
 public class MenuFactory {
 	public static final Color TEXT_COLOUR = Color.BLACK;
+	public static final Color TEXT_COLOUR2 = Color.WHITE;
 	public static final Color TEXT_COLOUR_HIGHLIGHTED = new Color(122, 169, 12);
 	public static final int TEXT_FIELD_HEIGHT = 30;
 
@@ -45,6 +46,15 @@ public class MenuFactory {
 		label.setName(text);
 		Font f = GameAssets.getFont(170f);
 		label.setForeground(TEXT_COLOUR);
+		label.setFont(f);
+		return label;
+	}
+	
+	public static JLabel createHeading2(String text) {
+		JLabel label = new JLabel(text);
+		label.setName(text);
+		Font f = GameAssets.getFont(50f);
+		label.setForeground(TEXT_COLOUR2);
 		label.setFont(f);
 		return label;
 	}
