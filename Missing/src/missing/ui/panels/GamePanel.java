@@ -94,12 +94,7 @@ public class GamePanel extends JPanel {
 			return;
 		curGWNode.setNodeSize(Math.min(this.getWidth(), this.getHeight()));
 		try {
-			curGWNode.draw(g, 0, 0, false, controller.getGGame().getGame().getAvatars()[controller.getPlayerID()]);// player
-																													// doesnt
-																													// matter
-																													// for
-																													// game
-																													// view
+			curGWNode.draw(g, 0, 0, false, controller.getGGame().getGame().getAvatars()[controller.getPlayerID()]);
 		} catch (GameException e) {
 			e.printStackTrace();
 		}

@@ -20,14 +20,11 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import missing.game.characters.Player;
-import missing.tests.BagFrameTest;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.frames.HandJFrame;
@@ -40,28 +37,26 @@ import missing.ui.panels.GamePanel;
  */
 @SuppressWarnings("serial")
 public class GameView extends View {
-	
+
 	private GamePanel gamePanel;
-	
+
 	private JButton btnViewMap;
 	private JButton btnPlayersBag;
 	private JButton btnDoAction;
 
 	private JTextField nameField;
-	private JList playersOnline;
-	
+	private JList<String> playersOnline;
+
 	private JPanel ctrlPanel;
 	private HandJFrame bagFrame;
-	
-	private JLabel lblHealthField;
-	
+
 	private final Color BACKGROUND_COLOR = Color.black;
-	
+
 	private Player currentPlayer;
 	private int id;
-	
+
 	private final double BTN_WEIGHT = 0.05;
-	
+
 	public GameView(VControl controller) {
 		super(controller);
 	}
@@ -82,11 +77,11 @@ public class GameView extends View {
 		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 1.0, Double.MIN_VALUE };
 		ctrlPanel.setLayout(gbl_panel);
-		
+
 		gamePanel.setBackground(BACKGROUND_COLOR);
 		this.setBackground(BACKGROUND_COLOR);
 		ctrlPanel.setBackground(BACKGROUND_COLOR);
-		
+
 		JLabel lblCurrentPlayer = new JLabel("Current Player");
 		lblCurrentPlayer.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblCurrentPlayer = new GridBagConstraints();
@@ -144,7 +139,7 @@ public class GameView extends View {
 		gbc_btnPlayersBag.weighty = BTN_WEIGHT;
 		gbc_btnPlayersBag.anchor = GridBagConstraints.NORTH;
 		ctrlPanel.add(btnPlayersBag, gbc_btnPlayersBag);
-		
+
 		JLabel lblPlayersOnline = new JLabel("Players Online");
 		lblPlayersOnline.setForeground(Color.WHITE);
 		GridBagConstraints gbc_playersOnline = new GridBagConstraints();
@@ -152,8 +147,8 @@ public class GameView extends View {
 		gbc_playersOnline.gridx = 0;
 		gbc_playersOnline.gridy = 5;
 		ctrlPanel.add(lblPlayersOnline, gbc_playersOnline);
-		
-		this.playersOnline = getPlayerNames(); //Set the JTextField.
+
+		this.playersOnline = getPlayerNames(); // Set the JTextField.
 		playersOnline.setFocusable(false);
 		GridBagConstraints gbc_players = new GridBagConstraints();
 		gbc_players.insets = new Insets(0, 0, 5, 0);
@@ -162,22 +157,23 @@ public class GameView extends View {
 		gbc_players.weighty = BTN_WEIGHT * 4;
 		gbc_players.fill = GridBagConstraints.BOTH;
 		ctrlPanel.add(playersOnline, gbc_players);
-		
+
 		this.add(gamePanel, BorderLayout.CENTER);
 		this.add(ctrlPanel, BorderLayout.EAST);
 		this.addActionListeners();
 
 	}
-	
+
 	/**
 	 * Helper method that grabs all of the players online and displays it onto
-	 * the JList. This should be called whenever the JList is updated or added/removed.
+	 * the JList. This should be called whenever the JList is updated or
+	 * added/removed.
 	 */
-	private JList<String> getPlayerNames(){
+	private JList<String> getPlayerNames() {
 		Player[] players = controller.getGGame().getGame().getAvatars();
 		String[] names = new String[players.length];
-		
-		for(int i = 0; i != players.length; ++i){
+
+		for (int i = 0; i != players.length; ++i) {
 			names[i] = players[i].getName();
 		}
 		return new JList<String>(names);
@@ -195,20 +191,19 @@ public class GameView extends View {
 		});
 
 		btnPlayersBag.addActionListener(e -> {
-			//TODO: need to fix. Currently only shows bag of first player.
+			// TODO: need to fix. Currently only shows bag of first player.
 			controller.requestFocus();
 			bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
 			bagFrame.setVisible(true);
 		});
 
 		btnViewMap.addActionListener(e -> {
-			// don't want controller to request focus because 
+			// don't want controller to request focus because
 			// shouldn't be able to move in MapView
 			controller.changeView(controller.getMapView());
 		});
 	}
-	
-	
+
 	/**
 	 * Updates the GamePanel with the controller with the updated game
 	 * 

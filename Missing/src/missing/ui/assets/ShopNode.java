@@ -9,6 +9,7 @@
 package missing.ui.assets;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -62,5 +63,15 @@ public class ShopNode extends JPanel {
 		return parent.getPreferredSize();
 	}
 
-	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		if (img == null) {
+			g.drawRect(0, 0, getWidth(), getHeight());
+		}
+	}
 }
