@@ -67,8 +67,7 @@ public class GWorld {
 				gwNodes[i][j].draw(g, x, y, inMapView, player);
 			}
 		}
-		
-		
+				
 	}
 
 	public GWNode[][] gwNodes() {

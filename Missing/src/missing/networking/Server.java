@@ -108,7 +108,6 @@ public class Server extends Thread {
 			// loop forever listening for inputs from clients
 			while (true) {
 				try {
-					System.out.println("Loop start");
 					// listen for inputs
 					for (int playerID = 0; playerID < ins.length; playerID++) {
 						if (ins[playerID] == null)continue;
@@ -145,7 +144,6 @@ public class Server extends Thread {
 						//send instructions to clients to update game
 						this.sendInstruction(instruction, playerID, direction);
 					}
-					System.out.println("Loop end");
 				} catch (IOException e) {
 					// TODO implement disconnects properly
 					e.printStackTrace();
