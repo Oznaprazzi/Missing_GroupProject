@@ -118,7 +118,6 @@ public class MapView extends View {
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-
+		mapPanel.requestFocus();
 	}
 }
