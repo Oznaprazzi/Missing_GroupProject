@@ -72,7 +72,7 @@ public class HandCanvas extends Canvas implements MouseListener {
 
 	private Point clickPoint;
 
-	private int clickIndex;
+	private int clickIndex = -1;
 
 	private List<Rectangle> gridRectangle; // array of rectangle locations.
 
@@ -108,7 +108,7 @@ public class HandCanvas extends Canvas implements MouseListener {
 
 	}
 
-	
+
 
 	/**
 	 * Converts the bag of items into a set - no duplicates to account for count
@@ -133,17 +133,18 @@ public class HandCanvas extends Canvas implements MouseListener {
 		return new Dimension(442, 409);
 	}
 
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		this.clickIndex = indexofCell(e);
-		selectClickedItem();
+		this.selectedItem = selectClickedItem();
+		System.out.println(this.selectedItem);
 		this.repaint();
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Draws a list of items onto the graphics pane, with a grid. If an cell
 	 * containing an item is clicked, it is selected and sets the selectedItem
@@ -200,7 +201,7 @@ public class HandCanvas extends Canvas implements MouseListener {
 			}
 		}
 	}
-	
+
 	/*
 	 * START OF HELPER METHODS:
 	 */
@@ -217,7 +218,7 @@ public class HandCanvas extends Canvas implements MouseListener {
 				int top = y_offset + i * size;
 				gridRectangle.add(new Rectangle(left, top, size, size));
 				/* Draw the cell normally. */
-				drawCell(g, left, top, size, size, false);
+				this.drawCell(g, left, top, size, size, false);
 				/*
 				 * Iterate through the rectangles - highlight it if index
 				 * matches click index.
@@ -253,7 +254,7 @@ public class HandCanvas extends Canvas implements MouseListener {
 			gg.drawRect(left, top, width, height);
 		}
 	}
-	
+
 	/**
 	 * Returns the index of the rectangle ArrayList that is being clicked.
 	 * 
@@ -269,7 +270,7 @@ public class HandCanvas extends Canvas implements MouseListener {
 		}
 		return -1;
 	}
-	
+
 
 	/**
 	 * This is a helper method that selects a clicked Item, and returns the object associated in that mouse click.
@@ -291,21 +292,17 @@ public class HandCanvas extends Canvas implements MouseListener {
 						return null; //At this memory address, there was an undefined object at that position.
 					}
 					return this.pocketSet.get(pocketIndex);
+				}
 			}
 		}
-	}else{
-		selectedItem = null;
+
+		return null;
 	}
-		if(selectedItem != null)
-			System.out.println(selectedItem.toString());
-		else
-			System.out.println("null selected item");
-	}
-	
+
 	/*
 	 * END OF HELPER METHODS.. 
 	 */
-	
+
 	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
