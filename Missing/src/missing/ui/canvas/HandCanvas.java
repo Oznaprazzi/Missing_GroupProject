@@ -76,8 +76,7 @@ public class HandCanvas extends Canvas implements MouseListener {
 
 	private List<Rectangle> gridRectangle; //array of rectangle locations.
 	
-	private List<Rectangle> gridRectanglePocket; //arraylist of rectangle locations.
-	//private List<Point> pointListPk;
+	private Movable selectedItem;
 
 	public HandCanvas(Bag bag, Pocket pocket) {
 		this.bag = bag;
@@ -85,22 +84,10 @@ public class HandCanvas extends Canvas implements MouseListener {
 		bagSet = new ArrayList<Movable>();
 		pocketSet = new ArrayList<Movable>();
 		gridRectangle = new ArrayList<>();
-		gridRectanglePocket = new ArrayList<>();
 		convertListToSet();
 		addMouseListener(this);
 	}
-	/**
-	 * This helper method determines if the mouse click is within a cell, and if so, what cell it is.
-	 */
-	private void determineClickedItems() {
-		System.out.println("ArrayList of Rectangles");
-		System.out.println(gridRectangle.size());
-		for(Rectangle r : gridRectangle){
-			System.out.println(r.toString());
-		}
-		System.out.println("End ArrayList of Rectangles.");
-	}
-
+	
 	@Override
 	public void paint(Graphics g) {
 		System.out.println("inside hand canvas.");
@@ -109,16 +96,25 @@ public class HandCanvas extends Canvas implements MouseListener {
 		g.setFont(serif);
 		g.setColor(Color.black);
 		g.drawString("Items in Bag:", 10, 40);
+		/*Firstly - draw the items inside the bag.. */
 		this.drawGrid(g, Y_OFFSET_BG);
-		determineClickedItems();
 		this.drawItems(g, Y_OFFSET_BG, bagSet);
 		g.setFont(serif);
 		g.setColor(Color.black);
+		
+		/*Now - draw the items inside the pocket.. */
 		g.drawString("Items in Pocket:", 10, 200);
 		this.drawGrid(g, Y_OFFSET_PK);
 		this.drawItems(g, Y_OFFSET_PK, pocketSet);
-	}
 
+	}
+	/**
+	 * Draws a list of items onto the graphics pane, with a grid.
+	 * If an cell containing an item is clicked, it is selected and sets the selectedItem field.
+	 * @param g
+	 * @param y_offset
+	 * @param set
+	 */
 	private void drawItems(Graphics g, int y_offset, List<Movable> set) {
 		if (set.isEmpty()) {
 			return;
@@ -178,19 +174,24 @@ public class HandCanvas extends Canvas implements MouseListener {
 				int left = X_OFFSET + j * size;
 				int top = y_offset + i * size;
 					gridRectangle.add(new Rectangle(left, top, size, size));
-					
-					for(Rectangle r : gridRectangle){
-						Rectangle obj = new Rectangle(left, top, size, size);
-						if(obj.equals(r)){
-						drawCell(g, left, top, size, size, true);
-						}else
-						drawCell(g, left, top, size, size, false);
+					/*Draw the cell normally. */
+					drawCell(g,left,top,size,size,false);
+					/*Iterate through the rectangles - highlight it if index matches click index.*/
+					for(int k = 0 ; k != this.gridRectangle.size(); k++){
+						if(k == clickIndex){
+							Rectangle r = gridRectangle.get(k);
+							int l = (int) r.getX();
+							int t = (int) r.getY();
+							int size = (int) r.getWidth();
+							this.drawCell(this.getGraphics(), l, t, size, size, true);
+						}
 					}
-					
-					
 			}
 		}
 	}
+
+	
+	
 	/**
 	 * Draws a Cell. Has a flag to determine if it is highlighted or not.
 	 * @param left
@@ -233,35 +234,46 @@ public class HandCanvas extends Canvas implements MouseListener {
 	}
 	
 	/**
-	 * Returns the index of the arraylist that is being clicked.
+	 * Returns the index of the rectangle ArrayList that is being clicked.
 	 * @param e
 	 * @return
 	 */
-	public int indexofCell(MouseEvent e){
-		System.out.println("Mouse clicked at:");
-		System.out.printf("\n Mouse Clicked at %d, %d", e.getX(), e.getY());
+	private int indexofCell(MouseEvent e){
 		clickPoint = e.getPoint();
-		
 		for(int i = 0 ; i != this.gridRectangle.size(); ++i){
 			if(gridRectangle.get(i).contains(clickPoint)){
-				System.out.println("\n You clicked inside me!");
-				System.out.println("\n rect: " + gridRectangle.get(i).toString());
-				System.out.println("\n index :" + i);
-				clickIndex = i;
 				return i;
 			}
 		}
-		System.out.println("You didn't click inside of me.");
 		return -1;
-		
 	}
 	
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Index: " + indexofCell(e));
+		this.clickIndex = indexofCell(e);
+		
+		if(clickIndex <= bagSet.size() - 1){
+			if(this.bagSet.get(clickIndex) == null){
+				return;
+			}
+			this.selectedItem = this.bagSet.get(clickIndex);
+			System.out.println("selectedItem has been assigned.");
+		}else if(clickIndex >= 10 && clickIndex <= 19){
+			int pocketIndex = clickIndex - 10;
+			
+			if(this.pocketSet.get(pocketIndex) == null){
+				return;
+			}
+			
+		}
+	
+
 		
 		
+		
+		
+		this.repaint();
 	}
 
 	@Override
