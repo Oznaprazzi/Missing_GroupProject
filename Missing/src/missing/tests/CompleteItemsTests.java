@@ -15,8 +15,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 		SourceTests.class,
 		FurnitureTests.class,
-		ToolTests.class,
-		SourceTimerTests.class
+		//SourceTimerTests.class,
+		ToolTests.class
 })
 public class CompleteItemsTests {
 
