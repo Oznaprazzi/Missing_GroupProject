@@ -270,54 +270,36 @@ public class HandCanvas extends Canvas implements MouseListener {
 		return -1;
 	}
 	
+
 	/**
-	 * Helper method to assign the clickedItem field.
+	 * This is a helper method that selects a clicked Item, and returns the object associated in that mouse click.
+	 * @return
 	 */
-	private void selectClickedItem(){
-		
-		
+	private Movable selectClickedItem(){
 		if(clickIndex != -1){
 			if(clickIndex >=0 && clickIndex <= 9){
-				
-			}else if(clickIndex >= 10 && clickIndex <= 19){
-				
-			}
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*
-		if (clickIndex != -1) {
-			if (clickIndex <= bagSet.size() - 1) {
-				if (this.bagSet.get(clickIndex) == null) {
-					return;
+				if (clickIndex <= bagSet.size() - 1) {
+					if (this.bagSet.get(clickIndex) == null) {
+						return null; 
+					}
+					return this.bagSet.get(clickIndex);
 				}
-				this.selectedItem = this.bagSet.get(clickIndex);
-				System.out.println("[BAG]selectedItem has been assigned.");
-			}
-		}*/
-			
-			
-			
-			/*pocketIndex = clickIndex - 10;
-			else if (pocketIndex >= 10 && pocketIndex <= 19) {
+			}else if(clickIndex >= 10 && clickIndex <= 19){
+				int pocketIndex = clickIndex - 10;
 				if (pocketIndex <= pocketSet.size() - 1) {
 					if (this.pocketSet.get(pocketIndex) == null) {
-						return;
+						return null; //At this memory address, there was an undefined object at that position.
 					}
-				}
-				this.selectedItem = this.pocketSet.get(pocketIndex);
-				System.out.println("[Pocket]selectedItem has been assigned.");
+					return this.pocketSet.get(pocketIndex);
 			}
-		}*/
+		}
+	}else{
+		selectedItem = null;
+	}
+		if(selectedItem != null)
+			System.out.println(selectedItem.toString());
+		else
+			System.out.println("null selected item");
 	}
 	
 	/*

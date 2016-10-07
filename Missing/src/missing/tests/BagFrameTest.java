@@ -83,14 +83,12 @@ public class BagFrameTest extends JFrame {
 		try{
 			bag.addItem(wood);
 			bag.addItem(wood2);
-			//bag.addItem(food);
-			//bag.addItem(food2);
-			/*bag.addItem(dirt);
+			bag.addItem(dirt);
 			bag.addItem(stone);
 			bag.addItem(axe);
 			bag.addItem(pickaxe);
 			bag.addItem(shovel);
-			bag.addItem(fishingrod);*/
+			bag.addItem(fishingrod);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -109,13 +107,8 @@ public class BagFrameTest extends JFrame {
 		Movable stone = new Stone(new Point(0, 0), new Point(0,0));
 		try{
 			pocket.addItem(wood);
-			//pocket.addItem(wood2);
-			pocket.addItem(food);
-			pocket.addItem(food2);
-			//pocket.addItem(food3);
-			//pocket.addItem(food4);
-			pocket.addItem(dirt);
-			pocket.addItem(stone);
+			
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
