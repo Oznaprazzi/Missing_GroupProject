@@ -72,11 +72,11 @@ public class HandCanvas extends Canvas implements MouseListener {
 
 	private Point clickPoint;
 
-	private int clickIndex = -1;
 
 	private List<Rectangle> gridRectangle; // array of rectangle locations.
 
-	private Movable selectedItem;
+	private static Movable selectedItem;
+	private static int clickIndex = -1;
 
 	public HandCanvas(Bag bag, Pocket pocket) {
 		this.bag = bag;
@@ -141,8 +141,25 @@ public class HandCanvas extends Canvas implements MouseListener {
 		System.out.println(this.selectedItem);
 		this.repaint();
 	}
-
-
+	/**
+	 * Returns the selected Item for use with other classes.
+	 * @return
+	 */
+	public static Movable getselectedItem(){
+		Movable itm = null;
+		if(selectedItem != null)
+			itm = selectedItem;
+		
+		return itm;
+	}
+	
+	public static int getClickedIndex(){
+		int idx = -1;
+		if(clickIndex != -1){
+			idx = clickIndex;
+		}
+		return idx;
+	}
 
 
 	/**
