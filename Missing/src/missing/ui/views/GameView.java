@@ -64,11 +64,11 @@ public class GameView extends View {
 	
 	public GameView(VControl controller) {
 		super(controller);
-		id = controller.getPlayerID();
 	}
 
 	@Override
 	public void initialise() {
+		id = controller.getPlayerID();
 		currentPlayer = controller.getGGame().getGame().getAvatars()[id];
 		setLayout(new BorderLayout());
 		gamePanel = new GamePanel(controller);
@@ -208,7 +208,8 @@ public class GameView extends View {
 			controller.changeView(controller.getMapView());
 		});
 	}
-
+	
+	
 	/**
 	 * Updates the GamePanel with the controller with the updated game
 	 * 
