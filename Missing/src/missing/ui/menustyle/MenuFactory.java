@@ -8,6 +8,7 @@
  * 24 Sep 16		Edward Kelly	created class
  * 6 Oct 16			Casey Huang		Added another createLabel method for game menu label
  * 									- change of font size and spacing
+ * 7 Oct 16			Casey Huang		Added another createHeading method for showing ClientWaitingView
  */
 package missing.ui.menustyle;
 
