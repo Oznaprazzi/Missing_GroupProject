@@ -26,10 +26,14 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.characters.Player;
+import missing.game.items.nonmovable.Fireplace;
 import missing.game.world.nodes.WorldNode;
+import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 
 /**
@@ -91,29 +95,38 @@ public class GWNode {
 		// calculate size of each tile relative to the node
 		int tileSize = nodeSize / TILE_SIZE;
 		// draw each tile in the appropriate coordinates
+		List<Point> fireplaceLocs = new ArrayList<Point>();
 		for (int i = 0; i < tiles.length; i++) {
 			int tileY = y + (i * tileSize);
 			for (int j = 0; j < tiles.length; j++) {
 				int tileX = x + (j * tileSize);
 				tiles[i][j].setSize(tileSize);
 				tiles[i][j].draw(g, tileX, tileY, inMapView, player);
+				if (tiles[i][j].getWorldTile().isOccupied()){
+					if (tiles[i][j].getWorldTile().getObject() instanceof Fireplace){
+						fireplaceLocs.add(new Point(j,i));
+					}
+				}
 			}
 		}
-		if (alpha != 0){
-			int haloAlpha = alpha;
-			if (alpha >150)haloAlpha = 150;
+		if (alpha != 0 && !inMapView){
 			// only need to draw filter if not fully transparent
 			Graphics2D g2d = (Graphics2D)g.create();
 			Area filter = new Area(new Rectangle(x, y, nodeSize, nodeSize));
-			if (player.getWorldLocation().equals(this.node.getGameLocation())&&!inMapView){
+			Area lightAreas = new Area();
+			if (player.getWorldLocation().equals(this.node.getGameLocation())&&alpha>150){
+				int haloAlpha = 150;
 				// draws light circle
 				Point playerTileLoc = player.getTileLocation();
 				int haloX = x + ((playerTileLoc.x-1) * tileSize);
 				int haloY = y + ((playerTileLoc.y-1) * tileSize);
-				Ellipse2D.Double halo = new Ellipse2D.Double(haloX, haloY, tileSize*3, tileSize*3);
+				lightAreas.add(new Area(new Ellipse2D.Double(haloX, haloY, tileSize*3, tileSize*3)));
+				for (Point p : fireplaceLocs){
+					lightAreas.add(new Area(new Ellipse2D.Double((p.x-1)* tileSize, (p.y-1)* tileSize, tileSize*3, tileSize*3)));
+				}
 				g2d.setColor(new Color(35, 35, 43, haloAlpha));
-				g2d.fill(halo);				
-				filter.subtract(new Area(halo));
+				g2d.fill(lightAreas);
+				filter.subtract(lightAreas);
 			}
 			g2d.setColor(new Color(35, 35, 43, alpha));
 			g2d.fill(filter);
