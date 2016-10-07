@@ -121,20 +121,24 @@ public class Merchant extends Character {
 	 * axe : 30 coins
 	 * pickaxe: 20 coins
 	 * fishingrod = 25 coins
+	 * shovel: 25 coins
 	 * </pre>
 	 */
 	private void getToolPrices() {
 		Tool axe = new Tool(null, null, ToolType.AXE);
 		Tool pickaxe = new Tool(null, null, ToolType.PICKAXE);
 		Tool rod = new Tool(null, null, ToolType.FISHINGROD);
+		Tool shovel = new Tool(null, null, ToolType.SHOVEL);
 		// put those items into the map
 		namesToItems.put(axe.getName(), axe);
 		namesToItems.put(pickaxe.getName(), pickaxe);
 		namesToItems.put(rod.getName(), rod);
+		namesToItems.put(shovel.getName(), shovel);
 		// map the items to cost
 		costs.put(axe, 30);
 		costs.put(pickaxe, 20);
 		costs.put(rod, 25);
+		costs.put(shovel, 25);
 	}
 
 	/**
