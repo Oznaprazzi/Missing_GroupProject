@@ -6,6 +6,7 @@
  * 	26 Sep 16		Casey Huang			created BagCanvas class.
  *  26 Sep 16		Casey Huang			added drawGrid method and convertBagToSet method
  *  27 Sep 16		Casey Huang			updated drawing methods and added rows and columns final static fields
+ *  08 Oct 16		Casey Huang			fixed bug
  */
 package missing.ui.canvas;
 
