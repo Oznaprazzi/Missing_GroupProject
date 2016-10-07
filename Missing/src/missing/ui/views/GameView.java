@@ -154,6 +154,7 @@ public class GameView extends View {
 		ctrlPanel.add(lblPlayersOnline, gbc_playersOnline);
 		
 		this.playersOnline = getPlayerNames(); //Set the JTextField.
+		this.playersOnline.setFocusable(false);
 		playersOnline.setFocusable(false);
 		GridBagConstraints gbc_players = new GridBagConstraints();
 		gbc_players.insets = new Insets(0, 0, 5, 0);
