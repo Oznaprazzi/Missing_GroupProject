@@ -14,6 +14,7 @@
  *  1 Oct 16		Linus Go			Added tombstone images.
  *  3 Oct 16		Casey Huang			Added pileofitems image.
  *  6 Oct 16 		Casey Huang			Added logo images and button image
+ *  7 Oct 16		Casey Huang			Added server/connecting background
  */
 
 package missing.datastorage.assetloader;
@@ -21,6 +22,8 @@ package missing.datastorage.assetloader;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -100,6 +103,8 @@ public class GameAssets {
 	private static BufferedImage splashBackgroundImage;
 
 	private static BufferedImage missingLogoImage;
+	
+	private static Image serverBackgroundImage;
 
 	private static ImageIcon buttonImage;
 
@@ -422,6 +427,13 @@ public class GameAssets {
 			}
 		}
 		return missingLogoImage;
+	}
+	
+	public static Image getServerBackgroundImage() {
+		if (serverBackgroundImage == null) {
+			serverBackgroundImage = new ImageIcon(GameAssets.class.getResource(STORAGE_PATH+"/img/serverbackground.gif")).getImage();
+		}
+		return serverBackgroundImage;
 	}
 
 	public static ImageIcon getButtonImage() {

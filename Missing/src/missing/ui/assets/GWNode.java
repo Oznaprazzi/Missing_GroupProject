@@ -33,6 +33,7 @@ import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.characters.Player;
 import missing.game.items.nonmovable.Fireplace;
 import missing.game.world.nodes.WorldNode;
+import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 
 /**
@@ -41,7 +42,7 @@ import missing.helper.GameException;
  */
 public class GWNode {
 	/** Indicates the number of tiles inside the node */
-	private final int TILE_SIZE = 10;
+	public static final int TILE_SIZE = 10;
 
 	private WorldNode node;
 	private GWTile[][] tiles;
@@ -108,6 +109,7 @@ public class GWNode {
 				}
 			}
 		}
+		// draws night colour filter for GameView
 		if (alpha != 0 && !inMapView){
 			// only need to draw filter if not fully transparent
 			Graphics2D g2d = (Graphics2D)g.create();
@@ -130,6 +132,40 @@ public class GWNode {
 			g2d.setColor(new Color(35, 35, 43, alpha));
 			g2d.fill(filter);
 		}
+	}
+	
+	/**
+	 * Returns an array of Point objects representing all the points
+	 * of glowable objects. Glowable objects are players and fireplaces
+	 * which emit light in the dark.
+	 * @param localPlayer
+	 * @return
+	 */
+	public Point[] getGlowableObjects(Player localPlayer){
+		Point[] glowableObjects = new Point[TILE_SIZE];
+		int index = 0;
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles.length; j++) {
+				if (tiles[i][j].getWorldTile().isOccupied()){
+					TileObject obj = tiles[i][j].getWorldTile().getObject();
+					if (obj instanceof Fireplace){
+						glowableObjects[index] = new Point(j,i);
+						index++;
+					}
+					else if (obj instanceof Player){
+						if (localPlayer.isDead()){
+							glowableObjects[index] = new Point(j,i);
+							index++;
+						}
+						else if (((Player)obj).getId() == localPlayer.getId()){
+							glowableObjects[index] = new Point(j,i);
+							index++;							
+						}
+					}
+				}
+			}
+		}
+		return glowableObjects;
 	}
 
 	
