@@ -99,8 +99,8 @@ public class MenuFactory {
 		btn.setOpaque(false);
 		btn.setContentAreaFilled(false);
 		btn.setBorderPainted(false);
+		btn.setBorder(null);
 		btn.addMouseListener(new MouseAdapter() {
-			
 		    public void mouseEntered(MouseEvent evt) {
 		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED);
 		    }
@@ -111,6 +111,10 @@ public class MenuFactory {
 		    
 		    public void mouseReleased(MouseEvent e){
 		    	btn.setForeground(TEXT_COLOUR);
+		    }
+		    
+		    public void mousePressed(MouseEvent evt){
+		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED);
 		    }
 		});
 		return btn;

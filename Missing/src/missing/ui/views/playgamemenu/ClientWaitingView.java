@@ -20,6 +20,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.networking.NetworkingHelper;
@@ -74,6 +75,7 @@ public class ClientWaitingView extends View {
 			Font f = new Font("Courier New", Font.PLAIN, 20);
 			IPAddr.setText("Game hosted at IP: "+NetworkingHelper.getIPAddress());
 			IPAddr.setFont(f);
+			IPAddr.setBorder(new EmptyBorder(20,0,0,0));
 			IPAddr.setForeground(Color.WHITE);
 		}
 	}
