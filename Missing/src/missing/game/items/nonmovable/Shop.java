@@ -17,6 +17,7 @@ import missing.game.characters.Merchant;
 import missing.game.characters.Player;
 import missing.helper.GameException;
 import missing.helper.SignalException;
+import missing.ui.assets.ShopNode;
 
 /**
  * This class represents a place where players can purchase items from the
@@ -33,12 +34,14 @@ public class Shop extends NonMovable {
 	private ShopType type;
 	private Merchant merchant;
 	private List<Player> players;
+	private ShopNode[] nodes;
 
 	public Shop(Point worldLocation, Point tileLocation, ShopType type) {
 		super("Shop", "A place where you can buy items", worldLocation, tileLocation);
 		this.type = type;
 		this.merchant = new Merchant(worldLocation, tileLocation, type);
 		this.players = new ArrayList<Player>();
+		this.nodes = new ShopNode[4]; // north south east west
 	}
 
 	// Getters and Setters...
@@ -57,6 +60,41 @@ public class Shop extends NonMovable {
 
 	public void setMerchant(Merchant merchant) {
 		this.merchant = merchant;
+	}
+
+	public ShopNode getNorthNode() {
+		return nodes[0];
+	}
+
+	public ShopNode getEastNode() {
+		return nodes[1];
+	}
+
+	public ShopNode getSouthNode() {
+		return nodes[2];
+	}
+
+	public ShopNode getWestNode() {
+		return nodes[3];
+	}
+
+	public void setNode(ShopNode node, Direction direction) {
+		switch (direction) {
+		case EAST:
+			nodes[1] = node;
+			break;
+		case NORTH:
+			nodes[0] = node;
+			break;
+		case SOUTH:
+			nodes[2] = node;
+			break;
+		case WEST:
+			nodes[3] = node;
+			break;
+		default:
+			break;
+		}
 	}
 
 	// Methods

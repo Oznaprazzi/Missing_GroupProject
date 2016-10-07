@@ -449,7 +449,13 @@ public class GameAssets {
 		return customFont.deriveFont(size);
 	}
 
-	public static BufferedImage getShopImage(ShopType type, Direction direction) {
+	public static BufferedImage getShopNodeImage(ShopType type, Direction direction) {
+		try {
+			return ImageIO.read(GameAssets.class
+					.getResource(String.format("%s/img/%s_%s.png", STORAGE_PATH, type.name(), direction.name())));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 }

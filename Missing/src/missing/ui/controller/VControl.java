@@ -145,7 +145,7 @@ public class VControl extends JFrame {
 			fileMenu.add(saveGame);
 			fileMenu.add(loadGame);
 			fileMenu.add(exitItem);
-		menuBar.add(fileMenu);
+			menuBar.add(fileMenu);
 			
 		
 		

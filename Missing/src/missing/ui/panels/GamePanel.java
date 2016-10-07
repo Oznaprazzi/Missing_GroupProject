@@ -16,6 +16,7 @@
  * 20 Sep 16		Linus Go			Made GamePanel render a a current Players node.
  * 21 Sep 16		Chris Rabe			fixed bugs. Rendering can now update
  * 22 Sep 16		Chris Rabe			removed old testing constructor. Now bases world off the game class.
+ * 7 Oct 16			Chris Rabe			removed redundant constructor
  */
 package missing.ui.panels;
 
@@ -25,13 +26,11 @@ import java.awt.Point;
 
 import javax.swing.JPanel;
 
-import missing.game.Game;
 import missing.game.characters.Player;
 import missing.helper.GameException;
 import missing.ui.assets.GWNode;
 import missing.ui.assets.GWorld;
 import missing.ui.controller.VControl;
-import missing.ui.controller.VControl.View;
 
 /**
  * This class represents the Game Panel in the regular state. When the game is
@@ -62,37 +61,6 @@ public class GamePanel extends JPanel {
 
 	public void setController(VControl controller) {
 		this.controller = controller;
-	}
-
-	/******
-	 * Testing constructors! TODO: remove this/alter in the final release.
-	 *********/
-
-	public GamePanel(Game game, Player currentPlayer) {
-		super(null);
-		try {
-			graphicWorld = new GWorld(game.getWorld(), new View(null) {
-
-				@Override
-				public void initialise() {
-					// TODO Auto-generated method stub
-
-				}
-
-				@Override
-				public void setFocus() {
-					// TODO Auto-generated method stub
-
-				}
-
-			}, new Point(0, 0));
-		} catch (GameException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.currentPlayer = currentPlayer;
-		curPoint = currentPlayer.getWorldLocation();
-		curGWNode = graphicWorld.gwNodes()[curPoint.y][curPoint.x];
 	}
 
 	public void initialise() {
@@ -126,7 +94,7 @@ public class GamePanel extends JPanel {
 			return;
 		curGWNode.setNodeSize(Math.min(this.getWidth(), this.getHeight()));
 		try {
-			curGWNode.draw(g, 0, 0, false, controller.getGGame().getGame().getAvatars()[controller.getPlayerID()]);// player doesnt matter for game view
+			curGWNode.draw(g, 0, 0, false, controller.getGGame().getGame().getAvatars()[controller.getPlayerID()]);
 		} catch (GameException e) {
 			e.printStackTrace();
 		}

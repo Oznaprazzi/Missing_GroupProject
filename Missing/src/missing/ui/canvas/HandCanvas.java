@@ -9,11 +9,13 @@
  */
 package missing.ui.canvas;
 
+import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -63,6 +65,10 @@ public class HandCanvas extends Canvas implements MouseListener {
 	private static final int rows = 2;
 
 	private static final int colunmns = 5;
+	
+	private final int BOLDED_WIDTH = 3;
+	
+	private final int REG_WIDTH = 1;
 	
 	private Point clickPoint;
 	
@@ -167,15 +173,21 @@ public class HandCanvas extends Canvas implements MouseListener {
 	 * @param g
 	 */
 	private void drawGrid(Graphics g, int y_offset) {
-		int count = 0;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < colunmns; j++) {
 				int left = X_OFFSET + j * size;
 				int top = y_offset + i * size;
-				++count;
-				gridRectangle.add(new Rectangle(left, top, size, size));
-					drawCell(g, left, top, size, size, false);
-				
+					gridRectangle.add(new Rectangle(left, top, size, size));
+					
+					for(Rectangle r : gridRectangle){
+						Rectangle obj = new Rectangle(left, top, size, size);
+						if(obj.equals(r)){
+						drawCell(g, left, top, size, size, true);
+						}else
+						drawCell(g, left, top, size, size, false);
+					}
+					
+					
 			}
 		}
 	}
@@ -186,11 +198,15 @@ public class HandCanvas extends Canvas implements MouseListener {
 	 * @param isHighlighted
 	 */
 	private void drawCell(Graphics g, int left, int top, int width, int height, boolean isHighlighted){
-		
+		Graphics2D gg = (Graphics2D) g;
 		if(isHighlighted){
-			g.setColor(Color.yellow);
-			g.drawRect(left,top,width,height);
-		}else{g.drawRect(left,top,width,height);}
+			gg.setStroke(new BasicStroke(BOLDED_WIDTH));
+			gg.setColor(Color.yellow);
+			gg.drawRect(left,top,width,height);
+		}else{
+			gg.setStroke(new BasicStroke(REG_WIDTH));
+			gg.drawRect(left,top,width,height);
+		}
 	}
 
 	/**
@@ -228,9 +244,9 @@ public class HandCanvas extends Canvas implements MouseListener {
 		
 		for(int i = 0 ; i != this.gridRectangle.size(); ++i){
 			if(gridRectangle.get(i).contains(clickPoint)){
-				System.out.println("You clicked inside me!");
-				System.out.println("rect: " + gridRectangle.get(i).toString());
-				System.out.println("index :" + i);
+				System.out.println("\n You clicked inside me!");
+				System.out.println("\n rect: " + gridRectangle.get(i).toString());
+				System.out.println("\n index :" + i);
 				clickIndex = i;
 				return i;
 			}
