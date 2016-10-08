@@ -2,12 +2,13 @@
  * 
  * Authors    		ID
  * Jian Wei Chong	300352789
+ * Chris Rabe		300334207
  * 
  * Date 		Author					Modification
  * 18/09/16		Jian Wei				created the class
- * 03/10/16		Casey Huang				
+ * 8/10/16		Chris rabe				added ingredients field
  * 
- * */
+ */
 
 package missing.game.items.movable;
 
@@ -28,6 +29,8 @@ import missing.helper.GameException;
 @SuppressWarnings("serial")
 public abstract class Craftable extends Usable {
 
+	private List<Resource> ingredients;
+
 	/**
 	 * Creates instance of Craftable class.
 	 * 
@@ -36,6 +39,16 @@ public abstract class Craftable extends Usable {
 	 */
 	public Craftable(Point worldLocation, Point tileLocation) {
 		super(null, null, worldLocation, tileLocation, 1, 1);
+	}
+
+	// Getters and Setters
+
+	public List<Resource> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Resource> ingredients) {
+		this.ingredients = ingredients;
 	}
 
 	/**
