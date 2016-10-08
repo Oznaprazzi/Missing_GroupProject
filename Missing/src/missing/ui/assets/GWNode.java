@@ -124,23 +124,24 @@ public class GWNode {
 		Area fireArea;
 		RadialGradientPaint fireGlow;
 		int fireAlpha = 50;
+		int playerAlpha = 150;
 		Area fireAreas = new Area();
 		for (Point p : fireplaceLocs){
 			fireArea = new Area(new Ellipse2D.Double((p.x-1)* tileSize, (p.y-1)* tileSize, tileSize*3, tileSize*3));
 			c1 = new Color(255, 213, 45, fireAlpha);
-			c2 = new Color(35, 35, 43, alpha);
+			if (alpha>playerAlpha)c2 = new Color(35, 35, 43, playerAlpha);
+			else c2 = new Color(35, 35, 43, alpha);
 			gx = x + p.x*tileSize + tileSize/2;
 			gy = y + p.y*tileSize + tileSize/2;
 			fireGlow = new RadialGradientPaint(gx, gy, (float) (tileSize*1.5), new float[]{0.0f,1.0f}, new Color[]{c1,c2});
 			fireAreas.add(fireArea);
-//			g2d.setPaint(fireGlow);
-//			g2d.fill(fireArea);
+			g2d.setPaint(fireGlow);
+			g2d.fill(fireArea);
 		}
 		// draws night colour filter for GameView
 		if (alpha != 0){
 			// only need to draw filter if not fully transparent
 			Area filter = new Area(new Rectangle(x, y, nodeSize, nodeSize));
-			int playerAlpha = 150;
 			if (player.getWorldLocation().equals(this.node.getGameLocation())&&alpha>playerAlpha){
 				// draws light circle
 				Point playerTileLoc = player.getTileLocation();
@@ -148,10 +149,13 @@ public class GWNode {
 				int haloY = y + ((playerTileLoc.y-1) * tileSize);
 				Area playerArea = new Area(new Ellipse2D.Double(haloX, haloY, tileSize*3, tileSize*3));
 				
-				fireAreas.add(playerArea);
 				filter.subtract(fireAreas);
+				filter.subtract(playerArea);
 				g2d.setColor(new Color(35, 35, 43, playerAlpha));
-				g2d.fill(fireAreas);
+				playerArea.subtract(fireAreas);
+				g2d.fill(playerArea);
+			} else{
+				filter.subtract(fireAreas);
 			}
 			g2d.setColor(new Color(35, 35, 43, alpha));
 			g2d.fill(filter);

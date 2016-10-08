@@ -297,7 +297,6 @@ public class VControl extends JFrame {
 	 */
 	public void displayContainerItems() {
 		// TODO: implement. get container items in square in front of player
-		// will probably call another method, maybe in GameView
 	}
 
 	/**
