@@ -5,6 +5,7 @@
  * 
  * 	Date			Author				changes
 *   6th Oct 2016	Linus Go			created PileCanvas class.
+*   8th Oct 2016	Linus Go			updated the background for the Pile Canvas.
  */
 package missing.ui.canvas;
 
@@ -61,8 +62,8 @@ public class PileCanvas extends Canvas implements MouseListener {
 
 	private static final int colunmns = 5;
 	
-	/*Fields  that determine stroke of the graphics rectangle */
-	private final int BOLDED_WIDTH = 3;
+	/*Fields that determine stroke of the graphics rectangle */
+	private final int BOLDED_WIDTH = 5;
 	private final int REG_WIDTH = 1;
 	
 	/**
@@ -91,10 +92,10 @@ public class PileCanvas extends Canvas implements MouseListener {
 
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(GameAssets.getBagBackgroundImage(), 0, 0, null);
+		g.drawImage(GameAssets.getPileBackgroundImage(), 0, 0, null);
 		Font serif = new Font("Calisto MT", Font.BOLD, 20);
 		g.setFont(serif);
-		g.setColor(Color.black);
+		g.setColor(Color.orange.darker());
 		g.drawString("Items in Pile:", 10, 40);
 		this.drawGrid(g, Y_OFFSET_BG);
 		try {
@@ -170,8 +171,8 @@ public class PileCanvas extends Canvas implements MouseListener {
 	private void drawGrid(Graphics g, int y_offset) {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < colunmns; j++) {
-				g.setColor(Color.black.darker());
-				
+				g.setColor(Color.yellow.brighter());
+
 				int left = X_OFFSET + j * size;
 				int top = y_offset + i * size;
 				gridRectangle.add(new Rectangle(left, top, size, size));

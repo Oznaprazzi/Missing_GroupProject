@@ -4,7 +4,7 @@
  * 	Linus Go	    300345571
  * 
  * 	Date			Author				changes
-*   6th Oct 2016	Linus Go			created PileCanvas class.
+*   8th Oct 2016	Linus Go			created ContainerCanvas class.
  */
 package missing.ui.canvas;
 
@@ -91,7 +91,7 @@ public class ContainerCanvas extends Canvas implements MouseListener {
 
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(GameAssets.getBagBackgroundImage(), 0, 0, null);
+		g.drawImage(GameAssets.getContainerBackgroundImage(), 0, 0, null);
 		Font serif = new Font("Calisto MT", Font.BOLD, 20);
 		g.setFont(serif);
 		g.setColor(Color.black);
