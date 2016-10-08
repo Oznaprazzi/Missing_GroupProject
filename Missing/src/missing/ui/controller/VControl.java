@@ -42,11 +42,13 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import missing.ui.daynight.DayNightCycle;
+import missing.ui.frames.ContainerFrame;
 import missing.ui.frames.PileFrame;
 import missing.datastorage.assetloader.XMLHandler;
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
 import missing.game.characters.Player;
+import missing.game.items.nonmovable.Container;
 import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
@@ -296,7 +298,12 @@ public class VControl extends JFrame {
 	 * items in that Container
 	 */
 	public void displayContainerItems() {
-		// TODO: implement. get container items in square in front of player
+		try {
+			TileObject container = gGame.getGame().getObjectInFront(playerID);
+			new ContainerFrame((Container) container).setVisible(true);
+		} catch (GameException e) {
+			e.printStackTrace();
+		}	
 	}
 
 	/**
@@ -304,7 +311,6 @@ public class VControl extends JFrame {
 	 * that Pile
 	 */
 	public void displayPileItems() {
-		// TODO: similar to displayContainerItems
 		try {
 			TileObject pile = gGame.getGame().getObjectInFront(playerID);
 			new PileFrame((Pile) pile).setVisible(true);

@@ -4,8 +4,7 @@
  * 	Linus Go	    300345571
  * 
  * 	Date			Author				changes
-*   6th Oct 2016	Linus Go			created PileCanvas class.
-*   8th Oct 2016	Linus Go			updated the background for the Pile Canvas.
+*   8th Oct 2016	Linus Go			created ContainerCanvas class.
  */
 package missing.ui.canvas;
 
@@ -33,6 +32,7 @@ import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
+import missing.game.items.nonmovable.Container;
 import missing.game.items.nonmovable.Pocket;
 import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
@@ -42,10 +42,10 @@ import missing.helper.GameException;
  * Canvas used to display the Pile of Items. If an item of the grid is pressed,
  * the cell is highlighted.
  */
-public class PileCanvas extends Canvas implements MouseListener {
+public class ContainerCanvas extends Canvas implements MouseListener {
 
 	/** Pile of items to display */
-	private Pile pile;
+	private Container container;
 
 	/** Contains the number of unique items in the pile */
 	private ArrayList<TileObject> pileSet;
@@ -62,8 +62,8 @@ public class PileCanvas extends Canvas implements MouseListener {
 
 	private static final int colunmns = 5;
 	
-	/*Fields that determine stroke of the graphics rectangle */
-	private final int BOLDED_WIDTH = 5;
+	/*Fields  that determine stroke of the graphics rectangle */
+	private final int BOLDED_WIDTH = 3;
 	private final int REG_WIDTH = 1;
 	
 	/**
@@ -81,22 +81,21 @@ public class PileCanvas extends Canvas implements MouseListener {
 	private int clickIndex = -1;
 	
 	
-	public PileCanvas(Pile pile) {
-		this.pile = pile;
+	public ContainerCanvas(Container container) {
+		this.container = container;
 		pileSet = new ArrayList<TileObject>();
 		gridRectangle = new ArrayList<Rectangle>();
 		convertListToSet();
 		addMouseListener(this);
-
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(GameAssets.getPileBackgroundImage(), 0, 0, null);
+		g.drawImage(GameAssets.getContainerBackgroundImage(), 0, 0, null);
 		Font serif = new Font("Calisto MT", Font.BOLD, 20);
 		g.setFont(serif);
-		g.setColor(Color.orange.darker());
-		g.drawString("Items in Pile:", 10, 40);
+		g.setColor(Color.black);
+		g.drawString("Items inside the container:", 10, 40);
 		this.drawGrid(g, Y_OFFSET_BG);
 		try {
 			this.drawItems(g, Y_OFFSET_BG, pileSet);
@@ -171,8 +170,8 @@ public class PileCanvas extends Canvas implements MouseListener {
 	private void drawGrid(Graphics g, int y_offset) {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < colunmns; j++) {
-				g.setColor(Color.yellow.brighter());
-
+				g.setColor(Color.black.darker());
+				
 				int left = X_OFFSET + j * size;
 				int top = y_offset + i * size;
 				gridRectangle.add(new Rectangle(left, top, size, size));
@@ -240,7 +239,7 @@ public class PileCanvas extends Canvas implements MouseListener {
 	 * of item and to only draw one item.
 	 */
 	private void convertListToSet() {
-		for (TileObject m : pile.getItems()) {
+		for (TileObject m : container.getItems()) {
 			if (!pileSet.contains(m)) {
 				pileSet.add(m);
 			}
