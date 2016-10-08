@@ -23,6 +23,7 @@ package missing.ui.assets;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.RadialGradientPaint;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;

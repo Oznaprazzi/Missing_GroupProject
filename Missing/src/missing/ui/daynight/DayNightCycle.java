@@ -21,7 +21,7 @@ public class DayNightCycle extends TimerTask {
 	/** Darkness limit for alpha. Must be <= 255 */
 	private final int DARK_LIMIT = 240;
 	/** Start time of cycle. Cannot be in getting lighter/darker times */
-	private final int START_TIME = 721;
+	private final int START_TIME = 839;
 	/** Last minute of day */
 	private final int END_OF_DAY = 1440;
 	/** Time game spends getting darker/lighter */
@@ -91,6 +91,10 @@ public class DayNightCycle extends TimerTask {
 			}
 		}
 //		System.out.println("Alpha: "+alpha + ", Current Time: "+currentTime);
+	}
+	
+	public int getTime(){
+		return currentTime;
 	}
 
 }

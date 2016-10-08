@@ -23,6 +23,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RadialGradientPaint;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
@@ -109,31 +110,58 @@ public class GWNode {
 				}
 			}
 		}
+		if (!inMapView){
+			drawLights(fireplaceLocs, tileSize, player, x, y, g);
+		}
+	}
+	
+	private void drawLights(List<Point> fireplaceLocs, int tileSize, Player player, int x, int y, Graphics g){
+
+		//Fireplaces
+		Graphics2D g2d = (Graphics2D)g.create();
+		Color c1, c2;
+		int gx, gy;
+		Area fireArea;
+		RadialGradientPaint fireGlow;
+		int fireAlpha = 50;
+		Area fireAreas = new Area();
+		for (Point p : fireplaceLocs){
+			fireArea = new Area(new Ellipse2D.Double((p.x-1)* tileSize, (p.y-1)* tileSize, tileSize*3, tileSize*3));
+			c1 = new Color(255, 213, 45, fireAlpha);
+			c2 = new Color(35, 35, 43, alpha);
+			gx = x + p.x*tileSize + tileSize/2;
+			gy = y + p.y*tileSize + tileSize/2;
+			fireGlow = new RadialGradientPaint(gx, gy, (float) (tileSize*1.5), new float[]{0.0f,1.0f}, new Color[]{c1,c2});
+			fireAreas.add(fireArea);
+//			g2d.setPaint(fireGlow);
+//			g2d.fill(fireArea);
+		}
 		// draws night colour filter for GameView
-		if (alpha != 0 && !inMapView){
+		if (alpha != 0){
 			// only need to draw filter if not fully transparent
-			Graphics2D g2d = (Graphics2D)g.create();
 			Area filter = new Area(new Rectangle(x, y, nodeSize, nodeSize));
-			Area lightAreas = new Area();
-			if (player.getWorldLocation().equals(this.node.getGameLocation())&&alpha>150){
-				int haloAlpha = 150;
+			int playerAlpha = 150;
+			if (player.getWorldLocation().equals(this.node.getGameLocation())&&alpha>playerAlpha){
 				// draws light circle
 				Point playerTileLoc = player.getTileLocation();
 				int haloX = x + ((playerTileLoc.x-1) * tileSize);
 				int haloY = y + ((playerTileLoc.y-1) * tileSize);
-				lightAreas.add(new Area(new Ellipse2D.Double(haloX, haloY, tileSize*3, tileSize*3)));
-				for (Point p : fireplaceLocs){
-					lightAreas.add(new Area(new Ellipse2D.Double((p.x-1)* tileSize, (p.y-1)* tileSize, tileSize*3, tileSize*3)));
-				}
-				g2d.setColor(new Color(35, 35, 43, haloAlpha));
-				g2d.fill(lightAreas);
-				filter.subtract(lightAreas);
+				Area playerArea = new Area(new Ellipse2D.Double(haloX, haloY, tileSize*3, tileSize*3));
+				
+				fireAreas.add(playerArea);
+				filter.subtract(fireAreas);
+				g2d.setColor(new Color(35, 35, 43, playerAlpha));
+				g2d.fill(fireAreas);
+				g2d.setColor(new Color(35, 35, 43, alpha));
+				g2d.fill(filter);
 			}
-			g2d.setColor(new Color(35, 35, 43, alpha));
-			g2d.fill(filter);
+//			else{
+//			filter.subtract(fireAreas);
+//			g2d.setColor(new Color(35, 35, 43, alpha));
+//			g2d.fill(filter);
+//			}
 		}
 	}
-	
 	/**
 	 * Returns an array of Point objects representing all the points
 	 * of glowable objects. Glowable objects are players and fireplaces
