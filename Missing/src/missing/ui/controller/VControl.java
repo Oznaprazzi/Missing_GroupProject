@@ -308,7 +308,7 @@ public class VControl extends JFrame {
 		// TODO: similar to displayContainerItems
 		try {
 			TileObject pile = gGame.getGame().getObjectInFront(playerID);
-			new PileFrame((Pile) pile);
+			new PileFrame((Pile) pile).setVisible(true);
 		} catch (GameException e) {
 			e.printStackTrace();
 		}

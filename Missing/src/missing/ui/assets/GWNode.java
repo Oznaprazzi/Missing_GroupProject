@@ -152,14 +152,10 @@ public class GWNode {
 				filter.subtract(fireAreas);
 				g2d.setColor(new Color(35, 35, 43, playerAlpha));
 				g2d.fill(fireAreas);
-				g2d.setColor(new Color(35, 35, 43, alpha));
-				g2d.fill(filter);
 			}
-//			else{
-//			filter.subtract(fireAreas);
-//			g2d.setColor(new Color(35, 35, 43, alpha));
-//			g2d.fill(filter);
-//			}
+			g2d.setColor(new Color(35, 35, 43, alpha));
+			g2d.fill(filter);
+			
 		}
 	}
 	/**
