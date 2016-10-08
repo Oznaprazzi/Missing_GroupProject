@@ -58,7 +58,7 @@ public class PileCanvas extends Canvas implements MouseListener {
 
 	private static final int size = 50;
 
-	private static final int rows = 5;
+	private static final int rows = 2;
 
 	private static final int colunmns = 5;
 	
