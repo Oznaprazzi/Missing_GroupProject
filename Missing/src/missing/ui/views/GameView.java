@@ -45,7 +45,7 @@ public class GameView extends View {
 	private JButton btnDoAction;
 
 	private JTextField nameField;
-	private JTextField timeField;
+	public static JTextField timeField;
 	
 	private JList<String> playersOnline;
 
