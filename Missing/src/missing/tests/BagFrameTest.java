@@ -8,17 +8,15 @@
  */
 package missing.tests;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.GridBagLayout;
+import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
+import missing.datastorage.assetloader.GameAssets;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
@@ -28,23 +26,26 @@ import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Pocket;
-import missing.ui.canvas.HandCanvas;
+import missing.ui.canvas.HandPanel;
+import missing.ui.menustyle.MenuFactory;
+
 import javax.swing.JButton;
-import java.awt.GridLayout;
 
 @SuppressWarnings("serial")
 public class BagFrameTest extends JFrame {
 
-	private JPanel contentPane;
-	private final JButton btnBagToPocket = new JButton("Transfer To Pocket");
-	private final JButton btnPocketToBag = new JButton("Transfer To Bag");
+	private ImagePanel contentPane;
+	private final JButton btnBagToPocket = MenuFactory.createButton2("Transfer To Pocket");
+	private final JButton btnPocketToBag = MenuFactory.createButton2("Transfer To Bag");
 
 	private Movable clickedItem;
 	private int clickedIndex;
-	private Canvas panel; //the hand canvas
+	private HandPanel panel; //the hand canvas
 	
 	private Bag bag;
 	private Pocket pocket;
+	
+	private BufferedImage backgroundImage = GameAssets.getWindowBackgroundImage();
 	
 	/**
 	 * Launch the application.
@@ -72,43 +73,44 @@ public class BagFrameTest extends JFrame {
 		this.bag = bag;
 		this.pocket = pocket;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		setSize(442, 439);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(157,213,243));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setSize(backgroundImage.getWidth(), backgroundImage.getHeight());
+		// elsewhere
+		contentPane = new ImagePanel();
 		setContentPane(contentPane);
 		contentPane.add(btnPocketToBag);
 		contentPane.add(btnBagToPocket);
-		panel = new HandCanvas(bag, pocket);
+		panel = new HandPanel(bag, pocket);
 		contentPane.add(panel);
 		addActionListeners();
 	}
 	
+	private class ImagePanel extends JPanel {
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
+	    }
+	}
+
 	/**
 	 * Sets up the Action Listeners for the buttons.
 	 */
 	private void addActionListeners() {
-		
-
 		btnPocketToBag.addActionListener(e->{
-			transferPocketToBag();
+			panel.transferPocketToBag();
 		});
 		btnBagToPocket.addActionListener(e->{
-			transferBagToPocket();
+			panel.transferBagToPocket();
 		});
-		
-		
-		
 	}
 	
 	/**HELPER METHODS */
 	
 	/**
 	 * When the button is clicked, if there is a clicked item selected, it transfers it from the current Players Pocket to the Bag.
-	 */
+	 *//*
 	private void transferPocketToBag(){
-		clickedItem = HandCanvas.getselectedItem();
+		clickedItem = panel.getselectedItem();
 		if(clickedItem == null) return;
 		System.out.println("Selected " + clickedItem.toString());
 		if(clickedIndex >=0 && clickedIndex <= 19){
@@ -123,12 +125,11 @@ public class BagFrameTest extends JFrame {
 		panel.repaint();
 	}
 	
-	/**
+	*//**
 	 * When the button is clicked, if there is a clicked item selected, it transfers it from the current Players Bag to the Pocket.
-	 */
+	 *//*
 	private void transferBagToPocket(){
-		clickedItem = HandCanvas.getselectedItem();
-		clickedIndex = HandCanvas.getClickedIndex();
+		clickedItem = panel.getselectedItem();
 		if(clickedItem == null) return;
 		System.out.println("Selected " + clickedItem.toString());
 		if(clickedIndex >=0 && clickedIndex <= 9){ 
@@ -143,10 +144,7 @@ public class BagFrameTest extends JFrame {
 		
 		
 		panel.repaint();
-	}
-	
-	
-	
+	}*/
 	
 	public static Bag addItemsToBag(){
 		Bag bag = new Bag();

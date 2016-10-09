@@ -121,8 +121,8 @@ public class Player extends Character {
 		this.bag = bag;
 	}
 
-	public int getMoney() {
-		return money.getAmount();
+	public Money getMoney() {
+		return money;
 	}
 
 	public void setMoney(int m) {

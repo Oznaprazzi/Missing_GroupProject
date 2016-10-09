@@ -6,6 +6,7 @@
  * 	3 Oct 16		Chris Rabe			created XMLExporter
  * 	5 Oct 16		Chris Rabe			created methods for converting the game to XML Document
  * 	7 Oct 16		Chris Rabe			can now turn shop objects into XML file
+ * 	9 Oct 16		Chris Rabe			can now turn money objects into XML file
  */
 
 package missing.datastorage.assetloader;
@@ -136,6 +137,8 @@ public class XMLExporter {
 			return getFood((Food) object, doc);
 		} else if (object instanceof Tool) {
 			return getTool((Tool) object, doc);
+		} else if (object instanceof Money) {
+			return getMoney((Money) object, doc);
 		}
 		throw new RuntimeException("Unknown object type");
 	}
@@ -192,6 +195,16 @@ public class XMLExporter {
 		wood.appendChild(amt);
 		return wood;
 	}
+
+	private static Element getMoney(Money object, Document doc) {
+		Element money = doc.createElement("money");
+		Element loc = getLocation(object.getTileLocation(), doc);
+		Element amt = getAmount(object.getAmount(), doc);
+		money.appendChild(loc);
+		money.appendChild(amt);
+		return money;
+	}
+
 	// Non-Movable parsers
 
 	private static Element getTree(Tree object, Document doc) {

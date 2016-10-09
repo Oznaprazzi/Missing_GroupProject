@@ -20,7 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Pocket;
-import missing.ui.canvas.HandCanvas;
+import missing.ui.canvas.HandPanel;
 
 
 @SuppressWarnings("serial")
@@ -41,7 +41,7 @@ public class HandJFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		HandCanvas panel = new HandCanvas(bag, pocket);
+		HandPanel panel = new HandPanel(bag, pocket);
 		contentPane.add(panel, BorderLayout.CENTER);
 	}
 

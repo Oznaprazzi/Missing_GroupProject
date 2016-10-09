@@ -126,7 +126,7 @@ public class VControl extends JFrame {
 	private JMenuItem credits;
 	private JFileChooser fc;
 	
-	
+	private DayNightCycle dnc;
 	public VControl() {
 		super("Missing: The Game");
 		this.views = GUIInitialiser.createViews(this);
@@ -496,9 +496,12 @@ public class VControl extends JFrame {
 	 */
 	private void startDayNightCycle(){
 		java.util.Timer timer = new java.util.Timer();
-		DayNightCycle dnc = new DayNightCycle(this);
+		dnc = new DayNightCycle(this);
 		timer.scheduleAtFixedRate(dnc, 0, CLOCK_TICK*10);
 	}
+	
+	
+	
 	
 	/**
 	 * Updates the alpha for MapView and GameView
@@ -515,7 +518,6 @@ public class VControl extends JFrame {
 	public void performAction() {
 		client.handleAction();
 	}
-	
 	
 
 	public int getPlayerID() {

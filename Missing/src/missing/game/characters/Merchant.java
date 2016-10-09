@@ -64,11 +64,11 @@ public class Merchant extends Character {
 		if (i == null)
 			throw new GameException("the merchant doesn't have this item");
 		int costOfItem = costs.get(i);
-		if (player.getMoney() < costOfItem) {
+		if (player.getMoney().getAmount() < costOfItem) {
 			throw new GameException("player doesn't have enough money");
 		}
 		// deduct from play money
-		player.setMoney(player.getMoney() - costOfItem);
+		player.setMoney(player.getMoney().getAmount() - costOfItem);
 		Movable playerItem = i;
 		player.addToPocket(playerItem);
 	}
@@ -80,7 +80,7 @@ public class Merchant extends Character {
 		if (!p.has(item))
 			throw new GameException("cannot sell item you dont have");
 		int sellAmount = costs.get(findItemInMap(item));
-		p.setMoney(p.getMoney() + sellAmount);
+		p.setMoney(p.getMoney().getAmount() + sellAmount);
 		// reduces amount of item
 		item.setAmount(item.getAmount() - 1);
 		if (item.getAmount() == 0)

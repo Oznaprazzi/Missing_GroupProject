@@ -10,6 +10,7 @@ package missing.ui.daynight;
 import java.util.TimerTask;
 
 import missing.ui.controller.VControl;
+import missing.ui.views.GameView;
 /**
  * Responsible of keeping track of time and Day and Night cycles
  * Units of time are in game minutes. Speed of game minutes
@@ -56,6 +57,8 @@ public class DayNightCycle extends TimerTask {
 	
 	@Override
 	public void run(){
+		setTimeField();
+		
 		if (currentTime >= END_OF_DAY){
 			// Reached end of day so set time back to 0
 			currentTime = 0;
@@ -90,7 +93,35 @@ public class DayNightCycle extends TimerTask {
 				controller.repaint();
 			}
 		}
-//		System.out.println("Alpha: "+alpha + ", Current Time: "+currentTime);
+	}
+	/**Sets the current Game Time to the timeField inside of GameView.*/
+	private void setTimeField(){
+		int hours = currentTime / 60; 
+		int mins = currentTime % 60;
+		if(hours >= 0 && hours <= 11){
+			/**Append a leading zero if the minutes is single digit. */
+			String min = "";
+			if(mins >=0 && mins <= 9){
+				min = "0" + mins;
+			}else{
+				min = ""+ mins;
+			}
+			
+			GameView.timeField.setText(hours + ":" + min + " AM");
+		}else if(hours > 12 && hours <= 23){
+			int pmHours = hours - 12;
+			/**Append a leading zero if the minutes is a single digit. */
+			String min = "";
+			if(mins >=0 && mins <= 9){
+				min = "0" + mins;
+			}else{
+				min = "" + mins;
+			}
+			
+			GameView.timeField.setText(pmHours + ":" + min + " PM");
+		}
+	
+	
 	}
 	
 	public int getTime(){

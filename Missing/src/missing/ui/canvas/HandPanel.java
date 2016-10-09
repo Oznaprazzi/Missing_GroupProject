@@ -7,6 +7,7 @@
  *  26 Sep 16		Casey Huang			added drawGrid method and convertBagToSet method
  *  27 Sep 16		Casey Huang			updated drawing methods and added rows and columns final static fields
  *  08 Oct 16		Casey Huang			fixed bug
+ *  09 Oct 16		Casey Huang			added map to draw selected item
  */
 package missing.ui.canvas;
 
@@ -22,9 +23,14 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
+import missing.game.Game;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Movable;
@@ -38,7 +44,7 @@ import missing.game.items.nonmovable.Pocket;
  * Canvas used to display the Player's bag's items
  */
 @SuppressWarnings("serial")
-public class HandCanvas extends Canvas implements MouseListener {
+public class HandPanel extends JPanel implements MouseListener {
 	/** Bag of items to display */
 	private Bag bag;
 
@@ -52,60 +58,60 @@ public class HandCanvas extends Canvas implements MouseListener {
 	private ArrayList<Movable> pocketSet;
 
 	/** x position of grid. */
-	protected static final int X_OFFSET = 96;
+	protected static final int X_OFFSET = 58;
 
 	/** Y position of bag grid. */
-	private static final int Y_OFFSET_BG = 60;
+	private static final int Y_OFFSET_BG = 45;
 
 	/** Y position of pocket grid. */
-	private static final int Y_OFFSET_PK = 220;
+	private static final int Y_OFFSET_PK = 225;
 
-	private static final int size = 50;
+	private static final int size = 65;
 
 	private static final int rows = 2;
 
-	private static final int colunmns = 5;
+	private static final int columns = 5;
 
 	private final int BOLDED_WIDTH = 3;
-
-	private final int REG_WIDTH = 1;
 
 	private Point clickPoint;
 
 
 	private List<Rectangle> gridRectangle; // array of rectangle locations.
+	private Map<Integer, Rectangle> gridMap;
 
-	private static Movable selectedItem;
-	private static int clickIndex = -1;
+	private Movable selectedItem;
+	private Rectangle clickRect;
+	private int clickIndex;
 
-	public HandCanvas(Bag bag, Pocket pocket) {
+	public HandPanel(Bag bag, Pocket pocket) {
 		this.bag = bag;
 		this.pocket = pocket;
 		bagSet = new ArrayList<Movable>();
 		pocketSet = new ArrayList<Movable>();
 		gridRectangle = new ArrayList<>();
+		gridMap = new HashMap<>();
 		convertListToSet();
 		addMouseListener(this);
+		this.setOpaque(false);
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(GameAssets.getBagBackgroundImage(), 0, 0, null);
-		Font serif = new Font("Calisto MT", Font.BOLD, 20);
-		g.setFont(serif);
-		g.setColor(Color.black);
-		g.drawString("Items in Bag:", 10, 40);
+		Font font = GameAssets.getFont2(30f);
+		g.setFont(font);
+		g.setColor(Color.BLACK);
+		g.drawString("Items in Bag", 20, 30);
 		/* Firstly - draw the items inside the bag.. */
 		this.drawGrid(g, Y_OFFSET_BG);
-		this.drawItems(g, Y_OFFSET_BG, bagSet);
-		g.setFont(serif);
-		g.setColor(Color.black);
+		this.drawItems(g, Y_OFFSET_BG + 7, bagSet);
+		g.setFont(font);
 
 		/* Now - draw the items inside the pocket.. */
-		g.drawString("Items in Pocket:", 10, 200);
+		g.drawString("Items in Pocket", 20, 210);
 		this.drawGrid(g, Y_OFFSET_PK);
-		this.drawItems(g, Y_OFFSET_PK, pocketSet);
-
+		this.drawItems(g, Y_OFFSET_PK + 7, pocketSet);
+		fillMap();
 	}
 
 
@@ -128,15 +134,25 @@ public class HandCanvas extends Canvas implements MouseListener {
 		}
 	}
 
+	private int findItemInSet(ArrayList<Movable> set){
+		for(int i = 0; i < set.size(); i++){
+			if(set.get(i).equals(selectedItem)){
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(442, 409);
+		return new Dimension(442, 439);
 	}
 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		this.clickIndex = indexofCell(e);
+		this.clickIndex = indexOfCell(e);
+		this.clickRect = gridMap.get(clickIndex);
 		this.selectedItem = selectClickedItem();
 		System.out.println(this.selectedItem);
 		this.repaint();
@@ -145,22 +161,13 @@ public class HandCanvas extends Canvas implements MouseListener {
 	 * Returns the selected Item for use with other classes.
 	 * @return
 	 */
-	public static Movable getselectedItem(){
+	public Movable getselectedItem(){
 		Movable itm = null;
 		if(selectedItem != null)
 			itm = selectedItem;
-		
+
 		return itm;
 	}
-	
-	public static int getClickedIndex(){
-		int idx = -1;
-		if(clickIndex != -1){
-			idx = clickIndex;
-		}
-		return idx;
-	}
-
 
 	/**
 	 * Draws a list of items onto the graphics pane, with a grid. If an cell
@@ -176,38 +183,37 @@ public class HandCanvas extends Canvas implements MouseListener {
 			return;
 		}
 		int count = 0;
-		Font serif = new Font("Calisto MT", Font.BOLD, 10);
-		g.setFont(serif);
-		g.setColor(Color.black);
+		g.setColor(Color.BLACK);
+		int x = X_OFFSET + 7;
 		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < colunmns; j++) {
+			for (int j = 0; j < columns; j++) {
 				Movable item = set.get(count);
 				if (item instanceof Food) {
 					if (((Food) item).getFoodType().equals(Food.FoodType.APPLE)) {
-						g.drawImage(GameAssets.getAppleImage(), X_OFFSET + j * size, y_offset + i * size, null);
+						g.drawImage(GameAssets.getAppleImage(), x + j * size, y_offset + i * size, null);
 					} else if (((Food) item).getFoodType().equals(Food.FoodType.BERRY)) {
-						g.drawImage(GameAssets.getBerriesImage(), X_OFFSET + j * size, y_offset + i * size, null);
+						g.drawImage(GameAssets.getBerriesImage(), x + j * size, y_offset + i * size, null);
 					} else if (((Food) item).getFoodType().equals(Food.FoodType.FISH)) {
-						g.drawImage(GameAssets.getFishImage(), X_OFFSET + j * size, y_offset + i * size, null);
+						g.drawImage(GameAssets.getFishImage(), x + j * size, y_offset + i * size, null);
 					}
 				} else if (item instanceof Dirt) {
-					g.drawImage(GameAssets.getDirtImage(), X_OFFSET + j * size, y_offset + i * size, null);
+					g.drawImage(GameAssets.getDirtImage(), x + j * size, y_offset + i * size, null);
 				} else if (item instanceof Stone) {
-					g.drawImage(GameAssets.getStoneImage(), X_OFFSET + j * size, y_offset + i * size, null);
+					g.drawImage(GameAssets.getStoneImage(), x + j * size, y_offset + i * size, null);
 				} else if (item instanceof Tool) {
 					if (((Tool) item).getType().equals(Tool.ToolType.AXE)) {
-						g.drawImage(GameAssets.getAxeImage(), X_OFFSET + j * size, y_offset + i * size, null);
+						g.drawImage(GameAssets.getAxeImage(), x + j * size, y_offset + i * size, null);
 					} else if (((Tool) item).getType().equals(Tool.ToolType.FISHINGROD)) {
-						g.drawImage(GameAssets.getFishingRodImage(), X_OFFSET + j * size, y_offset + i * size, null);
+						g.drawImage(GameAssets.getFishingRodImage(), x + j * size, y_offset + i * size, null);
 					} else if (((Tool) item).getType().equals(Tool.ToolType.PICKAXE)) {
-						g.drawImage(GameAssets.getPickaxeImage(), X_OFFSET + j * size, y_offset + i * size, null);
+						g.drawImage(GameAssets.getPickaxeImage(), x + j * size, y_offset + i * size, null);
 					} else if (((Tool) item).getType().equals(Tool.ToolType.SHOVEL)) {
-						g.drawImage(GameAssets.getShovelImage(), X_OFFSET + j * size, y_offset + i * size, null);
+						g.drawImage(GameAssets.getShovelImage(), x + j * size, y_offset + i * size, null);
 					}
 				} else if (item instanceof Wood) {
-					g.drawImage(GameAssets.getWoodImage(), X_OFFSET + j * size, y_offset + i * size, null);
+					g.drawImage(GameAssets.getWoodImage(), x + j * size, y_offset + i * size, null);
 				}
-				g.drawString(String.valueOf(item.getCount()), X_OFFSET + 2 + j * size, y_offset + 10 + i * size);
+				g.drawString(String.valueOf(item.getCount()), x + 2 + j * size, y_offset + 10 + i * size);
 				if (j > 5) {
 					j = 0;
 				}
@@ -230,65 +236,61 @@ public class HandCanvas extends Canvas implements MouseListener {
 	 */
 	private void drawGrid(Graphics g, int y_offset) {
 		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < colunmns; j++) {
+			for (int j = 0; j < columns; j++) {
 				int left = X_OFFSET + j * size;
 				int top = y_offset + i * size;
 				gridRectangle.add(new Rectangle(left, top, size, size));
 				/* Draw the cell normally. */
-				this.drawCell(g, left, top, size, size, false);
-				/*
-				 * Iterate through the rectangles - highlight it if index
-				 * matches click index.
-				 */
-				for (int k = 0; k != this.gridRectangle.size(); k++) {
-					if (k == clickIndex) {
-						Rectangle r = gridRectangle.get(k);
-						int l = (int) r.getX();
-						int t = (int) r.getY();
-						int size = (int) r.getWidth();
-						this.drawCell(getGraphics(), l, t, size, size, true);
-					}
-				}
+				drawCell(g, left, top, size, false);
 			}
+		}
+		
+		if(clickRect != null){
+			drawCell(g, clickRect.x, clickRect.y, size, true);
 		}
 	}
 
 	/**
 	 * Draws a Cell. Has a flag to determine if it is highlighted or not.
-	 * 
+	 * @param g
 	 * @param left
 	 * @param top
+	 * @param size
 	 * @param isHighlighted
 	 */
-	private void drawCell(Graphics g, int left, int top, int width, int height, boolean isHighlighted) {
+	private void drawCell(Graphics g, int left, int top, int size, boolean isHighlighted) {
 		Graphics2D gg = (Graphics2D) g;
 		if (isHighlighted) {
 			gg.setStroke(new BasicStroke(BOLDED_WIDTH));
-			gg.setColor(Color.yellow);
-			gg.drawRect(left, top, width, height);
+			g.setColor(Color.YELLOW);
+			g.drawRect(left, top, size, size);
 		} else {
-			gg.setStroke(new BasicStroke(REG_WIDTH));
-			gg.drawRect(left, top, width, height);
+			g.drawImage(GameAssets.getItemBackgroundImage(), left, top, size, size, null);
 		}
 	}
-
+	
+	private void fillMap(){
+		for(int i = 0 ; i < gridRectangle.size(); i++){
+			gridMap.put(i, gridRectangle.get(i));
+		}
+	}
+	
 	/**
-	 * Returns the index of the rectangle ArrayList that is being clicked.
+	 * Returns the rectangle of the rectangle ArrayList that is being clicked.
 	 * 
 	 * @param e
 	 * @return
 	 */
-	private int indexofCell(MouseEvent e) {
+	private int indexOfCell(MouseEvent e) {
 		clickPoint = e.getPoint();
-		for (int i = 0; i != this.gridRectangle.size(); ++i) {
+		for (int i = 0; i < gridRectangle.size(); i++) {
 			if (gridRectangle.get(i).contains(clickPoint)) {
 				return i;
 			}
 		}
 		return -1;
 	}
-
-
+	
 	/**
 	 * This is a helper method that selects a clicked Item, and returns the object associated in that mouse click.
 	 * @return
@@ -312,8 +314,46 @@ public class HandCanvas extends Canvas implements MouseListener {
 				}
 			}
 		}
-
 		return null;
+	}
+
+	/**
+	 * When the button is clicked, if there is a clicked item selected, it transfers it from the current Players Pocket to the Bag.
+	 */
+	public void transferPocketToBag(){
+		if(selectedItem == null) return;
+		//System.out.println("Selected " + clickedItem.toString());
+		if(clickIndex >=0 && clickIndex <= 9){ 
+			return; //cant transfer to yourself - leave.
+		}else if(clickIndex >= 10 && clickIndex <= 19){
+			bagSet.add(selectedItem);
+			pocketSet.remove(selectedItem);
+			selectedItem = null;
+			clickIndex = -1;
+		}
+		this.repaint();
+	}
+
+	/**
+	 * When the button is clicked, if there is a clicked item selected, it transfers it from the current Players Bag to the Pocket.
+	 */
+	public void transferBagToPocket(){
+		if(selectedItem == null) return;
+		if(clickIndex >=0 && clickIndex <= 9){
+			int index = findItemInSet(pocketSet);
+			if(index != -1){
+				pocketSet.get(index).addAmount(selectedItem.getAmount());
+			}else{
+				pocketSet.add(selectedItem);
+			}
+			bagSet.remove(selectedItem);
+			selectedItem = null;
+			clickIndex = -1;
+		}else if(clickIndex >= 10 && clickIndex <= 19){
+			//can't transfer to yourself - leave.
+			return;
+		}
+		this.repaint();
 	}
 
 	/*

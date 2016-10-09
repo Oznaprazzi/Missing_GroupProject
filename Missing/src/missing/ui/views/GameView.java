@@ -2,6 +2,7 @@
  * 
  * Authors			ID
  * Edward Kelly 	300334192
+ * Linus Go			300345571
  * 
  * Date				Author			Modification
  * 28 Sep 16		Edward Kelly	created class
@@ -9,6 +10,7 @@
  * 3 Oct 16			Edward Kelly	now resizes game panel
  * 5 Oct 16			Linus Go		added bag and pocket drawing code.
  * 6 Oct 16			Edward Kelly	added call for performaction
+ * 9 Oct 16			Linus Go		added money text field, and a shitload of comments.
  */
 package missing.ui.views;
 
@@ -37,19 +39,24 @@ import missing.ui.panels.GamePanel;
  */
 @SuppressWarnings("serial")
 public class GameView extends View {
-
+	/*Holds an instance of the gamePanel */
 	private GamePanel gamePanel;
-
+	/*JButtons for the GameView. */
 	private JButton btnViewMap;
 	private JButton btnPlayersBag;
 	private JButton btnDoAction;
-
+	/*Text Fields to represent the name, and money amounts and the current time*/
 	private JTextField nameField;
-	private JTextField timeField;
+	private JTextField moneyField;
+	public static JTextField timeField; //THIS IS STATIC BECAUSE THIS needs to be updated every call to run() - see DayNightCycle
 	
+	/*List of Players Online. */
 	private JList<String> playersOnline;
-
-	private JPanel ctrlPanel;
+	
+	/*The Side Panel */
+	private JPanel ctrlPanel; 
+	
+	/*Window that represents the Players Bag */
 	private HandJFrame bagFrame;
 
 	private final Color BACKGROUND_COLOR = Color.black;
@@ -58,11 +65,19 @@ public class GameView extends View {
 	private int id;
 
 	private final double BTN_WEIGHT = 0.05;
-
+	
+	/**
+	 * Creates a new instance of a GameView with the current controller.
+	 * @param controller
+	 */
 	public GameView(VControl controller) {
 		super(controller);
 	}
-
+	
+	/**
+	 * Initializes and sets up the GameView. The GameView is laid out using GridBagConstraints, and uses <code>BTN_WEIGHT</code> fields to govern
+	 * the size of the buttons. It also relies on the current state of the controller to display the correct information to the various <code>JTextField</code>s
+	 */
 	@Override
 	public void initialise() {
 		id = controller.getPlayerID();
@@ -84,12 +99,32 @@ public class GameView extends View {
 		this.setBackground(BACKGROUND_COLOR);
 		ctrlPanel.setBackground(BACKGROUND_COLOR);
 		
+		JLabel lblMoney = new JLabel("Players Money");
+		lblMoney.setForeground(Color.WHITE);
+		GridBagConstraints gbcMoney = new GridBagConstraints();
+		gbcMoney.insets = new Insets(0, 0, 5, 0);
+		gbcMoney.gridx = 0;
+		gbcMoney.gridy = 1;
+		ctrlPanel.add(lblMoney, gbcMoney);
+		
+		moneyField = new JTextField();
+		moneyField.setFocusable(false);
+		moneyField.setEditable(false);
+		
+		GridBagConstraints gbc_moneyField = new GridBagConstraints();
+		gbc_moneyField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_moneyField.insets = new Insets(0, 0, 5, 0);
+		gbc_moneyField.gridx = 0;
+		gbc_moneyField.gridy = 2;
+		ctrlPanel.add(moneyField, gbc_moneyField);
+		
+		
 		JLabel lblTime = new JLabel("Current Time");
 		lblTime.setForeground(Color.WHITE);
 		GridBagConstraints gbc_time = new GridBagConstraints();
 		gbc_time.insets = new Insets(0, 0, 5, 0);
 		gbc_time.gridx = 0;
-		gbc_time.gridy = 1;
+		gbc_time.gridy = 3;
 		ctrlPanel.add(lblTime, gbc_time);
 
 		timeField = new JTextField();
@@ -100,7 +135,7 @@ public class GameView extends View {
 		gbc_timeField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_timeField.insets = new Insets(0, 0, 5, 0);
 		gbc_timeField.gridx = 0;
-		gbc_timeField.gridy = 2;
+		gbc_timeField.gridy = 4;
 		ctrlPanel.add(timeField, gbc_timeField);
 		timeField.setColumns(10);
 		
@@ -110,7 +145,7 @@ public class GameView extends View {
 		GridBagConstraints gbc_lblCurrentPlayer = new GridBagConstraints();
 		gbc_lblCurrentPlayer.insets = new Insets(0, 0, 5, 0);
 		gbc_lblCurrentPlayer.gridx = 0;
-		gbc_lblCurrentPlayer.gridy = 3;
+		gbc_lblCurrentPlayer.gridy = 5;
 		ctrlPanel.add(lblCurrentPlayer, gbc_lblCurrentPlayer);
 
 		nameField = new JTextField();
@@ -121,7 +156,7 @@ public class GameView extends View {
 		gbc_txtName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtName.insets = new Insets(0, 0, 5, 0);
 		gbc_txtName.gridx = 0;
-		gbc_txtName.gridy = 4;
+		gbc_txtName.gridy = 6;
 		ctrlPanel.add(nameField, gbc_txtName);
 		nameField.setColumns(10);
 
@@ -132,7 +167,7 @@ public class GameView extends View {
 		gbc_btnDoAction.insets = new Insets(0, 0, 5, 0);
 		gbc_btnDoAction.fill = GridBagConstraints.BOTH;
 		gbc_btnDoAction.gridx = 0;
-		gbc_btnDoAction.gridy = 5;
+		gbc_btnDoAction.gridy = 7;
 		gbc_btnDoAction.anchor = GridBagConstraints.NORTH;
 		gbc_btnDoAction.weighty = BTN_WEIGHT;
 
@@ -145,7 +180,7 @@ public class GameView extends View {
 		gbc_btnViewMap.insets = new Insets(0, 0, 5, 0);
 		gbc_btnViewMap.fill = GridBagConstraints.BOTH;
 		gbc_btnViewMap.gridx = 0;
-		gbc_btnViewMap.gridy = 6;
+		gbc_btnViewMap.gridy = 8;
 		gbc_btnViewMap.anchor = GridBagConstraints.NORTH;
 
 		gbc_btnViewMap.weighty = BTN_WEIGHT;
@@ -158,7 +193,7 @@ public class GameView extends View {
 		gbc_btnPlayersBag.insets = new Insets(0, 0, 5, 0);
 		gbc_btnPlayersBag.fill = GridBagConstraints.BOTH;
 		gbc_btnPlayersBag.gridx = 0;
-		gbc_btnPlayersBag.gridy = 7;
+		gbc_btnPlayersBag.gridy = 9;
 		gbc_btnPlayersBag.weighty = BTN_WEIGHT;
 		gbc_btnPlayersBag.anchor = GridBagConstraints.NORTH;
 		ctrlPanel.add(btnPlayersBag, gbc_btnPlayersBag);
@@ -168,7 +203,7 @@ public class GameView extends View {
 		GridBagConstraints gbc_playersOnline = new GridBagConstraints();
 		gbc_playersOnline.insets = new Insets(0, 0, 5, 0);
 		gbc_playersOnline.gridx = 0;
-		gbc_playersOnline.gridy = 8;
+		gbc_playersOnline.gridy = 10;
 		ctrlPanel.add(lblPlayersOnline, gbc_playersOnline);
 		
 		this.playersOnline = getPlayerNames(); //Set the JTextField.
@@ -176,7 +211,7 @@ public class GameView extends View {
 		GridBagConstraints gbc_players = new GridBagConstraints();
 		gbc_players.insets = new Insets(0, 0, 5, 0);
 		gbc_players.gridx = 0;
-		gbc_players.gridy = 9;
+		gbc_players.gridy = 11;
 		gbc_players.weighty = BTN_WEIGHT * 4;
 		gbc_players.fill = GridBagConstraints.BOTH;
 		ctrlPanel.add(playersOnline, gbc_players);
@@ -189,8 +224,7 @@ public class GameView extends View {
 
 	/**
 	 * Helper method that grabs all of the players online and displays it onto
-	 * the JList. This should be called whenever the JList is updated or
-	 * added/removed.
+	 * the JList. This should be called whenever the list of players changes.
 	 */
 	private JList<String> getPlayerNames() {
 		Player[] players = controller.getGGame().getGame().getAvatars();
@@ -203,7 +237,7 @@ public class GameView extends View {
 	}
 
 	/**
-	 * Action Listeners for the various Buttons.
+	 * Action Listeners for the various Buttons. This is called in the constructor of the game.
 	 */
 	private void addActionListeners() {
 		currentPlayer = controller.getGGame().getGame().getAvatars()[id];
@@ -213,7 +247,6 @@ public class GameView extends View {
 		});
 
 		btnPlayersBag.addActionListener(e -> {
-			// TODO: need to fix. Currently only shows bag of first player.
 			controller.requestFocus();
 			bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
 			bagFrame.setVisible(true);
@@ -229,16 +262,17 @@ public class GameView extends View {
 	/**
 	 * Updates the GamePanel with the controller with the updated game
 	 * 
-	 * @param controller
-	 *            updated controller
+	 * @param controller - updated controller
 	 */
 	public void updateGamePanel(VControl controller) {
 		this.controller = controller;
+		moneyField.setText("COINS: " + currentPlayer.getMoney().getAmount());
+		playersOnline = getPlayerNames();
 		gamePanel.setController(controller);
 		gamePanel.initialise();
-		playersOnline = getPlayerNames();
 	} 
-
+	
+	
 	@Override
 	public void setFocus() {
 		gamePanel.setFocusable(true);

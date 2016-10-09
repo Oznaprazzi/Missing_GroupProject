@@ -33,6 +33,7 @@ import missing.game.items.Item;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
+import missing.game.items.movable.Money;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.movable.Wood;
@@ -117,6 +118,7 @@ public class XMLImporter {
 		List<Item> stone = parseStone(worldLocation, doc, xPath, expression);
 		List<Item> food = parseFood(worldLocation, doc, xPath, expression);
 		List<Item> tools = parseTools(worldLocation, doc, xPath, expression);
+		List<Item> money = parseMoney(worldLocation, doc, xPath, expression);
 		// Combine everything together
 		List<Item> tmp = new ArrayList<Item>();
 		tmp.addAll(dirt);
@@ -124,6 +126,7 @@ public class XMLImporter {
 		tmp.addAll(stone);
 		tmp.addAll(food);
 		tmp.addAll(tools);
+		tmp.addAll(money);
 		return tmp;
 	}
 
@@ -190,6 +193,28 @@ public class XMLImporter {
 					FoodType type = parseFoodType(elem.getElementsByTagName("type").item(0).getTextContent());
 					int amount = Integer.parseInt(elem.getElementsByTagName("amount").item(0).getTextContent());
 					tmp.add(new Food(worldLocation, location, type, amount));
+				}
+			}
+		} catch (XPathExpressionException e) {
+			System.out.println(e.getMessage());
+			System.exit(1);
+		}
+		return tmp;
+	}
+
+	private static List<Item> parseMoney(Point worldLocation, Document doc, XPath xPath, String expression) {
+		List<Item> tmp = new ArrayList<Item>();
+		expression += "/money";
+		try {
+			NodeList money = (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
+			for (int i = 0; i < money.getLength(); i++) {
+				Node m = money.item(i);
+				if (m.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) m;
+					Node locNode = elem.getElementsByTagName("location").item(0);
+					Point location = parseLocation(locNode);
+					int amount = Integer.parseInt(elem.getElementsByTagName("amount").item(0).getTextContent());
+					tmp.add(new Money(worldLocation, location, amount));
 				}
 			}
 		} catch (XPathExpressionException e) {
