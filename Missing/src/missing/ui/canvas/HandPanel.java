@@ -183,6 +183,8 @@ public class HandPanel extends JPanel implements MouseListener {
 			return;
 		}
 		int count = 0;
+		Font font = GameAssets.getFont2(15f);
+		g.setFont(font);
 		g.setColor(Color.BLACK);
 		int x = X_OFFSET + 7;
 		for (int i = 0; i < rows; i++) {

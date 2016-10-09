@@ -41,6 +41,11 @@ public class ShopPanel extends JPanel implements KeyListener {
 		this.node = initialiseNodes(shop, orientation);
 		this.addKeyListener(this);
 	}
+	
+	//Getter Methods
+	public Direction getDir(){
+		return this.orientation;
+	}
 
 	// Methods
 

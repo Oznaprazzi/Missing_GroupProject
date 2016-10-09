@@ -4,14 +4,21 @@
  * 
  * 	Date				Author					Changes
  * 	8 Oct 16			Chris Rabe				created shopview
+ *  09 Oct 16			Casey Huang				added buttons
  */
 package missing.ui.views;
 
 import missing.game.items.nonmovable.Shop;
+import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
+import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.ShopPanel;
+import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+import javax.swing.JButton;
 
 /**
  * This view displays a pseudo 3D view of the shop. The player can rotate its
@@ -27,10 +34,16 @@ public class ShopView extends View {
 	private static ShopPanel RESOURCE_PANEL;
 	private static ShopPanel TOOLS_PANEL;
 
+	private JButton btnSell;
+	private JButton btnBuy;
+	private JButton btnExit;
+
 	private ShopPanel display;
+
 
 	public ShopView(VControl controller) {
 		super(controller);
+		this.setLayout(null);
 	}
 
 	// Methods
@@ -56,11 +69,21 @@ public class ShopView extends View {
 
 	@Override
 	public void initialise() {
+		setButtons();
 		this.removeAll();
 		if (display != null) {
 			this.add(display);
 		}
 		setFocus();
+
+
+		/*JButton btnSell = new JButton("Sell");
+		btnSell.setBounds(103, 156, 89, 23);
+		panel.add(btnSell);
+
+		JButton btnBuy = new JButton("Buy");
+		btnBuy.setBounds(256, 156, 89, 23);
+		panel.add(btnBuy);*/
 	}
 
 	@Override
@@ -101,6 +124,31 @@ public class ShopView extends View {
 			return TOOLS_PANEL;
 		default:
 			throw new GameException("Invalid display");
+		}
+	}
+
+	private void setButtons(){
+		int height = display.getPreferredSize().height;
+		int width = display.getPreferredSize().width;
+		switch(display.getDir()){
+		case NORTH:
+			if(btnExit != null){
+				this.display.remove(btnExit);
+			}
+			btnSell = MenuFactory.createShopButton("Sell", (int) (height/1.6), 20, width);
+			this.display.add(btnSell);
+
+			btnBuy = MenuFactory.createShopButton("Buy", (int) (height/1.6), 20, width);
+			this.display.add(btnBuy);
+			break;
+		case SOUTH:
+			if(btnSell != null && btnBuy != null){
+				this.display.remove(btnSell);
+				this.display.remove(btnBuy);
+			}
+			btnExit = MenuFactory.createShopButton("Exit", (int) (height/5), 0, width);
+			this.display.add(btnExit);
+			break;
 		}
 	}
 }

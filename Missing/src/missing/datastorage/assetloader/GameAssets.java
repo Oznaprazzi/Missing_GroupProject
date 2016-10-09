@@ -114,6 +114,8 @@ public class GameAssets {
 	private static Font customFont;
 
 	private static Font customFont2;
+	
+	private static Font customFont3;
 
 	// Getters for File Assets
 
@@ -482,6 +484,19 @@ public class GameAssets {
 		try {
 			customFont2 = Font.createFont(Font.TRUETYPE_FONT,
 					GameAssets.class.getResource(STORAGE_PATH + "/fonts/ParmaPetit-Normal.ttf").openStream());
+			GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			genv.registerFont(customFont2);
+			return customFont2.deriveFont(size);
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
+		return customFont2.deriveFont(size);
+	}
+	
+	public static Font getFont3(float size) {
+		try {
+			customFont2 = Font.createFont(Font.TRUETYPE_FONT,
+					GameAssets.class.getResource(STORAGE_PATH + "/fonts/Drifttype.ttf").openStream());
 			GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			genv.registerFont(customFont2);
 			return customFont2.deriveFont(size);

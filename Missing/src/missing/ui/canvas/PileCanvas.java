@@ -117,6 +117,8 @@ public class PileCanvas extends JPanel implements MouseListener {
 			return;
 		}
 		int count = 0;
+		Font font = GameAssets.getFont2(15f);
+		g.setFont(font);
 		g.setColor(Color.black);
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {

@@ -106,54 +106,9 @@ public class BagFrameTest extends JFrame {
 	
 	/**HELPER METHODS */
 	
-	/**
-	 * When the button is clicked, if there is a clicked item selected, it transfers it from the current Players Pocket to the Bag.
-	 *//*
-	private void transferPocketToBag(){
-		clickedItem = panel.getselectedItem();
-		if(clickedItem == null) return;
-		System.out.println("Selected " + clickedItem.toString());
-		if(clickedIndex >=0 && clickedIndex <= 19){
-			//can't transfer to yourself - leave.
-			return;
-		}else if(clickedIndex >= 10 && clickedIndex <= 19){
-			//we are in the pocket.
-			//TODO: do some logic here.
-		}
-		
-		
-		panel.repaint();
-	}
-	
-	*//**
-	 * When the button is clicked, if there is a clicked item selected, it transfers it from the current Players Bag to the Pocket.
-	 *//*
-	private void transferBagToPocket(){
-		clickedItem = panel.getselectedItem();
-		if(clickedItem == null) return;
-		System.out.println("Selected " + clickedItem.toString());
-		if(clickedIndex >=0 && clickedIndex <= 9){ 
-			//we are in the bag.
-			//TODO: do some logic here.
-	
-		}else if(clickedIndex >= 10 && clickedIndex <= 19){
-			return; //cant transfer to yourself - leave.
-		}
-		
-		
-		
-		
-		panel.repaint();
-	}*/
-	
 	public static Bag addItemsToBag(){
 		Bag bag = new Bag();
 		Movable wood = new Wood(new Point(0, 0), new Point(0,0));
-		Movable wood2 = new Wood(new Point(0, 0), new Point(0,0));
-		Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
-		Movable food2 = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
-		Movable food3 = new Food(new Point(0, 0), new Point(0,0), FoodType.BERRY);
-		Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
 		Movable dirt = new Dirt(new Point(0, 0), new Point(0,0));
 		Movable stone = new Stone(new Point(0, 0), new Point(0,0));
 		Movable axe  = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.AXE, 0);
@@ -162,7 +117,6 @@ public class BagFrameTest extends JFrame {
 		Movable fishingrod = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.FISHINGROD, 0);
 		try{
 			bag.addItem(wood);
-			bag.addItem(wood2);
 			bag.addItem(dirt);
 			bag.addItem(stone);
 			bag.addItem(axe);
@@ -177,16 +131,13 @@ public class BagFrameTest extends JFrame {
 
 	public static Pocket addItemsToPocket() {
 		Pocket pocket = new Pocket();
-		Movable wood = new Wood(new Point(0, 0), new Point(0,0));
-		Movable wood2 = new Wood(new Point(0, 0), new Point(0,0));
 		Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
-		Movable food2 = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
-		Movable food3 = new Food(new Point(0, 0), new Point(0,0), FoodType.BERRY);
 		Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
 		Movable dirt = new Dirt(new Point(0, 0), new Point(0,0));
-		Movable stone = new Stone(new Point(0, 0), new Point(0,0));
 		try{
-			pocket.addItem(wood);
+			pocket.addItem(food);
+			pocket.addItem(food4);
+			pocket.addItem(dirt);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

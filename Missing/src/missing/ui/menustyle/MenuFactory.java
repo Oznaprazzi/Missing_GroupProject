@@ -16,6 +16,7 @@ package missing.ui.menustyle;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,6 +36,7 @@ public class MenuFactory {
 	public static final Color TEXT_COLOUR2 = Color.WHITE;
 	public static final Color TEXT_COLOUR_HIGHLIGHTED = new Color(122, 169, 12);
 	public static final Color TEXT_COLOUR_HIGHLIGHTED2 = new Color(199, 110, 48);
+	public static final Color TEXT_COLOUR_HIGHLIGHTED3 = new Color(250, 85, 177);
 	public static final int TEXT_FIELD_HEIGHT = 30;
 
 	private MenuFactory() {
@@ -147,6 +149,43 @@ public class MenuFactory {
 		    
 		    public void mousePressed(MouseEvent evt){
 		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED2);
+		    }
+		});
+		return btn;
+	}
+	
+	public static JButton createShopButton(String text, int y, int spacing, int width) {
+		JButton btn = new JButton();
+		Font f = GameAssets.getFont3(40f);
+		btn.setFont(f);
+		btn.setName(text);
+		btn.setText(text);
+		btn.setForeground(TEXT_COLOUR);
+		btn.setOpaque(false);
+		btn.setContentAreaFilled(false);
+		btn.setBorderPainted(false);
+		btn.setFocusPainted(false);
+		btn.setLocation((int) (width/2 - btn.getSize().getWidth()), y);
+		//btn.setBounds(0, x, 80, 80);
+		//btn.setAlignmentX(x);
+		//btn.setAlignmentY(spacing);
+		//btn.setMargin(new Insets(y, spacing, 0, spacing));
+		//btn.setBorder(new EmptyBorder(y, spacing, 0, spacing));
+		btn.addMouseListener(new MouseAdapter() {
+		    public void mouseEntered(MouseEvent evt) {
+		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED3);
+		    }
+
+		    public void mouseExited(MouseEvent evt) {
+		    	btn.setForeground(TEXT_COLOUR);
+		    }
+		    
+		    public void mouseReleased(MouseEvent e){
+		    	btn.setForeground(TEXT_COLOUR);
+		    }
+		    
+		    public void mousePressed(MouseEvent evt){
+		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED3);
 		    }
 		});
 		return btn;
