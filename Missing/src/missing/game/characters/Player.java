@@ -47,6 +47,8 @@ public class Player extends Character {
 	private Bag bag;
 	private boolean isDead;
 	private boolean insidePile;
+	private boolean insideGrass;
+
 	private int id; // client ID
 	private int imageID; // sprite ID
 	private Money money;
@@ -62,6 +64,14 @@ public class Player extends Character {
 	}
 
 	// Getters and setters...
+
+	public boolean isInsideGrass() {
+		return insideGrass;
+	}
+
+	public void setInsideGrass(boolean insideGrass) {
+		this.insideGrass = insideGrass;
+	}
 
 	public boolean isInsidePile() {
 		return insidePile;
@@ -141,18 +151,22 @@ public class Player extends Character {
 	public boolean has(Movable item) {
 		return pocket.getItems().contains(item);
 	}
-	
+
 	/**
 	 * Checks if the player's pocket has at least a given number of a certain
 	 * item
-	 * @param item item needed
-	 * @param amount amount of given item needed
+	 * 
+	 * @param item
+	 *            item needed
+	 * @param amount
+	 *            amount of given item needed
 	 * @return
 	 */
-	public boolean hasMultipleOfItem(Movable item, int amount){
-		if (!has(item))return false;
-		for (Movable pocketItem : pocket.getItems()){
-			if (pocketItem.equals(item)&&pocketItem.getAmount()>=amount){
+	public boolean hasMultipleOfItem(Movable item, int amount) {
+		if (!has(item))
+			return false;
+		for (Movable pocketItem : pocket.getItems()) {
+			if (pocketItem.equals(item) && pocketItem.getAmount() >= amount) {
 				return true;
 			}
 		}

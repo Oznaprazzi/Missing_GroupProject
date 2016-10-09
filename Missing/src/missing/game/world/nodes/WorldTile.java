@@ -25,6 +25,7 @@ import java.util.List;
 import missing.game.characters.Player;
 import missing.game.items.nonmovable.FishArea;
 import missing.game.items.nonmovable.NonMovable;
+import missing.game.items.nonmovable.TallGrass;
 import missing.helper.GameException;
 import missing.helper.SignalException;
 
@@ -343,7 +344,7 @@ public class WorldTile implements Serializable {
 			return false;
 		default:
 			if (object instanceof NonMovable) {
-				if (object instanceof Pile) {
+				if (object instanceof Pile || object instanceof TallGrass) {
 					return true;
 				}
 				return false;

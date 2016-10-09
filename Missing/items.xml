@@ -3,6 +3,12 @@
 <nodes>
 	<node worldLocation="0,0">
 		<items>
+			<tallgrass>
+				<location>
+					<x>8</x>
+					<y>6</y>
+				</location>
+			</tallgrass>
 			<tree>
 				<location>
 					<x>7</x>
@@ -31,6 +37,12 @@
 	</node>
 	<node worldLocation="1,0">
 		<items>
+			<tallgrass>
+				<location>
+					<x>4</x>
+					<y>7</y>
+				</location>
+			</tallgrass>
 			<fisharea>
 				<location>
 					<x>5</x>
@@ -83,6 +95,12 @@
 	</node>
 	<node worldLocation="2,0">
 		<items>
+			<tallgrass>
+				<location>
+					<x>3</x>
+					<y>8</y>
+				</location>
+			</tallgrass>
 			<tree>
 				<location>
 					<x>3</x>
@@ -117,6 +135,30 @@
 	</node>
 	<node worldLocation="3,0">
 		<items>
+			<tallgrass>
+				<location>
+					<x>4</x>
+					<y>7</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>5</x>
+					<y>7</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>4</x>
+					<y>6</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>5</x>
+					<y>5</y>
+				</location>
+			</tallgrass>
 			<soil>
 				<location>
 					<x>2</x>
@@ -151,6 +193,24 @@
 	</node>
 	<node worldLocation="0,1">
 		<items>
+			<tallgrass>
+				<location>
+					<x>5</x>
+					<y>2</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>6</x>
+					<y>2</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>6</x>
+					<y>3</y>
+				</location>
+			</tallgrass>
 			<fisharea>
 				<location>
 					<x>2</x>
@@ -185,6 +245,18 @@
 	</node>
 	<node worldLocation="1,1">
 		<items>
+			<tallgrass>
+				<location>
+					<x>4</x>
+					<y>3</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>5</x>
+					<y>3</y>
+				</location>
+			</tallgrass>
 			<fireplace>
 				<location>
 					<x>3</x>
@@ -286,6 +358,18 @@
 	</node>
 	<node worldLocation="2,1">
 		<items>
+			<tallgrass>
+				<location>
+					<x>3</x>
+					<y>3</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>4</x>
+					<y>3</y>
+				</location>
+			</tallgrass>
 			<soil>
 				<location>
 					<x>5</x>
@@ -424,6 +508,36 @@
 	</node>
 	<node worldLocation="1,2">
 		<items>
+			<tallgrass>
+				<location>
+					<x>2</x>
+					<y>3</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>5</x>
+					<y>3</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>5</x>
+					<y>5</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>6</x>
+					<y>2</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>7</x>
+					<y>7</y>
+				</location>
+			</tallgrass>
 			<shop>
 				<location>
 					<x>4</x>
@@ -591,6 +705,48 @@
 	</node>
 	<node worldLocation="2,2">
 		<items>
+			<tallgrass>
+				<location>
+					<x>3</x>
+					<y>2</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>4</x>
+					<y>2</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>4</x>
+					<y>1</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>5</x>
+					<y>4</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>6</x>
+					<y>4</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>7</x>
+					<y>4</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>6</x>
+					<y>5</y>
+				</location>
+			</tallgrass>
 			<fireplace>
 				<location>
 					<x>6</x>
@@ -783,6 +939,12 @@
 	</node>
 	<node worldLocation="1,3">
 		<items>
+			<tallgrass>
+				<location>
+					<x>6</x>
+					<y>2</y>
+				</location>
+			</tallgrass>
 			<fisharea>
 				<location>
 					<x>4</x>
@@ -883,6 +1045,24 @@
 	</node>
 	<node worldLocation="2,3">
 		<items>
+			<tallgrass>
+				<location>
+					<x>4</x>
+					<y>1</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>4</x>
+					<y>2</y>
+				</location>
+			</tallgrass>
+			<tallgrass>
+				<location>
+					<x>5</x>
+					<y>2</y>
+				</location>
+			</tallgrass>
 			<shop>
 				<location>
 					<x>1</x>

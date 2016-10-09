@@ -37,6 +37,7 @@ import missing.game.items.nonmovable.FishArea;
 import missing.game.items.nonmovable.Rock;
 import missing.game.items.nonmovable.Shop;
 import missing.game.items.nonmovable.Soil;
+import missing.game.items.nonmovable.TallGrass;
 import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile;
 import missing.game.world.nodes.WorldTile.Pile;
@@ -164,6 +165,8 @@ public class GWTile {
 			default:
 				throw new GameException("Invalid shop type");
 			}
+		} else if (tile.getObject() instanceof TallGrass) {
+			g.drawImage(GameAssets.getTallGrassImage(), x, y, size, size, null);
 		}
 	}
 
@@ -218,8 +221,12 @@ public class GWTile {
 			default:
 				break;
 			}
-			/* Dimensions for the bar. */
-			drawHealthBar(x, y, g);
+			// draw grass on top of it
+			if (curPlayer.isInsideGrass()) {
+				g.drawImage(GameAssets.getTallGrassImage(), x, y, size, size, null);
+			} else {
+				drawHealthBar(x, y, g);
+			}
 		}
 	}
 
