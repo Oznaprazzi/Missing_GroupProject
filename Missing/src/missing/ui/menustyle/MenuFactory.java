@@ -223,7 +223,7 @@ public class MenuFactory {
 		return btn;
 	}
 	
-	public static JButton createShopButton(String text, int y, int spacing, int width) {
+	public static JButton createShopButton(String text) {
 		JButton btn = new JButton();
 		Font f = GameAssets.getFont3(40f);
 		btn.setFont(f);
