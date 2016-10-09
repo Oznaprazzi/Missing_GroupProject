@@ -94,8 +94,8 @@ public abstract class Craftable extends Usable {
 				if (amt > woodLeft) {
 					// item has enough wood -- just decrease
 					newAmt = amt - woodLeft;
-					pocket.setSize(pocket.getSize() - woodLeft);
-					System.out.println("pocket size shovel: "+pocket.getSize());
+					pocket.setCurrentSize(pocket.getCurrentSize() - woodLeft);
+					System.out.println("pocket size shovel: " + pocket.getSize());
 					woodLeft = 0;
 					w.setAmount(newAmt);
 				} else {
@@ -109,7 +109,7 @@ public abstract class Craftable extends Usable {
 				if (amt > stoneLeft) {
 					// item has enough stone -- just decrease
 					newAmt = amt - stoneLeft;
-					pocket.setSize(pocket.getSize() - stoneLeft);
+					pocket.setCurrentSize(pocket.getCurrentSize() - stoneLeft);
 					stoneLeft = 0;
 					s.setAmount(newAmt);
 				} else {
@@ -148,7 +148,7 @@ public abstract class Craftable extends Usable {
 				if (amt > woodLeft) {
 					// item has enough wood -- just decrease
 					newAmt = amt - woodLeft;
-					pocket.setSize(pocket.getSize() - woodLeft);
+					pocket.setCurrentSize(pocket.getCurrentSize() - woodLeft);
 					woodLeft = 0;
 					w.setAmount(newAmt);
 				} else {
@@ -162,7 +162,7 @@ public abstract class Craftable extends Usable {
 				if (amt > stoneLeft) {
 					// item has enough stone -- just decrease
 					newAmt = amt - stoneLeft;
-					pocket.setSize(pocket.getSize() - stoneLeft);
+					pocket.setCurrentSize(pocket.getCurrentSize() - stoneLeft);
 					stoneLeft = 0;
 					s.setAmount(newAmt);
 				} else {
@@ -201,7 +201,7 @@ public abstract class Craftable extends Usable {
 				if (amt > woodLeft) {
 					// item has enough wood -- just decrease
 					newAmt = amt - woodLeft;
-					pocket.setSize(pocket.getSize() - woodLeft);
+					pocket.setCurrentSize(pocket.getCurrentSize() - woodLeft);
 					woodLeft = 0;
 					w.setAmount(newAmt);
 				} else {
@@ -215,7 +215,7 @@ public abstract class Craftable extends Usable {
 				if (amt > dirtLeft) {
 					// item has enough stone -- just decrease
 					newAmt = amt - dirtLeft;
-					pocket.setSize(pocket.getSize() - dirtLeft);
+					pocket.setCurrentSize(pocket.getCurrentSize() - dirtLeft);
 					dirtLeft = 0;
 					d.setAmount(newAmt);
 				} else {
@@ -254,7 +254,7 @@ public abstract class Craftable extends Usable {
 				if (amt > woodLeft) {
 					// item has enough wood -- just decrease
 					newAmt = amt - woodLeft;
-					pocket.setSize(pocket.getSize() - woodLeft);
+					pocket.setCurrentSize(pocket.getCurrentSize() - woodLeft);
 					woodLeft = 0;
 					w.setAmount(newAmt);
 				} else {
@@ -268,7 +268,7 @@ public abstract class Craftable extends Usable {
 				if (amt > stoneLeft) {
 					// item has enough stone -- just decrease
 					newAmt = amt - stoneLeft;
-					pocket.setSize(pocket.getSize() - stoneLeft);
+					pocket.setCurrentSize(pocket.getCurrentSize() - stoneLeft);
 					stoneLeft = 0;
 					s.setAmount(newAmt);
 				} else {
