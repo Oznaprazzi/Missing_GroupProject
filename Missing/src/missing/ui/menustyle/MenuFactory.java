@@ -43,9 +43,6 @@ public class MenuFactory {
 	
 	public static final int TEXT_FIELD_HEIGHT = 30;
 	
-	
-	
-	
 	private MenuFactory() {
 		
 	}
@@ -210,7 +207,7 @@ public class MenuFactory {
 		return btn;
 	}
 	
-	public static JButton createShopButton(String text, int y, int spacing, int width) {
+	public static JButton createShopButton(String text) {
 		JButton btn = new JButton();
 		Font f = GameAssets.getFont3(40f);
 		btn.setFont(f);
@@ -221,12 +218,6 @@ public class MenuFactory {
 		btn.setContentAreaFilled(false);
 		btn.setBorderPainted(false);
 		btn.setFocusPainted(false);
-		btn.setLocation((int) (width/2 - btn.getSize().getWidth()), y);
-		//btn.setBounds(0, x, 80, 80);
-		//btn.setAlignmentX(x);
-		//btn.setAlignmentY(spacing);
-		//btn.setMargin(new Insets(y, spacing, 0, spacing));
-		//btn.setBorder(new EmptyBorder(y, spacing, 0, spacing));
 		btn.addMouseListener(new MouseAdapter() {
 		    public void mouseEntered(MouseEvent evt) {
 		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED3);
