@@ -11,6 +11,7 @@ package missing.ui.frames;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import missing.datastorage.assetloader.GameAssets;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
@@ -33,7 +35,7 @@ import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.ui.canvas.ContainerCanvas;
-import missing.ui.canvas.HandCanvas;
+import missing.ui.canvas.HandPanel;
 import missing.ui.canvas.PileCanvas;
 import javax.swing.JButton;
 
@@ -46,7 +48,7 @@ public class ContainerFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnTransferToPlayer;
-	
+	private BufferedImage backgroundImage = GameAssets.getWindowBackgroundImage();
 	/**
 	 * Create a window that renders the Piles to be drawn.
 	 * @param Pile - pile to be rendered.
@@ -55,8 +57,7 @@ public class ContainerFrame extends JFrame {
 		super("Pile of Items");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 450, 300);
-		setSize(442, 409);
+		setSize(backgroundImage.getWidth(), backgroundImage.getHeight());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

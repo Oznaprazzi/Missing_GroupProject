@@ -9,6 +9,7 @@
  * 6 Oct 16			Casey Huang		Added another createLabel method for game menu label
  * 									- change of font size and spacing
  * 7 Oct 16			Casey Huang		Added another createHeading method for showing ClientWaitingView
+ * 09 Oct 16		Casey Huang		Added another createLabel2 and createButton2
  */
 package missing.ui.menustyle;
 
@@ -33,6 +34,7 @@ public class MenuFactory {
 	public static final Color TEXT_COLOUR = Color.BLACK;
 	public static final Color TEXT_COLOUR2 = Color.WHITE;
 	public static final Color TEXT_COLOUR_HIGHLIGHTED = new Color(122, 169, 12);
+	public static final Color TEXT_COLOUR_HIGHLIGHTED2 = new Color(199, 110, 48);
 	public static final int TEXT_FIELD_HEIGHT = 30;
 
 	private MenuFactory() {
@@ -97,6 +99,7 @@ public class MenuFactory {
 		btn.setContentAreaFilled(false);
 		btn.setBorderPainted(false);
 		btn.setBorder(null);
+		btn.setFocusPainted(false);
 		btn.addMouseListener(new MouseAdapter() {
 		    public void mouseEntered(MouseEvent evt) {
 		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED);
@@ -112,6 +115,38 @@ public class MenuFactory {
 		    
 		    public void mousePressed(MouseEvent evt){
 		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED);
+		    }
+		});
+		return btn;
+	}
+
+	public static JButton createButton2(String text) {
+		JButton btn = new JButton();
+		Font f = GameAssets.getFont2(20f);
+		btn.setFont(f);
+		btn.setName(text);
+		btn.setText(text);
+		btn.setForeground(TEXT_COLOUR);
+		btn.setOpaque(false);
+		btn.setContentAreaFilled(false);
+		btn.setBorderPainted(false);
+		btn.setFocusPainted(false);
+		btn.setBorder(new EmptyBorder(10, 15, 0, 15));
+		btn.addMouseListener(new MouseAdapter() {
+		    public void mouseEntered(MouseEvent evt) {
+		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED2);
+		    }
+
+		    public void mouseExited(MouseEvent evt) {
+		    	btn.setForeground(TEXT_COLOUR);
+		    }
+		    
+		    public void mouseReleased(MouseEvent e){
+		    	btn.setForeground(TEXT_COLOUR);
+		    }
+		    
+		    public void mousePressed(MouseEvent evt){
+		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED2);
 		    }
 		});
 		return btn;
