@@ -516,7 +516,6 @@ public class VControl extends JFrame {
 		client.handleAction();
 	}
 	
-	
 
 	public int getPlayerID() {
 		return playerID;
