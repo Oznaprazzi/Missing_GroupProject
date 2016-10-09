@@ -17,6 +17,7 @@
  *  4 oct 16			Jian Wei			added a Money field
  *  4 Oct 16			Chris Rabe			created a flag which indicates if the player is inside a pile
  *  5 Oct 16			Chris Rabe			buffed player damage to other players - now takes away 10 health
+ *  9 Oct 16			Edward Kelly		added hasMultipleOfItem method
 
  */
 
@@ -120,8 +121,8 @@ public class Player extends Character {
 		this.bag = bag;
 	}
 
-	public int getMoney() {
-		return money.getAmount();
+	public Money getMoney() {
+		return money;
 	}
 
 	public void setMoney(int m) {
@@ -139,6 +140,23 @@ public class Player extends Character {
 	 */
 	public boolean has(Movable item) {
 		return pocket.getItems().contains(item);
+	}
+	
+	/**
+	 * Checks if the player's pocket has at least a given number of a certain
+	 * item
+	 * @param item item needed
+	 * @param amount amount of given item needed
+	 * @return
+	 */
+	public boolean hasMultipleOfItem(Movable item, int amount){
+		if (!has(item))return false;
+		for (Movable pocketItem : pocket.getItems()){
+			if (pocketItem.equals(item)&&pocketItem.getAmount()>=amount){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

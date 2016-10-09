@@ -15,7 +15,11 @@
  *  3 Oct 16		Casey Huang			Added pileofitems image.
  *  6 Oct 16 		Casey Huang			Added logo images and button image
  *  7 Oct 16		Casey Huang			Added server/connecting background
+<<<<<<< HEAD
+ *  9 Oct 16		Edward Kelly		Added crafting background
+=======
  *  09 Oct 16		Casey Huang			Added new fonts
+>>>>>>> branch 'master' of https://gitlab.ecs.vuw.ac.nz/rabechri/Missing.git
  */
 
 package missing.datastorage.assetloader;
@@ -24,7 +28,6 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,6 +51,12 @@ public class GameAssets {
 	private static final String WORLD_FILE_PATH = STORAGE_PATH + "/files/nodes/";
 
 	// Image assets
+
+	private static BufferedImage foodShopImage;
+
+	private static BufferedImage resourceShopImage;
+
+	private static BufferedImage toolsShopImage;
 
 	private static BufferedImage playerImage;
 
@@ -103,10 +112,12 @@ public class GameAssets {
 
 	private static BufferedImage missingLogoImage;
 	
+	private static BufferedImage craftingBackgroundImage;
+
 	private static BufferedImage windowBackgroundImage;
-	
+
 	private static BufferedImage itemBackgroundImage;
-	
+
 	private static Image serverBackgroundImage;
 
 	private static ImageIcon buttonImage;
@@ -124,6 +135,39 @@ public class GameAssets {
 	}
 
 	// getters for the image assets
+
+	public static BufferedImage getFoodShopImage() {
+		if (foodShopImage == null) {
+			try {
+				foodShopImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/foodshop.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return foodShopImage;
+	}
+
+	public static BufferedImage getResourceShopImage() {
+		if (resourceShopImage == null) {
+			try {
+				resourceShopImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/resourceshop.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return resourceShopImage;
+	}
+
+	public static BufferedImage getToolsShopImage() {
+		if (toolsShopImage == null) {
+			try {
+				toolsShopImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/toolsshop.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return toolsShopImage;
+	}
 
 	public static BufferedImage getPlayerImage(int index, String direction) {
 		try {
@@ -378,7 +422,7 @@ public class GameAssets {
 		}
 		return fishImage;
 	}
-	
+
 	public static BufferedImage getWindowBackgroundImage() {
 		if (windowBackgroundImage == null) {
 			try {
@@ -389,6 +433,18 @@ public class GameAssets {
 			}
 		}
 		return windowBackgroundImage;
+	}
+	
+	public static BufferedImage getCraftingBackgroundImage() {
+		if (craftingBackgroundImage == null) {
+			try {
+				craftingBackgroundImage = ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/craftingBackground.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return craftingBackgroundImage;
 	}
 
 	public static BufferedImage getPileOfItemsImage() {
@@ -435,7 +491,7 @@ public class GameAssets {
 		}
 		return missingLogoImage;
 	}
-	
+
 	public static BufferedImage getItemBackgroundImage() {
 		if (itemBackgroundImage == null) {
 			try {
@@ -447,10 +503,11 @@ public class GameAssets {
 		}
 		return itemBackgroundImage;
 	}
-	
+
 	public static Image getServerBackgroundImage() {
 		if (serverBackgroundImage == null) {
-			serverBackgroundImage = new ImageIcon(GameAssets.class.getResource(STORAGE_PATH+"/img/serverbackground.gif")).getImage();
+			serverBackgroundImage = new ImageIcon(
+					GameAssets.class.getResource(STORAGE_PATH + "/img/serverbackground.gif")).getImage();
 		}
 		return serverBackgroundImage;
 	}
@@ -479,7 +536,7 @@ public class GameAssets {
 		}
 		return customFont.deriveFont(size);
 	}
-	
+
 	public static Font getFont2(float size) {
 		try {
 			customFont2 = Font.createFont(Font.TRUETYPE_FONT,

@@ -43,6 +43,7 @@ import javax.swing.Timer;
 
 import missing.ui.daynight.DayNightCycle;
 import missing.ui.frames.ContainerFrame;
+import missing.ui.frames.CraftingFrame;
 import missing.ui.frames.PileFrame;
 import missing.datastorage.assetloader.XMLHandler;
 import missing.datastorage.initialisers.GUIInitialiser;
@@ -292,7 +293,9 @@ public class VControl extends JFrame {
 		}
 		System.exit(0);
 	}
-	
+	public void openCrafting(){
+		new CraftingFrame(this).setVisible(true);
+	}
 	/**
 	 * Called if the player performed an action on a Container Displays the
 	 * items in that Container
@@ -515,7 +518,6 @@ public class VControl extends JFrame {
 	public void performAction() {
 		client.handleAction();
 	}
-	
 	
 
 	public int getPlayerID() {

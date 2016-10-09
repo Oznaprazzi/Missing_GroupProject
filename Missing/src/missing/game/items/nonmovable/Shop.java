@@ -42,6 +42,11 @@ public class Shop extends NonMovable {
 		this.merchant = new Merchant(worldLocation, tileLocation, type);
 		this.players = new ArrayList<Player>();
 		this.nodes = new ShopNode[4]; // north south east west
+		// resource shop is hardcoded to be facing WEST
+		if (type == ShopType.RESOURCE) {
+			this.orientation = Direction.WEST;
+		}
+		determineApproach(this.orientation);
 	}
 
 	// Getters and Setters...
@@ -134,6 +139,31 @@ public class Shop extends NonMovable {
 	}
 
 	// Helper methods
+
+	/**
+	 * Changes the orientation of the shop and ensures that the player can only
+	 * interact with the shop if it is facing the shop.
+	 * 
+	 * @param type
+	 */
+	private void determineApproach(Direction orientation) {
+		switch (orientation) {
+		case EAST:
+			this.approach = Direction.EAST;
+			break;
+		case NORTH:
+			this.approach = Direction.NORTH;
+			break;
+		case SOUTH:
+			this.approach = Direction.SOUTH;
+			break;
+		case WEST:
+			this.approach = Direction.WEST;
+			break;
+		default:
+			throw new RuntimeException("Invalid orientation");
+		}
+	}
 
 	/**
 	 * Searches through the avatars in the shop and returns the instance of

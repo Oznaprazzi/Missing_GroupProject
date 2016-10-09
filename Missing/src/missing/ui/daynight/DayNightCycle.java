@@ -108,7 +108,7 @@ public class DayNightCycle extends TimerTask {
 			}
 			
 			GameView.timeField.setText(hours + ":" + min + " AM");
-		}else if(hours >= 12 && hours <= 23){
+		}else if(hours > 12 && hours <= 23){
 			int pmHours = hours - 12;
 			/**Append a leading zero if the minutes is a single digit. */
 			String min = "";
