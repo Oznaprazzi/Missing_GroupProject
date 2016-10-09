@@ -267,7 +267,7 @@ public class GameView extends View {
 	 */
 	public void updateGamePanel(VControl controller) {
 		this.controller = controller;
-		moneyField.setText("COINS: " + currentPlayer.getMoney());
+		moneyField.setText("COINS: " + currentPlayer.getMoney().getAmount());
 		playersOnline = getPlayerNames();
 		gamePanel.setController(controller);
 		gamePanel.initialise();
