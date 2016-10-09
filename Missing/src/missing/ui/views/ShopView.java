@@ -34,13 +34,7 @@ public class ShopView extends View {
 	private static ShopPanel RESOURCE_PANEL;
 	private static ShopPanel TOOLS_PANEL;
 
-	private JButton btnSell;
-	private JButton btnBuy;
-	private JButton btnExit;
-
 	private ShopPanel display;
-
-	private JPanel btnPanel;
 
 	public ShopView(VControl controller) {
 		super(controller);
@@ -70,10 +64,8 @@ public class ShopView extends View {
 	@Override
 	public void initialise() {
 		this.removeAll();
-		setButtons();
 		if (display != null) {
 			this.add(display);
-			this.display.add(btnPanel);
 		}
 		setFocus();
 	}
@@ -118,39 +110,6 @@ public class ShopView extends View {
 			return TOOLS_PANEL;
 		default:
 			throw new GameException("Invalid display");
-		}
-	}
-
-	private void setButtons() {
-		this.btnPanel = new JPanel();
-		GridLayout layout = new GridLayout(0, 2);
-		layout.setVgap(20);
-		this.btnPanel.setLayout(layout);
-		switch (display.getDir()) {
-		case NORTH:
-			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height / 1.6), 0, 0, 0));
-			btnPanel.setOpaque(false);
-			btnSell = MenuFactory.createShopButton("Sell");
-			this.btnPanel.add(btnSell);
-			btnBuy = MenuFactory.createShopButton("Buy");
-			this.btnPanel.add(btnBuy);
-			break;
-		case SOUTH:
-			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height / 5),
-					(int) (display.getPreferredSize().width / 8), 0, 0));
-			btnPanel.setOpaque(false);
-			btnExit = MenuFactory.createShopButton("Exit");
-			this.btnPanel.add(btnExit);
-			break;
-		default:
-			break;
-		}
-		if (btnExit != null) {
-			this.btnPanel.remove(btnExit);
-		}
-		if (btnSell != null && btnBuy != null) {
-			this.btnPanel.remove(btnSell);
-			this.btnPanel.remove(btnBuy);
 		}
 	}
 }
