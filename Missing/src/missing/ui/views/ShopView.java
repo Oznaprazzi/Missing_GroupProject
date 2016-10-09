@@ -128,9 +128,6 @@ public class ShopView extends View {
 		case NORTH:
 			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height / 1.6), 0, 0, 0));
 			btnPanel.setOpaque(false);
-			if (btnExit != null) {
-				this.btnPanel.remove(btnExit);
-			}
 			btnSell = MenuFactory.createShopButton("Sell");
 			this.btnPanel.add(btnSell);
 			btnBuy = MenuFactory.createShopButton("Buy");
@@ -139,15 +136,18 @@ public class ShopView extends View {
 		case SOUTH:
 			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height/ 5), (int) (display.getPreferredSize().width/8), 0, 0));
 			btnPanel.setOpaque(false);
-			if (btnSell != null && btnBuy != null) {
-				this.btnPanel.remove(btnSell);
-				this.btnPanel.remove(btnBuy);
-			}
 			btnExit = MenuFactory.createShopButton("Exit");
 			this.btnPanel.add(btnExit);
 			break;
 		default:
 			break;
+		}
+		if (btnExit != null) {
+			this.btnPanel.remove(btnExit);
+		}
+		if (btnSell != null && btnBuy != null) {
+			this.btnPanel.remove(btnSell);
+			this.btnPanel.remove(btnBuy);
 		}
 	}
 }
