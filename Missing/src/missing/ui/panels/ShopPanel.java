@@ -37,9 +37,9 @@ public class ShopPanel extends JPanel implements KeyListener {
 	public ShopPanel(View parent, Shop shop) {
 		this.parent = parent;
 		this.shop = shop;
-		this.orientation = Direction.SOUTH;
+		this.orientation = Direction.NORTH;
 		this.node = initialiseNodes(shop, orientation);
-		this.addKeyListener(this);
+		parent.addKeyListener(this);
 	}
 	
 	//Getter Methods
@@ -58,10 +58,10 @@ public class ShopPanel extends JPanel implements KeyListener {
 	public void rotateView(Direction dir) {
 		switch (dir) {
 		case EAST:
-			turnCamera(orientation, 1);
+			turnCamera(orientation, -1);
 			break;
 		case WEST:
-			turnCamera(orientation, -1);
+			turnCamera(orientation, 1);
 			break;
 		default:
 			break;

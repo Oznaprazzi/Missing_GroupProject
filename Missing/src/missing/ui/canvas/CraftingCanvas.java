@@ -181,30 +181,21 @@ public class CraftingCanvas extends JPanel implements MouseListener{
 				}
 			}
 			try {
+				
 				Tool tool = Craftable.createTool(toolType, player);
+				System.out.println(tool.getCount());
 				player.addToPocket(tool);
+				
 				new CraftingFrame(controller).setVisible(true);
 				frame.dispose();
 				return;
 			} catch (GameException e1) {
 				if (e1.getMessage().equals("Not enough space left.")){
-					Tool tool;
-					try {
-						tool = Craftable.createTool(toolType, player);
-						player.addToBag(tool);
-						new CraftingFrame(controller).setVisible(true);
-						frame.dispose();
-						return;
-					} catch (Exception e2) {
-						if (e1.getMessage().equals("Not enough space left.")){
-							JOptionPane.showMessageDialog(this, "No room in bag for tool", "Cannot Craft Item", JOptionPane.WARNING_MESSAGE);
-						}	
-					}
+					JOptionPane.showMessageDialog(this, "No room in pocket for tool", "Cannot Craft Item", JOptionPane.WARNING_MESSAGE);
 				} else if (e1.getMessage().equals("Player does not have the required items")){
 					JOptionPane.showMessageDialog(this, "You do not have the resources for this tool", "Cannot Craft Item", JOptionPane.WARNING_MESSAGE);
-					
 				}
-				else e1.printStackTrace();
+				e1.printStackTrace();
 			}
 			
 		});
