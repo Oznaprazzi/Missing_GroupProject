@@ -23,6 +23,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import missing.datastorage.assetloader.GameAssets;
@@ -42,7 +43,6 @@ public class MenuFactory {
 	public static final Color VIEW_BTN_BG_COLOUR = new Color(61, 86, 38);
 	
 	public static final int TEXT_FIELD_HEIGHT = 30;
-	
 	
 	
 	
@@ -97,7 +97,20 @@ public class MenuFactory {
 		label.setFont(f);
 		return label;
 	}
-
+	
+	public static JTextField createGameViewTextField(String text){
+		JTextField tf = new JTextField(text);
+		tf.setBackground(Color.black);
+		tf.setForeground(Color.white);
+		/*Set the font size to orginal font size times 1.5 */
+		tf.setFont(GameAssets.getFont2((float) (tf.getFont().getSize() * 1.5)));
+		tf.setHorizontalAlignment(tf.CENTER);
+		tf.setFocusable(false);
+		tf.setEditable(false);
+		return tf;
+	}
+	
+	
 	
 	
 	public static TextField createTextField(int width) {
@@ -224,7 +237,6 @@ public class MenuFactory {
 		btn.setLocation((int) (width/2 - btn.getSize().getWidth()), y);
 		//btn.setBounds(0, x, 80, 80);
 		//btn.setAlignmentX(x);
-		//btn.setAlignmentY(spacing);
 		//btn.setMargin(new Insets(y, spacing, 0, spacing));
 		//btn.setBorder(new EmptyBorder(y, spacing, 0, spacing));
 		btn.addMouseListener(new MouseAdapter() {
