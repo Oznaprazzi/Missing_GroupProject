@@ -9,16 +9,12 @@
 package missing.ui.views;
 
 import missing.game.items.nonmovable.Shop;
-import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.ShopPanel;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
