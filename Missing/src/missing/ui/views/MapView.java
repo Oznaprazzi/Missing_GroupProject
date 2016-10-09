@@ -4,8 +4,7 @@
  *  Edward Kelly	300334192
  *  
  * 	Date			Author				Changes
- * 	19 Sep 16		Casey Huang			created MapPanel class
- * 	19 Sep 16		Casey Huang			renamed MapView to MapPanel
+ * 	19 Sep 16		Casey Huang			created class
  *  23 Sep 16		Edward Kelly		removed World param from constructor
  *  3 Oct 16		Edward Kelly		implemented as View with MapPanel
  *  									added spectator mode

@@ -15,6 +15,7 @@
  *  3 Oct 16		Casey Huang			Added pileofitems image.
  *  6 Oct 16 		Casey Huang			Added logo images and button image
  *  7 Oct 16		Casey Huang			Added server/connecting background
+ *  9 Oct 16		Edward Kelly		Added crafting background
  */
 
 package missing.datastorage.assetloader;
@@ -105,6 +106,8 @@ public class GameAssets {
 	private static BufferedImage missingLogoImage;
 	
 	private static BufferedImage containerBackgroundImage;
+	
+	private static BufferedImage craftingBackgroundImage;
 
 	private static BufferedImage pileBackgroundImage;
 	
@@ -399,6 +402,18 @@ public class GameAssets {
 			}
 		}
 		return containerBackgroundImage;
+	}
+	
+	public static BufferedImage getCraftingBackgroundImage() {
+		if (craftingBackgroundImage == null) {
+			try {
+				craftingBackgroundImage = ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/craftingBackground.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return craftingBackgroundImage;
 	}
 	
 	public static BufferedImage getPileBackgroundImage() {

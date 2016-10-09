@@ -125,7 +125,7 @@ public class GameView extends View {
 		ctrlPanel.add(nameField, gbc_txtName);
 		nameField.setColumns(10);
 
-		btnDoAction = new JButton("Do Action");
+		btnDoAction = new JButton("Craft Item");
 		btnDoAction.setBackground(Color.yellow);
 		btnDoAction.setFocusable(false);
 		GridBagConstraints gbc_btnDoAction = new GridBagConstraints();
@@ -209,8 +209,7 @@ public class GameView extends View {
 		currentPlayer = controller.getGGame().getGame().getAvatars()[id];
 
 		btnDoAction.addActionListener(e -> {
-			controller.requestFocus();
-			controller.performAction();
+			controller.openCrafting();
 		});
 
 		btnPlayersBag.addActionListener(e -> {

@@ -228,8 +228,10 @@ public class CreatePlayerView extends View{
 					try {
 						//Start server
 						NetworkingHelper.runServer(numPlayers, port, controller, playerName, imageNumber);
+						controller.changeView(controller.getClientWaitingView());
 					} catch (IOException | IllegalArgumentException e1) {
 						JOptionPane.showMessageDialog(this, "Could not connect to server at " + NetworkingHelper.getIPAddress() + " : " +port);
+						controller.changeView(controller.getPlayGameView());
 					}
 				} else {
 					IPAddress = ((JoinGameView)(controller.getView(controller.getJoinGameView()))).getIP();
@@ -239,9 +241,9 @@ public class CreatePlayerView extends View{
 						controller.changeView(controller.getClientWaitingView());
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(this, "Could not connect to server at " + IPAddress + " : " +port);
+						controller.changeView(controller.getPlayGameView());
 					}
 				}
-				controller.changeView(controller.getClientWaitingView());
 			
 			}
 		});
