@@ -69,7 +69,7 @@ public class CraftingCanvas extends JPanel implements MouseListener{
 		initialise();
 	}
 	/**
-	 * Initialise panel
+	 * Initialise 
 	 */
 	private void initialise(){
 		selected = null;

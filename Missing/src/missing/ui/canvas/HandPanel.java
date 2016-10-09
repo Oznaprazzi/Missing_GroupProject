@@ -31,6 +31,7 @@ import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.Game;
+import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Movable;
@@ -39,6 +40,7 @@ import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Pocket;
+import missing.helper.GameException;
 
 /**
  * Canvas used to display the Player's bag's items
@@ -326,14 +328,19 @@ public class HandPanel extends JPanel implements MouseListener {
 
 	/**
 	 * When the button is clicked, if there is a clicked item selected, it transfers it from the current Players Pocket to the Bag.
+	 * @throws GameException 
 	 */
-	public void transferPocketToBag(){
+	public void transferPocketToBag() throws GameException{
 		if(selectedItem == null) return;
 		//System.out.println("Selected " + clickedItem.toString());
 		if(clickIndex >=0 && clickIndex <= 9){ 
 			return; //cant transfer to yourself - leave.
 		}else if(clickIndex >= 10 && clickIndex <= 19){
+			
 			bagSet.add(selectedItem);
+			bag.addItem(selectedItem);
+			pocket.removeItem(selectedItem);
+			
 			pocketSet.remove(selectedItem);
 			selectedItem = null;
 			clickIndex = -1;
@@ -343,8 +350,9 @@ public class HandPanel extends JPanel implements MouseListener {
 
 	/**
 	 * When the button is clicked, if there is a clicked item selected, it transfers it from the current Players Bag to the Pocket.
+	 * @throws GameException 
 	 */
-	public void transferBagToPocket(){
+	public void transferBagToPocket() throws GameException{
 		if(selectedItem == null) return;
 		if(clickIndex >=0 && clickIndex <= 9){
 			int index = findItemInSet(pocketSet);
@@ -353,6 +361,9 @@ public class HandPanel extends JPanel implements MouseListener {
 			}else{
 				pocketSet.add(selectedItem);
 			}
+			pocket.addItem(selectedItem);
+			bag.removeItem(selectedItem);
+			
 			bagSet.remove(selectedItem);
 			selectedItem = null;
 			clickIndex = -1;
