@@ -4,22 +4,27 @@
  * 
  * 	Date					Author					Changes
  * 	8 Oct 16				Chris Rabe				created shop panel
+ * 	10 Oct 16				Casey Huang				fixed position of buttons
  */
 
 package missing.ui.panels;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import missing.game.items.nonmovable.Shop;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.ui.assets.ShopNode;
 import missing.ui.controller.VControl.View;
+import missing.ui.menustyle.MenuFactory;
 
 /**
  * The shop panel initialises the nodes of the game shop as well as change the
@@ -34,17 +39,24 @@ public class ShopPanel extends JPanel implements KeyListener {
 	private ShopNode node;
 	private Direction orientation; // where player is facing in the shop
 
+	private JButton btnSell;
+	private JButton btnBuy;
+	private JButton btnExit;
+	
+	private JPanel btnPanel;
+	
 	public ShopPanel(View parent, Shop shop) {
 		this.parent = parent;
 		this.shop = shop;
 		this.orientation = Direction.NORTH;
 		this.node = initialiseNodes(shop, orientation);
+		this.btnPanel = new JPanel();
+		GridLayout layout = new GridLayout(0, 2);
+		layout.setVgap(20);
+		this.btnPanel.setLayout(layout);
+		this.add(btnPanel);
 		parent.addKeyListener(this);
-	}
-	
-	//Getter Methods
-	public Direction getDir(){
-		return this.orientation;
+		setButtons();
 	}
 
 	// Methods
@@ -66,6 +78,7 @@ public class ShopPanel extends JPanel implements KeyListener {
 		default:
 			break;
 		}
+		setButtons();
 		this.repaint();
 	}
 
@@ -202,5 +215,53 @@ public class ShopPanel extends JPanel implements KeyListener {
 			tmp = getNode(shop, orientation);
 		}
 		return tmp;
+	}
+	
+	private void setButtons() {
+		/*this.btnPanel = new JPanel();
+		GridLayout layout = new GridLayout(0, 2);
+		layout.setVgap(20);
+		this.btnPanel.setLayout(layout);*/
+		System.out.println(this.orientation);
+		switch (this.orientation) {
+		case NORTH:
+			if (btnExit != null) {
+				this.btnPanel.remove(btnExit);
+				btnExit = null;
+			}
+			btnPanel.setBorder(new EmptyBorder((int) (this.getPreferredSize().height / 1.6), 0, 0, 0));
+			btnPanel.setOpaque(false);
+			btnSell = MenuFactory.createShopButton("Sell");
+			this.btnPanel.add(btnSell);
+			btnBuy = MenuFactory.createShopButton("Buy");
+			this.btnPanel.add(btnBuy);
+			break;
+		case SOUTH:
+			if (btnSell != null && btnBuy != null) {
+				this.btnPanel.remove(btnSell);
+				this.btnPanel.remove(btnBuy);
+				btnSell = null;
+				btnBuy = null;
+			}
+			btnPanel.setBorder(new EmptyBorder((int) (this.getPreferredSize().height / 5),
+					(int) (this.getPreferredSize().width / 8), 0, 0));
+			btnPanel.setOpaque(false);
+			btnExit = MenuFactory.createShopButton("Exit");
+			this.btnPanel.add(btnExit);
+			break;
+		default:
+			if (btnExit != null) {
+				this.btnPanel.remove(btnExit);
+				btnExit = null;
+			}
+			if (btnSell != null && btnBuy != null) {
+				this.btnPanel.remove(btnSell);
+				this.btnPanel.remove(btnBuy);
+				btnSell = null;
+				btnBuy = null;
+			}
+			break;
+		}
+		
 	}
 }
