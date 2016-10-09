@@ -44,10 +44,6 @@ public class ShopView extends View {
 
 	public ShopView(VControl controller) {
 		super(controller);
-		this.btnPanel = new JPanel();
-		GridLayout layout = new GridLayout(0, 2);
-		layout.setVgap(20);
-		this.btnPanel.setLayout(layout);
 	}
 
 	// Methods
@@ -85,7 +81,9 @@ public class ShopView extends View {
 	@Override
 	public void setFocus() {
 		if (display != null) {
-			display.requestFocus();
+			this.addKeyListener(display);
+			this.setFocusable(true);
+			this.requestFocus();
 		}
 	}
 
@@ -124,6 +122,10 @@ public class ShopView extends View {
 	}
 
 	private void setButtons() {
+		this.btnPanel = new JPanel();
+		GridLayout layout = new GridLayout(0, 2);
+		layout.setVgap(20);
+		this.btnPanel.setLayout(layout);
 		switch (display.getDir()) {
 		case NORTH:
 			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height / 1.6), 0, 0, 0));
@@ -137,7 +139,8 @@ public class ShopView extends View {
 			this.btnPanel.add(btnBuy);
 			break;
 		case SOUTH:
-			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height/ 5), (int) (display.getPreferredSize().width/8), 0, 0));
+			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height / 5),
+					(int) (display.getPreferredSize().width / 8), 0, 0));
 			btnPanel.setOpaque(false);
 			if (btnSell != null && btnBuy != null) {
 				this.btnPanel.remove(btnSell);
