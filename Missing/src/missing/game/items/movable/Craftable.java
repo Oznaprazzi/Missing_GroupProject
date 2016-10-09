@@ -18,6 +18,7 @@ import java.util.List;
 
 import missing.game.characters.Player;
 import missing.game.items.movable.Tool.ToolType;
+import missing.game.items.nonmovable.Pocket;
 import missing.helper.GameException;
 
 /**
@@ -78,7 +79,8 @@ public abstract class Craftable extends Usable {
 	private static Tool createShovel(Player player) throws GameException {
 		int woodLeft = 2;
 		int stoneLeft = 1;
-		List<Movable> items = player.getPocket().getItems();
+		Pocket pocket = player.getPocket();
+		List<Movable> items = pocket.getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && stoneLeft == 0) {
@@ -92,8 +94,10 @@ public abstract class Craftable extends Usable {
 				if (amt > woodLeft) {
 					// item has enough wood -- just decrease
 					newAmt = amt - woodLeft;
+					pocket.setSize(pocket.getSize() - woodLeft);
+					System.out.println("pocket size shovel: "+pocket.getSize());
 					woodLeft = 0;
-					w.setAmount(newAmt);// TODO fix decrease pocket
+					w.setAmount(newAmt);
 				} else {
 					newAmt = woodLeft - amt;
 					woodLeft = newAmt;
@@ -105,6 +109,7 @@ public abstract class Craftable extends Usable {
 				if (amt > stoneLeft) {
 					// item has enough stone -- just decrease
 					newAmt = amt - stoneLeft;
+					pocket.setSize(pocket.getSize() - stoneLeft);
 					stoneLeft = 0;
 					s.setAmount(newAmt);
 				} else {
@@ -128,7 +133,8 @@ public abstract class Craftable extends Usable {
 	private static Tool createPickaxe(Player player) throws GameException {
 		int woodLeft = 2;
 		int stoneLeft = 3;
-		List<Movable> items = player.getPocket().getItems();
+		Pocket pocket = player.getPocket();
+		List<Movable> items = pocket.getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && stoneLeft == 0) {
@@ -142,6 +148,7 @@ public abstract class Craftable extends Usable {
 				if (amt > woodLeft) {
 					// item has enough wood -- just decrease
 					newAmt = amt - woodLeft;
+					pocket.setSize(pocket.getSize() - woodLeft);
 					woodLeft = 0;
 					w.setAmount(newAmt);
 				} else {
@@ -155,6 +162,7 @@ public abstract class Craftable extends Usable {
 				if (amt > stoneLeft) {
 					// item has enough stone -- just decrease
 					newAmt = amt - stoneLeft;
+					pocket.setSize(pocket.getSize() - stoneLeft);
 					stoneLeft = 0;
 					s.setAmount(newAmt);
 				} else {
@@ -178,7 +186,8 @@ public abstract class Craftable extends Usable {
 	private static Tool createRod(Player player) throws GameException {
 		int woodLeft = 2;
 		int dirtLeft = 3;
-		List<Movable> items = player.getPocket().getItems();
+		Pocket pocket = player.getPocket();
+		List<Movable> items = pocket.getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && dirtLeft == 0) {
@@ -192,6 +201,7 @@ public abstract class Craftable extends Usable {
 				if (amt > woodLeft) {
 					// item has enough wood -- just decrease
 					newAmt = amt - woodLeft;
+					pocket.setSize(pocket.getSize() - woodLeft);
 					woodLeft = 0;
 					w.setAmount(newAmt);
 				} else {
@@ -205,6 +215,7 @@ public abstract class Craftable extends Usable {
 				if (amt > dirtLeft) {
 					// item has enough stone -- just decrease
 					newAmt = amt - dirtLeft;
+					pocket.setSize(pocket.getSize() - dirtLeft);
 					dirtLeft = 0;
 					d.setAmount(newAmt);
 				} else {
@@ -228,7 +239,8 @@ public abstract class Craftable extends Usable {
 	private static Tool createAxe(Player player) throws GameException {
 		int woodLeft = 2;
 		int stoneLeft = 3;
-		List<Movable> items = player.getPocket().getItems();
+		Pocket pocket = player.getPocket();
+		List<Movable> items = pocket.getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && stoneLeft == 0) {
@@ -242,6 +254,7 @@ public abstract class Craftable extends Usable {
 				if (amt > woodLeft) {
 					// item has enough wood -- just decrease
 					newAmt = amt - woodLeft;
+					pocket.setSize(pocket.getSize() - woodLeft);
 					woodLeft = 0;
 					w.setAmount(newAmt);
 				} else {
@@ -255,6 +268,7 @@ public abstract class Craftable extends Usable {
 				if (amt > stoneLeft) {
 					// item has enough stone -- just decrease
 					newAmt = amt - stoneLeft;
+					pocket.setSize(pocket.getSize() - stoneLeft);
 					stoneLeft = 0;
 					s.setAmount(newAmt);
 				} else {
