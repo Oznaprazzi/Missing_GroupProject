@@ -79,6 +79,8 @@ public class HandPanel extends JPanel implements MouseListener {
 
 	private List<Rectangle> gridRectangle; // array of rectangle locations.
 	private Map<Integer, Rectangle> gridMap;
+	
+	
 
 	private Movable selectedItem;
 	private Rectangle clickRect;
@@ -100,7 +102,7 @@ public class HandPanel extends JPanel implements MouseListener {
 	public void paint(Graphics g) {
 		Font font = GameAssets.getFont2(30f);
 		g.setFont(font);
-		g.setColor(Color.BLACK);
+		//g.setColor(Color.BLACK);
 		g.drawString("Items in Bag", 20, 30);
 		/* Firstly - draw the items inside the bag.. */
 		this.drawGrid(g, Y_OFFSET_BG);
@@ -108,7 +110,10 @@ public class HandPanel extends JPanel implements MouseListener {
 		g.setFont(font);
 
 		/* Now - draw the items inside the pocket.. */
+		Color currentColor = g.getColor();
+		g.setColor(Color.black);
 		g.drawString("Items in Pocket", 20, 210);
+		g.setColor(currentColor);
 		this.drawGrid(g, Y_OFFSET_PK);
 		this.drawItems(g, Y_OFFSET_PK + 7, pocketSet);
 		fillMap();
@@ -264,10 +269,10 @@ public class HandPanel extends JPanel implements MouseListener {
 		Graphics2D gg = (Graphics2D) g;
 		if (isHighlighted) {
 			gg.setStroke(new BasicStroke(BOLDED_WIDTH));
-			g.setColor(Color.YELLOW);
-			g.drawRect(left, top, size, size);
+			gg.setColor(Color.YELLOW);
+			gg.drawRect(left, top, size, size);
 		} else {
-			g.drawImage(GameAssets.getItemBackgroundImage(), left, top, size, size, null);
+			gg.drawImage(GameAssets.getItemBackgroundImage(), left, top, size, size, null);
 		}
 	}
 	
