@@ -97,10 +97,18 @@ public class BagFrameTest extends JFrame {
 	 */
 	private void addActionListeners() {
 		btnPocketToBag.addActionListener(e->{
-			panel.transferPocketToBag();
+			try {
+				panel.transferPocketToBag();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		});
 		btnBagToPocket.addActionListener(e->{
-			panel.transferBagToPocket();
+			try {
+				panel.transferBagToPocket();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		});
 	}
 	

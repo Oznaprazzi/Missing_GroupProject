@@ -122,6 +122,8 @@ public class XMLExporter {
 			return getFireplace((Fireplace) object, doc);
 		} else if (object instanceof Shop) {
 			return getShop((Shop) object, doc);
+		} else if (object instanceof TallGrass) {
+			return getTallGrass((TallGrass) object, doc);
 		}
 		throw new RuntimeException("Unknown object type");
 	}
@@ -228,6 +230,13 @@ public class XMLExporter {
 		Element loc = getLocation(object.getTileLocation(), doc);
 		soil.appendChild(loc);
 		return soil;
+	}
+
+	private static Element getTallGrass(TallGrass object, Document doc) {
+		Element tallgrass = doc.createElement("tallgrass");
+		Element loc = getLocation(object.getTileLocation(), doc);
+		tallgrass.appendChild(loc);
+		return tallgrass;
 	}
 
 	private static Element getRock(Rock object, Document doc) {

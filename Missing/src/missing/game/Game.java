@@ -31,6 +31,7 @@ import missing.datastorage.initialisers.WorldInitialiser;
 import missing.game.characters.Player;
 import missing.game.items.Item;
 import missing.game.items.movable.Movable;
+import missing.game.items.nonmovable.TallGrass;
 import missing.game.world.World;
 import missing.game.world.nodes.WorldTile;
 import missing.game.world.nodes.WorldTile.Pile;
@@ -412,6 +413,9 @@ public class Game implements Serializable {
 		if (player.isInsidePile()) {
 			player.setInsidePile(false);
 			tile.removePlayerFromPile();
+		} else if (player.isInsideGrass()) {
+			player.setInsideGrass(false);
+			tile.setObject(new TallGrass(oldWLoc, oldTLoc));
 		} else {
 			tile.setObject(null);
 		}
@@ -424,8 +428,13 @@ public class Game implements Serializable {
 		player.setOrientation(direction);
 		// If there is an item, add the player to the pile
 		if (tile.isOccupied()) {
-			player.setInsidePile(true);
-			tile.addPlayerToPile(player);
+			if (tile.getObject() instanceof Pile) {
+				player.setInsidePile(true);
+				tile.addPlayerToPile(player);
+			} else {
+				player.setInsideGrass(true);
+				tile.setObject(player);
+			}
 		} else {
 			tile.setObject(player);
 		}
@@ -513,7 +522,8 @@ public class Game implements Serializable {
 		// Next check if the tile is occupied by an object
 		if (tile.isOccupied()) {
 			// Only movable objects can be walked over -- can pick them up
-			if (tile.getObject() != null && (tile.getObject() instanceof Movable || tile.getObject() instanceof Pile)) {
+			if (tile.getObject() != null && (tile.getObject() instanceof Movable || tile.getObject() instanceof Pile
+					|| tile.getObject() instanceof TallGrass)) {
 				return true;
 			}
 			return false;

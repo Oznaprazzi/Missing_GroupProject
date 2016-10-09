@@ -44,6 +44,7 @@ import missing.game.items.nonmovable.Rock;
 import missing.game.items.nonmovable.Shop;
 import missing.game.items.nonmovable.Shop.ShopType;
 import missing.game.items.nonmovable.Soil;
+import missing.game.items.nonmovable.TallGrass;
 import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.game.world.nodes.WorldTile.Pile;
@@ -140,6 +141,7 @@ public class XMLImporter {
 		List<Item> fireplace = parseFirePlace(worldLocation, doc, xPath, expression);
 		List<Item> piles = parsePiles(worldLocation, doc, xPath, expression);
 		List<Item> shops = parseShops(worldLocation, doc, xPath, expression);
+		List<Item> tallgrass = parseTallGrass(worldLocation, doc, xPath, expression);
 		// Combine everything together
 		List<Item> tmp = new ArrayList<Item>();
 		tmp.addAll(trees);
@@ -150,6 +152,7 @@ public class XMLImporter {
 		tmp.addAll(fireplace);
 		tmp.addAll(piles);
 		tmp.addAll(shops);
+		tmp.addAll(tallgrass);
 		return tmp;
 	}
 
@@ -455,6 +458,27 @@ public class XMLImporter {
 					Node locNode = elem.getElementsByTagName("location").item(0);
 					Point location = parseLocation(locNode);
 					tmp.add(new Tree(worldLocation, location));
+				}
+			}
+		} catch (XPathExpressionException e) {
+			System.out.println(e.getMessage());
+			System.exit(1);
+		}
+		return tmp;
+	}
+
+	private static List<Item> parseTallGrass(Point worldLocation, Document doc, XPath xPath, String expression) {
+		List<Item> tmp = new ArrayList<Item>();
+		expression += "/tallgrass";
+		try {
+			NodeList tallgrass = (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
+			for (int i = 0; i < tallgrass.getLength(); i++) {
+				Node t = tallgrass.item(i);
+				if (t.getNodeType() == Node.ELEMENT_NODE) {
+					Element elem = (Element) t;
+					Node locNode = elem.getElementsByTagName("location").item(0);
+					Point location = parseLocation(locNode);
+					tmp.add(new TallGrass(worldLocation, location));
 				}
 			}
 		} catch (XPathExpressionException e) {

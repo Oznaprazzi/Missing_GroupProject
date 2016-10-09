@@ -52,6 +52,8 @@ public class GameAssets {
 
 	// Image assets
 
+	private static BufferedImage tallGrassImage;
+
 	private static BufferedImage foodShopImage;
 
 	private static BufferedImage resourceShopImage;
@@ -111,7 +113,7 @@ public class GameAssets {
 	private static BufferedImage splashBackgroundImage;
 
 	private static BufferedImage missingLogoImage;
-	
+
 	private static BufferedImage craftingBackgroundImage;
 
 	private static BufferedImage windowBackgroundImage;
@@ -125,7 +127,7 @@ public class GameAssets {
 	private static Font customFont;
 
 	private static Font customFont2;
-	
+
 	private static Font customFont3;
 
 	// Getters for File Assets
@@ -135,6 +137,17 @@ public class GameAssets {
 	}
 
 	// getters for the image assets
+
+	public static BufferedImage getTallGrassImage() {
+		if (tallGrassImage == null) {
+			try {
+				tallGrassImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/tallgrass.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return tallGrassImage;
+	}
 
 	public static BufferedImage getFoodShopImage() {
 		if (foodShopImage == null) {
@@ -434,7 +447,7 @@ public class GameAssets {
 		}
 		return windowBackgroundImage;
 	}
-	
+
 	public static BufferedImage getCraftingBackgroundImage() {
 		if (craftingBackgroundImage == null) {
 			try {
@@ -549,7 +562,7 @@ public class GameAssets {
 		}
 		return customFont2.deriveFont(size);
 	}
-	
+
 	public static Font getFont3(float size) {
 		try {
 			customFont2 = Font.createFont(Font.TRUETYPE_FONT,
