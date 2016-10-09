@@ -424,6 +424,13 @@
 	</node>
 	<node worldLocation="1,2">
 		<items>
+			<shop>
+				<location>
+					<x>4</x>
+					<y>3</y>
+				</location>
+				<type>FOOD</type>
+			</shop>
 			<fireplace>
 				<location>
 					<x>1</x>
@@ -876,6 +883,13 @@
 	</node>
 	<node worldLocation="2,3">
 		<items>
+			<shop>
+				<location>
+					<x>1</x>
+					<y>3</y>
+				</location>
+				<type>TOOLS</type>
+			</shop>
 			<tree>
 				<location>
 					<x>1</x>
@@ -946,6 +960,13 @@
 	</node>
 	<node worldLocation="3,3">
 		<items>
+			<shop>
+				<location>
+					<x>5</x>
+					<y>3</y>
+				</location>
+				<type>RESOURCE</type>
+			</shop>
 			<fisharea>
 				<location>
 					<x>6</x>

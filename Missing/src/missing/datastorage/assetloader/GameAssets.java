@@ -48,6 +48,12 @@ public class GameAssets {
 
 	// Image assets
 
+	private static BufferedImage foodShopImage;
+
+	private static BufferedImage resourceShopImage;
+
+	private static BufferedImage toolsShopImage;
+
 	private static BufferedImage playerImage;
 
 	private static BufferedImage sandImage;
@@ -101,11 +107,11 @@ public class GameAssets {
 	private static BufferedImage splashBackgroundImage;
 
 	private static BufferedImage missingLogoImage;
-	
+
 	private static BufferedImage windowBackgroundImage;
-	
+
 	private static BufferedImage itemBackgroundImage;
-	
+
 	private static Image serverBackgroundImage;
 
 	private static ImageIcon buttonImage;
@@ -121,6 +127,39 @@ public class GameAssets {
 	}
 
 	// getters for the image assets
+
+	public static BufferedImage getFoodShopImage() {
+		if (foodShopImage == null) {
+			try {
+				foodShopImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/foodshop.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return foodShopImage;
+	}
+
+	public static BufferedImage getResourceShopImage() {
+		if (resourceShopImage == null) {
+			try {
+				resourceShopImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/resourceshop.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return resourceShopImage;
+	}
+
+	public static BufferedImage getToolsShopImage() {
+		if (toolsShopImage == null) {
+			try {
+				toolsShopImage = ImageIO.read(GameAssets.class.getResource(STORAGE_PATH + "/img/toolsshop.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return toolsShopImage;
+	}
 
 	public static BufferedImage getPlayerImage(int index, String direction) {
 		try {
@@ -375,7 +414,7 @@ public class GameAssets {
 		}
 		return fishImage;
 	}
-	
+
 	public static BufferedImage getWindowBackgroundImage() {
 		if (windowBackgroundImage == null) {
 			try {
@@ -432,7 +471,7 @@ public class GameAssets {
 		}
 		return missingLogoImage;
 	}
-	
+
 	public static BufferedImage getItemBackgroundImage() {
 		if (itemBackgroundImage == null) {
 			try {
@@ -444,10 +483,11 @@ public class GameAssets {
 		}
 		return itemBackgroundImage;
 	}
-	
+
 	public static Image getServerBackgroundImage() {
 		if (serverBackgroundImage == null) {
-			serverBackgroundImage = new ImageIcon(GameAssets.class.getResource(STORAGE_PATH+"/img/serverbackground.gif")).getImage();
+			serverBackgroundImage = new ImageIcon(
+					GameAssets.class.getResource(STORAGE_PATH + "/img/serverbackground.gif")).getImage();
 		}
 		return serverBackgroundImage;
 	}
@@ -476,7 +516,7 @@ public class GameAssets {
 		}
 		return customFont.deriveFont(size);
 	}
-	
+
 	public static Font getFont2(float size) {
 		try {
 			customFont2 = Font.createFont(Font.TRUETYPE_FONT,

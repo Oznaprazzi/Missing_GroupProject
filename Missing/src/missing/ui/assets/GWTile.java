@@ -17,13 +17,13 @@
  *  27 Sep 16		Casey Huang			Added tree number to obtaining tree image
  *  3 Oct 16		Edward Kelly		add inMapView and player to draw params
  *  3 Oct 16		Edward Kelly 		added logic for drawing map/spectator views
+ *  9 Oct 16		Chris Rabe			separated draw method into multiple methods
  */
 
 package missing.ui.assets;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.RadialGradientPaint;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
@@ -35,6 +35,7 @@ import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Fireplace;
 import missing.game.items.nonmovable.FishArea;
 import missing.game.items.nonmovable.Rock;
+import missing.game.items.nonmovable.Shop;
 import missing.game.items.nonmovable.Soil;
 import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile;
@@ -90,23 +91,9 @@ public class GWTile {
 	 * @throws GameException
 	 */
 	public void draw(Graphics g, int x, int y, boolean inMapView, Player player) throws GameException {
-		switch (tile.getType()) {
-		case SAND:
-			g.drawImage(GameAssets.getSandImage(), x, y, size, size, null);
-			break;
-		case WATER:
-			g.drawImage(GameAssets.getWaterImage(), x, y, size, size, null);
-			break;
-		case GRASS:
-			g.drawImage(GameAssets.getGrassImage(), x, y, size, size, null);
-			break;
-		case ROAD:
-			g.drawImage(GameAssets.getRoadImage(), x, y, size, size, null);
-			break;
-		default:
-			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
-		}
-		/* Draws the player. */
+		// draw background tile
+		drawTile(g, x, y);
+		// draw the player
 		if (tile.isOccupied() && tile.getObject() instanceof Player) {
 			curPlayer = (Player) (tile.getObject());
 			if (player == null || player.isDead() || !inMapView) {
@@ -117,8 +104,20 @@ public class GWTile {
 				drawPlayer(g, x, y, tile.getObject());
 			}
 		}
+		// draw the object
+		drawObject(g, x, y);
+		if (DEBUG) {
+			/*
+			 * If the tile is not enterable and there is an object image for it.
+			 */
+			if (!tile.isEnterable() && tile.getObject() != null) {
+				g.setColor(Color.green);
+				g.drawOval(x, y, size, size);
+			}
+		}
+	}
 
-		/* Draws all of the nonmovable items onto the pile. */
+	private void drawObject(Graphics g, int x, int y) throws GameException {
 		if (tile.getObject() instanceof Tree) {
 			int number = (int) (Math.random() * 2) + 1;
 			g.drawImage(GameAssets.getTreeImage(number), x, y, size, size, null);
@@ -150,16 +149,40 @@ public class GWTile {
 			}
 		} else if (tile.getObject() instanceof Soil) {
 			g.drawImage(GameAssets.getSoilImage(), x, y, size, size, null);
-		}
-
-		if (DEBUG) {
-			/*
-			 * If the tile is not enterable and there is an object image for it.
-			 */
-			if (!tile.isEnterable() && tile.getObject() != null) {
-				g.setColor(Color.green);
-				g.drawOval(x, y, size, size);
+		} else if (tile.getObject() instanceof Shop) {
+			Shop shop = (Shop) tile.getObject();
+			switch (shop.getType()) {
+			case FOOD:
+				g.drawImage(GameAssets.getFoodShopImage(), x, y, size, size, null);
+				break;
+			case RESOURCE:
+				g.drawImage(GameAssets.getResourceShopImage(), x, y, size, size, null);
+				break;
+			case TOOLS:
+				g.drawImage(GameAssets.getToolsShopImage(), x, y, size, size, null);
+				break;
+			default:
+				throw new GameException("Invalid shop type");
 			}
+		}
+	}
+
+	private void drawTile(Graphics g, int x, int y) throws GameException {
+		switch (tile.getType()) {
+		case SAND:
+			g.drawImage(GameAssets.getSandImage(), x, y, size, size, null);
+			break;
+		case WATER:
+			g.drawImage(GameAssets.getWaterImage(), x, y, size, size, null);
+			break;
+		case GRASS:
+			g.drawImage(GameAssets.getGrassImage(), x, y, size, size, null);
+			break;
+		case ROAD:
+			g.drawImage(GameAssets.getRoadImage(), x, y, size, size, null);
+			break;
+		default:
+			throw new GameException("Trying to draw an invalid tile type which doesn't exist!");
 		}
 	}
 
