@@ -15,7 +15,11 @@
  *  3 Oct 16		Casey Huang			Added pileofitems image.
  *  6 Oct 16 		Casey Huang			Added logo images and button image
  *  7 Oct 16		Casey Huang			Added server/connecting background
+<<<<<<< HEAD
+ *  9 Oct 16		Edward Kelly		Added crafting background
+=======
  *  09 Oct 16		Casey Huang			Added new fonts
+>>>>>>> branch 'master' of https://gitlab.ecs.vuw.ac.nz/rabechri/Missing.git
  */
 
 package missing.datastorage.assetloader;
@@ -107,6 +111,8 @@ public class GameAssets {
 	private static BufferedImage splashBackgroundImage;
 
 	private static BufferedImage missingLogoImage;
+	
+	private static BufferedImage craftingBackgroundImage;
 
 	private static BufferedImage windowBackgroundImage;
 
@@ -425,6 +431,18 @@ public class GameAssets {
 			}
 		}
 		return windowBackgroundImage;
+	}
+	
+	public static BufferedImage getCraftingBackgroundImage() {
+		if (craftingBackgroundImage == null) {
+			try {
+				craftingBackgroundImage = ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/craftingBackground.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return craftingBackgroundImage;
 	}
 
 	public static BufferedImage getPileOfItemsImage() {
