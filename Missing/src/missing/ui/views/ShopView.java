@@ -16,8 +16,12 @@ import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.ShopPanel;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
 /**
@@ -39,11 +43,15 @@ public class ShopView extends View {
 	private JButton btnExit;
 
 	private ShopPanel display;
-
+	
+	private JPanel btnPanel;
 
 	public ShopView(VControl controller) {
 		super(controller);
-		this.setLayout(null);
+		this.btnPanel = new JPanel();
+		GridLayout layout = new GridLayout(0,2);
+		layout.setVgap(20);
+		this.btnPanel.setLayout(layout);
 	}
 
 	// Methods
@@ -73,17 +81,9 @@ public class ShopView extends View {
 		this.removeAll();
 		if (display != null) {
 			this.add(display);
+			this.display.add(btnPanel);
 		}
 		setFocus();
-
-
-		/*JButton btnSell = new JButton("Sell");
-		btnSell.setBounds(103, 156, 89, 23);
-		panel.add(btnSell);
-
-		JButton btnBuy = new JButton("Buy");
-		btnBuy.setBounds(256, 156, 89, 23);
-		panel.add(btnBuy);*/
 	}
 
 	@Override
@@ -128,26 +128,27 @@ public class ShopView extends View {
 	}
 
 	private void setButtons(){
-		int height = display.getPreferredSize().height;
-		int width = display.getPreferredSize().width;
 		switch(display.getDir()){
 		case NORTH:
+			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height/1.6), 0, 0, 0));
+			btnPanel.setOpaque(false);
 			if(btnExit != null){
-				this.display.remove(btnExit);
+				this.btnPanel.remove(btnExit);
 			}
-			btnSell = MenuFactory.createShopButton("Sell", (int) (height/1.6), 20, width);
-			this.display.add(btnSell);
+			btnSell = MenuFactory.createShopButton("Sell");
+			this.btnPanel.add(btnSell);
 
-			btnBuy = MenuFactory.createShopButton("Buy", (int) (height/1.6), 20, width);
-			this.display.add(btnBuy);
+			btnBuy = MenuFactory.createShopButton("Buy");
+			this.btnPanel.add(btnBuy);
 			break;
 		case SOUTH:
+			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height/5), 0, 0, 0));
 			if(btnSell != null && btnBuy != null){
-				this.display.remove(btnSell);
-				this.display.remove(btnBuy);
+				this.btnPanel.remove(btnSell);
+				this.btnPanel.remove(btnBuy);
 			}
-			btnExit = MenuFactory.createShopButton("Exit", (int) (height/5), 0, width);
-			this.display.add(btnExit);
+			btnExit = MenuFactory.createShopButton("Exit");
+			this.btnPanel.add(btnExit);
 			break;
 		}
 	}

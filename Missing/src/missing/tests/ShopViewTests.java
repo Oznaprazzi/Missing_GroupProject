@@ -20,6 +20,7 @@ public class ShopViewTests {
 	public static void main(String[] args) {
 		ShopView view = new ShopView(null);
 		Shop shop = new Shop(null, null, ShopType.RESOURCE);
+		
 		try {
 			view.updateDisplay(shop);
 		} catch (GameException e) {
