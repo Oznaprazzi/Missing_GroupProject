@@ -137,7 +137,8 @@ public class ShopView extends View {
 			this.btnPanel.add(btnBuy);
 			break;
 		case SOUTH:
-			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height / 5), 0, 0, 0));
+			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height/ 5), (int) (display.getPreferredSize().width/8), 0, 0));
+			btnPanel.setOpaque(false);
 			if (btnSell != null && btnBuy != null) {
 				this.btnPanel.remove(btnSell);
 				this.btnPanel.remove(btnBuy);
