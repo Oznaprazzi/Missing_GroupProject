@@ -30,6 +30,7 @@ import missing.game.characters.Player;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.frames.HandJFrame;
+import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.GamePanel;
 
 /**
@@ -99,7 +100,8 @@ public class GameView extends View {
 		this.setBackground(BACKGROUND_COLOR);
 		ctrlPanel.setBackground(BACKGROUND_COLOR);
 		
-		JLabel lblMoney = new JLabel("Players Money");
+		//JLabel lblMoney = new JLabel("Players Money");
+		JLabel lblMoney = MenuFactory.createLabel3("Players Money");
 		lblMoney.setForeground(Color.WHITE);
 		GridBagConstraints gbcMoney = new GridBagConstraints();
 		gbcMoney.insets = new Insets(0, 0, 5, 0);
@@ -119,7 +121,7 @@ public class GameView extends View {
 		ctrlPanel.add(moneyField, gbc_moneyField);
 		
 		
-		JLabel lblTime = new JLabel("Current Time");
+		JLabel lblTime = MenuFactory.createLabel3("Current Time");
 		lblTime.setForeground(Color.WHITE);
 		GridBagConstraints gbc_time = new GridBagConstraints();
 		gbc_time.insets = new Insets(0, 0, 5, 0);
@@ -140,7 +142,7 @@ public class GameView extends View {
 		timeField.setColumns(10);
 		
 		
-		JLabel lblCurrentPlayer = new JLabel("Current Player");
+		JLabel lblCurrentPlayer = MenuFactory.createLabel3("Current Player");
 		lblCurrentPlayer.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblCurrentPlayer = new GridBagConstraints();
 		gbc_lblCurrentPlayer.insets = new Insets(0, 0, 5, 0);
@@ -160,7 +162,7 @@ public class GameView extends View {
 		ctrlPanel.add(nameField, gbc_txtName);
 		nameField.setColumns(10);
 
-		btnDoAction = new JButton("Do Action");
+		btnDoAction = MenuFactory.createButton3("Perform Action");
 		btnDoAction.setBackground(Color.yellow);
 		btnDoAction.setFocusable(false);
 		GridBagConstraints gbc_btnDoAction = new GridBagConstraints();
@@ -173,7 +175,7 @@ public class GameView extends View {
 
 		ctrlPanel.add(btnDoAction, gbc_btnDoAction);
 
-		btnViewMap = new JButton("View Map");
+		btnViewMap = MenuFactory.createButton3("View Map");
 		btnViewMap.setBackground(Color.yellow);
 		btnViewMap.setFocusable(false);
 		GridBagConstraints gbc_btnViewMap = new GridBagConstraints();
@@ -186,7 +188,8 @@ public class GameView extends View {
 		gbc_btnViewMap.weighty = BTN_WEIGHT;
 		ctrlPanel.add(btnViewMap, gbc_btnViewMap);
 
-		btnPlayersBag = new JButton("Players Bag");
+		//btnPlayersBag = new JButton("Players Bag");
+		btnPlayersBag = MenuFactory.createButton3("Players Bag");
 		btnPlayersBag.setBackground(Color.yellow);
 		btnPlayersBag.setFocusable(false);
 		GridBagConstraints gbc_btnPlayersBag = new GridBagConstraints();
@@ -198,7 +201,7 @@ public class GameView extends View {
 		gbc_btnPlayersBag.anchor = GridBagConstraints.NORTH;
 		ctrlPanel.add(btnPlayersBag, gbc_btnPlayersBag);
 
-		JLabel lblPlayersOnline = new JLabel("Players Online");
+		JLabel lblPlayersOnline = MenuFactory.createLabel3("Players Online");
 		lblPlayersOnline.setForeground(Color.WHITE);
 		GridBagConstraints gbc_playersOnline = new GridBagConstraints();
 		gbc_playersOnline.insets = new Insets(0, 0, 5, 0);
