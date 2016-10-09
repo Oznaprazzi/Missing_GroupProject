@@ -26,6 +26,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
@@ -109,9 +110,7 @@ public class GameView extends View {
 		gbcMoney.gridy = 1;
 		ctrlPanel.add(lblMoney, gbcMoney);
 		
-		moneyField = new JTextField();
-		moneyField.setFocusable(false);
-		moneyField.setEditable(false);
+		moneyField = MenuFactory.createGameViewTextField("");
 		
 		GridBagConstraints gbc_moneyField = new GridBagConstraints();
 		gbc_moneyField.fill = GridBagConstraints.HORIZONTAL;
@@ -129,9 +128,7 @@ public class GameView extends View {
 		gbc_time.gridy = 3;
 		ctrlPanel.add(lblTime, gbc_time);
 
-		timeField = new JTextField();
-		timeField.setEditable(false);
-		timeField.setFocusable(false);
+		timeField = MenuFactory.createGameViewTextField("");
 		
 		GridBagConstraints gbc_timeField = new GridBagConstraints();
 		gbc_timeField.fill = GridBagConstraints.HORIZONTAL;
@@ -150,8 +147,7 @@ public class GameView extends View {
 		gbc_lblCurrentPlayer.gridy = 5;
 		ctrlPanel.add(lblCurrentPlayer, gbc_lblCurrentPlayer);
 
-		nameField = new JTextField();
-		nameField.setEditable(false);
+		nameField = MenuFactory.createGameViewTextField("");
 		nameField.setText("" + currentPlayer.getName());// curPlayer.getName());
 
 		GridBagConstraints gbc_txtName = new GridBagConstraints();
@@ -211,6 +207,10 @@ public class GameView extends View {
 		
 		this.playersOnline = getPlayerNames(); //Set the JTextField.
 		playersOnline.setFocusable(false);
+		playersOnline.setEnabled(false);
+		playersOnline.setBackground(Color.black);
+		playersOnline.setForeground(Color.white);
+		playersOnline.setFont(GameAssets.getFont2((float) (playersOnline.getFont().getSize() * 1.5)));
 		GridBagConstraints gbc_players = new GridBagConstraints();
 		gbc_players.insets = new Insets(0, 0, 5, 0);
 		gbc_players.gridx = 0;

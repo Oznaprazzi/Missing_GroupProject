@@ -39,13 +39,13 @@ public class ShopView extends View {
 	private JButton btnExit;
 
 	private ShopPanel display;
-	
+
 	private JPanel btnPanel;
 
 	public ShopView(VControl controller) {
 		super(controller);
 		this.btnPanel = new JPanel();
-		GridLayout layout = new GridLayout(0,2);
+		GridLayout layout = new GridLayout(0, 2);
 		layout.setVgap(20);
 		this.btnPanel.setLayout(layout);
 	}
@@ -73,8 +73,8 @@ public class ShopView extends View {
 
 	@Override
 	public void initialise() {
-		setButtons();
 		this.removeAll();
+		setButtons();
 		if (display != null) {
 			this.add(display);
 			this.display.add(btnPanel);
@@ -123,28 +123,29 @@ public class ShopView extends View {
 		}
 	}
 
-	private void setButtons(){
-		switch(display.getDir()){
+	private void setButtons() {
+		switch (display.getDir()) {
 		case NORTH:
-			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height/1.6), 0, 0, 0));
+			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height / 1.6), 0, 0, 0));
 			btnPanel.setOpaque(false);
-			if(btnExit != null){
+			if (btnExit != null) {
 				this.btnPanel.remove(btnExit);
 			}
 			btnSell = MenuFactory.createShopButton("Sell");
 			this.btnPanel.add(btnSell);
-
 			btnBuy = MenuFactory.createShopButton("Buy");
 			this.btnPanel.add(btnBuy);
 			break;
 		case SOUTH:
-			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height/5), 0, 0, 0));
-			if(btnSell != null && btnBuy != null){
+			btnPanel.setBorder(new EmptyBorder((int) (display.getPreferredSize().height / 5), 0, 0, 0));
+			if (btnSell != null && btnBuy != null) {
 				this.btnPanel.remove(btnSell);
 				this.btnPanel.remove(btnBuy);
 			}
 			btnExit = MenuFactory.createShopButton("Exit");
 			this.btnPanel.add(btnExit);
+			break;
+		default:
 			break;
 		}
 	}

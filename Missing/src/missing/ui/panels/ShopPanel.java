@@ -37,7 +37,7 @@ public class ShopPanel extends JPanel implements KeyListener {
 	public ShopPanel(View parent, Shop shop) {
 		this.parent = parent;
 		this.shop = shop;
-		this.orientation = Direction.NORTH;
+		this.orientation = Direction.SOUTH;
 		this.node = initialiseNodes(shop, orientation);
 		this.addKeyListener(this);
 	}
