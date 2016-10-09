@@ -15,6 +15,7 @@
  *  3 Oct 16		Casey Huang			Added pileofitems image.
  *  6 Oct 16 		Casey Huang			Added logo images and button image
  *  7 Oct 16		Casey Huang			Added server/connecting background
+ *  09 Oct 16		Casey Huang			Added new fonts
  */
 
 package missing.datastorage.assetloader;
@@ -94,8 +95,6 @@ public class GameAssets {
 
 	private static BufferedImage berriesImage;
 
-	private static BufferedImage bagBackgroundImage;
-
 	private static BufferedImage pileOfItemsImage;
 
 	private static BufferedImage logoImage;
@@ -104,9 +103,9 @@ public class GameAssets {
 
 	private static BufferedImage missingLogoImage;
 	
-	private static BufferedImage containerBackgroundImage;
-
-	private static BufferedImage pileBackgroundImage;
+	private static BufferedImage windowBackgroundImage;
+	
+	private static BufferedImage itemBackgroundImage;
 	
 	private static Image serverBackgroundImage;
 
@@ -114,6 +113,7 @@ public class GameAssets {
 
 	private static Font customFont;
 
+	private static Font customFont2;
 
 	// Getters for File Assets
 
@@ -376,41 +376,17 @@ public class GameAssets {
 		}
 		return fishImage;
 	}
-
-	public static BufferedImage getBagBackgroundImage() {
-		if (bagBackgroundImage == null) {
-			try {
-				bagBackgroundImage = ImageIO
-						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/bagBackground.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return bagBackgroundImage;
-	}
 	
-	public static BufferedImage getContainerBackgroundImage() {
-		if (containerBackgroundImage == null) {
+	public static BufferedImage getWindowBackgroundImage() {
+		if (windowBackgroundImage == null) {
 			try {
-				containerBackgroundImage = ImageIO
-						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/containerBackground.jpg"));
+				windowBackgroundImage = ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/windowbackground.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		return containerBackgroundImage;
-	}
-	
-	public static BufferedImage getPileBackgroundImage() {
-		if (pileBackgroundImage == null) {
-			try {
-				pileBackgroundImage = ImageIO
-						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/pileBackground.jpg"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return pileBackgroundImage;
+		return windowBackgroundImage;
 	}
 
 	public static BufferedImage getPileOfItemsImage() {
@@ -458,6 +434,18 @@ public class GameAssets {
 		return missingLogoImage;
 	}
 	
+	public static BufferedImage getItemBackgroundImage() {
+		if (itemBackgroundImage == null) {
+			try {
+				itemBackgroundImage = ImageIO
+						.read(GameAssets.class.getResource(STORAGE_PATH + "/img/itembackground.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return itemBackgroundImage;
+	}
+	
 	public static Image getServerBackgroundImage() {
 		if (serverBackgroundImage == null) {
 			serverBackgroundImage = new ImageIcon(GameAssets.class.getResource(STORAGE_PATH+"/img/serverbackground.gif")).getImage();
@@ -488,6 +476,19 @@ public class GameAssets {
 			e.printStackTrace();
 		}
 		return customFont.deriveFont(size);
+	}
+	
+	public static Font getFont2(float size) {
+		try {
+			customFont2 = Font.createFont(Font.TRUETYPE_FONT,
+					GameAssets.class.getResource(STORAGE_PATH + "/fonts/ParmaPetit-Normal.ttf").openStream());
+			GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			genv.registerFont(customFont2);
+			return customFont2.deriveFont(size);
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
+		return customFont2.deriveFont(size);
 	}
 
 	public static BufferedImage getShopNodeImage(ShopType type, Direction direction) {

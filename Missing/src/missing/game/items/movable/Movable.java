@@ -12,6 +12,7 @@
  * 7 Sep 16		Chris Rabe		added getters and setters for stored field
  * 21 Sep 16	Chris Rabe		allowed player to interact with the object
  * 26 Sep 16	Casey Huang		added count field to count how many items of this type the player holds
+ * 8 Oct 16		Casey Huang		Added addAmount method to add to amount when same item is added to pocket/bag
  */
 package missing.game.items.movable;
 
@@ -69,6 +70,22 @@ public abstract class Movable extends Item {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	
+	/**
+	 * Used when transferring same item to pocket/bag
+	 * @param amount
+	 */
+	public void addAmount(int amount){
+		this.amount += amount;
+	}
+	
+	/**
+	 * Used when transferring same item to pocket/bag
+	 * @param amount
+	 */
+	public void decreaseAmount(int amount){
+		this.amount -= amount;
 	}
 
 	public boolean isStored() {
