@@ -19,7 +19,7 @@ public class ShopViewTests {
 
 	public static void main(String[] args) {
 		ShopView view = new ShopView(null);
-		Shop shop = new Shop(null, null, ShopType.RESOURCE);
+		Shop shop = new Shop(null, null, ShopType.FOOD);
 		
 		try {
 			view.updateDisplay(shop);
