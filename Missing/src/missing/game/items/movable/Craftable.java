@@ -93,7 +93,7 @@ public abstract class Craftable extends Usable {
 					// item has enough wood -- just decrease
 					newAmt = amt - woodLeft;
 					woodLeft = 0;
-					w.setAmount(newAmt);
+					w.setAmount(newAmt);// TODO fix decrease pocket
 				} else {
 					newAmt = woodLeft - amt;
 					woodLeft = newAmt;
