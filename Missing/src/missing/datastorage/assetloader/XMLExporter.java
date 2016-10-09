@@ -316,13 +316,17 @@ public class XMLExporter {
 	 * @return
 	 */
 	private static Element getLocation(Point tileLocation, Document doc) {
+		// null check here
+
 		// create all the nodes needed
 		Element loc = doc.createElement("location");
 		Element x = doc.createElement("x");
 		Element y = doc.createElement("y");
 		// set the values of x and y
-		x.appendChild(doc.createTextNode(String.valueOf(tileLocation.x)));
-		y.appendChild(doc.createTextNode(String.valueOf(tileLocation.y)));
+		if (tileLocation != null) {
+			x.appendChild(doc.createTextNode(String.valueOf(tileLocation.x)));
+			y.appendChild(doc.createTextNode(String.valueOf(tileLocation.y)));
+		}
 		// put x and y as children of loc
 		loc.appendChild(x);
 		loc.appendChild(y);

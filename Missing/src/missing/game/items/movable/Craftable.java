@@ -18,6 +18,7 @@ import java.util.List;
 
 import missing.game.characters.Player;
 import missing.game.items.movable.Tool.ToolType;
+import missing.game.items.nonmovable.Pocket;
 import missing.helper.GameException;
 
 /**
@@ -78,7 +79,8 @@ public abstract class Craftable extends Usable {
 	private static Tool createShovel(Player player) throws GameException {
 		int woodLeft = 2;
 		int stoneLeft = 1;
-		List<Movable> items = player.getPocket().getItems();
+		Pocket pocket = player.getPocket();
+		List<Movable> items = pocket.getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && stoneLeft == 0) {
@@ -94,6 +96,7 @@ public abstract class Craftable extends Usable {
 					newAmt = amt - woodLeft;
 					woodLeft = 0;
 					w.setAmount(newAmt);
+					pocket.setSize(pocket.getSize() - woodLeft);
 				} else {
 					newAmt = woodLeft - amt;
 					woodLeft = newAmt;
@@ -107,6 +110,7 @@ public abstract class Craftable extends Usable {
 					newAmt = amt - stoneLeft;
 					stoneLeft = 0;
 					s.setAmount(newAmt);
+					pocket.setSize(pocket.getSize() - stoneLeft);
 				} else {
 					newAmt = stoneLeft - amt;
 					stoneLeft = newAmt;
@@ -128,7 +132,8 @@ public abstract class Craftable extends Usable {
 	private static Tool createPickaxe(Player player) throws GameException {
 		int woodLeft = 2;
 		int stoneLeft = 3;
-		List<Movable> items = player.getPocket().getItems();
+		Pocket pocket = player.getPocket();
+		List<Movable> items = pocket.getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && stoneLeft == 0) {
@@ -144,6 +149,7 @@ public abstract class Craftable extends Usable {
 					newAmt = amt - woodLeft;
 					woodLeft = 0;
 					w.setAmount(newAmt);
+					pocket.setSize(pocket.getSize() - woodLeft);
 				} else {
 					newAmt = woodLeft - amt;
 					woodLeft = newAmt;
@@ -157,6 +163,7 @@ public abstract class Craftable extends Usable {
 					newAmt = amt - stoneLeft;
 					stoneLeft = 0;
 					s.setAmount(newAmt);
+					pocket.setSize(pocket.getSize() - stoneLeft);
 				} else {
 					newAmt = stoneLeft - amt;
 					stoneLeft = newAmt;
@@ -178,7 +185,8 @@ public abstract class Craftable extends Usable {
 	private static Tool createRod(Player player) throws GameException {
 		int woodLeft = 2;
 		int dirtLeft = 3;
-		List<Movable> items = player.getPocket().getItems();
+		Pocket pocket = player.getPocket();
+		List<Movable> items = pocket.getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && dirtLeft == 0) {
@@ -194,6 +202,7 @@ public abstract class Craftable extends Usable {
 					newAmt = amt - woodLeft;
 					woodLeft = 0;
 					w.setAmount(newAmt);
+					pocket.setSize(pocket.getSize() - woodLeft);
 				} else {
 					newAmt = woodLeft - amt;
 					woodLeft = newAmt;
@@ -207,6 +216,7 @@ public abstract class Craftable extends Usable {
 					newAmt = amt - dirtLeft;
 					dirtLeft = 0;
 					d.setAmount(newAmt);
+					pocket.setSize(pocket.getSize() - dirtLeft);
 				} else {
 					newAmt = dirtLeft - amt;
 					dirtLeft = newAmt;
@@ -228,7 +238,8 @@ public abstract class Craftable extends Usable {
 	private static Tool createAxe(Player player) throws GameException {
 		int woodLeft = 2;
 		int stoneLeft = 3;
-		List<Movable> items = player.getPocket().getItems();
+		Pocket pocket = player.getPocket();
+		List<Movable> items = pocket.getItems();
 		List<Movable> used = new ArrayList<Movable>();
 		for (Movable item : items) {
 			if (woodLeft == 0 && stoneLeft == 0) {
@@ -244,6 +255,7 @@ public abstract class Craftable extends Usable {
 					newAmt = amt - woodLeft;
 					woodLeft = 0;
 					w.setAmount(newAmt);
+					pocket.setSize(pocket.getSize() - woodLeft);
 				} else {
 					newAmt = woodLeft - amt;
 					woodLeft = newAmt;
@@ -257,6 +269,7 @@ public abstract class Craftable extends Usable {
 					newAmt = amt - stoneLeft;
 					stoneLeft = 0;
 					s.setAmount(newAmt);
+					pocket.setSize(pocket.getSize() - stoneLeft);
 				} else {
 					newAmt = stoneLeft - amt;
 					stoneLeft = newAmt;
