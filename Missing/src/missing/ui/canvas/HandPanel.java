@@ -9,6 +9,7 @@
  *  08 Oct 16		Casey Huang			fixed bug
  *  09 Oct 16		Casey Huang			added map to draw selected item
  *  10 Oct 16		Edward Kelly		use item now sends over server
+ *  11 Oct 16		Casey Huang			Fixed duplication bug
  */
 package missing.ui.canvas;
 
@@ -82,8 +83,8 @@ public class HandPanel extends JPanel implements MouseListener {
 
 	private List<Rectangle> gridRectangle; // array of rectangle locations.
 	private Map<Integer, Rectangle> gridMap;
-	
-	
+
+
 	private Movable selectedItem;
 	private Rectangle clickRect;
 	private int clickIndex;
@@ -181,7 +182,6 @@ public class HandPanel extends JPanel implements MouseListener {
 		this.clickIndex = indexOfCell(e);
 		this.clickRect = gridMap.get(clickIndex);
 		this.selectedItem = selectClickedItem();
-		System.out.println(this.selectedItem);
 		this.repaint();
 	}
 
@@ -336,6 +336,7 @@ public class HandPanel extends JPanel implements MouseListener {
 					if (this.bagSet.get(clickIndex) == null) {
 						return null;
 					}
+					System.out.println(this.bagSet.get(clickIndex).getAmount());
 					return this.bagSet.get(clickIndex);
 				}
 			} else if (clickIndex >= 10 && clickIndex <= 19) {
@@ -343,7 +344,7 @@ public class HandPanel extends JPanel implements MouseListener {
 				if (pocketIndex <= pocketSet.size() - 1) {
 					if (this.pocketSet.get(pocketIndex) == null) {
 						return null; // At this memory address, there was an
-										// undefined object at that position.
+						// undefined object at that position.
 					}
 					return this.pocketSet.get(pocketIndex);
 				}
@@ -365,14 +366,16 @@ public class HandPanel extends JPanel implements MouseListener {
 		if (clickIndex >= 0 && clickIndex <= 9) {
 			return; // cant transfer to yourself - leave.
 		} else if (clickIndex >= 10 && clickIndex <= 19) {
-
+			bag.addItem(selectedItem);
+			
 			if (!bagSet.contains(selectedItem)) {
 				bagSet.add(selectedItem);
 			}
-			bag.addItem(selectedItem);
+			
 			pocket.removeItem(selectedItem);
-
 			pocketSet.remove(selectedItem);
+			
+			System.out.println("transferPocketToBag" + this.selectedItem.getAmount());
 			selectedItem = null;
 			clickIndex = -1;
 		}
@@ -390,24 +393,28 @@ public class HandPanel extends JPanel implements MouseListener {
 			return;
 		if (clickIndex >= 0 && clickIndex <= 9) {
 			int index = findItemInSet(pocketSet);
+			pocket.addItem(selectedItem);
 			if (index != -1) {
 				pocketSet.get(index).addAmount(selectedItem.getAmount());
 			} else {
 				pocketSet.add(selectedItem);
 			}
-			pocket.addItem(selectedItem);
+			
 			bag.removeItem(selectedItem);
-
 			bagSet.remove(selectedItem);
+			
 			selectedItem = null;
 			clickIndex = -1;
 		} else if (clickIndex >= 10 && clickIndex <= 19) {
 			// can't transfer to yourself - leave.
 			return;
 		}
+		if(this.selectedItem != null){
+			System.out.println("transferBagToPocket" + this.selectedItem.getAmount());
+		}
 		this.repaint();
 	}
-	
+
 	/**
 	 * Whenever the "USE" button is pressed, it uses the item to help benefit the player.
 	 * For example, if a player presses this button on an APPLE, it allows the player to consume 
@@ -420,25 +427,25 @@ public class HandPanel extends JPanel implements MouseListener {
 			/*Now, the respective item has been removed and can now be used. */
 			Usable curItem = (Usable) selectedItem;
 			if(curItem instanceof Food){
-			
-			/*Remove from the pocket or bag if they have the selected item. */
-			if(pocketSet.contains(selectedItem))
-				pocketSet.remove(selectedItem);
-			else if(bagSet.contains(selectedItem))
-				bagSet.remove(selectedItem);
-			/*Now, we don't have a selected item anymore :( */
-			selectedItem = null;
-			
-			curItem.use(player); //use it.
-			control.sendUseItem(((Food) curItem).getFoodType().toString());
-			System.out.println("Current Item should have been used.");
+
+				/*Remove from the pocket or bag if they have the selected item. */
+				if(pocketSet.contains(selectedItem))
+					pocketSet.remove(selectedItem);
+				else if(bagSet.contains(selectedItem))
+					bagSet.remove(selectedItem);
+				/*Now, we don't have a selected item anymore :( */
+				selectedItem = null;
+
+				curItem.use(player); //use it.
+				control.sendUseItem(((Food) curItem).getFoodType().toString());
+				System.out.println("Current Item should have been used.");
 			}
 			//now repaint the graphics pane.
 			this.revalidate();
 			this.repaint();
 		}
 	}
-		
+
 	/*
 	 * END OF HELPER METHODS..
 	 */

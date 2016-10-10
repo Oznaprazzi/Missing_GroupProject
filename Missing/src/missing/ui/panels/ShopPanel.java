@@ -253,6 +253,12 @@ public class ShopPanel extends JPanel {
 			bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
 			bagFrame.setVisible(true);
 		});
+		
+		btnExit.addActionListener(e -> {
+			controller.requestFocus();
+			bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
+			bagFrame.setVisible(true);
+		});
 
 	}
 }
