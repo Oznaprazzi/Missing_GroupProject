@@ -21,6 +21,7 @@ import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
+import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.movable.Movable;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
@@ -41,10 +42,13 @@ public class BagFrameTest extends JFrame {
 	private final JButton btnPocketToBag = MenuFactory.createButton2("Transfer To Bag");
 	private final JButton btnUseItem = MenuFactory.createButton2("Use Item");
 	private Player testPlayer = new Player(0, "chris", new Point(0,0), new Point(0,0));
-	
-	
-	private Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
-	private Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
+	private static Point pt = new Point(0, 0); /*Used to quickly create test objects. */
+
+	/*Holds objects that the current Player has. */
+	private static Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
+	private static Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
+	private static Movable dirt = new Dirt(pt, pt);
+	private static Movable rod = new Tool(pt, pt, ToolType.FISHINGROD);
 
 	private Movable clickedItem;
 	private int clickedIndex;
@@ -52,7 +56,6 @@ public class BagFrameTest extends JFrame {
 	
 	private Bag bag;
 	private Pocket pocket;
-	
 	private BufferedImage backgroundImage = GameAssets.getWindowBackgroundImage();
 	
 	/**
@@ -93,6 +96,8 @@ public class BagFrameTest extends JFrame {
 		try {
 			testPlayer.addToPocket(food);
 			testPlayer.addToPocket(food4);
+			testPlayer.addToPocket(dirt);
+			testPlayer.addToPocket(rod);
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
@@ -149,13 +154,11 @@ public class BagFrameTest extends JFrame {
 
 	public static Pocket addItemsToPocket() {
 		Pocket pocket = new Pocket();
-		Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
-		Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
-		Movable dirt = new Dirt(new Point(0, 0), new Point(0,0));
 		try{
 			pocket.addItem(food);
 			pocket.addItem(food4);
 			pocket.addItem(dirt);
+			pocket.addItem(rod);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
