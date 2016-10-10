@@ -455,7 +455,7 @@ public class Game implements Serializable {
 			if (tile.getObject() instanceof Pile) {
 				player.setInsidePile(true);
 				tile.addPlayerToPile(player);
-			} else {
+			} else if (tile.getObject() instanceof TallGrass) {
 				player.setInsideGrass(true);
 				tile.setObject(player);
 			}
