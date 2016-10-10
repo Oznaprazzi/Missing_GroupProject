@@ -371,6 +371,9 @@ public class HandPanel extends JPanel implements MouseListener {
 			}
 			bag.addItem(selectedItem);
 			pocket.removeItem(selectedItem);
+			
+			// send over server
+			control.sendTransferTo("bag", selectedItem);
 
 			pocketSet.remove(selectedItem);
 			selectedItem = null;
@@ -398,6 +401,9 @@ public class HandPanel extends JPanel implements MouseListener {
 			pocket.addItem(selectedItem);
 			bag.removeItem(selectedItem);
 
+			// send over server
+			control.sendTransferTo("pocket", selectedItem);
+			
 			bagSet.remove(selectedItem);
 			selectedItem = null;
 			clickIndex = -1;

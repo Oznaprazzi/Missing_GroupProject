@@ -49,6 +49,7 @@ import missing.datastorage.assetloader.XMLHandler;
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
 import missing.game.items.movable.Food.FoodType;
+import missing.game.items.movable.Movable;
 import missing.game.items.nonmovable.Container;
 import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
@@ -559,7 +560,10 @@ public class VControl extends JFrame {
 	
 	public void sendUseItem(String foodType) {
 		client.sendUseItem(foodType);
-		
+	}
+	
+	public void sendTransferTo(String to, Movable item) {
+		client.sendTransferTo(to, item);
 	}
 
 	public int getPlayerID() {
@@ -595,6 +599,8 @@ public class VControl extends JFrame {
 	public void repaint() {
 		super.repaint();
 	}
+
+	
 
 	
 
