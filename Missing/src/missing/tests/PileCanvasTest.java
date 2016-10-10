@@ -43,7 +43,6 @@ public class PileCanvasTest extends JFrame {
 	private JButton btnTransferSelected;
 
 	
-	
 	/**
 	 * Run the test.
 	 */

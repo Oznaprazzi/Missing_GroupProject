@@ -20,6 +20,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,6 +72,8 @@ public class PileCanvas extends JPanel implements MouseListener {
 	private final int BOLDED_WIDTH = 5;
 	private final int REG_WIDTH = 1;
 	
+	private BufferedImage windowBg = GameAssets.getWindowBackgroundImage();
+	
 	/**
 	 * Stores all of the grids being drawn. Used to check if a click is inside a rectangle.
 	 */
@@ -103,6 +106,7 @@ public class PileCanvas extends JPanel implements MouseListener {
 
 	@Override
 	public void paint(Graphics g) {
+		g.drawImage(windowBg, 0, 0, getWidth(), getHeight(), null);
 		Font font = GameAssets.getFont2(30f);
 		g.setFont(font);
 		g.setColor(Color.orange.darker());
