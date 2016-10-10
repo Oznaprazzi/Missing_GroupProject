@@ -21,12 +21,12 @@
  * 3 Oct 16			Linus Go			added JMenuChooser and some items.
  * 6 Oct 16			Edward Kelly		implemented calls to XMLHandler.saveGame()
  * 6 Oct 16 		Edward Kelly		implemented day night cycle
+ * 11 Oct 16		Chris Rabe			tidied up code structure
  */
 package missing.ui.controller;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -136,97 +136,6 @@ public class VControl extends JFrame {
 		views[cur].initialise();
 	}
 
-	public void reset() {
-		timer.cancel();
-		cur = 0;
-		prev = 0;
-		gGame = null;
-		playerID = 0;
-		isHost = false;
-		client = null;
-		alpha = 0;
-		dnc = null;
-		timer = null;
-		this.views = GUIInitialiser.createViews(this);
-		initializeMenu();
-		initialiseGUI();
-		setupMenuListeners();
-		views[cur].initialise();
-	}
-
-	/**
-	 * Helper method. Initializes the JMenu and all of the Items inside.
-	 */
-	private void initializeMenu() {
-		menuBar = new JMenuBar();
-
-		JMenu fileMenu = new JMenu("File");
-		saveGame = new JMenuItem("Save Game", KeyEvent.VK_S);
-		loadGame = new JMenuItem("Load Game", KeyEvent.VK_L);
-		exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
-		/* Ensure that the VControl doesn't lose focus. */
-		saveGame.setFocusable(false);
-		loadGame.setFocusable(false);
-		exitItem.setFocusable(false);
-		fileMenu.add(saveGame);
-		fileMenu.add(loadGame);
-		fileMenu.add(exitItem);
-		menuBar.add(fileMenu);
-
-		JMenu helpMenu = new JMenu("Help");
-		helpItem = new JMenuItem("Game Instructions", KeyEvent.VK_G);
-		credits = new JMenuItem("Credits", KeyEvent.VK_C);
-		/* Ensure that VControl doesn't lose focus. */
-		helpItem.setFocusable(false);
-		credits.setFocusable(false);
-
-		helpMenu.add(helpItem);
-		helpMenu.add(credits);
-		menuBar.add(helpMenu);
-
-		this.setJMenuBar(menuBar);
-	}
-
-	private void setupMenuListeners() {
-
-		saveGame.addActionListener(e -> {
-			if (gGame == null) {
-				JOptionPane.showMessageDialog(this, "You must load or start a game to save", "No Game to Save",
-						JOptionPane.WARNING_MESSAGE);
-			} else
-				saveGame();
-		});
-
-		loadGame.addActionListener(e -> {
-			loadGame();
-		});
-
-		exitItem.addActionListener(e -> {
-			int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Exit Confirmation",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-			if (choice == 0) {
-				if (isHost && gGame != null) {
-					// ask if want to save game
-					choice = JOptionPane.showConfirmDialog(null, "Would you like to save the game?", "Save game",
-							JOptionPane.YES_NO_OPTION);
-					if (choice == JOptionPane.YES_OPTION) {
-						saveGame();
-					}
-				}
-				closeVControl();
-			}
-		});
-
-		helpItem.addActionListener(e -> {
-
-		});
-
-		credits.addActionListener(e -> {
-
-		});
-	}
-
 	// View Control Methods
 
 	public int getMenuView() {
@@ -303,17 +212,37 @@ public class VControl extends JFrame {
 		revalidate();
 	}
 
-	/**
-	 * Disconnects client from game and closes window
-	 */
-	private void closeVControl() {
-		if (client != null) {
-			client.disconnectClient();
-		}
-		System.exit(0);
+	// Getters and Setters
+
+	public int getPlayerID() {
+		return playerID;
 	}
 
-	public void openCrafting() {
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
+	}
+
+	public View getView(int viewIndex) {
+		return views[viewIndex];
+	}
+
+	public void setIsHost(boolean isHost) {
+		this.isHost = isHost;
+	}
+
+	public boolean isHost() {
+		return isHost;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public GGame getGGame() {
+		return gGame;
+	}
+
+	public void displayCrafting() {
 		CraftingFrame craftingFrame = new CraftingFrame(this);
 		craftingFrame.setLocationRelativeTo(this);
 		craftingFrame.pack();
@@ -393,6 +322,7 @@ public class VControl extends JFrame {
 		((MapView) views[this.getMapView()]).setSpectator(true);
 		this.changeView(this.getMapView());
 	}
+
 	// Helper methods
 
 	private void initialiseGUI() {
@@ -422,6 +352,169 @@ public class VControl extends JFrame {
 		pack();
 		setVisible(true);
 	}
+
+	/** Updates the current GGame. Called by client */
+	public void updateGGame(Game game) throws GameException {
+		this.gGame = new GGame(game, views[cur]);
+		updateAlpha(this.alpha);
+		gGame.setView(views[cur]);
+		gGame.setPlayer(gGame.getGame().getAvatars()[playerID]);
+		((GameView) views[this.getGameView()]).updateGamePanel(this);
+		((MapView) views[this.getMapView()]).updateMapPanel(this);
+
+	}
+
+	public void setGGame(Game game) throws GameException {
+		this.gGame = new GGame(game, views[cur]);
+		views[this.getGameView()].initialise();
+		views[this.getMapView()].initialise();
+		startDayNightCycle();
+	}
+
+	// Weather controls
+
+	/**
+	 * Updates the alpha for MapView and GameView
+	 * 
+	 * @param alpha
+	 *            The transparency of the rect to be drawn over game
+	 */
+	public void updateAlpha(int alpha) {
+		this.alpha = alpha;
+		this.gGame.setAlpha(alpha);
+	}
+
+	/**
+	 * Starts day and night cycle for game
+	 */
+	private void startDayNightCycle() {
+		timer = new java.util.Timer();
+		dnc = new DayNightCycle(this);
+		timer.scheduleAtFixedRate(dnc, 0, CLOCK_TICK * 10);
+	}
+
+	// Network Sending Methods
+
+	/**
+	 * Calls Client.handleAction(). This method is called by performAction
+	 * button in GameView
+	 */
+	public void performAction() {
+		client.handleAction();
+	}
+
+	public void sendCraftedItem(String item) {
+		client.sendCraftedItem(item);
+	}
+
+	public void sendExitSignal() {
+		client.sendExitSignal(playerID);
+	}
+
+	public void sendUseItem(String foodType) {
+		client.sendUseItem(foodType);
+	}
+
+	public void sendTransferTo(String to, Movable item) {
+		client.sendTransferTo(to, item);
+	}
+
+	public void sendPilePickUp(String selectedItem) {
+		client.sendPilePickUp(selectedItem);
+
+	}
+
+	/** Disconnects client from game */
+	public void disconnectClient() {
+		client.disconnectClient();
+	}
+
+	// Helper Method
+
+	/**
+	 * Disconnects client from game and closes window
+	 */
+	private void closeVControl() {
+		if (client != null) {
+			client.disconnectClient();
+		}
+		System.exit(0);
+	}
+
+	private void setupMenuListeners() {
+
+		saveGame.addActionListener(e -> {
+			if (gGame == null) {
+				JOptionPane.showMessageDialog(this, "You must load or start a game to save", "No Game to Save",
+						JOptionPane.WARNING_MESSAGE);
+			} else
+				saveGame();
+		});
+
+		loadGame.addActionListener(e -> {
+			loadGame();
+		});
+
+		exitItem.addActionListener(e -> {
+			int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Exit Confirmation",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (choice == 0) {
+				if (isHost && gGame != null) {
+					// ask if want to save game
+					choice = JOptionPane.showConfirmDialog(null, "Would you like to save the game?", "Save game",
+							JOptionPane.YES_NO_OPTION);
+					if (choice == JOptionPane.YES_OPTION) {
+						saveGame();
+					}
+				}
+				closeVControl();
+			}
+		});
+
+		helpItem.addActionListener(e -> {
+
+		});
+
+		credits.addActionListener(e -> {
+
+		});
+	}
+
+	/**
+	 * Helper method. Initializes the JMenu and all of the Items inside.
+	 */
+	private void initializeMenu() {
+		menuBar = new JMenuBar();
+
+		JMenu fileMenu = new JMenu("File");
+		saveGame = new JMenuItem("Save Game", KeyEvent.VK_S);
+		loadGame = new JMenuItem("Load Game", KeyEvent.VK_L);
+		exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
+		/* Ensure that the VControl doesn't lose focus. */
+		saveGame.setFocusable(false);
+		loadGame.setFocusable(false);
+		exitItem.setFocusable(false);
+		fileMenu.add(saveGame);
+		fileMenu.add(loadGame);
+		fileMenu.add(exitItem);
+		menuBar.add(fileMenu);
+
+		JMenu helpMenu = new JMenu("Help");
+		helpItem = new JMenuItem("Game Instructions", KeyEvent.VK_G);
+		credits = new JMenuItem("Credits", KeyEvent.VK_C);
+		/* Ensure that VControl doesn't lose focus. */
+		helpItem.setFocusable(false);
+		credits.setFocusable(false);
+
+		helpMenu.add(helpItem);
+		helpMenu.add(credits);
+		menuBar.add(helpMenu);
+
+		this.setJMenuBar(menuBar);
+	}
+
+	// Game Initialiser Methods
 
 	/**
 	 * Displays GUI to save game and calls XMLHandler.saveGame()
@@ -499,110 +592,4 @@ public class VControl extends JFrame {
 		XMLHandler.filename = xmlFile;
 		JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");
 	}
-
-	public GGame getGGame() {
-		return gGame;
-	}
-
-	/** Updates the current GGame. Called by client */
-	public void updateGGame(Game game) throws GameException {
-		this.gGame = new GGame(game, views[cur]);
-		updateAlpha(this.alpha);
-		gGame.setView(views[cur]);
-		gGame.setPlayer(gGame.getGame().getAvatars()[playerID]);
-		((GameView) views[this.getGameView()]).updateGamePanel(this);
-		((MapView) views[this.getMapView()]).updateMapPanel(this);
-
-	}
-
-	public void setGGame(Game game) throws GameException {
-		this.gGame = new GGame(game, views[cur]);
-		views[this.getGameView()].initialise();
-		views[this.getMapView()].initialise();
-		startDayNightCycle();
-	}
-
-	/**
-	 * Starts day and night cycle for game
-	 */
-	private void startDayNightCycle() {
-		timer = new java.util.Timer();
-		dnc = new DayNightCycle(this);
-		timer.scheduleAtFixedRate(dnc, 0, CLOCK_TICK * 10);
-	}
-
-	/**
-	 * Updates the alpha for MapView and GameView
-	 * 
-	 * @param alpha
-	 *            The transparency of the rect to be drawn over game
-	 */
-	public void updateAlpha(int alpha) {
-		this.alpha = alpha;
-		this.gGame.setAlpha(alpha);
-	}
-
-	/**
-	 * Calls Client.handleAction(). This method is called by performAction
-	 * button in GameView
-	 */
-	public void performAction() {
-		client.handleAction();
-	}
-
-	public void sendCraftedItem(String item) {
-		client.sendCraftedItem(item);
-	}
-
-	public void sendExitSignal() {
-		client.sendExitSignal(playerID);
-	}
-
-	public void sendUseItem(String foodType) {
-		client.sendUseItem(foodType);
-	}
-
-	public void sendTransferTo(String to, Movable item) {
-		client.sendTransferTo(to, item);
-	}
-
-	public void sendPilePickUp(String selectedItem) {
-		client.sendPilePickUp(selectedItem);
-
-	}
-
-	public int getPlayerID() {
-		return playerID;
-	}
-
-	public void setPlayerID(int playerID) {
-		this.playerID = playerID;
-	}
-
-	public View getView(int viewIndex) {
-		return views[viewIndex];
-	}
-
-	public void setIsHost(boolean isHost) {
-		this.isHost = isHost;
-	}
-
-	public boolean isHost() {
-		return isHost;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
-	}
-
-	/** Disconnects client from game */
-	public void disconnectClient() {
-		client.disconnectClient();
-	}
-
-	@Override
-	public void repaint() {
-		super.repaint();
-	}
-
 }

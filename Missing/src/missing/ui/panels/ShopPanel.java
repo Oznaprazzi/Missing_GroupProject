@@ -22,7 +22,6 @@ import missing.game.items.nonmovable.Shop;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.ui.assets.ShopNode;
-import missing.ui.frames.HandJFrame;
 import missing.ui.menustyle.MenuFactory;
 import missing.ui.views.ShopView;
 

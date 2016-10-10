@@ -190,12 +190,8 @@ public class HandPanel extends JPanel implements MouseListener {
 	 * 
 	 * @return
 	 */
-	public Movable getselectedItem() {
-		Movable itm = null;
-		if (selectedItem != null)
-			itm = selectedItem;
-
-		return itm;
+	public Movable getSelectedItem() {
+		return selectedItem;
 	}
 
 	/**

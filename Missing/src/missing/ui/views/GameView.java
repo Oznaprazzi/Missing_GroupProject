@@ -246,7 +246,7 @@ public class GameView extends View {
 		currentPlayer = controller.getGGame().getGame().getAvatars()[id];
 
 		btnDoAction.addActionListener(e -> {
-			controller.openCrafting();
+			controller.displayCrafting();
 		});
 
 		btnPlayersBag.addActionListener(e -> {
