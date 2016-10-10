@@ -60,7 +60,7 @@ public class GUIInitialiser {
 
 	public static View[] createViews(VControl control) {
 		// TODO append new views at end, increase views variable
-		int views = 10;
+		int views = 11;
 		View[] tmp = new View[views];
 		tmp[0] = new SplashView(control);
 		tmp[1] = new MenuView(control);
@@ -72,6 +72,7 @@ public class GUIInitialiser {
 		tmp[7] = new LobbyView(control);
 		tmp[8] = new ClientWaitingView(control);
 		tmp[9] = new CreatePlayerView(control);
+		tmp[10] = new ShopView(control);
 		return tmp;
 	}
 }

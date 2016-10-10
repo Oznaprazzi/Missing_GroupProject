@@ -93,6 +93,18 @@ public class Game implements Serializable {
 	// Methods for interacting with the game
 
 	/**
+	 * Removes the player with the specified id from the square, however it does
+	 * not alter the player's position.
+	 */
+	public void forceRemovePlayer(int id) {
+		Player p = avatars[id];
+		Point wLoc = p.getWorldLocation();
+		Point tLoc = p.getTileLocation();
+		WorldTile tile = getWorld().getWorldNodes()[wLoc.y][wLoc.x].getWorldTiles()[tLoc.y][tLoc.x];
+		tile.setObject(null);
+	}
+
+	/**
 	 * Kills all the players in the game and converts all the players into pile
 	 * objects. This method should be called when the host client disconnects so
 	 * that it is possible to save the game state easily.

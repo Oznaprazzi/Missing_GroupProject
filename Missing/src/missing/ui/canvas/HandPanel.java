@@ -12,7 +12,6 @@
 package missing.ui.canvas;
 
 import java.awt.BasicStroke;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -30,8 +29,6 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
-import missing.game.Game;
-import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Movable;
@@ -54,10 +51,10 @@ public class HandPanel extends JPanel implements MouseListener {
 	private Pocket pocket;
 
 	/** Contains the number of unique items in the bag */
-	private ArrayList<Movable> bagSet;
+	private List<Movable> bagSet;
 
 	/** Contains the number of unique items in the pocket */
-	private ArrayList<Movable> pocketSet;
+	private List<Movable> pocketSet;
 
 	/** x position of grid. */
 	protected static final int X_OFFSET = 58;
@@ -78,11 +75,8 @@ public class HandPanel extends JPanel implements MouseListener {
 
 	private Point clickPoint;
 
-
 	private List<Rectangle> gridRectangle; // array of rectangle locations.
 	private Map<Integer, Rectangle> gridMap;
-	
-	
 
 	private Movable selectedItem;
 	private Rectangle clickRect;
@@ -104,7 +98,7 @@ public class HandPanel extends JPanel implements MouseListener {
 	public void paint(Graphics g) {
 		Font font = GameAssets.getFont2(30f);
 		g.setFont(font);
-		//g.setColor(Color.BLACK);
+		// g.setColor(Color.BLACK);
 		g.drawString("Items in Bag", 20, 30);
 		/* Firstly - draw the items inside the bag.. */
 		this.drawGrid(g, Y_OFFSET_BG);
@@ -120,8 +114,6 @@ public class HandPanel extends JPanel implements MouseListener {
 		this.drawItems(g, Y_OFFSET_PK + 7, pocketSet);
 		fillMap();
 	}
-
-
 
 	/**
 	 * Converts the bag of items into a set - no duplicates to account for count
@@ -141,9 +133,9 @@ public class HandPanel extends JPanel implements MouseListener {
 		}
 	}
 
-	private int findItemInSet(ArrayList<Movable> set){
-		for(int i = 0; i < set.size(); i++){
-			if(set.get(i).equals(selectedItem)){
+	private int findItemInSet(List<Movable> pocketSet2) {
+		for (int i = 0; i < pocketSet2.size(); i++) {
+			if (pocketSet2.get(i).equals(selectedItem)) {
 				return i;
 			}
 		}
@@ -155,7 +147,6 @@ public class HandPanel extends JPanel implements MouseListener {
 		return new Dimension(442, 439);
 	}
 
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		this.clickIndex = indexOfCell(e);
@@ -164,13 +155,15 @@ public class HandPanel extends JPanel implements MouseListener {
 		System.out.println(this.selectedItem);
 		this.repaint();
 	}
+
 	/**
 	 * Returns the selected Item for use with other classes.
+	 * 
 	 * @return
 	 */
-	public Movable getselectedItem(){
+	public Movable getselectedItem() {
 		Movable itm = null;
-		if(selectedItem != null)
+		if (selectedItem != null)
 			itm = selectedItem;
 
 		return itm;
@@ -253,14 +246,15 @@ public class HandPanel extends JPanel implements MouseListener {
 				drawCell(g, left, top, size, false);
 			}
 		}
-		
-		if(clickRect != null){
+
+		if (clickRect != null) {
 			drawCell(g, clickRect.x, clickRect.y, size, true);
 		}
 	}
 
 	/**
 	 * Draws a Cell. Has a flag to determine if it is highlighted or not.
+	 * 
 	 * @param g
 	 * @param left
 	 * @param top
@@ -277,13 +271,13 @@ public class HandPanel extends JPanel implements MouseListener {
 			gg.drawImage(GameAssets.getItemBackgroundImage(), left, top, size, size, null);
 		}
 	}
-	
-	private void fillMap(){
-		for(int i = 0 ; i < gridRectangle.size(); i++){
+
+	private void fillMap() {
+		for (int i = 0; i < gridRectangle.size(); i++) {
 			gridMap.put(i, gridRectangle.get(i));
 		}
 	}
-	
+
 	/**
 	 * Returns the rectangle of the rectangle ArrayList that is being clicked.
 	 * 
@@ -299,25 +293,28 @@ public class HandPanel extends JPanel implements MouseListener {
 		}
 		return -1;
 	}
-	
+
 	/**
-	 * This is a helper method that selects a clicked Item, and returns the object associated in that mouse click.
+	 * This is a helper method that selects a clicked Item, and returns the
+	 * object associated in that mouse click.
+	 * 
 	 * @return
 	 */
-	private Movable selectClickedItem(){
-		if(clickIndex != -1){
-			if(clickIndex >=0 && clickIndex <= 9){
+	private Movable selectClickedItem() {
+		if (clickIndex != -1) {
+			if (clickIndex >= 0 && clickIndex <= 9) {
 				if (clickIndex <= bagSet.size() - 1) {
 					if (this.bagSet.get(clickIndex) == null) {
-						return null; 
+						return null;
 					}
 					return this.bagSet.get(clickIndex);
 				}
-			}else if(clickIndex >= 10 && clickIndex <= 19){
+			} else if (clickIndex >= 10 && clickIndex <= 19) {
 				int pocketIndex = clickIndex - 10;
 				if (pocketIndex <= pocketSet.size() - 1) {
 					if (this.pocketSet.get(pocketIndex) == null) {
-						return null; //At this memory address, there was an undefined object at that position.
+						return null; // At this memory address, there was an
+										// undefined object at that position.
 					}
 					return this.pocketSet.get(pocketIndex);
 				}
@@ -327,20 +324,25 @@ public class HandPanel extends JPanel implements MouseListener {
 	}
 
 	/**
-	 * When the button is clicked, if there is a clicked item selected, it transfers it from the current Players Pocket to the Bag.
-	 * @throws GameException 
+	 * When the button is clicked, if there is a clicked item selected, it
+	 * transfers it from the current Players Pocket to the Bag.
+	 * 
+	 * @throws GameException
 	 */
-	public void transferPocketToBag() throws GameException{
-		if(selectedItem == null) return;
-		//System.out.println("Selected " + clickedItem.toString());
-		if(clickIndex >=0 && clickIndex <= 9){ 
-			return; //cant transfer to yourself - leave.
-		}else if(clickIndex >= 10 && clickIndex <= 19){
-			
-			bagSet.add(selectedItem);
+	public void transferPocketToBag() throws GameException {
+		if (selectedItem == null)
+			return;
+		// System.out.println("Selected " + clickedItem.toString());
+		if (clickIndex >= 0 && clickIndex <= 9) {
+			return; // cant transfer to yourself - leave.
+		} else if (clickIndex >= 10 && clickIndex <= 19) {
+
+			if (!bagSet.contains(selectedItem)) {
+				bagSet.add(selectedItem);
+			}
 			bag.addItem(selectedItem);
 			pocket.removeItem(selectedItem);
-			
+
 			pocketSet.remove(selectedItem);
 			selectedItem = null;
 			clickIndex = -1;
@@ -349,33 +351,36 @@ public class HandPanel extends JPanel implements MouseListener {
 	}
 
 	/**
-	 * When the button is clicked, if there is a clicked item selected, it transfers it from the current Players Bag to the Pocket.
-	 * @throws GameException 
+	 * When the button is clicked, if there is a clicked item selected, it
+	 * transfers it from the current Players Bag to the Pocket.
+	 * 
+	 * @throws GameException
 	 */
-	public void transferBagToPocket() throws GameException{
-		if(selectedItem == null) return;
-		if(clickIndex >=0 && clickIndex <= 9){
+	public void transferBagToPocket() throws GameException {
+		if (selectedItem == null)
+			return;
+		if (clickIndex >= 0 && clickIndex <= 9) {
 			int index = findItemInSet(pocketSet);
-			if(index != -1){
+			if (index != -1) {
 				pocketSet.get(index).addAmount(selectedItem.getAmount());
-			}else{
+			} else {
 				pocketSet.add(selectedItem);
 			}
 			pocket.addItem(selectedItem);
 			bag.removeItem(selectedItem);
-			
+
 			bagSet.remove(selectedItem);
 			selectedItem = null;
 			clickIndex = -1;
-		}else if(clickIndex >= 10 && clickIndex <= 19){
-			//can't transfer to yourself - leave.
+		} else if (clickIndex >= 10 && clickIndex <= 19) {
+			// can't transfer to yourself - leave.
 			return;
 		}
 		this.repaint();
 	}
 
 	/*
-	 * END OF HELPER METHODS.. 
+	 * END OF HELPER METHODS..
 	 */
 
 	@Override
