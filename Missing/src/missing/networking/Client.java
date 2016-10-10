@@ -13,6 +13,7 @@
  * 2 Oct 16			Edward Kelly	disconnects handled
  * 3 Oct 16			Edward Kelly	implemented dieing
  * 10 Oct 16		Edward Kelly	fixed health difference bug between clients
+ * 10 Oct 16		Edward Kelly	added sendUseItem
  */
 package missing.networking;
 
@@ -28,6 +29,8 @@ import java.net.SocketException;
 import missing.game.Game;
 import missing.game.items.nonmovable.Shop;
 import missing.game.items.movable.Craftable;
+import missing.game.items.movable.Food;
+import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
@@ -195,6 +198,14 @@ public class Client extends Thread implements KeyListener {
 					} else if (((String) input).contains("exit")) {
 						int id = Integer.valueOf(((String) input).split(" ")[1]);
 						game.forceEnterPlayer(id);
+					} else if (((String) input).contains("use")) {
+						String foodType = ((String) input).split(" ")[1];
+						Food food = new Food(null, null, FoodType.valueOf(foodType));
+						try {
+							food.use(game.getAvatars()[movingPlayer]);
+						} catch (GameException e) {
+							//handled at player who used item
+						}
 					}
 					try {
 						vControl.updateGGame(game);
@@ -350,5 +361,9 @@ public class Client extends Thread implements KeyListener {
 	public void sendExitSignal(int id) {
 		game.forceEnterPlayer(id);
 		out.println("exit " + id);
+	}
+
+	public void sendUseItem(String foodType) {
+		out.println("use "+foodType);		
 	}
 }

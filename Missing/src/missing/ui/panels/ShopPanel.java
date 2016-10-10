@@ -17,10 +17,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import missing.game.characters.Player;
 import missing.game.items.nonmovable.Shop;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.ui.assets.ShopNode;
+import missing.ui.frames.HandJFrame;
 import missing.ui.menustyle.MenuFactory;
 import missing.ui.views.ShopView;
 
@@ -42,6 +44,10 @@ public class ShopPanel extends JPanel {
 	private JButton btnExit;
 
 	private JPanel btnPanel;
+	
+	private JPanel buyPanel;
+	
+	private Player currentPlayer;
 
 	public ShopPanel(ShopView parent, Shop shop) {
 		this.parent = parent;
@@ -233,6 +239,20 @@ public class ShopPanel extends JPanel {
 			}
 			break;
 		}
+	}
+	
+	private void addActionListeners(){
+		currentPlayer = parent.getPlayer();
+
+		btnBuy.addActionListener(e -> {
+			controller.openCrafting();
+		});
+
+		btnSell.addActionListener(e -> {
+			controller.requestFocus();
+			bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
+			bagFrame.setVisible(true);
+		});
 
 	}
 }

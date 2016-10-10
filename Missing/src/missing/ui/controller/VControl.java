@@ -48,6 +48,7 @@ import missing.ui.frames.PileFrame;
 import missing.datastorage.assetloader.XMLHandler;
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
+import missing.game.items.movable.Food.FoodType;
 import missing.game.items.nonmovable.Container;
 import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
@@ -312,7 +313,10 @@ public class VControl extends JFrame {
 	}
 
 	public void openCrafting() {
-		new CraftingFrame(this).setVisible(true);
+		CraftingFrame craftingFrame = new CraftingFrame(this);
+		craftingFrame.setLocationRelativeTo(this);
+		craftingFrame.pack();
+		craftingFrame.setVisible(true);
 	}
 
 	/**
@@ -362,11 +366,11 @@ public class VControl extends JFrame {
 		JLabel label = new JLabel(msg);
 		dialog.getContentPane().add(label);
 		dialog.setUndecorated(true);
-		dialog.pack();
 		dialog.setLocationRelativeTo(views[3]);
 		dialog.setFocusable(false);
 		dialog.setFocusableWindowState(false);
 		dialog.getContentPane().setBackground(Color.YELLOW);
+		dialog.pack();
 		dialog.setVisible(true);
 	}
 
@@ -552,6 +556,11 @@ public class VControl extends JFrame {
 	public void sendExitSignal() {
 		client.sendExitSignal(playerID);
 	}
+	
+	public void sendUseItem(String foodType) {
+		client.sendUseItem(foodType);
+		
+	}
 
 	public int getPlayerID() {
 		return playerID;
@@ -586,5 +595,7 @@ public class VControl extends JFrame {
 	public void repaint() {
 		super.repaint();
 	}
+
+	
 
 }

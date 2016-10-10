@@ -1,16 +1,11 @@
-/*	File: BagCanvas.java
- * 	Author:
- * 	Casey Huang		300316284
- * 
- * 	Date			Author				changes
- * 	26 Sep 16		Casey Huang			created BagCanvas class.
- *  26 Sep 16		Casey Huang			added drawGrid method and convertBagToSet method
- *  27 Sep 16		Casey Huang			updated drawing methods and added rows and columns final static fields
- *  08 Oct 16		Casey Huang			fixed bug
- *  09 Oct 16		Casey Huang			added map to draw selected item
- *  10 Oct 16		Edward Kelly		use item now sends over server
+/*	File: SellPanel.java
+ * 	Author
+ *  Casey Huang		300316284
+ *  
+ * 	Date			Author				Changes
+ *  10 Oct 16		Casey Huang			created class
  */
-package missing.ui.canvas;
+package missing.ui.panels;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -27,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.sound.midi.ControllerEventListener;
 import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
@@ -44,11 +38,7 @@ import missing.game.items.nonmovable.Pocket;
 import missing.helper.GameException;
 import missing.ui.controller.VControl;
 
-/**
- * Canvas used to display the Player's bag's items
- */
-@SuppressWarnings("serial")
-public class HandPanel extends JPanel implements MouseListener {
+public class SellPanel extends JPanel implements MouseListener{
 	/** Bag of items to display */
 	private Bag bag;
 
@@ -89,13 +79,10 @@ public class HandPanel extends JPanel implements MouseListener {
 	private int clickIndex;
 	private Player player;
 
-	private VControl control;
-
-	public HandPanel(VControl control) {
-		this.control = control;
+	public SellPanel(VControl control, Bag bag, Pocket pocket) {
+		this.bag = bag;
+		this.pocket = pocket;
 		this.player = control.getGGame().getGame().getAvatars()[control.getPlayerID()];
-		this.bag = player.getBag();
-		this.pocket = player.getPocket();
 		bagSet = new ArrayList<Movable>();
 		pocketSet = new ArrayList<Movable>();
 		gridRectangle = new ArrayList<>();
@@ -110,10 +97,10 @@ public class HandPanel extends JPanel implements MouseListener {
 	 * @param bag
 	 * @param pocket
 	 */
-	public HandPanel(Player player){
+	public SellPanel(Player player, Bag bag, Pocket pocket){
+		this.bag = bag;
+		this.pocket = pocket;
 		this.player = player;
-		this.bag = player.getBag();
-		this.pocket = player.getPocket();
 		bagSet = new ArrayList<Movable>();
 		pocketSet = new ArrayList<Movable>();
 		gridRectangle = new ArrayList<>();
@@ -369,17 +356,12 @@ public class HandPanel extends JPanel implements MouseListener {
 			if (!bagSet.contains(selectedItem)) {
 				bagSet.add(selectedItem);
 			}
-			try{
 			bag.addItem(selectedItem);
 			pocket.removeItem(selectedItem);
+
 			pocketSet.remove(selectedItem);
 			selectedItem = null;
 			clickIndex = -1;
-		}catch(GameException g){
-			
-		}
-		
-		
 		}
 		this.repaint();
 	}
@@ -435,7 +417,6 @@ public class HandPanel extends JPanel implements MouseListener {
 			selectedItem = null;
 			
 			curItem.use(player); //use it.
-			control.sendUseItem(((Food) curItem).getFoodType().toString());
 			System.out.println("Current Item should have been used.");
 			}
 			//now repaint the graphics pane.
@@ -444,6 +425,9 @@ public class HandPanel extends JPanel implements MouseListener {
 		}
 	}
 		
+		
+	
+
 	/*
 	 * END OF HELPER METHODS..
 	 */
@@ -463,5 +447,4 @@ public class HandPanel extends JPanel implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
-
 }
