@@ -33,8 +33,8 @@ public class SellFrame extends JFrame {
 	private final JButton btnBuy = MenuFactory.createButton2("Buy");
 	private final JButton btnCancel = MenuFactory.createButton2("Exit");
 
-	private BuyPanel panel; //the hand canvas
-	
+	private BuyPanel panel; // the hand canvas
+
 	/**
 	 * Create a Test canvas contained within this window.
 	 */
@@ -50,30 +50,29 @@ public class SellFrame extends JFrame {
 		contentPane.add(panel);
 		addActionListeners();
 	}
-	
+
 	private class ImagePanel extends JPanel {
-	    @Override
-	    protected void paintComponent(Graphics g) {
-	        super.paintComponent(g);
-	        g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
-	    }
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
+		}
 	}
 
 	/**
 	 * Sets up the Action Listeners for the buttons.
 	 */
 	private void addActionListeners() {
-		btnBuy.addActionListener(e->{
+		btnBuy.addActionListener(e -> {
 			try {
 				panel.buyItem();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		});
-		btnCancel.addActionListener(e->{
+		btnCancel.addActionListener(e -> {
 			this.dispose();
 		});
 	}
-	
-}
 
+}
