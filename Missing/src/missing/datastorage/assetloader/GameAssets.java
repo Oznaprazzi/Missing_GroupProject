@@ -128,7 +128,6 @@ public class GameAssets {
 
 	private static Font customFont2;
 
-	private static Font customFont3;
 
 	// Getters for File Assets
 
