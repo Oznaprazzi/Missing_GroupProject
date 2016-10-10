@@ -60,7 +60,7 @@ public class HandJFrame extends JFrame {
 	/**
 	 * Create a Test canvas contained within this window.
 	 */
-	public HandJFrame(VControl control, Bag bag, Pocket pocket) {
+	public HandJFrame(VControl control) {
 		this.bag = bag;
 		this.pocket = pocket;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -73,7 +73,7 @@ public class HandJFrame extends JFrame {
 		contentPane.add(btnBagToPocket);
 		contentPane.add(btnUseItem);
 		contentPane.add(btnDrop);
-		panel = new HandPanel(control, bag, pocket);
+		panel = new HandPanel(control);
 		contentPane.add(panel);
 		addActionListeners();
 	}

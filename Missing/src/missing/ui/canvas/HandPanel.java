@@ -87,10 +87,10 @@ public class HandPanel extends JPanel implements MouseListener {
 	private int clickIndex;
 	private Player player;
 
-	public HandPanel(VControl control, Bag bag, Pocket pocket) {
-		this.bag = bag;
-		this.pocket = pocket;
+	public HandPanel(VControl control) {
 		this.player = control.getGGame().getGame().getAvatars()[control.getPlayerID()];
+		this.bag = player.getBag();
+		this.pocket = player.getPocket();
 		bagSet = new ArrayList<Movable>();
 		pocketSet = new ArrayList<Movable>();
 		gridRectangle = new ArrayList<>();
@@ -105,10 +105,10 @@ public class HandPanel extends JPanel implements MouseListener {
 	 * @param bag
 	 * @param pocket
 	 */
-	public HandPanel(Player player, Bag bag, Pocket pocket){
-		this.bag = bag;
-		this.pocket = pocket;
+	public HandPanel(Player player){
 		this.player = player;
+		this.bag = player.getBag();
+		this.pocket = player.getPocket();
 		bagSet = new ArrayList<Movable>();
 		pocketSet = new ArrayList<Movable>();
 		gridRectangle = new ArrayList<>();
