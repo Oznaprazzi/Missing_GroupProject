@@ -26,6 +26,7 @@ package missing.ui.controller;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -340,7 +341,7 @@ public class VControl extends JFrame {
 	public void displayPileItems() {
 		try {
 			TileObject pile = gGame.getGame().getObjectInFront(playerID);
-			new PileFrame((Pile) pile).setVisible(true);
+			new PileFrame((Pile) pile, this).setVisible(true);
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
@@ -565,6 +566,11 @@ public class VControl extends JFrame {
 	public void sendTransferTo(String to, Movable item) {
 		client.sendTransferTo(to, item);
 	}
+	
+	public void sendPilePickUp(String selectedItem) {
+		client.sendPilePickUp(selectedItem);
+		
+	}
 
 	public int getPlayerID() {
 		return playerID;
@@ -599,6 +605,8 @@ public class VControl extends JFrame {
 	public void repaint() {
 		super.repaint();
 	}
+
+	
 
 	
 

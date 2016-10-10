@@ -79,7 +79,7 @@ public class PileCanvasTest extends JFrame {
 		setContentPane(contentPane);
 		contentPane.add(btnTransferAll);
 		contentPane.add(btnTransferSelected);
-		panel = new PileCanvas(pile);
+		panel = new PileCanvas(pile,null);
 		contentPane.add(panel, BorderLayout.CENTER);
 		addActionListeners();
 	}
