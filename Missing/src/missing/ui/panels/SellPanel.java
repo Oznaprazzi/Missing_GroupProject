@@ -4,6 +4,7 @@
  *  
  * 	Date			Author				Changes
  *  10 Oct 16		Casey Huang			created class
+ *  10 Oct 16		Linus Go			added methods to SellPanel
  */
 package missing.ui.panels;
 
@@ -22,9 +23,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
+import missing.game.characters.Merchant;
 import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
@@ -35,22 +38,11 @@ import missing.game.items.movable.Usable;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Pocket;
+import missing.game.items.nonmovable.Shop;
 import missing.helper.GameException;
 import missing.ui.controller.VControl;
 
-public class SellPanel extends JPanel implements MouseListener{
-	/** Bag of items to display */
-	private Bag bag;
-
-	/** Pocket of items to display */
-	private Pocket pocket;
-
-	/** Contains the number of unique items in the bag */
-	private List<Movable> bagSet;
-
-	/** Contains the number of unique items in the pocket */
-	private List<Movable> pocketSet;
-
+public class SellPanel extends JPanel implements MouseListener{	
 	/** x position of grid. */
 	protected static final int X_OFFSET = 58;
 
@@ -60,6 +52,7 @@ public class SellPanel extends JPanel implements MouseListener{
 	/** Y position of pocket grid. */
 	private static final int Y_OFFSET_PK = 225;
 
+	
 	private static final int size = 65;
 
 	private static final int rows = 2;
@@ -72,44 +65,41 @@ public class SellPanel extends JPanel implements MouseListener{
 
 	private List<Rectangle> gridRectangle; // array of rectangle locations.
 	private Map<Integer, Rectangle> gridMap;
-	
-	
+
 	private Movable selectedItem;
 	private Rectangle clickRect;
 	private int clickIndex;
+	
 	private Player player;
+	
+	private Merchant merchant;
+	
+	List<Movable> items;
 
-	public SellPanel(VControl control, Bag bag, Pocket pocket) {
-		this.bag = bag;
-		this.pocket = pocket;
-		this.player = control.getGGame().getGame().getAvatars()[control.getPlayerID()];
-		bagSet = new ArrayList<Movable>();
-		pocketSet = new ArrayList<Movable>();
-		gridRectangle = new ArrayList<>();
-		gridMap = new HashMap<>();
-		convertListToSet();
-		addMouseListener(this);
-		this.setOpaque(false);
-	}
-	/**
-	 * Alternative constructor to test the handpanel and the player interactions.
-	 * @param player
-	 * @param bag
-	 * @param pocket
-	 */
-	public SellPanel(Player player, Bag bag, Pocket pocket){
-		this.bag = bag;
-		this.pocket = pocket;
+	public SellPanel(Player player, Shop shop) {
 		this.player = player;
-		bagSet = new ArrayList<Movable>();
-		pocketSet = new ArrayList<Movable>();
 		gridRectangle = new ArrayList<>();
 		gridMap = new HashMap<>();
-		convertListToSet();
 		addMouseListener(this);
 		this.setOpaque(false);
+		merchant = shop.getMerchant();
+		//items = PLAYER.getItems();
+		items = player.getBag().getItems();
 	}
-
+	
+	
+//	@Override
+//	public void paint(Graphics g) {
+//		Font font = GameAssets.getFont2(30f);
+//		g.setFont(font);
+//		// g.setColor(Color.BLACK);
+//		g.drawString("Items Available:", 20, 30);
+//		/* Firstly - draw the items inside the bag.. */
+//		this.drawGrid(g, Y_OFFSET);
+//		this.drawItems(g, Y_OFFSET + 7);
+//		g.setFont(font);
+//		fillMap();
+//	} 
 	@Override
 	public void paint(Graphics g) {
 		Font font = GameAssets.getFont2(30f);
@@ -130,39 +120,15 @@ public class SellPanel extends JPanel implements MouseListener{
 		this.drawItems(g, Y_OFFSET_PK + 7, pocketSet);
 		fillMap();
 	}
-
-	/**
-	 * Converts the bag of items into a set - no duplicates to account for count
-	 * of item and to only draw one item.
-	 */
-	private void convertListToSet() {
-		for (Movable m : bag.getItems()) {
-			if (!bagSet.contains(m)) {
-				bagSet.add(m);
-			}
-		}
-
-		for (Movable m : pocket.getItems()) {
-			if (!pocketSet.contains(m)) {
-				pocketSet.add(m);
-			}
-		}
-	}
-
-	private int findItemInSet(List<Movable> pocketSet2) {
-		for (int i = 0; i < pocketSet2.size(); i++) {
-			if (pocketSet2.get(i).equals(selectedItem)) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
+	
+	
+	
+	
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(442, 439);
 	}
-
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		this.clickIndex = indexOfCell(e);
@@ -171,7 +137,7 @@ public class SellPanel extends JPanel implements MouseListener{
 		System.out.println(this.selectedItem);
 		this.repaint();
 	}
-
+	
 	/**
 	 * Returns the selected Item for use with other classes.
 	 * 
@@ -184,7 +150,7 @@ public class SellPanel extends JPanel implements MouseListener{
 
 		return itm;
 	}
-
+	
 	/**
 	 * Draws a list of items onto the graphics pane, with a grid. If an cell
 	 * containing an item is clicked, it is selected and sets the selectedItem
@@ -194,8 +160,8 @@ public class SellPanel extends JPanel implements MouseListener{
 	 * @param y_offset
 	 * @param set
 	 */
-	private void drawItems(Graphics g, int y_offset, List<Movable> set) {
-		if (set.isEmpty()) {
+	private void drawItems(Graphics g, int y_offset) {
+		if (items.isEmpty()) {
 			return;
 		}
 		int count = 0;
@@ -205,7 +171,7 @@ public class SellPanel extends JPanel implements MouseListener{
 		int x = X_OFFSET + 7;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				Movable item = set.get(count);
+				Movable item = items.get(count);
 				if (item instanceof Food) {
 					if (((Food) item).getFoodType().equals(Food.FoodType.APPLE)) {
 						g.drawImage(GameAssets.getAppleImage(), x + j * size, y_offset + i * size, null);
@@ -231,18 +197,18 @@ public class SellPanel extends JPanel implements MouseListener{
 				} else if (item instanceof Wood) {
 					g.drawImage(GameAssets.getWoodImage(), x + j * size, y_offset + i * size, null);
 				}
-				g.drawString(String.valueOf(item.getCount()), x + 2 + j * size, y_offset + 10 + i * size);
 				if (j > 5) {
 					j = 0;
 				}
 				count++;
-				if (count >= set.size()) {
+				if (count >= items.size()) {
 					return;
 				}
 			}
 		}
 	}
-
+	
+	
 	/*
 	 * START OF HELPER METHODS:
 	 */
@@ -319,114 +285,27 @@ public class SellPanel extends JPanel implements MouseListener{
 	private Movable selectClickedItem() {
 		if (clickIndex != -1) {
 			if (clickIndex >= 0 && clickIndex <= 9) {
-				if (clickIndex <= bagSet.size() - 1) {
-					if (this.bagSet.get(clickIndex) == null) {
+				if (clickIndex <= items.size() - 1) {
+					if (this.items.get(clickIndex) == null) {
 						return null;
 					}
-					return this.bagSet.get(clickIndex);
+					return this.items.get(clickIndex);
 				}
-			} else if (clickIndex >= 10 && clickIndex <= 19) {
-				int pocketIndex = clickIndex - 10;
-				if (pocketIndex <= pocketSet.size() - 1) {
-					if (this.pocketSet.get(pocketIndex) == null) {
-						return null; // At this memory address, there was an
-										// undefined object at that position.
-					}
-					return this.pocketSet.get(pocketIndex);
-				}
-			}
+			} 
 		}
 		return null;
 	}
-
-	/**
-	 * When the button is clicked, if there is a clicked item selected, it
-	 * transfers it from the current Players Pocket to the Bag.
-	 * 
-	 * @throws GameException
-	 */
-	public void transferPocketToBag() throws GameException {
-		if (selectedItem == null)
-			return;
-		// System.out.println("Selected " + clickedItem.toString());
-		if (clickIndex >= 0 && clickIndex <= 9) {
-			return; // cant transfer to yourself - leave.
-		} else if (clickIndex >= 10 && clickIndex <= 19) {
-
-			if (!bagSet.contains(selectedItem)) {
-				bagSet.add(selectedItem);
-			}
-			bag.addItem(selectedItem);
-			pocket.removeItem(selectedItem);
-
-			pocketSet.remove(selectedItem);
-			selectedItem = null;
-			clickIndex = -1;
-		}
-		this.repaint();
-	}
-
-	/**
-	 * When the button is clicked, if there is a clicked item selected, it
-	 * transfers it from the current Players Bag to the Pocket.
-	 * 
-	 * @throws GameException
-	 */
-	public void transferBagToPocket() throws GameException {
-		if (selectedItem == null)
-			return;
-		if (clickIndex >= 0 && clickIndex <= 9) {
-			int index = findItemInSet(pocketSet);
-			if (index != -1) {
-				pocketSet.get(index).addAmount(selectedItem.getAmount());
-			} else {
-				pocketSet.add(selectedItem);
-			}
-			pocket.addItem(selectedItem);
-			bag.removeItem(selectedItem);
-
-			bagSet.remove(selectedItem);
-			selectedItem = null;
-			clickIndex = -1;
-		} else if (clickIndex >= 10 && clickIndex <= 19) {
-			// can't transfer to yourself - leave.
-			return;
-		}
-		this.repaint();
-	}
-	
-	/**
-	 * Whenever the "USE" button is pressed, it uses the item to help benefit the player.
-	 * For example, if a player presses this button on an APPLE, it allows the player to consume 
-	 * this apple to increase their health.
-	 * @throws GameException
-	 */
-	public void useItem() throws GameException{
-		if(selectedItem == null) return;
-		if(selectedItem instanceof Usable){ //can we use this item?
-			/*Now, the respective item has been removed and can now be used. */
-			Usable curItem = (Usable) selectedItem;
-			if(curItem instanceof Food){
-			
-			/*Remove from the pocket or bag if they have the selected item. */
-			if(pocketSet.contains(selectedItem))
-				pocketSet.remove(selectedItem);
-			else if(bagSet.contains(selectedItem))
-				bagSet.remove(selectedItem);
-			/*Now, we don't have a selected item anymore :( */
-			selectedItem = null;
-			
-			curItem.use(player); //use it.
-			System.out.println("Current Item should have been used.");
-			}
-			//now repaint the graphics pane.
-			this.revalidate();
-			this.repaint();
-		}
-	}
 		
 		
-	
+	public void sellItem(){
+		try {
+			merchant.sellItem(this.player, this.selectedItem);
+			JOptionPane.showMessageDialog(null, this.selectedItem + " has been added to your pocket successfully.");
+		} catch (GameException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/*
 	 * END OF HELPER METHODS..
