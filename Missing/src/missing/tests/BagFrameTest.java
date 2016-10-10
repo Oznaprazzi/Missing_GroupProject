@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
+import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
@@ -26,6 +27,7 @@ import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Pocket;
+import missing.helper.GameException;
 import missing.ui.canvas.HandPanel;
 import missing.ui.menustyle.MenuFactory;
 
@@ -37,6 +39,12 @@ public class BagFrameTest extends JFrame {
 	private ImagePanel contentPane;
 	private final JButton btnBagToPocket = MenuFactory.createButton2("Transfer To Pocket");
 	private final JButton btnPocketToBag = MenuFactory.createButton2("Transfer To Bag");
+	private final JButton btnUseItem = MenuFactory.createButton2("Use Item");
+	private Player testPlayer = new Player(0, "chris", new Point(0,0), new Point(0,0));
+	
+	
+	private Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
+	private Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
 
 	private Movable clickedItem;
 	private int clickedIndex;
@@ -79,7 +87,16 @@ public class BagFrameTest extends JFrame {
 		setContentPane(contentPane);
 		contentPane.add(btnPocketToBag);
 		contentPane.add(btnBagToPocket);
-		panel = new HandPanel(bag, pocket);
+		contentPane.add(btnUseItem);
+		/*make sure that the player has some food in their pocket */
+		testPlayer.setHealth(1); //ensure that the player is almost dead.
+		try {
+			testPlayer.addToPocket(food);
+			testPlayer.addToPocket(food4);
+		} catch (GameException e) {
+			e.printStackTrace();
+		}
+		panel = new HandPanel(testPlayer, bag, pocket);
 		contentPane.add(panel);
 		addActionListeners();
 	}
@@ -110,30 +127,23 @@ public class BagFrameTest extends JFrame {
 				e1.printStackTrace();
 			}
 		});
+		
+		btnUseItem.addActionListener(e->{
+			System.out.println("health before: " + testPlayer.getHealth());
+			try{
+				panel.useItem();
+				System.out.println("health after: " + testPlayer.getHealth());
+			}catch(Exception e1){
+				e1.printStackTrace();
+			}
+		});
 	}
 	
 	/**HELPER METHODS */
 	
 	public static Bag addItemsToBag(){
 		Bag bag = new Bag();
-		Movable wood = new Wood(new Point(0, 0), new Point(0,0));
-		Movable dirt = new Dirt(new Point(0, 0), new Point(0,0));
-		Movable stone = new Stone(new Point(0, 0), new Point(0,0));
-		Movable axe  = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.AXE, 0);
-		Movable pickaxe = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.PICKAXE, 0);
-		Movable shovel = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.SHOVEL, 0);
-		Movable fishingrod = new Tool(new Point(0, 0), new Point(0,0), Tool.ToolType.FISHINGROD, 0);
-		try{
-			bag.addItem(wood);
-			bag.addItem(dirt);
-			bag.addItem(stone);
-			bag.addItem(axe);
-			bag.addItem(pickaxe);
-			bag.addItem(shovel);
-			bag.addItem(fishingrod);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+	
 		return bag;
 	}
 
