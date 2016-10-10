@@ -55,6 +55,13 @@ You can craft tools in the game from the crafting window.
   * To craft a tool, click a tool displayed in colour and click craft.  
   * The tool will be added to your pocket.  
 
+### Craftable Items
+The following tools must be in your pocket to gain their benefits  
+**Axe** - cuts up to 3 wood from trees  
+**Pickaxe** - mines up to 5 stones from rocks  
+**Shovel** - digs up to 5 dirt from soil  
+**Fishing Rod** - can catch fish with at fishing spots
+
 ## Player Health
 Every player has a health bar. You can lose health by taking damage from other players,   
 hitting trees, rocks and collecting soil without the correct tool in your pocket.  
