@@ -145,7 +145,7 @@ public class CraftingCanvas extends JPanel implements MouseListener{
 		});
 		bagBtn.addActionListener(e->{
 			controller.requestFocus();
-			new HandJFrame(player.getBag(), player.getPocket()).setVisible(true);
+			new HandJFrame(controller, player.getBag(), player.getPocket()).setVisible(true);
 			frame.dispose();
 		});
 		return bagBtn;

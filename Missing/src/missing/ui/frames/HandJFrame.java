@@ -36,7 +36,7 @@ public class HandJFrame extends JFrame {
 
 	private final JButton btnBagToPocket = MenuFactory.createButton2("Transfer To Pocket");
 	private final JButton btnPocketToBag = MenuFactory.createButton2("Transfer To Bag");
-
+	private final JButton btnUseItem = MenuFactory.createButton2("Use Item");
 	private Movable clickedItem;
 	private int clickedIndex;
 	private HandPanel panel; //the hand canvas
@@ -44,13 +44,11 @@ public class HandJFrame extends JFrame {
 	private Bag bag;
 	private Pocket pocket;
 	
-	private VControl control;
-	private Player currentPlayer;
 	
 	/**
 	 * Create a Test canvas contained within this window.
 	 */
-	public HandJFrame(Bag bag, Pocket pocket) {
+	public HandJFrame(VControl control, Bag bag, Pocket pocket) {
 		this.bag = bag;
 		this.pocket = pocket;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -60,7 +58,8 @@ public class HandJFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.add(btnPocketToBag);
 		contentPane.add(btnBagToPocket);
-		panel = new HandPanel(bag, pocket);
+		contentPane.add(btnUseItem);
+		panel = new HandPanel(control, bag, pocket);
 		contentPane.add(panel);
 		addActionListeners();
 	}
@@ -91,6 +90,16 @@ public class HandJFrame extends JFrame {
 				e1.printStackTrace();
 			}
 		});
+		/*Called when the item is used. */
+		btnUseItem.addActionListener(e->{
+			try{
+				panel.useItem();
+			}catch(Exception e1){
+				e1.printStackTrace();
+			}
+		});
+	
+	
 	}
 	
 }
