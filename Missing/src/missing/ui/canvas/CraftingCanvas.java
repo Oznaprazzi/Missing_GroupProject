@@ -183,9 +183,8 @@ public class CraftingCanvas extends JPanel implements MouseListener{
 			try {
 				
 				Tool tool = Craftable.createTool(toolType, player);
-				System.out.println(tool.getCount());
 				player.addToPocket(tool);
-				
+				controller.sendCraftedItem(tool.getType().toString());
 				new CraftingFrame(controller).setVisible(true);
 				frame.dispose();
 				return;
