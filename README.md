@@ -1,6 +1,6 @@
-"Missing" - Island Survivor Game
+# "Missing" - Island Survivor Game
 
-This project is developed for SWEN222
+#### This project is developed for SWEN222
 
 # Getting Started
 
@@ -34,6 +34,7 @@ Pushing 'F' in front of the following objects will do the following
 **Tree** - Gives you wood and sometimes apples  
 **Bush** - Gives you berries  
 **Rock** - Gives you stones  
+**Soil** - Gives you dirt
 **Fishing Area** - Gives you fish  
 **Shop Door** - Enters shop  
 **Other Player** - Damages player  
