@@ -107,8 +107,10 @@ public class Food extends Health {
 			// decrease the amount
 			this.setAmount(this.getAmount() - 1);
 			if (this.getAmount() <= 0) {
-				System.out.println("Got here!");
 				player.removeFromPocket(this);
+			} else {
+				// decrease current size
+				player.getPocket().setCurrentSize(player.getPocket().getCurrentSize() - 1);
 			}
 		}
 	}
