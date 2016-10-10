@@ -519,6 +519,10 @@ public class VControl extends JFrame {
 		client.handleAction();
 	}
 	
+	public void sendCraftedItem(String item){
+		client.sendCraftedItem(item);
+	}
+	
 
 	public int getPlayerID() {
 		return playerID;

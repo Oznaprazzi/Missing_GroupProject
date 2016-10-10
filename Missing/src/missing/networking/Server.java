@@ -140,6 +140,9 @@ public class Server extends Thread {
 						} else if (input.equals("disconnect")) {
 							// player wants to perform action
 							instruction = "disconnect";
+						} else if (input.contains("craft")) {
+							// player crafted an item
+							instruction = input;
 						}
 						//send instructions to clients to update game
 						this.sendInstruction(instruction, playerID, direction);
@@ -174,6 +177,7 @@ public class Server extends Thread {
 			// action already performed in client
 			if (action.equals("perform") && playerNum == playerID)continue;
 			if (action.equals("disconnect") && playerNum == playerID)continue;
+			if (action.contains("craft") && playerNum == playerID)continue;
 			try {
 				outs[playerNum].reset();
 				outs[playerNum].writeObject(action);

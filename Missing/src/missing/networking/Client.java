@@ -12,6 +12,7 @@
  * 30 Sep 16		Edward Kelly	now sends player image number
  * 2 Oct 16			Edward Kelly	disconnects handled
  * 3 Oct 16			Edward Kelly	implemented dieing
+ * 10 Oct 16		Edward Kelly	fixed health difference bug between clients
  */
 package missing.networking;
 
@@ -24,6 +25,10 @@ import java.net.Socket;
 import java.net.SocketException;
 
 import missing.game.Game;
+import missing.game.items.movable.Craftable;
+import missing.game.items.movable.Resource;
+import missing.game.items.movable.Tool;
+import missing.game.items.movable.Tool.ToolType;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
@@ -168,9 +173,21 @@ public class Client extends Thread implements KeyListener {
 							game.convertPlayerToPile(movingPlayer);
 						}
 						vControl.displayTimedMessage(game.getAvatars()[movingPlayer].getName() + " disconnected");
+					}  
+					else if (((String)input).contains("craft")) {
+						String itemType = ((String)input).split(" ")[1];
+						try {
+							Tool tool = Craftable.createTool(ToolType.valueOf(itemType), game.getAvatars()[movingPlayer]);
+							game.getAvatars()[movingPlayer].addToPocket(tool);
+						} catch (GameException e) {
+							// already handled by player crafting item
+						}
+						System.out.println(game.getAvatars()[movingPlayer].getPocket().getItems().toString());
 					} 
 					try {
 						vControl.updateGGame(game);
+						System.out.println("p1 health "+game.getAvatars()[0].getHealth());
+						System.out.println("p2 health "+game.getAvatars()[1].getHealth());
 					} catch (GameException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -249,6 +266,8 @@ public class Client extends Thread implements KeyListener {
 			game.performAction(clientID);
 			out.println("F");
 			vControl.updateGGame(game);
+			System.out.println("local p1 health "+game.getAvatars()[0].getHealth());
+			System.out.println("local p2 health "+game.getAvatars()[1].getHealth());
 			vControl.repaint();
 		} catch(SignalException | GameException e){
 			if (e.getClass() == SignalException.class){
@@ -277,6 +296,7 @@ public class Client extends Thread implements KeyListener {
 				}
 			} else if(e.getClass() == GameException.class){
 				vControl.displayException(e.getMessage());
+				out.println("F");
 			}
 		}
 	}
@@ -305,5 +325,10 @@ public class Client extends Thread implements KeyListener {
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void sendCraftedItem(String item) {
+		out.println("craft "+item);
+		
 	}
 }
