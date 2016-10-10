@@ -9,16 +9,14 @@
 package missing.ui.views;
 
 import missing.game.items.nonmovable.Shop;
+import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
-import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.ShopPanel;
-import java.awt.GridLayout;
 
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * This view displays a pseudo 3D view of the shop. The player can rotate its
@@ -26,7 +24,7 @@ import javax.swing.JButton;
  * displaying anything.
  */
 @SuppressWarnings("serial")
-public class ShopView extends View {
+public class ShopView extends View implements KeyListener {
 
 	// Three panels representing the shop
 
@@ -38,9 +36,16 @@ public class ShopView extends View {
 
 	public ShopView(VControl controller) {
 		super(controller);
+		this.addKeyListener(this);
 	}
 
 	// Methods
+
+	public void sendExitSignal() {
+		controller.sendExitSignal();
+		controller.requestFocus();
+		controller.changeView(controller.getGameView());
+	}
 
 	public void updateDisplay(Shop shop) throws GameException {
 		switch (shop.getType()) {
@@ -73,7 +78,6 @@ public class ShopView extends View {
 	@Override
 	public void setFocus() {
 		if (display != null) {
-			this.addKeyListener(display);
 			this.setFocusable(true);
 			this.requestFocus();
 		}
@@ -111,5 +115,31 @@ public class ShopView extends View {
 		default:
 			throw new GameException("Invalid display");
 		}
+	}
+
+	// Key listener methods
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (display == null) {
+			return;
+		}
+		int key = e.getKeyCode();
+		switch (key) {
+		case KeyEvent.VK_Q:
+			display.rotateView(Direction.WEST);
+			break;
+		case KeyEvent.VK_E:
+			display.rotateView(Direction.EAST);
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 	}
 }

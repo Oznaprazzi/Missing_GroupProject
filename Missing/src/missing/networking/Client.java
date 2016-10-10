@@ -26,14 +26,15 @@ import java.net.Socket;
 import java.net.SocketException;
 
 import missing.game.Game;
+import missing.game.items.nonmovable.Shop;
 import missing.game.items.movable.Craftable;
-import missing.game.items.movable.Resource;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
 import missing.ui.controller.VControl;
+import missing.ui.views.ShopView;
 
 /**
  * The Client is responsible for sending inputs from the player to the server
@@ -143,55 +144,59 @@ public class Client extends Thread implements KeyListener {
 								game.movePlayer(movingPlayer, direction);
 							}
 						} catch (GameException e) {
-							if (clientID == movingPlayer){
+							if (clientID == movingPlayer) {
 								vControl.displayException(e.getMessage());
 							}
 						}
-					}
-					else if (input.equals("turn")) {
+					} else if (input.equals("turn")) {
 						try {
 							game.turnPlayer(movingPlayer, direction);
 						} catch (GameException e) {
-							if (clientID == movingPlayer){
+							if (clientID == movingPlayer) {
 								vControl.displayException(e.getMessage());
 							}
 						}
-					} 
-					else if (input.equals("perform")) {
+					} else if (input.equals("perform")) {
 						// only receive actions from other players
-						// actions for this player handled locally in handleAction
+						// actions for this player handled locally in
+						// handleAction
 						try {
 							game.performAction(movingPlayer);
-						} catch (GameException | SignalException e) {
-							if (e.getClass()==SignalException.class){
-								if (e.getMessage().contains("DEAD")){
-									String[] msg = e.getMessage().split(" ");
-									int id = Integer.parseInt(msg[1]);
-									if (clientID==id){
-										playerDied = true;							
-									}
+						} catch (GameException e) {
+							// ignore it
+						} catch (SignalException e1) {
+							if (e1.getMessage().contains("DEAD")) {
+								String[] msg = e1.getMessage().split(" ");
+								int id = Integer.parseInt(msg[1]);
+								if (clientID == id) {
+									playerDied = true;
 								}
+							} else if (e1.getMessage().contains("SHOP")) {
+								game.forceRemovePlayer(movingPlayer);
 							}
 						}
-					} 
-					else if (input.equals("disconnect")) {
+					} else if (input.equals("disconnect")) {
 						// a player disconnected
-						if (!game.getAvatars()[movingPlayer].isDead()){
+						if (!game.getAvatars()[movingPlayer].isDead()) {
 							game.getAvatars()[movingPlayer].setDead(true);
 							game.convertPlayerToPile(movingPlayer);
 						}
 						vControl.displayTimedMessage(game.getAvatars()[movingPlayer].getName() + " disconnected");
-					}  
-					else if (((String)input).contains("craft")) {
-						String itemType = ((String)input).split(" ")[1];
+
+					} else if (((String) input).contains("craft")) {
+						String itemType = ((String) input).split(" ")[1];
 						try {
-							Tool tool = Craftable.createTool(ToolType.valueOf(itemType), game.getAvatars()[movingPlayer]);
+							Tool tool = Craftable.createTool(ToolType.valueOf(itemType),
+									game.getAvatars()[movingPlayer]);
 							game.getAvatars()[movingPlayer].addToPocket(tool);
 						} catch (GameException e) {
 							// already handled by player crafting item
 						}
 						System.out.println(game.getAvatars()[movingPlayer].getPocket().getItems().toString());
-					} 
+					} else if (((String) input).contains("exit")) {
+						int id = Integer.valueOf(((String) input).split(" ")[1]);
+						game.forceEnterPlayer(id);
+					}
 					try {
 						vControl.updateGGame(game);
 					} catch (GameException e) {
@@ -199,7 +204,7 @@ public class Client extends Thread implements KeyListener {
 						e.printStackTrace();
 					}
 					vControl.repaint();
-					if (playerDied){
+					if (playerDied) {
 						vControl.displayDead();
 						playerDied = false;
 					}
@@ -229,28 +234,28 @@ public class Client extends Thread implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		Direction moveDirection = null;
 		int key = e.getKeyCode();
-		switch(key){
-			case KeyEvent.VK_W :
-				moveDirection = Direction.NORTH;
-				break;
-			case KeyEvent.VK_S :
-				moveDirection = Direction.SOUTH;
-				break;
-			case KeyEvent.VK_A :
-				moveDirection = Direction.WEST;
-				break;
-			case KeyEvent.VK_D :
-				moveDirection = Direction.EAST;
-				break;
-			case KeyEvent.VK_Q :
-				out.println("Q");
-				break;
-			case KeyEvent.VK_E :
-				out.println("E");
-				break;
-			case KeyEvent.VK_F :
-				handleAction();
-				break;
+		switch (key) {
+		case KeyEvent.VK_W:
+			moveDirection = Direction.NORTH;
+			break;
+		case KeyEvent.VK_S:
+			moveDirection = Direction.SOUTH;
+			break;
+		case KeyEvent.VK_A:
+			moveDirection = Direction.WEST;
+			break;
+		case KeyEvent.VK_D:
+			moveDirection = Direction.EAST;
+			break;
+		case KeyEvent.VK_Q:
+			out.println("Q");
+			break;
+		case KeyEvent.VK_E:
+			out.println("E");
+			break;
+		case KeyEvent.VK_F:
+			handleAction();
+			break;
 		}
 		if (moveDirection != null) {
 			try {
@@ -262,75 +267,89 @@ public class Client extends Thread implements KeyListener {
 			}
 		}
 	}
-	
+
 	/**
-	 * Performs an action in the game. If action needs
-	 * to be applied to all clients games the action is
-	 * sent to the server
+	 * Performs an action in the game. If action needs to be applied to all
+	 * clients games the action is sent to the server
 	 */
-	public void handleAction(){
+	public void handleAction() {
 		try {
 			game.performAction(clientID);
 			out.println("F");
 			vControl.updateGGame(game);
 			vControl.repaint();
-		} catch(SignalException | GameException e){
-			if (e.getClass() == SignalException.class){
+		} catch (SignalException | GameException e) {
+			if (e.getClass() == SignalException.class) {
 				System.out.println(e.getMessage());
-				if (e.getMessage().equals("CONTAINER")){
+				if (e.getMessage().equals("CONTAINER")) {
 					vControl.displayContainerItems();
-				} else if (e.getMessage().equals("PILE")){
+				} else if (e.getMessage().equals("PILE")) {
 					vControl.displayPileItems();
-				} else if (e.getMessage().contains("DEAD")){
+				} else if (e.getMessage().contains("DEAD")) {
 					String[] msg = e.getMessage().split(" ");
 					int id = Integer.parseInt(msg[1]);
 					out.println("F");
 					try {
 						vControl.updateGGame(game);
 					} catch (GameException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						vControl.displayException(e.getMessage());
 					}
 					vControl.repaint();
-					if (id==clientID){
+					if (id == clientID) {
 						// this player died
 						vControl.displayDead();
 					}
+				} else if (e.getMessage().contains("SHOP")) {
+					out.println("F");
+					try {
+						// first grab the shop in front of the player
+						Shop shop = (Shop) game.getObjectInFront(clientID);
+						// remove player from the current tile
+						game.forceRemovePlayer(clientID);
+						// update the shop of the player
+						ShopView view = (ShopView) vControl.getView(vControl.getShopView());
+						view.updateDisplay(shop);
+						vControl.changeView(vControl.getShopView());
+					} catch (GameException e1) {
+						vControl.displayException(e.getMessage());
+					}
 				}
-			} else if(e.getClass() == GameException.class){
+			} else if (e.getClass() == GameException.class) {
 				vControl.displayException(e.getMessage());
 				out.println("F");
 			}
 		}
 	}
-	
+
 	/**
 	 * Disconnects client from server and closes socket
 	 */
-	public void disconnectClient(){
-		try{
+	public void disconnectClient() {
+		try {
 			out.println("disconnect");
-		} catch(NullPointerException e){}
+		} catch (NullPointerException e) {
+		}
 		try {
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void sendCraftedItem(String item) {
-		out.println("craft "+item);
-		
+		out.println("craft " + item);
+	}
+
+	public void sendExitSignal(int id) {
+		game.forceEnterPlayer(id);
+		out.println("exit " + id);
 	}
 }

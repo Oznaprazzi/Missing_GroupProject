@@ -1,6 +1,6 @@
-"Missing" - Island Survivor Game
+# "Missing" - Island Survivor Game
 
-This project is developed for SWEN222
+#### This project is developed for SWEN222
 
 # Getting Started
 
@@ -34,6 +34,7 @@ Pushing 'F' in front of the following objects will do the following
 **Tree** - Gives you wood and sometimes apples  
 **Bush** - Gives you berries  
 **Rock** - Gives you stones  
+**Soil** - Gives you dirt
 **Fishing Area** - Gives you fish  
 **Shop Door** - Enters shop  
 **Other Player** - Damages player  
@@ -54,6 +55,13 @@ You can craft tools in the game from the crafting window.
   * You can view information about tools and resources by hovering your mouse over their image
   * To craft a tool, click a tool displayed in colour and click craft.  
   * The tool will be added to your pocket.  
+
+### Craftable Items
+The following tools must be in your pocket to gain their benefits  
+**Axe** - cuts up to 3 wood from trees  
+**Pickaxe** - mines up to 5 stones from rocks  
+**Shovel** - digs up to 5 dirt from soil  
+**Fishing Rod** - can catch fish with at fishing spots
 
 ## Player Health
 Every player has a health bar. You can lose health by taking damage from other players,   

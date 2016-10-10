@@ -20,7 +20,8 @@ public class ShopViewTests {
 	public static void main(String[] args) {
 		ShopView view = new ShopView(null);
 		Shop shop = new Shop(null, null, ShopType.FOOD);
-		
+		Shop shop2 = new Shop(null, null, ShopType.RESOURCE);
+
 		try {
 			view.updateDisplay(shop);
 		} catch (GameException e) {
@@ -33,5 +34,11 @@ public class ShopViewTests {
 		frame.pack();
 		frame.setVisible(true);
 		view.setFocus();
+		try {
+			view.updateDisplay(shop2);
+			view.revalidate();
+		} catch (GameException e) {
+			e.printStackTrace();
+		}
 	}
 }

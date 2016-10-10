@@ -12,8 +12,6 @@ package missing.ui.panels;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -23,17 +21,17 @@ import missing.game.items.nonmovable.Shop;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.ui.assets.ShopNode;
-import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
+import missing.ui.views.ShopView;
 
 /**
  * The shop panel initialises the nodes of the game shop as well as change the
  * camera view through key listener.
  */
 @SuppressWarnings("serial")
-public class ShopPanel extends JPanel implements KeyListener {
+public class ShopPanel extends JPanel {
 
-	private View parent;
+	private ShopView parent;
 
 	private Shop shop;
 	private ShopNode node;
@@ -42,10 +40,10 @@ public class ShopPanel extends JPanel implements KeyListener {
 	private JButton btnSell;
 	private JButton btnBuy;
 	private JButton btnExit;
-	
+
 	private JPanel btnPanel;
-	
-	public ShopPanel(View parent, Shop shop) {
+
+	public ShopPanel(ShopView parent, Shop shop) {
 		this.parent = parent;
 		this.shop = shop;
 		this.orientation = Direction.NORTH;
@@ -55,7 +53,6 @@ public class ShopPanel extends JPanel implements KeyListener {
 		layout.setVgap(20);
 		this.btnPanel.setLayout(layout);
 		this.add(btnPanel);
-		parent.addKeyListener(this);
 		setButtons();
 	}
 
@@ -70,10 +67,10 @@ public class ShopPanel extends JPanel implements KeyListener {
 	public void rotateView(Direction dir) {
 		switch (dir) {
 		case EAST:
-			turnCamera(orientation, -1);
+			turnCamera(orientation, 1);
 			break;
 		case WEST:
-			turnCamera(orientation, 1);
+			turnCamera(orientation, -1);
 			break;
 		default:
 			break;
@@ -93,31 +90,6 @@ public class ShopPanel extends JPanel implements KeyListener {
 	@Override
 	public Dimension getPreferredSize() {
 		return parent.getPreferredSize();
-	}
-
-	// key listener methods
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		switch (key) {
-		case KeyEvent.VK_Q:
-			rotateView(Direction.WEST);
-			break;
-		case KeyEvent.VK_E:
-			rotateView(Direction.EAST);
-			break;
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-
 	}
 
 	// Helper methods
@@ -216,13 +188,8 @@ public class ShopPanel extends JPanel implements KeyListener {
 		}
 		return tmp;
 	}
-	
+
 	private void setButtons() {
-		/*this.btnPanel = new JPanel();
-		GridLayout layout = new GridLayout(0, 2);
-		layout.setVgap(20);
-		this.btnPanel.setLayout(layout);*/
-		System.out.println(this.orientation);
 		switch (this.orientation) {
 		case NORTH:
 			if (btnExit != null) {
@@ -247,6 +214,10 @@ public class ShopPanel extends JPanel implements KeyListener {
 					(int) (this.getPreferredSize().width / 8), 0, 0));
 			btnPanel.setOpaque(false);
 			btnExit = MenuFactory.createShopButton("Exit");
+			// exit signal
+			btnExit.addActionListener(e -> {
+				parent.sendExitSignal();
+			});
 			this.btnPanel.add(btnExit);
 			break;
 		default:
@@ -262,6 +233,6 @@ public class ShopPanel extends JPanel implements KeyListener {
 			}
 			break;
 		}
-		
+
 	}
 }

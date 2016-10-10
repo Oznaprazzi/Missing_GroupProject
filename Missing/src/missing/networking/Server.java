@@ -52,7 +52,6 @@ public class Server extends Thread {
 	private String[] playerNames;
 	/** Player image numbers for each player */
 	private int[] playerImageNumbers;
-	
 
 	public Server(Socket[] sockets) {
 		this.socket = sockets;
@@ -110,12 +109,13 @@ public class Server extends Thread {
 				try {
 					// listen for inputs
 					for (int playerID = 0; playerID < ins.length; playerID++) {
-						if (ins[playerID] == null)continue;
+						if (ins[playerID] == null)
+							continue;
 						if (!ins[playerID].ready())
 							continue;
 						// new input from client.
 						String input = ins[playerID].readLine();
-						System.out.println("Server: received "+input+" input from player +"+playerID);
+						System.out.println("Server: received " + input + " input from player +" + playerID);
 						// move that player in given direction
 						if (input.equals("NORTH") || input.equals("SOUTH") || input.equals("EAST")
 								|| input.equals("WEST")) {
@@ -144,8 +144,10 @@ public class Server extends Thread {
 						} else if (input.contains("craft")) {
 							// player crafted an item
 							instruction = input;
+						} else if (input.contains("exit")) {
+							instruction = input;
 						}
-						//send instructions to clients to update game
+						// send instructions to clients to update game
 						this.sendInstruction(instruction, playerID, direction);
 					}
 				} catch (IOException e) {
@@ -168,25 +170,30 @@ public class Server extends Thread {
 		}
 		System.out.println("Server stopped");
 	}
-	
-	
-	private void sendInstruction(String action, int playerID, Direction direction) throws IOException{
+
+	private void sendInstruction(String action, int playerID, Direction direction) throws IOException {
 		boolean disconnect = false;
 		int disconnectedPlayer = -1;
 		for (int playerNum = 0; playerNum < outs.length; playerNum++) {
-			if (outs[playerNum] == null)continue; //disconnected player
+			if (outs[playerNum] == null)
+				continue; // disconnected player
 			// action already performed in client
-			if (action.equals("perform") && playerNum == playerID)continue;
-			if (action.equals("disconnect") && playerNum == playerID)continue;
-			if (action.contains("craft") && playerNum == playerID)continue;
+			if (action.equals("perform") && playerNum == playerID)
+				continue;
+			if (action.equals("disconnect") && playerNum == playerID)
+				continue;
+			if (action.contains("craft") && playerNum == playerID)
+				continue;
+			if (action.contains("exit") && playerNum == playerID)
+				continue;
 			try {
 				outs[playerNum].reset();
 				outs[playerNum].writeObject(action);
 				outs[playerNum].writeObject(playerID);
 				outs[playerNum].writeObject(direction);
 				outs[playerNum].flush();
-			} catch (IOException e){
-				if (e.getClass() == SocketException.class){
+			} catch (IOException e) {
+				if (e.getClass() == SocketException.class) {
 					System.out.println("disconnect");
 					outs[playerNum] = null;
 					ins[playerNum] = null;
@@ -194,12 +201,12 @@ public class Server extends Thread {
 					socket[playerNum] = null;
 					disconnectedPlayer = playerNum;
 					disconnect = true;
-				} else{
+				} else {
 					e.printStackTrace();
 				}
 			}
 		}
-		if (disconnect){
+		if (disconnect) {
 			sendInstruction("disconnect", disconnectedPlayer, null);
 		}
 	}

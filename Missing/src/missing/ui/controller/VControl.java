@@ -48,7 +48,6 @@ import missing.ui.frames.PileFrame;
 import missing.datastorage.assetloader.XMLHandler;
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
-import missing.game.characters.Player;
 import missing.game.items.nonmovable.Container;
 import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
@@ -68,10 +67,7 @@ import javax.swing.JMenu;
  */
 @SuppressWarnings("serial")
 public class VControl extends JFrame {
-	
-	
-	
-	
+
 	/**
 	 * Views are essentially JPanels with different content. This abstract class
 	 * should be extended by other classes.
@@ -116,8 +112,8 @@ public class VControl extends JFrame {
 	private Client client;
 	/** Darkness level of world */
 	private int alpha;
-	
-	/*JMenuBar stuff */
+
+	/* JMenuBar stuff */
 	private JMenuBar menuBar;
 	private JMenuItem saveGame;
 	private JMenuItem loadGame;
@@ -125,10 +121,9 @@ public class VControl extends JFrame {
 	private JMenuItem helpItem;
 	private JMenuItem credits;
 	private JFileChooser fc;
-	
+
 	private DayNightCycle dnc;
 	private java.util.Timer timer;
-	
 	public VControl() {
 		super("Missing: The Game");
 		this.views = GUIInitialiser.createViews(this);
@@ -159,59 +154,57 @@ public class VControl extends JFrame {
 	/**
 	 * Helper method. Initializes the JMenu and all of the Items inside.
 	 */
-	private void initializeMenu(){
+	private void initializeMenu() {
 		menuBar = new JMenuBar();
-		
+
 		JMenu fileMenu = new JMenu("File");
-			saveGame = new JMenuItem("Save Game", KeyEvent.VK_S);
-			loadGame = new JMenuItem("Load Game", KeyEvent.VK_L);
-			exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
-			/*Ensure that the VControl doesn't lose focus. */
-			saveGame.setFocusable(false);
-			loadGame.setFocusable(false);
-			exitItem.setFocusable(false);
-			fileMenu.add(saveGame);
-			fileMenu.add(loadGame);
-			fileMenu.add(exitItem);
-			menuBar.add(fileMenu);
-			
-		
-		
+		saveGame = new JMenuItem("Save Game", KeyEvent.VK_S);
+		loadGame = new JMenuItem("Load Game", KeyEvent.VK_L);
+		exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
+		/* Ensure that the VControl doesn't lose focus. */
+		saveGame.setFocusable(false);
+		loadGame.setFocusable(false);
+		exitItem.setFocusable(false);
+		fileMenu.add(saveGame);
+		fileMenu.add(loadGame);
+		fileMenu.add(exitItem);
+		menuBar.add(fileMenu);
+
 		JMenu helpMenu = new JMenu("Help");
-			helpItem = new JMenuItem("Game Instructions", KeyEvent.VK_G);
-			credits = new JMenuItem("Credits", KeyEvent.VK_C);
-			/*Ensure that VControl doesn't lose focus. */
-			helpItem.setFocusable(false);
-			credits.setFocusable(false);
-			
-			helpMenu.add(helpItem);
-			helpMenu.add(credits);
+		helpItem = new JMenuItem("Game Instructions", KeyEvent.VK_G);
+		credits = new JMenuItem("Credits", KeyEvent.VK_C);
+		/* Ensure that VControl doesn't lose focus. */
+		helpItem.setFocusable(false);
+		credits.setFocusable(false);
+
+		helpMenu.add(helpItem);
+		helpMenu.add(credits);
 		menuBar.add(helpMenu);
-		
-	this.setJMenuBar(menuBar);
+
+		this.setJMenuBar(menuBar);
 	}
-	
-	private void setupMenuListeners(){
-		
-		saveGame.addActionListener(e->{
-			if (gGame==null){
-				JOptionPane.showMessageDialog(this, "You must load or start a game to save", "No Game to Save", JOptionPane.WARNING_MESSAGE);
-			}
-			else
+
+	private void setupMenuListeners() {
+
+		saveGame.addActionListener(e -> {
+			if (gGame == null) {
+				JOptionPane.showMessageDialog(this, "You must load or start a game to save", "No Game to Save",
+						JOptionPane.WARNING_MESSAGE);
+			} else
 				saveGame();
 		});
-		
-		loadGame.addActionListener(e->{
+
+		loadGame.addActionListener(e -> {
 			loadGame();
 		});
-		
-		exitItem.addActionListener(e->{
+
+		exitItem.addActionListener(e -> {
 			int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Exit Confirmation",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-			if(choice == 0) {
-				if (isHost && gGame!=null){
-					//ask if want to save game
+			if (choice == 0) {
+				if (isHost && gGame != null) {
+					// ask if want to save game
 					choice = JOptionPane.showConfirmDialog(null, "Would you like to save the game?", "Save game",
 							JOptionPane.YES_NO_OPTION);
 					if (choice == JOptionPane.YES_OPTION) {
@@ -221,17 +214,17 @@ public class VControl extends JFrame {
 				closeVControl();
 			}
 		});
-		
-		helpItem.addActionListener(e->{
-			
+
+		helpItem.addActionListener(e -> {
+
 		});
-		
-		credits.addActionListener(e->{
-			
+
+		credits.addActionListener(e -> {
+
 		});
 	}
 	
-	
+
 	// View Control Methods
 
 	public int getMenuView() {
@@ -270,6 +263,10 @@ public class VControl extends JFrame {
 		return 9;
 	}
 
+	public int getShopView() {
+		return 10;
+	}
+
 	public int getPrevious() {
 		return prev;
 	}
@@ -281,7 +278,6 @@ public class VControl extends JFrame {
 	 * @param index
 	 */
 	public void changeView(int index) {
-		// TODO: change GGame view
 		if (index < 0 || index >= views.length) {
 			return;
 		}
@@ -294,7 +290,7 @@ public class VControl extends JFrame {
 		// Remove and replace the view
 		getContentPane().removeAll();
 		getContentPane().add(views[cur]);
-		if (gGame!=null){
+		if (gGame != null) {
 			gGame.setView(views[index]);
 			gGame.setPlayer(gGame.getGame().getAvatars()[playerID]);
 		}
@@ -314,9 +310,11 @@ public class VControl extends JFrame {
 		}
 		System.exit(0);
 	}
-	public void openCrafting(){
+
+	public void openCrafting() {
 		new CraftingFrame(this).setVisible(true);
 	}
+
 	/**
 	 * Called if the player performed an action on a Container Displays the
 	 * items in that Container
@@ -327,7 +325,7 @@ public class VControl extends JFrame {
 			new ContainerFrame((Container) container).setVisible(true);
 		} catch (GameException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 
 	/**
@@ -341,7 +339,7 @@ public class VControl extends JFrame {
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 
 	/**
@@ -378,17 +376,16 @@ public class VControl extends JFrame {
 	 * @param msg
 	 *            message to be displayed
 	 */
-	public void displayException(String msg){
+	public void displayException(String msg) {
 		JOptionPane.showMessageDialog(views[cur], msg);
 	}
-	
+
 	/**
-	 * Displays to player that they died and sets to
-	 * spectator mode
+	 * Displays to player that they died and sets to spectator mode
 	 */
-	public void displayDead(){
+	public void displayDead() {
 		JOptionPane.showMessageDialog(views[cur], "YOU DIED");
-		((MapView)views[this.getMapView()]).setSpectator(true);
+		((MapView) views[this.getMapView()]).setSpectator(true);
 		this.changeView(this.getMapView());
 	}
 	// Helper methods
@@ -402,8 +399,8 @@ public class VControl extends JFrame {
 				int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit game",
 						JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
-					if (isHost && gGame!=null){
-						//ask if want to save game
+					if (isHost && gGame != null) {
+						// ask if want to save game
 						result = JOptionPane.showConfirmDialog(null, "Would you like to save the game?", "Save game",
 								JOptionPane.YES_NO_OPTION);
 						if (result == JOptionPane.YES_OPTION) {
@@ -420,20 +417,21 @@ public class VControl extends JFrame {
 		pack();
 		setVisible(true);
 	}
-	
+
 	/**
 	 * Displays GUI to save game and calls XMLHandler.saveGame()
 	 */
-	private void saveGame(){
-		// JFileChooser choose save location 
+	private void saveGame() {
+		// JFileChooser choose save location
 		fc = new JFileChooser("Choose save location");
 		fc.setCurrentDirectory(new File("."));
-		while (true){
+		while (true) {
 			int rVal = fc.showSaveDialog(this);
-			if(rVal == JFileChooser.APPROVE_OPTION){
-				String fileName = fc.getSelectedFile().getAbsolutePath();//TODO: may change to getName()
-				if (fileName == null){
-					JOptionPane.showMessageDialog(this, "Please give a filename", "No Filename", JOptionPane.WARNING_MESSAGE);
+			if (rVal == JFileChooser.APPROVE_OPTION) {
+				String fileName = fc.getSelectedFile().getAbsolutePath();
+				if (fileName == null) {
+					JOptionPane.showMessageDialog(this, "Please give a filename", "No Filename",
+							JOptionPane.WARNING_MESSAGE);
 					continue;
 				}
 				System.out.println(fileName);
@@ -448,102 +446,112 @@ public class VControl extends JFrame {
 					JOptionPane.showMessageDialog(this, e.getMessage(), "File Saving Error", JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-			} else break;
+			} else
+				break;
 		}
 	}
+
 	/**
-	 * Displays GUI to load game and calls XMLHandler.filename to set the current XML file.
+	 * Displays GUI to load game and calls XMLHandler.filename to set the
+	 * current XML file.
 	 */
 	private void loadGame() {
 		fc = new JFileChooser("Load");
 		// set up the file chooser
 		fc.setCurrentDirectory(new File("."));
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		
+
 		File theFile = null;
-		String xmlFile = "";				
-		while(true){
+		String xmlFile = "";
+		while (true) {
 			int rVal = fc.showOpenDialog(this);
-			
-			if(rVal == JFileChooser.APPROVE_OPTION){
+
+			if (rVal == JFileChooser.APPROVE_OPTION) {
 				theFile = fc.getSelectedFile();
 				xmlFile = theFile.getAbsolutePath();
-				
+
 				// Sanity Checks
 				if (xmlFile == null) {
-					JOptionPane.showMessageDialog(null, "XML File must be specified.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
-					//System.exit(1);
+					JOptionPane.showMessageDialog(null, "XML File must be specified.", "File Loading Error",
+							JOptionPane.ERROR_MESSAGE);
+					// System.exit(1);
 				}
 				if (!xmlFile.endsWith(".xml")) {
-					JOptionPane.showMessageDialog(null, "File must end with XML.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
-					//System.exit(1);
+					JOptionPane.showMessageDialog(null, "File must end with XML.", "File Loading Error",
+							JOptionPane.ERROR_MESSAGE);
+					// System.exit(1);
 				}
-			}else if(rVal == JFileChooser.CANCEL_OPTION){
-				JOptionPane.showMessageDialog(null, "User did not specify an XML file.", "File Loading Error", JOptionPane.ERROR_MESSAGE);
+			} else if (rVal == JFileChooser.CANCEL_OPTION) {
+				JOptionPane.showMessageDialog(null, "User did not specify an XML file.", "File Loading Error",
+						JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			}
-			
-			if(xmlFile != null && xmlFile.endsWith(".xml"))
+
+			if (xmlFile != null && xmlFile.endsWith(".xml"))
 				break;
-	
+
 		}
 		XMLHandler.filename = xmlFile;
-		JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");		
+		JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");
 	}
-	
+
 	public GGame getGGame() {
 		return gGame;
 	}
+
 	/** Updates the current GGame. Called by client */
-	public void updateGGame(Game game) throws GameException{
+	public void updateGGame(Game game) throws GameException {
 		this.gGame = new GGame(game, views[cur]);
 		updateAlpha(this.alpha);
 		gGame.setView(views[cur]);
 		gGame.setPlayer(gGame.getGame().getAvatars()[playerID]);
-		((GameView)views[this.getGameView()]).updateGamePanel(this);
-		((MapView)views[this.getMapView()]).updateMapPanel(this);
-		
+		((GameView) views[this.getGameView()]).updateGamePanel(this);
+		((MapView) views[this.getMapView()]).updateMapPanel(this);
+
 	}
-	
+
 	public void setGGame(Game game) throws GameException {
 		this.gGame = new GGame(game, views[cur]);
 		views[this.getGameView()].initialise();
 		views[this.getMapView()].initialise();
 		startDayNightCycle();
 	}
-	
+
 	/**
 	 * Starts day and night cycle for game
 	 */
 	private void startDayNightCycle(){
 		timer = new java.util.Timer();
 		dnc = new DayNightCycle(this);
-		timer.scheduleAtFixedRate(dnc, 0, CLOCK_TICK*10);
+		timer.scheduleAtFixedRate(dnc, 0, CLOCK_TICK * 10);
 	}
-	
-	
-	
-	
+
 	/**
 	 * Updates the alpha for MapView and GameView
-	 * @param alpha The transparency of the rect to be drawn over game
+	 * 
+	 * @param alpha
+	 *            The transparency of the rect to be drawn over game
 	 */
-	public void updateAlpha(int alpha){
+	public void updateAlpha(int alpha) {
 		this.alpha = alpha;
 		this.gGame.setAlpha(alpha);
 	}
+
 	/**
-	 * Calls Client.handleAction(). This method is called
-	 * by performAction button in GameView
+	 * Calls Client.handleAction(). This method is called by performAction
+	 * button in GameView
 	 */
 	public void performAction() {
 		client.handleAction();
 	}
-	
-	public void sendCraftedItem(String item){
+
+	public void sendCraftedItem(String item) {
 		client.sendCraftedItem(item);
 	}
-	
+
+	public void sendExitSignal() {
+		client.sendExitSignal(playerID);
+	}
 
 	public int getPlayerID() {
 		return playerID;
@@ -568,10 +576,12 @@ public class VControl extends JFrame {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+
 	/** Disconnects client from game */
-	public void disconnectClient(){
+	public void disconnectClient() {
 		client.disconnectClient();
 	}
+
 	@Override
 	public void repaint() {
 		super.repaint();
