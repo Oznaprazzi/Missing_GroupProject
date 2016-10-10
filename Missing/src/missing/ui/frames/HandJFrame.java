@@ -30,17 +30,29 @@ import missing.ui.menustyle.MenuFactory;
 
 @SuppressWarnings("serial")
 public class HandJFrame extends JFrame {
-
+	/*Height and Width of this JFrame */
+	private final int FRAME_WD = 434;
+	private final int FRAME_HT = 481;
+	/*The content Pane */
 	private ImagePanel contentPane;
+	
+	/*The current background Image */
 	private BufferedImage backgroundImage = GameAssets.getWindowBackgroundImage();
-
+	
+	/*Buttons */
 	private final JButton btnBagToPocket = MenuFactory.createButton2("Transfer To Pocket");
 	private final JButton btnPocketToBag = MenuFactory.createButton2("Transfer To Bag");
 	private final JButton btnUseItem = MenuFactory.createButton2("Use Item");
+	private final JButton btnDrop = MenuFactory.createButton2("Drop");
+	
+	/*Helper fields for determining the clicked cell location, and the items index */
 	private Movable clickedItem;
 	private int clickedIndex;
+	
+	/**The hand canvas */
 	private HandPanel panel; //the hand canvas
 	
+	/*The bag and pocket */
 	private Bag bag;
 	private Pocket pocket;
 	
@@ -48,18 +60,20 @@ public class HandJFrame extends JFrame {
 	/**
 	 * Create a Test canvas contained within this window.
 	 */
-	public HandJFrame(VControl control, Bag bag, Pocket pocket) {
+	public HandJFrame(VControl control) {
 		this.bag = bag;
 		this.pocket = pocket;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(backgroundImage.getWidth(), backgroundImage.getHeight());
+		//setSize(backgroundImage.getWidth(), backgroundImage.getHeight());
+		setSize(FRAME_WD, FRAME_HT);
 		// elsewhere
 		contentPane = new ImagePanel();
 		setContentPane(contentPane);
 		contentPane.add(btnPocketToBag);
 		contentPane.add(btnBagToPocket);
 		contentPane.add(btnUseItem);
-		panel = new HandPanel(control, bag, pocket);
+		contentPane.add(btnDrop);
+		panel = new HandPanel(control);
 		contentPane.add(panel);
 		addActionListeners();
 	}
@@ -98,8 +112,11 @@ public class HandJFrame extends JFrame {
 				e1.printStackTrace();
 			}
 		});
-	
-	
+		btnDrop.addActionListener(e->{
+			//TODO: implement Chris.
+			//Item dropping logic would go inside of here.
+		});
+		
 	}
 	
 }

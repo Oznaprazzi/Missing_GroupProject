@@ -106,7 +106,9 @@ public class WorldTile implements Serializable {
 			super("Pile", "A pile of objects", object.getWorldLocation(), object.getTileLocation());
 			items = new ArrayList<TileObject>();
 			if (object instanceof Player) {
-				this.player = object;
+				Player p = (Player)object;
+				p.setInsidePile(true);
+				this.player = p;
 			} else {
 				this.items.add(object);
 			}

@@ -21,6 +21,7 @@ import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
+import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.movable.Movable;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
@@ -41,18 +42,22 @@ public class BagFrameTest extends JFrame {
 	private final JButton btnPocketToBag = MenuFactory.createButton2("Transfer To Bag");
 	private final JButton btnUseItem = MenuFactory.createButton2("Use Item");
 	private Player testPlayer = new Player(0, "chris", new Point(0,0), new Point(0,0));
-	
-	
-	private Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
-	private Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
+	private static Point pt = new Point(0, 0); /*Used to quickly create test objects. */
 
+	/*Holds objects that the current Player has. */
+	private static Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
+	private static Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
+	private static Movable dirt = new Dirt(pt, pt);
+	private static Movable rod = new Tool(pt, pt, ToolType.FISHINGROD);
+	private static Movable axe = new Tool(pt,pt, ToolType.AXE);
+	private static Movable pickaxe = new Tool(pt, pt, ToolType.PICKAXE);
+	
 	private Movable clickedItem;
 	private int clickedIndex;
 	private HandPanel panel; //the hand canvas
 	
 	private Bag bag;
 	private Pocket pocket;
-	
 	private BufferedImage backgroundImage = GameAssets.getWindowBackgroundImage();
 	
 	/**
@@ -62,9 +67,8 @@ public class BagFrameTest extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Bag bag = addItemsToBag();
-					Pocket pocket = addItemsToPocket();
-					BagFrameTest frame = new BagFrameTest(bag, pocket);
+					Player player = new Player(0, "Chris", pt, pt);
+					BagFrameTest frame = new BagFrameTest(player);
 					frame.setResizable(false);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -77,9 +81,9 @@ public class BagFrameTest extends JFrame {
 	/**
 	 * Create a Test canvas contained within this window.
 	 */
-	public BagFrameTest(Bag bag, Pocket pocket) {
-		this.bag = bag;
-		this.pocket = pocket;
+	public BagFrameTest(Player player) {
+		this.bag = player.getBag();
+		this.pocket = player.getPocket();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(backgroundImage.getWidth(), backgroundImage.getHeight());
 		// elsewhere
@@ -93,10 +97,14 @@ public class BagFrameTest extends JFrame {
 		try {
 			testPlayer.addToPocket(food);
 			testPlayer.addToPocket(food4);
+			testPlayer.addToPocket(dirt);
+			testPlayer.addToPocket(rod);
+			testPlayer.addToBag(axe);
+			testPlayer.addToBag(pickaxe);
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
-		panel = new HandPanel(testPlayer, bag, pocket);
+		panel = new HandPanel(testPlayer);
 		contentPane.add(panel);
 		addActionListeners();
 	}
@@ -141,24 +149,22 @@ public class BagFrameTest extends JFrame {
 	
 	/**HELPER METHODS */
 	
-	public static Bag addItemsToBag(){
-		Bag bag = new Bag();
-	
-		return bag;
-	}
-
-	public static Pocket addItemsToPocket() {
-		Pocket pocket = new Pocket();
-		Movable food = new Food(new Point(0, 0), new Point(0,0), FoodType.APPLE);
-		Movable food4 = new Food(new Point(0, 0), new Point(0,0), FoodType.FISH);
-		Movable dirt = new Dirt(new Point(0, 0), new Point(0,0));
-		try{
-			pocket.addItem(food);
-			pocket.addItem(food4);
-			pocket.addItem(dirt);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return pocket;
-	}
+//	public static Bag addItemsToBag(){
+//		Bag bag = new Bag();
+//	
+//		return bag;
+//	}
+//
+//	public static Pocket addItemsToPocket() {
+//		Pocket pocket = new Pocket();
+//		try{
+//			pocket.addItem(food);
+//			pocket.addItem(food4);
+//			pocket.addItem(dirt);
+//			pocket.addItem(rod);
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//		return pocket;
+//	}
 }

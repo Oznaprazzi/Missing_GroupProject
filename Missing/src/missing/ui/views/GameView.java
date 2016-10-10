@@ -251,7 +251,8 @@ public class GameView extends View {
 
 		btnPlayersBag.addActionListener(e -> {
 			controller.requestFocus();
-			bagFrame = new HandJFrame(controller, currentPlayer.getBag(), currentPlayer.getPocket());
+			//bagFrame = new HandJFrame(controller, currentPlayer.getBag(), currentPlayer.getPocket());
+			bagFrame = new HandJFrame(controller);
 			bagFrame.setVisible(true);
 		});
 
