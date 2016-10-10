@@ -12,7 +12,10 @@
 package missing.game.characters;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
@@ -44,6 +47,12 @@ public class Merchant extends Character {
 		namesToItems = new HashMap<String, Movable>();
 		costs = new HashMap<Movable, Integer>();
 		getCosts();
+	}
+	
+	//Getters
+	
+	public ArrayList<Movable> getItems(){
+		return new ArrayList<Movable>(namesToItems.values());
 	}
 
 	// Methods
