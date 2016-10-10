@@ -205,6 +205,7 @@ public class VControl extends JFrame {
 
 		});
 	}
+	
 
 	// View Control Methods
 
@@ -259,7 +260,6 @@ public class VControl extends JFrame {
 	 * @param index
 	 */
 	public void changeView(int index) {
-		// TODO: change GGame view
 		if (index < 0 || index >= views.length) {
 			return;
 		}
@@ -529,6 +529,10 @@ public class VControl extends JFrame {
 
 	public void sendCraftedItem(String item) {
 		client.sendCraftedItem(item);
+	}
+
+	public void sendExitSignal() {
+		client.sendExitSignal(playerID);
 	}
 
 	public int getPlayerID() {

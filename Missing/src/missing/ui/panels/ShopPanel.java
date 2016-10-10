@@ -214,6 +214,10 @@ public class ShopPanel extends JPanel {
 					(int) (this.getPreferredSize().width / 8), 0, 0));
 			btnPanel.setOpaque(false);
 			btnExit = MenuFactory.createShopButton("Exit");
+			// exit signal
+			btnExit.addActionListener(e -> {
+				parent.sendExitSignal();
+			});
 			this.btnPanel.add(btnExit);
 			break;
 		default:

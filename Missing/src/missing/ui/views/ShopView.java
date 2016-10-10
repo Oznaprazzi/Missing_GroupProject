@@ -41,6 +41,12 @@ public class ShopView extends View implements KeyListener {
 
 	// Methods
 
+	public void sendExitSignal() {
+		controller.sendExitSignal();
+		controller.requestFocus();
+		controller.changeView(controller.getGameView());
+	}
+
 	public void updateDisplay(Shop shop) throws GameException {
 		switch (shop.getType()) {
 		case FOOD:

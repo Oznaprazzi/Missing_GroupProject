@@ -175,21 +175,22 @@ public class Client extends Thread implements KeyListener {
 						}
 						vControl.displayTimedMessage(game.getAvatars()[movingPlayer].getName() + " disconnected");
 
-					}  
-					else if (((String)input).contains("craft")) {
-						String itemType = ((String)input).split(" ")[1];
+					} else if (((String) input).contains("craft")) {
+						String itemType = ((String) input).split(" ")[1];
 						try {
-							Tool tool = Craftable.createTool(ToolType.valueOf(itemType), game.getAvatars()[movingPlayer]);
+							Tool tool = Craftable.createTool(ToolType.valueOf(itemType),
+									game.getAvatars()[movingPlayer]);
 							game.getAvatars()[movingPlayer].addToPocket(tool);
 						} catch (GameException e) {
 							// already handled by player crafting item
 						}
 						System.out.println(game.getAvatars()[movingPlayer].getPocket().getItems().toString());
-					} 
+					} else if (((String) input).contains("exit")) {
+						int id = Integer.valueOf(((String) input).split(" ")[1]);
+						game.forceEnterPlayer(id);
+					}
 					try {
 						vControl.updateGGame(game);
-						System.out.println("p1 health "+game.getAvatars()[0].getHealth());
-						System.out.println("p2 health "+game.getAvatars()[1].getHealth());
 					} catch (GameException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -267,8 +268,6 @@ public class Client extends Thread implements KeyListener {
 			game.performAction(clientID);
 			out.println("F");
 			vControl.updateGGame(game);
-			System.out.println("local p1 health "+game.getAvatars()[0].getHealth());
-			System.out.println("local p2 health "+game.getAvatars()[1].getHealth());
 			vControl.repaint();
 		} catch (SignalException | GameException e) {
 			if (e.getClass() == SignalException.class) {
@@ -339,7 +338,11 @@ public class Client extends Thread implements KeyListener {
 	}
 
 	public void sendCraftedItem(String item) {
-		out.println("craft "+item);
-		
+		out.println("craft " + item);
+	}
+
+	public void sendExitSignal(int id) {
+		game.forceEnterPlayer(id);
+		out.println("exit " + id);
 	}
 }
