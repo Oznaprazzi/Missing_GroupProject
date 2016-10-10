@@ -35,6 +35,8 @@ import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Movable;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
+import missing.game.world.nodes.WorldTile.Pile;
+import missing.game.world.nodes.WorldTile.TileObject;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
@@ -208,6 +210,23 @@ public class Client extends Thread implements KeyListener {
 						} catch (GameException e) {
 							//handled at player who used item
 						}
+					} else if (((String) input).contains("pilepickup")) {
+						String itemName = ((String) input).split(" ")[1];
+						Pile pile = null;
+						Movable selectedItem = null;
+						try {
+							pile = (Pile) game.getObjectInFront(movingPlayer);
+							for (TileObject pileItem : pile.getItems()){
+								if (pileItem.getName().equals(itemName)){
+									selectedItem = (Movable) pileItem;
+									break;
+								}
+							}
+							game.getAvatars()[movingPlayer].addToPocket(selectedItem);
+						} catch (GameException e) {
+							System.out.println("server parse error: pilepickup");
+						}
+						pile.getItems().remove(selectedItem);
 					} else if (((String) input).contains("transfer")) {
 						String to = ((String) input).split(" ")[1];
 						String itemName = ((String) input).split(" ")[2];
@@ -215,6 +234,7 @@ public class Client extends Thread implements KeyListener {
 						if (to.equals("bag")){
 							Movable movingItem = null;
 							for (Movable pocketItem : player.getPocket().getItems()){
+								System.out.println(pocketItem.getName()+" : "+itemName);
 								if (pocketItem.getName().equals(itemName)){
 									movingItem = pocketItem;
 									break;
@@ -405,6 +425,11 @@ public class Client extends Thread implements KeyListener {
 
 	public void sendTransferTo(String to, Movable item) {
 		out.println("transfer "+to+" "+ item.getName());
+		
+	}
+
+	public void sendPilePickUp(String selectedItem) {
+		out.println("pilepickup "+selectedItem);
 		
 	}
 }

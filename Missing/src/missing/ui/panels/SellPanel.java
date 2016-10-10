@@ -103,19 +103,6 @@ public class SellPanel extends JPanel implements MouseListener{
 		items = player.getBag().getItems();
 	}
 	
-	
-//	@Override
-//	public void paint(Graphics g) {
-//		Font font = GameAssets.getFont2(30f);
-//		g.setFont(font);
-//		// g.setColor(Color.BLACK);
-//		g.drawString("Items Available:", 20, 30);
-//		/* Firstly - draw the items inside the bag.. */
-//		this.drawGrid(g, Y_OFFSET);
-//		this.drawItems(g, Y_OFFSET + 7);
-//		g.setFont(font);
-//		fillMap();
-//	} 
 	@Override
 	public void paint(Graphics g) {
 		Font font = GameAssets.getFont2(30f);
@@ -136,9 +123,6 @@ public class SellPanel extends JPanel implements MouseListener{
 		this.drawItems(g, Y_OFFSET_PK + 7, pocketSet);
 		fillMap();
 	}
-	
-	
-	
 	
 	@Override
 	public Dimension getPreferredSize() {

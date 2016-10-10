@@ -26,6 +26,7 @@ package missing.ui.controller;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -48,7 +49,6 @@ import missing.ui.frames.PileFrame;
 import missing.datastorage.assetloader.XMLHandler;
 import missing.datastorage.initialisers.GUIInitialiser;
 import missing.game.Game;
-import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Movable;
 import missing.game.items.nonmovable.Container;
 import missing.game.world.nodes.WorldTile.Pile;
@@ -126,6 +126,7 @@ public class VControl extends JFrame {
 
 	private DayNightCycle dnc;
 	private java.util.Timer timer;
+
 	public VControl() {
 		super("Missing: The Game");
 		this.views = GUIInitialiser.createViews(this);
@@ -134,8 +135,8 @@ public class VControl extends JFrame {
 		setupMenuListeners();
 		views[cur].initialise();
 	}
-	
-	public void reset(){
+
+	public void reset() {
 		timer.cancel();
 		cur = 0;
 		prev = 0;
@@ -152,7 +153,7 @@ public class VControl extends JFrame {
 		setupMenuListeners();
 		views[cur].initialise();
 	}
-	
+
 	/**
 	 * Helper method. Initializes the JMenu and all of the Items inside.
 	 */
@@ -225,7 +226,6 @@ public class VControl extends JFrame {
 
 		});
 	}
-	
 
 	// View Control Methods
 
@@ -340,7 +340,7 @@ public class VControl extends JFrame {
 	public void displayPileItems() {
 		try {
 			TileObject pile = gGame.getGame().getObjectInFront(playerID);
-			new PileFrame((Pile) pile).setVisible(true);
+			new PileFrame((Pile) pile, this).setVisible(true);
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
@@ -525,7 +525,7 @@ public class VControl extends JFrame {
 	/**
 	 * Starts day and night cycle for game
 	 */
-	private void startDayNightCycle(){
+	private void startDayNightCycle() {
 		timer = new java.util.Timer();
 		dnc = new DayNightCycle(this);
 		timer.scheduleAtFixedRate(dnc, 0, CLOCK_TICK * 10);
@@ -557,13 +557,18 @@ public class VControl extends JFrame {
 	public void sendExitSignal() {
 		client.sendExitSignal(playerID);
 	}
-	
+
 	public void sendUseItem(String foodType) {
 		client.sendUseItem(foodType);
 	}
-	
+
 	public void sendTransferTo(String to, Movable item) {
 		client.sendTransferTo(to, item);
+	}
+
+	public void sendPilePickUp(String selectedItem) {
+		client.sendPilePickUp(selectedItem);
+
 	}
 
 	public int getPlayerID() {
@@ -599,9 +604,5 @@ public class VControl extends JFrame {
 	public void repaint() {
 		super.repaint();
 	}
-
-	
-
-	
 
 }
