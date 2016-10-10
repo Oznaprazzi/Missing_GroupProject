@@ -16,6 +16,7 @@
  * 7 Sep 16		Chris Rabe		added helper method for the toString method
  * 7 Sep 16		Chris Rabe		overrided equals and hashcode methods
  * 21 Sep 16	Chris Rabe		implemented fish and berries
+ * 10 Oct 16	Edward Kelly	fixed use method
  */
 package missing.game.items.movable;
 
@@ -98,7 +99,9 @@ public class Food extends Health {
 		// Check if player has the food in his pocket
 		if (player.has(this)) {
 			// increase player's health by regen amount
-			player.setHealth(player.getHealth() + getRegenAmount());
+			int newHealth = player.getHealth()+getRegenAmount();
+			if (newHealth >100)newHealth = 100;
+			player.setHealth(newHealth);
 			// remove the item from player's pocket
 			player.removeFromPocket(this);
 		}

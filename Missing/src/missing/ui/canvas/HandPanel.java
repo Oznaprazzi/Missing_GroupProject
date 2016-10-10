@@ -8,6 +8,7 @@
  *  27 Sep 16		Casey Huang			updated drawing methods and added rows and columns final static fields
  *  08 Oct 16		Casey Huang			fixed bug
  *  09 Oct 16		Casey Huang			added map to draw selected item
+ *  10 Oct 16		Edward Kelly		use item now sends over server
  */
 package missing.ui.canvas;
 
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.midi.ControllerEventListener;
 import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
@@ -87,7 +89,10 @@ public class HandPanel extends JPanel implements MouseListener {
 	private int clickIndex;
 	private Player player;
 
+	private VControl control;
+
 	public HandPanel(VControl control) {
+		this.control = control;
 		this.player = control.getGGame().getGame().getAvatars()[control.getPlayerID()];
 		this.bag = player.getBag();
 		this.pocket = player.getPocket();
@@ -425,6 +430,7 @@ public class HandPanel extends JPanel implements MouseListener {
 			selectedItem = null;
 			
 			curItem.use(player); //use it.
+			control.sendUseItem(((Food) curItem).getFoodType().toString());
 			System.out.println("Current Item should have been used.");
 			}
 			//now repaint the graphics pane.
