@@ -13,9 +13,7 @@ package missing.game.characters;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
@@ -70,8 +68,9 @@ public class Merchant extends Character {
 	 */
 	public void buyItem(Player player, String item) throws GameException {
 		Movable i = namesToItems.get(item);
-		if (i == null)
+		if (i == null) {
 			throw new GameException("the merchant doesn't have this item");
+		}
 		int costOfItem = costs.get(i);
 		if (player.getMoney().getAmount() < costOfItem) {
 			throw new GameException("player doesn't have enough money");
@@ -86,9 +85,13 @@ public class Merchant extends Character {
 	 * player sells one amount of an item to the merchant
 	 */
 	public void sellItem(Player p, Movable item) throws GameException {
-		if (!p.has(item))
+		if (!p.has(item)) {
 			throw new GameException("cannot sell item you dont have");
-		int sellAmount = costs.get(findItemInMap(item));
+		}
+		if (!costs.containsKey(item)) {
+			throw new GameException("This merchant does not buy that sort of item!");
+		}
+		int sellAmount = (int) (costs.get(findItemInMap(item)) * 0.5);
 		p.setMoney(p.getMoney().getAmount() + sellAmount);
 		// reduces amount of item
 		item.setAmount(item.getAmount() - 1);

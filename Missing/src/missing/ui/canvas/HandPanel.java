@@ -8,7 +8,7 @@
  *  27 Sep 16		Casey Huang			updated drawing methods and added rows and columns final static fields
  *  08 Oct 16		Casey Huang			fixed bug
  *  09 Oct 16		Casey Huang			added map to draw selected item
- *  10 Oct 16		Edward Kelly		use item now sends over server
+ *  10 Oct 16		Edward Kelly		use item & transfers now send over server
  *  11 Oct 16		Casey Huang			Fixed duplication bug
  */
 package missing.ui.canvas;
@@ -371,13 +371,21 @@ public class HandPanel extends JPanel implements MouseListener {
 			if (!bagSet.contains(selectedItem)) {
 				bagSet.add(selectedItem);
 			}
+			try{
 			
 			pocket.removeItem(selectedItem);
 			pocketSet.remove(selectedItem);
 			
-			System.out.println("transferPocketToBag" + this.selectedItem.getAmount());
+			// send over server
+			control.sendTransferTo("bag", selectedItem);
+			
 			selectedItem = null;
 			clickIndex = -1;
+		}catch(GameException g){
+			
+		}
+		
+		
 		}
 		this.repaint();
 	}
@@ -402,6 +410,9 @@ public class HandPanel extends JPanel implements MouseListener {
 			
 			bag.removeItem(selectedItem);
 			bagSet.remove(selectedItem);
+			
+			// send over server
+			control.sendTransferTo("pocket", selectedItem);
 			
 			selectedItem = null;
 			clickIndex = -1;

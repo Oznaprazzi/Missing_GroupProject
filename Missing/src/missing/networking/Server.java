@@ -148,6 +148,8 @@ public class Server extends Thread {
 							instruction = input;
 						} else if (input.contains("use")) {
 							instruction = input;
+						} else if (input.contains("transfer")) {
+							instruction = input;
 						}
 						// send instructions to clients to update game
 						this.sendInstruction(instruction, playerID, direction);
@@ -187,6 +189,10 @@ public class Server extends Thread {
 			if (action.contains("craft") && playerNum == playerID)
 				continue;
 			if (action.contains("exit") && playerNum == playerID)
+				continue;
+			if (action.contains("use") && playerNum == playerID)
+				continue;
+			if (action.contains("transfer") && playerNum == playerID)
 				continue;
 			try {
 				outs[playerNum].reset();
