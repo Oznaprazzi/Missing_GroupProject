@@ -8,6 +8,7 @@
  */
 package missing.ui.views;
 
+import missing.game.characters.Player;
 import missing.game.items.nonmovable.Shop;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
@@ -33,10 +34,21 @@ public class ShopView extends View implements KeyListener {
 	private static ShopPanel TOOLS_PANEL;
 
 	private ShopPanel display;
+	private Player player;
 
 	public ShopView(VControl controller) {
 		super(controller);
 		this.addKeyListener(this);
+	}
+
+	// Getters and Setters
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
 	// Methods
@@ -44,6 +56,7 @@ public class ShopView extends View implements KeyListener {
 	public void sendExitSignal() {
 		controller.sendExitSignal();
 		controller.requestFocus();
+		this.player = null;
 		controller.changeView(controller.getGameView());
 	}
 

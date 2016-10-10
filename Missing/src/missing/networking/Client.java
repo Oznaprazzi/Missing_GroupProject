@@ -115,7 +115,6 @@ public class Client extends Thread implements KeyListener {
 				vControl.requestFocusInWindow();
 
 			} catch (GameException e) {
-				// TODO forward to controller
 				e.printStackTrace();
 			}
 
@@ -123,9 +122,9 @@ public class Client extends Thread implements KeyListener {
 			boolean playerDied = false;
 			while (true) {
 				Object input = null;
-				try{
+				try {
 					input = in.readObject();
-				} catch (EOFException e){
+				} catch (EOFException e) {
 					vControl.displayException("Disconnected from host");
 					vControl.dispose();
 					new VControl();
@@ -200,7 +199,6 @@ public class Client extends Thread implements KeyListener {
 					try {
 						vControl.updateGGame(game);
 					} catch (GameException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					vControl.repaint();
@@ -215,7 +213,7 @@ public class Client extends Thread implements KeyListener {
 			if (e.getClass() == SocketException.class) {
 				// host disconnected, send to main menu
 				vControl.displayException("Disconnected from host");
-//				vControl.reset();
+				// vControl.reset();
 				vControl.dispose();
 				new VControl();
 			} else {
@@ -308,6 +306,7 @@ public class Client extends Thread implements KeyListener {
 						game.forceRemovePlayer(clientID);
 						// update the shop of the player
 						ShopView view = (ShopView) vControl.getView(vControl.getShopView());
+						view.setPlayer(game.getAvatars()[clientID]);
 						view.updateDisplay(shop);
 						vControl.changeView(vControl.getShopView());
 					} catch (GameException e1) {
