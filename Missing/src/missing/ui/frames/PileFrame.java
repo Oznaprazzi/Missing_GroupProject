@@ -36,6 +36,8 @@ import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.ui.canvas.HandPanel;
 import missing.ui.canvas.PileCanvas;
+import missing.ui.controller.VControl;
+
 import javax.swing.JButton;
 
 /**
@@ -49,21 +51,22 @@ public class PileFrame extends JFrame {
 	private JButton btnTransferToPlayer;
 	
 	private BufferedImage backgroundImage = GameAssets.getWindowBackgroundImage();
+	private PileCanvas panel;
 	
 	/**
 	 * Create a window that renders the Piles to be drawn.
 	 * @param Pile - pile to be rendered.
 	 */
-	public PileFrame(Pile pile) {
+	public PileFrame(Pile pile, VControl control) {
 		super("Pile of Items");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setSize(backgroundImage.getWidth(), backgroundImage.getHeight());
-		contentPane = new JPanel();
+		contentPane = new ImagePanel();
+		setContentPane(contentPane);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-		PileCanvas panel = new PileCanvas(pile);
+		panel = new PileCanvas(pile, control);
 		contentPane.add(panel, BorderLayout.CENTER);
 		
 		btnTransferToPlayer = new JButton("Transfer Selection to Player");
@@ -81,7 +84,7 @@ public class PileFrame extends JFrame {
 	
 	private void addActionListeners(){
 		btnTransferToPlayer.addActionListener(e->{
-			//TODO: need to define logic to transfer the selected items to a player.
+			panel.transferSelectionToPlayer();
 		});
 	}
 	

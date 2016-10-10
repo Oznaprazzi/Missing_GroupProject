@@ -13,7 +13,7 @@
  * 2 Oct 16			Edward Kelly	disconnects handled
  * 3 Oct 16			Edward Kelly	implemented dieing
  * 10 Oct 16		Edward Kelly	fixed health difference bug between clients
- * 10 Oct 16		Edward Kelly	added sendUseItem
+ * 10 Oct 16		Edward Kelly	added sendUseItem and bag/pocket transfers
  */
 package missing.networking;
 
@@ -27,12 +27,16 @@ import java.net.Socket;
 import java.net.SocketException;
 
 import missing.game.Game;
+import missing.game.characters.Player;
 import missing.game.items.nonmovable.Shop;
 import missing.game.items.movable.Craftable;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
+import missing.game.items.movable.Movable;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
+import missing.game.world.nodes.WorldTile.Pile;
+import missing.game.world.nodes.WorldTile.TileObject;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.helper.SignalException;
@@ -206,6 +210,58 @@ public class Client extends Thread implements KeyListener {
 						} catch (GameException e) {
 							//handled at player who used item
 						}
+					} else if (((String) input).contains("pilepickup")) {
+						String itemName = ((String) input).split(" ")[1];
+						Pile pile = null;
+						Movable selectedItem = null;
+						try {
+							pile = (Pile) game.getObjectInFront(movingPlayer);
+							for (TileObject pileItem : pile.getItems()){
+								if (pileItem.getName().equals(itemName)){
+									selectedItem = (Movable) pileItem;
+									break;
+								}
+							}
+							game.getAvatars()[movingPlayer].addToPocket(selectedItem);
+						} catch (GameException e) {
+							System.out.println("server parse error: pilepickup");
+						}
+						pile.getItems().remove(selectedItem);
+					} else if (((String) input).contains("transfer")) {
+						String to = ((String) input).split(" ")[1];
+						String itemName = ((String) input).split(" ")[2];
+						Player player = game.getAvatars()[movingPlayer];
+						if (to.equals("bag")){
+							Movable movingItem = null;
+							for (Movable pocketItem : player.getPocket().getItems()){
+								System.out.println(pocketItem.getName()+" : "+itemName);
+								if (pocketItem.getName().equals(itemName)){
+									movingItem = pocketItem;
+									break;
+								}
+							}
+							try {
+								player.removeFromPocket(movingItem);
+								player.addToBag(movingItem);
+							} catch (GameException e) {
+								System.out.println("server parse error: transfer to bag");
+							}
+						} else if (to.equals("pocket")){
+							Movable movingItem = null;
+							for (Movable bagItem : player.getBag().getItems()){
+								if (bagItem.getName().equals(itemName)){
+									movingItem = bagItem;
+									break;
+								}
+							}
+							try {
+								player.getBag().removeItem(movingItem);
+								player.addToPocket(movingItem);
+							} catch (GameException e) {
+								System.out.println("server parse error: transfer to pocket");
+							}
+							
+						} else System.out.println("server parse error: transfer");
 					}
 					try {
 						vControl.updateGGame(game);
@@ -365,5 +421,15 @@ public class Client extends Thread implements KeyListener {
 
 	public void sendUseItem(String foodType) {
 		out.println("use "+foodType);		
+	}
+
+	public void sendTransferTo(String to, Movable item) {
+		out.println("transfer "+to+" "+ item.getName());
+		
+	}
+
+	public void sendPilePickUp(String selectedItem) {
+		out.println("pilepickup "+selectedItem);
+		
 	}
 }

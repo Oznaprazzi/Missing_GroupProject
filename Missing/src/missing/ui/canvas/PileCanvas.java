@@ -25,9 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
+import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Movable;
@@ -39,6 +41,7 @@ import missing.game.items.nonmovable.Pocket;
 import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
+import missing.ui.controller.VControl;
 
 /**
  * Canvas used to display the Pile of Items. If an item of the grid is pressed,
@@ -79,14 +82,17 @@ public class PileCanvas extends JPanel implements MouseListener {
 	/**
 	 * Stores the currently clicked on item. If it is null, there is nothing in that cell.
 	 */
-	private  Movable selectedItem;
+	private  TileObject selectedItem;
 	private Rectangle clickRect;
 	
 	private int clickIndex = -1;
+
+	private VControl control;
 	
 	
-	public PileCanvas(Pile pile) {
+	public PileCanvas(Pile pile, VControl control) {
 		this.pile = pile;
+		this.control = control;
 		pileSet = new ArrayList<TileObject>();
 		gridRectangle = new ArrayList<Rectangle>();
 		gridMap = new HashMap<>();
@@ -268,19 +274,61 @@ public class PileCanvas extends JPanel implements MouseListener {
 	public Dimension getPreferredSize() {
 		return new Dimension(442, 409);
 	}
+	
+	public void transferSelectionToPlayer() {
+		if (selectedItem == null)
+			return;
+		if (clickIndex >= 0 && clickIndex <= 9) {
+			Player player = control.getGGame().getGame().getAvatars()[control.getPlayerID()];
+			if (selectedItem instanceof Movable){
+				try {
+					player.addToPocket((Movable) selectedItem);
+				} catch (GameException e) {
+					JOptionPane.showMessageDialog(this, "No room in pocket for item", "Cannot Pick up Item", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				pile.getItems().remove(selectedItem);
+			}
+
+			// send over server
+			control.sendPilePickUp(selectedItem.toString());
+			
+			pileSet.remove(selectedItem);
+			selectedItem = null;
+			clickIndex = -1;
+		}
+		this.repaint();
+		
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		clickIndex = indexofCell(e);
-		//selectedItem = selectClickedItem();
+		this.clickRect = gridMap.get(clickIndex);
+		selectedItem = selectClickedItem();
 		System.out.println(this.clickIndex);
 		this.repaint();
 	}
-
+	
+	private TileObject selectClickedItem() {
+		if (clickIndex != -1) {
+			if (clickIndex >= 0 && clickIndex <= 9) {
+				if (clickIndex <= pileSet.size() - 1) {
+					if (this.pileSet.get(clickIndex) != null) {
+						return this.pileSet.get(clickIndex);
+					}
+				}
+			} 
+		}
+		return null;
+	}
+	
 	/*
 	 * EXTRA MOUSE METHODS - NOT BEING USED.
 	 */
 	
+	
+
 	@Override
 	public void mousePressed(MouseEvent e) {}
 
@@ -293,4 +341,5 @@ public class PileCanvas extends JPanel implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {}
 
+	
 }

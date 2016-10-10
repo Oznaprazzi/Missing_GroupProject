@@ -45,10 +45,6 @@ public class HandJFrame extends JFrame {
 	private final JButton btnUseItem = MenuFactory.createButton2("Use Item");
 	private final JButton btnDrop = MenuFactory.createButton2("Drop");
 	
-	/*Helper fields for determining the clicked cell location, and the items index */
-	private Movable clickedItem;
-	private int clickedIndex;
-	
 	/**The hand canvas */
 	private HandPanel panel; //the hand canvas
 	
@@ -61,8 +57,6 @@ public class HandJFrame extends JFrame {
 	 * Create a Test canvas contained within this window.
 	 */
 	public HandJFrame(VControl control) {
-		this.bag = bag;
-		this.pocket = pocket;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		//setSize(backgroundImage.getWidth(), backgroundImage.getHeight());
 		setSize(FRAME_WD, FRAME_HT);
