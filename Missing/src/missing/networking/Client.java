@@ -13,7 +13,7 @@
  * 2 Oct 16			Edward Kelly	disconnects handled
  * 3 Oct 16			Edward Kelly	implemented dieing
  * 10 Oct 16		Edward Kelly	fixed health difference bug between clients
- * 10 Oct 16		Edward Kelly	added sendUseItem
+ * 10 Oct 16		Edward Kelly	added sendUseItem and bag/pocket transfers
  */
 package missing.networking;
 
