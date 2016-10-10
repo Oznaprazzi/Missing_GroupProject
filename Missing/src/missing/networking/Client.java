@@ -208,7 +208,7 @@ public class Client extends Thread implements KeyListener {
 						try {
 							food.use(game.getAvatars()[movingPlayer]);
 						} catch (GameException e) {
-							//handled at player who used item
+							e.printStackTrace();
 						}
 					} else if (((String) input).contains("pilepickup")) {
 						String itemName = ((String) input).split(" ")[1];

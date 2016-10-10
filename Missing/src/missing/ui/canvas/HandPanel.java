@@ -382,7 +382,7 @@ public class HandPanel extends JPanel implements MouseListener {
 			selectedItem = null;
 			clickIndex = -1;
 		}catch(GameException g){
-			
+			g.printStackTrace();
 		}
 		
 		
