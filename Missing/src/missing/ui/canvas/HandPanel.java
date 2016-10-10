@@ -433,9 +433,6 @@ public class HandPanel extends JPanel implements MouseListener {
 		}
 	}
 		
-		
-	
-
 	/*
 	 * END OF HELPER METHODS..
 	 */
