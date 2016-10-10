@@ -84,7 +84,7 @@ public class Merchant extends Character {
 	/**
 	 * player sells one amount of an item to the merchant
 	 */
-	public void sellItem(Player p, Movable item) throws GameException {
+	public int sellItem(Player p, Movable item) throws GameException {
 		if (!p.has(item)) {
 			throw new GameException("cannot sell item you dont have");
 		}
@@ -97,6 +97,7 @@ public class Merchant extends Character {
 		item.setAmount(item.getAmount() - 1);
 		if (item.getAmount() == 0)
 			p.removeFromPocket(item);
+		return sellAmount;
 
 	}
 
