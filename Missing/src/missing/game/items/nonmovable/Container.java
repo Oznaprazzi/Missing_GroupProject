@@ -82,9 +82,7 @@ public class Container extends NonMovable {
 	 * @throws GameException
 	 */
 	public void addItem(Movable item) throws GameException {
-		System.out.println("curr size" + currentSize);
 		int newSize = currentSize + item.getCount();
-		System.out.println("new size" + newSize);
 		if (newSize <= size) {
 			this.currentSize = newSize;
 			Movable i = findItem(item);
@@ -126,13 +124,10 @@ public class Container extends NonMovable {
 	 */
 	public Movable removeItem(Movable item) throws GameException {
 		// search for the first occurence of the item
-		System.out.println("item amt " + item.getAmount());
 		Movable tmp = findItem(item);
 		if (tmp != null) {
-			System.out.println("tmp amt " + tmp.getAmount());
 			items.remove(tmp);
 			this.currentSize -= tmp.getAmount();
-			System.out.println("remove curr size :" + currentSize);
 			return tmp;
 		}
 		// didn't find item if reaches here

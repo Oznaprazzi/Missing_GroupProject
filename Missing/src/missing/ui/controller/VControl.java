@@ -127,6 +127,8 @@ public class VControl extends JFrame {
 	private JFileChooser fc;
 	
 	private DayNightCycle dnc;
+	private java.util.Timer timer;
+	
 	public VControl() {
 		super("Missing: The Game");
 		this.views = GUIInitialiser.createViews(this);
@@ -135,6 +137,25 @@ public class VControl extends JFrame {
 		setupMenuListeners();
 		views[cur].initialise();
 	}
+	
+	public void reset(){
+		timer.cancel();
+		cur = 0;
+		prev = 0;
+		gGame = null;
+		playerID = 0;
+		isHost = false;
+		client = null;
+		alpha = 0;
+		dnc = null;
+		timer = null;
+		this.views = GUIInitialiser.createViews(this);
+		initializeMenu();
+		initialiseGUI();
+		setupMenuListeners();
+		views[cur].initialise();
+	}
+	
 	/**
 	 * Helper method. Initializes the JMenu and all of the Items inside.
 	 */
@@ -495,7 +516,7 @@ public class VControl extends JFrame {
 	 * Starts day and night cycle for game
 	 */
 	private void startDayNightCycle(){
-		java.util.Timer timer = new java.util.Timer();
+		timer = new java.util.Timer();
 		dnc = new DayNightCycle(this);
 		timer.scheduleAtFixedRate(dnc, 0, CLOCK_TICK*10);
 	}

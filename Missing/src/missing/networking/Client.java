@@ -18,6 +18,7 @@ package missing.networking;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -120,7 +121,14 @@ public class Client extends Thread implements KeyListener {
 			// listen for updates from server
 			boolean playerDied = false;
 			while (true) {
-				Object input = in.readObject();
+				Object input = null;
+				try{
+					input = in.readObject();
+				} catch (EOFException e){
+					vControl.displayException("Disconnected from host");
+					vControl.dispose();
+					new VControl();
+				}
 				if (input == null) {
 					break;
 				}
@@ -186,8 +194,6 @@ public class Client extends Thread implements KeyListener {
 					} 
 					try {
 						vControl.updateGGame(game);
-						System.out.println("p1 health "+game.getAvatars()[0].getHealth());
-						System.out.println("p2 health "+game.getAvatars()[1].getHealth());
 					} catch (GameException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -203,10 +209,11 @@ public class Client extends Thread implements KeyListener {
 		} catch (IOException | ClassNotFoundException e) {
 			if (e.getClass() == SocketException.class) {
 				// host disconnected, send to main menu
-				vControl.displayException("Host has disconnected, game ended");
+				vControl.displayException("Disconnected from host");
+//				vControl.reset();
 				vControl.dispose();
-				vControl = new VControl();
-			} else{
+				new VControl();
+			} else {
 				e.printStackTrace();
 			}
 		} finally {
@@ -266,8 +273,6 @@ public class Client extends Thread implements KeyListener {
 			game.performAction(clientID);
 			out.println("F");
 			vControl.updateGGame(game);
-			System.out.println("local p1 health "+game.getAvatars()[0].getHealth());
-			System.out.println("local p2 health "+game.getAvatars()[1].getHealth());
 			vControl.repaint();
 		} catch(SignalException | GameException e){
 			if (e.getClass() == SignalException.class){
@@ -282,7 +287,6 @@ public class Client extends Thread implements KeyListener {
 					out.println("F");
 					try {
 						vControl.updateGGame(game);
-						System.out.println("updated after killed by tree");
 					} catch (GameException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -292,7 +296,6 @@ public class Client extends Thread implements KeyListener {
 						// this player died
 						vControl.displayDead();
 					}
-					System.out.println("repainted killed by tree");
 				}
 			} else if(e.getClass() == GameException.class){
 				vControl.displayException(e.getMessage());
@@ -311,7 +314,6 @@ public class Client extends Thread implements KeyListener {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -139,6 +139,7 @@ public class Server extends Thread {
 							instruction = "perform";
 						} else if (input.equals("disconnect")) {
 							// player wants to perform action
+							if (playerID==0)return;
 							instruction = "disconnect";
 						} else if (input.contains("craft")) {
 							// player crafted an item

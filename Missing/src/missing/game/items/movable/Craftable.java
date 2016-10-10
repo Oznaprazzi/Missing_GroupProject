@@ -95,7 +95,6 @@ public abstract class Craftable extends Usable {
 					// item has enough wood -- just decrease
 					newAmt = amt - woodLeft;
 					pocket.setCurrentSize(pocket.getCurrentSize() - woodLeft);
-					System.out.println("pocket size shovel: " + pocket.getSize());
 					woodLeft = 0;
 					w.setAmount(newAmt);
 				} else {

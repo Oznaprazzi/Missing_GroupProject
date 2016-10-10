@@ -69,9 +69,7 @@ public class MapView extends View {
 		JButton exitBtn = new JButton("Main Menu");
 		exitBtn.setBackground(Color.yellow);
 		exitBtn.addActionListener(e->{
-			new VControl();
-//			controller.disconnectClient();
-			controller.dispose();
+			controller.disconnectClient();
 		});
 		spectatorButtonsPanel.add(exitBtn);
 	}
