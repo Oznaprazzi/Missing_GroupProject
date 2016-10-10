@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.sound.midi.ControllerEventListener;
 import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
@@ -82,8 +81,7 @@ public class HandPanel extends JPanel implements MouseListener {
 
 	private List<Rectangle> gridRectangle; // array of rectangle locations.
 	private Map<Integer, Rectangle> gridMap;
-	
-	
+
 	private Movable selectedItem;
 	private Rectangle clickRect;
 	private int clickIndex;
@@ -104,13 +102,16 @@ public class HandPanel extends JPanel implements MouseListener {
 		addMouseListener(this);
 		this.setOpaque(false);
 	}
+
 	/**
-	 * Alternative constructor to test the handpanel and the player interactions.
+	 * Alternative constructor to test the handpanel and the player
+	 * interactions.
+	 * 
 	 * @param player
 	 * @param bag
 	 * @param pocket
 	 */
-	public HandPanel(Player player){
+	public HandPanel(Player player) {
 		this.player = player;
 		this.bag = player.getBag();
 		this.pocket = player.getPocket();
@@ -369,17 +370,16 @@ public class HandPanel extends JPanel implements MouseListener {
 			if (!bagSet.contains(selectedItem)) {
 				bagSet.add(selectedItem);
 			}
-			try{
-			bag.addItem(selectedItem);
-			pocket.removeItem(selectedItem);
-			pocketSet.remove(selectedItem);
-			selectedItem = null;
-			clickIndex = -1;
-		}catch(GameException g){
-			
-		}
-		
-		
+			try {
+				bag.addItem(selectedItem);
+				pocket.removeItem(selectedItem);
+				pocketSet.remove(selectedItem);
+				selectedItem = null;
+				clickIndex = -1;
+			} catch (GameException g) {
+
+			}
+
 		}
 		this.repaint();
 	}
@@ -412,38 +412,39 @@ public class HandPanel extends JPanel implements MouseListener {
 		}
 		this.repaint();
 	}
-	
+
 	/**
-	 * Whenever the "USE" button is pressed, it uses the item to help benefit the player.
-	 * For example, if a player presses this button on an APPLE, it allows the player to consume 
-	 * this apple to increase their health.
+	 * Whenever the "USE" button is pressed, it uses the item to help benefit
+	 * the player. For example, if a player presses this button on an APPLE, it
+	 * allows the player to consume this apple to increase their health.
+	 * 
 	 * @throws GameException
 	 */
-	public void useItem() throws GameException{
-		if(selectedItem == null) return;
-		if(selectedItem instanceof Usable){ //can we use this item?
-			/*Now, the respective item has been removed and can now be used. */
+	public void useItem() throws GameException {
+		if (selectedItem == null)
+			return;
+		if (selectedItem instanceof Usable) { // can we use this item?
+			/* Now, the respective item has been removed and can now be used. */
 			Usable curItem = (Usable) selectedItem;
-			if(curItem instanceof Food){
-			
-			/*Remove from the pocket or bag if they have the selected item. */
-			if(pocketSet.contains(selectedItem))
-				pocketSet.remove(selectedItem);
-			else if(bagSet.contains(selectedItem))
-				bagSet.remove(selectedItem);
-			/*Now, we don't have a selected item anymore :( */
-			selectedItem = null;
-			
-			curItem.use(player); //use it.
-			control.sendUseItem(((Food) curItem).getFoodType().toString());
-			System.out.println("Current Item should have been used.");
+			if (curItem instanceof Food) {
+				curItem.use(player); // use it.
+				if (curItem.getAmount() <= 0) {
+					selectedItem = null;
+					if (pocketSet.contains(curItem)) {
+						pocketSet.remove(curItem);
+					} else if (bagSet.contains(curItem)) {
+						bagSet.remove(curItem);
+					}
+				}
+				control.sendUseItem(((Food) curItem).getFoodType().toString());
+				System.out.println("Current Item should have been used.");
 			}
-			//now repaint the graphics pane.
+			// now repaint the graphics pane.
 			this.revalidate();
 			this.repaint();
 		}
 	}
-		
+
 	/*
 	 * END OF HELPER METHODS..
 	 */

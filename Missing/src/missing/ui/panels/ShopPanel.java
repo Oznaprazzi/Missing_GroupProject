@@ -245,13 +245,13 @@ public class ShopPanel extends JPanel {
 		currentPlayer = parent.getPlayer();
 
 		btnBuy.addActionListener(e -> {
-			controller.openCrafting();
+		//	controller.openCrafting();
 		});
 
 		btnSell.addActionListener(e -> {
-			controller.requestFocus();
-			bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
-			bagFrame.setVisible(true);
+		//	controller.requestFocus();
+		//	bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
+		//	bagFrame.setVisible(true);
 		});
 
 	}

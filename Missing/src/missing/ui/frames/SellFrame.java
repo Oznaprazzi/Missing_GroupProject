@@ -52,7 +52,7 @@ public class SellFrame  extends JFrame {
 		contentPane.add(btnPocketToBag);
 		contentPane.add(btnBagToPocket);
 		contentPane.add(btnUseItem);
-		panel = new HandPanel(control, bag, pocket);
+		panel = new HandPanel(control);
 		contentPane.add(panel);
 		addActionListeners();
 	}

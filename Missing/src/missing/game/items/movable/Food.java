@@ -99,11 +99,17 @@ public class Food extends Health {
 		// Check if player has the food in his pocket
 		if (player.has(this)) {
 			// increase player's health by regen amount
-			int newHealth = player.getHealth()+getRegenAmount();
-			if (newHealth >100)newHealth = 100;
+			int newHealth = player.getHealth() + getRegenAmount();
+			if (newHealth > 100) {
+				newHealth = 100;
+			}
 			player.setHealth(newHealth);
-			// remove the item from player's pocket
-			player.removeFromPocket(this);
+			// decrease the amount
+			this.setAmount(this.getAmount() - 1);
+			if (this.getAmount() <= 0) {
+				System.out.println("Got here!");
+				player.removeFromPocket(this);
+			}
 		}
 	}
 
