@@ -26,7 +26,6 @@ public class CraftingFrame extends JFrame{
 		super("Crafting");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 450, 300);
 		setSize(442, 409);
 		contentPane = new JPanel();
 		contentPane.setOpaque(false);
@@ -34,7 +33,6 @@ public class CraftingFrame extends JFrame{
 		setContentPane(contentPane);
 		canvas = new CraftingCanvas(controller, this);
 		contentPane.add(canvas, BorderLayout.CENTER);
-		pack();
 		
 	}
 }

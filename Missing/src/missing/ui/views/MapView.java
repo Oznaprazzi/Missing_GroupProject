@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
+import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.MapPanel;
 
 @SuppressWarnings("serial")
@@ -66,8 +67,7 @@ public class MapView extends View {
 		spectatorButtonsPanel = new JPanel();
 		spectatorButtonsPanel.setOpaque(false);
 		
-		JButton exitBtn = new JButton("Main Menu");
-		exitBtn.setBackground(Color.yellow);
+		JButton exitBtn = MenuFactory.createButton3("Main Menu");
 		exitBtn.addActionListener(e->{
 			controller.disconnectClient();
 		});
@@ -79,8 +79,7 @@ public class MapView extends View {
 		mapButtonsPanel = new JPanel();
 		mapButtonsPanel.setOpaque(false);
 		
-		JButton backBtn = new JButton("Back");
-		backBtn.setBackground(Color.yellow);
+		JButton backBtn = MenuFactory.createButton3("Back");
 		backBtn.addActionListener(e->{
 			controller.requestFocus();
 			controller.changeView(controller.getGameView());
