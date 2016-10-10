@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
@@ -89,14 +90,14 @@ public class HandJFrame extends JFrame {
 			try {
 				panel.transferPocketToBag();
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Bag is full", "Bag Full", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		btnBagToPocket.addActionListener(e -> {
 			try {
 				panel.transferBagToPocket();
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Pocket is full", "Pocket Full", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		/* Called when the item is used. */
@@ -104,7 +105,7 @@ public class HandJFrame extends JFrame {
 			try {
 				panel.useItem();
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Cannot use this item", "Cannot Use", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		btnDrop.addActionListener(e -> {

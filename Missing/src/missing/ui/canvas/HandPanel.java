@@ -367,19 +367,17 @@ public class HandPanel extends JPanel implements MouseListener {
 			if (!bagSet.contains(selectedItem)) {
 				bagSet.add(selectedItem);
 			}
-			try {
-
-				pocket.removeItem(selectedItem);
-				pocketSet.remove(selectedItem);
-
-				// send over server
-				control.sendTransferTo("bag", selectedItem);
-
-				selectedItem = null;
-				clickIndex = -1;
-			} catch (GameException g) {
-
-			}
+			
+			pocket.removeItem(selectedItem);
+			pocketSet.remove(selectedItem);
+			
+			// send over server
+			control.sendTransferTo("bag", selectedItem);
+			
+			selectedItem = null;
+			clickIndex = -1;
+		
+		
 		}
 		this.repaint();
 	}
