@@ -13,9 +13,7 @@ package missing.game.characters;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
