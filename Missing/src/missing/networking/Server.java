@@ -146,6 +146,8 @@ public class Server extends Thread {
 							instruction = input;
 						} else if (input.contains("exit")) {
 							instruction = input;
+						} else if (input.contains("use")) {
+							instruction = input;
 						}
 						// send instructions to clients to update game
 						this.sendInstruction(instruction, playerID, direction);

@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.midi.ControllerEventListener;
 import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
@@ -87,7 +88,10 @@ public class HandPanel extends JPanel implements MouseListener {
 	private int clickIndex;
 	private Player player;
 
+	private VControl control;
+
 	public HandPanel(VControl control, Bag bag, Pocket pocket) {
+		this.control = control;
 		this.bag = bag;
 		this.pocket = pocket;
 		this.player = control.getGGame().getGame().getAvatars()[control.getPlayerID()];
@@ -425,6 +429,7 @@ public class HandPanel extends JPanel implements MouseListener {
 			selectedItem = null;
 			
 			curItem.use(player); //use it.
+			control.sendUseItem(((Food) curItem).getFoodType().toString());
 			System.out.println("Current Item should have been used.");
 			}
 			//now repaint the graphics pane.

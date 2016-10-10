@@ -187,7 +187,10 @@ public class CraftingCanvas extends JPanel implements MouseListener{
 				System.out.println("pocket currentsize: "+player.getPocket().getCurrentSize());
 				System.out.println("pocket size: "+player.getPocket().getSize());
 				controller.sendCraftedItem(tool.getType().toString());
-				new CraftingFrame(controller).setVisible(true);
+				CraftingFrame cf = new CraftingFrame(controller);
+				cf.setLocationRelativeTo(controller);
+				cf.pack();
+				cf.setVisible(true);
 				frame.dispose();
 				return;
 			} catch (GameException e1) {
