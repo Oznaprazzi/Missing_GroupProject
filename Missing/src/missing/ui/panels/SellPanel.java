@@ -70,6 +70,18 @@ public class SellPanel extends JPanel implements MouseListener{
 	private Rectangle clickRect;
 	private int clickIndex;
 	
+	/** Contains the number of unique items in the bag */
+	private List<Movable> bagSet;
+
+	/** Contains the number of unique items in the pocket */
+	private List<Movable> pocketSet;
+	
+	/** Bag of items to display */
+	private Bag bag;
+
+	/** Pocket of items to display */
+	private Pocket pocket;
+	
 	private Player player;
 	
 	private Merchant merchant;
@@ -78,6 +90,10 @@ public class SellPanel extends JPanel implements MouseListener{
 
 	public SellPanel(Player player, Shop shop) {
 		this.player = player;
+		this.bag = player.getBag();
+		this.pocket = player.getPocket();
+		bagSet = new ArrayList<Movable>();
+		pocketSet = new ArrayList<Movable>();
 		gridRectangle = new ArrayList<>();
 		gridMap = new HashMap<>();
 		addMouseListener(this);
@@ -160,8 +176,8 @@ public class SellPanel extends JPanel implements MouseListener{
 	 * @param y_offset
 	 * @param set
 	 */
-	private void drawItems(Graphics g, int y_offset) {
-		if (items.isEmpty()) {
+	private void drawItems(Graphics g, int y_offset, List<Movable> set) {
+		if (set.isEmpty()) {
 			return;
 		}
 		int count = 0;
@@ -171,7 +187,7 @@ public class SellPanel extends JPanel implements MouseListener{
 		int x = X_OFFSET + 7;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				Movable item = items.get(count);
+				Movable item = set.get(count);
 				if (item instanceof Food) {
 					if (((Food) item).getFoodType().equals(Food.FoodType.APPLE)) {
 						g.drawImage(GameAssets.getAppleImage(), x + j * size, y_offset + i * size, null);
@@ -197,17 +213,17 @@ public class SellPanel extends JPanel implements MouseListener{
 				} else if (item instanceof Wood) {
 					g.drawImage(GameAssets.getWoodImage(), x + j * size, y_offset + i * size, null);
 				}
+				g.drawString(String.valueOf(item.getCount()), x + 2 + j * size, y_offset + 10 + i * size);
 				if (j > 5) {
 					j = 0;
 				}
 				count++;
-				if (count >= items.size()) {
+				if (count >= set.size()) {
 					return;
 				}
 			}
 		}
 	}
-	
 	
 	/*
 	 * START OF HELPER METHODS:
@@ -299,8 +315,9 @@ public class SellPanel extends JPanel implements MouseListener{
 		
 	public void sellItem(){
 		try {
-			merchant.sellItem(this.player, this.selectedItem);
-			JOptionPane.showMessageDialog(null, this.selectedItem + " has been added to your pocket successfully.");
+			int amount = merchant.sellItem(this.player, this.selectedItem);
+			JOptionPane.showMessageDialog(null, this.selectedItem + " has been removed from your pocket successfully. /n"
+											+ amount + " has been added to your account.");
 		} catch (GameException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

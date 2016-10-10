@@ -44,9 +44,9 @@ public class ShopPanel extends JPanel {
 	private JButton btnExit;
 
 	private JPanel btnPanel;
-	
+
 	private JPanel buyPanel;
-	
+
 	private Player currentPlayer;
 
 	public ShopPanel(ShopView parent, Shop shop) {
@@ -239,26 +239,27 @@ public class ShopPanel extends JPanel {
 			}
 			break;
 		}
+		addActionListeners();
 	}
-	
+
 	private void addActionListeners(){
 		currentPlayer = parent.getPlayer();
 
-		btnBuy.addActionListener(e -> {
-			controller.openCrafting();
-		});
+		if(btnBuy != null && btnSell != null){
+			btnBuy.addActionListener(e -> {
+				BuyPanel bP = new BuyPanel(currentPlayer, shop);
+			});
 
-		btnSell.addActionListener(e -> {
-			controller.requestFocus();
-			bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
-			bagFrame.setVisible(true);
-		});
-		
-		btnExit.addActionListener(e -> {
-			controller.requestFocus();
-			bagFrame = new HandJFrame(currentPlayer.getBag(), currentPlayer.getPocket());
-			bagFrame.setVisible(true);
-		});
+			btnSell.addActionListener(e -> {
+				SellPanel sP = new SellPanel(currentPlayer, shop);
+			});
+		}
+
+		if(btnExit != null){
+			btnExit.addActionListener(e -> {
+				parent.sendExitSignal();
+			});
+		}
 
 	}
 }
