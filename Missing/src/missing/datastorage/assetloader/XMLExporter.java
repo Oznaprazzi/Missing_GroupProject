@@ -38,7 +38,11 @@ import missing.game.items.nonmovable.Shop.ShopType;
  * This class encapsulates all the saving and exporting logic
  */
 public class XMLExporter {
-
+	/**
+	 * Returns the current state of the game into a document.
+	 * @param game
+	 * @return the current game as <code>Document</code>
+	 */
 	public static Document toDocument(Game game) {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		try {
