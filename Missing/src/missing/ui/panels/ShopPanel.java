@@ -5,6 +5,8 @@
  * 	Date					Author					Changes
  * 	8 Oct 16				Chris Rabe				created shop panel
  * 	10 Oct 16				Casey Huang				fixed position of buttons
+ *  11 Oct 16				Casey Huang				fixed drawing bug for buttons - buttons would not show when rotated
+ *  												between two nodes.
  */
 
 package missing.ui.panels;
@@ -85,6 +87,7 @@ public class ShopPanel extends JPanel {
 		default:
 			break;
 		}
+		System.out.println(this.orientation);
 		setButtons();
 		this.repaint();
 	}
@@ -243,6 +246,7 @@ public class ShopPanel extends JPanel {
 			}
 			break;
 		}
+		parent.revalidate();
 		addActionListeners();
 	}
 
@@ -252,18 +256,21 @@ public class ShopPanel extends JPanel {
 		if(btnBuy != null && btnSell != null){
 			btnBuy.addActionListener(e -> {
 				 bF = new BuyFrame(currentPlayer, shop);
+				 parent.requestFocus();
 			});
 
 			btnSell.addActionListener(e -> {
 				sF = new SellFrame(currentPlayer, shop);
+				parent.requestFocus();
 			});
 		}
 
 		if(btnExit != null){
 			btnExit.addActionListener(e -> {
 				parent.sendExitSignal();
+				parent.requestFocus();
 			});
 		}
-
+		
 	}
 }
