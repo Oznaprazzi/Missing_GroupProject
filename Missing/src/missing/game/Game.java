@@ -631,7 +631,6 @@ public class Game implements Serializable {
 
 	/**
 	 * Distributes the items inside the game world.
-	 * 
 	 * @param itemsFromFile
 	 */
 	private void distributeItems(List<Item> items) {

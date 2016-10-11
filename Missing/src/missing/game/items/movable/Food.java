@@ -43,7 +43,13 @@ public class Food extends Health {
 	private FoodType foodType;
 
 	private boolean cooked;
-
+	
+	/**
+	 * Construct a new Food object.
+	 * @param worldLocation
+	 * @param tileLocation
+	 * @param type
+	 */
 	public Food(Point worldLocation, Point tileLocation, FoodType type) {
 		// Fill super constructor with dummy values
 		super(null, null, worldLocation, tileLocation, -1, -1, -1);
@@ -51,7 +57,13 @@ public class Food extends Health {
 		this.foodType = type;
 		setInfo();
 	}
-
+	/**
+	 * Construct a new Food object with a specified amount.
+	 * @param worldLocation
+	 * @param tileLocation
+	 * @param type
+	 * @param amount
+	 */
 	public Food(Point worldLocation, Point tileLocation, FoodType type, int amount) {
 		this(worldLocation, tileLocation, type);
 		super.setAmount(amount);
@@ -76,9 +88,10 @@ public class Food extends Health {
 	}
 
 	/**
-	 * If the food item is cooked, then it increases the regenAmount by 10%.
+	 * Returns the regenAmount that the certain food can give.
 	 */
 	protected int getRegenAmount() {
+		//If the food item is cooked, then it increases the regenAmount by 10%.
 		if (cooked) {
 			return (int) (regenAmount * 0.1) + regenAmount;
 		}

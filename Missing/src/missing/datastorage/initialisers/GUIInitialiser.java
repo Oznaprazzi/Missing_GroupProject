@@ -31,9 +31,19 @@ import missing.ui.views.playgamemenu.LobbyView;
 import missing.ui.views.playgamemenu.PlayGameView;
 import missing.game.world.World;
 import missing.ui.assets.GWNode;
-
+/**
+ * This class is responsible for initializing the GUI and has many utility methods that initializes the
+ * world.
+ *
+ */
 public class GUIInitialiser {
-
+	/**
+	 * Initialises the graphical "world" tiles, given a WorldNode and a specified tile size.
+	 * @param node
+	 * @param tileSize
+	 * @return 2D array of GWTiles
+	 * @throws GameException
+	 */
 	public static GWTile[][] initialiseGTiles(WorldNode node, int tileSize) throws GameException {
 		WorldTile[][] tiles = node.getWorldTiles();
 		GWTile[][] temp = new GWTile[tiles.length][tiles[0].length];
@@ -45,7 +55,13 @@ public class GUIInitialiser {
 		}
 		return temp;
 	}
-
+	/**
+	 * Initialises the graphical "world" nodes, given a <code>World</code> object and a specified nodeSize
+	 * @param world
+	 * @param nodeSize
+	 * @return 2D array of GWNodes
+	 * @throws GameException
+	 */
 	public static GWNode[][] initialiseGNodes(World world, int nodeSize) throws GameException {
 		WorldNode[][] nodes = world.getWorldNodes();
 		GWNode[][] temp = new GWNode[nodes.length][nodes[0].length];
@@ -57,7 +73,11 @@ public class GUIInitialiser {
 		}
 		return temp;
 	}
-
+	/**
+	 * Creates and returns an Array of different views.
+	 * @param control
+	 * @return
+	 */
 	public static View[] createViews(VControl control) {
 		// TODO append new views at end, increase views variable
 		int views = 11;

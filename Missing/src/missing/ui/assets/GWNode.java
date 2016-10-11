@@ -51,7 +51,12 @@ public class GWNode {
 	
 	/** Used for darkness in day night cycles */
 	private int alpha;
-
+	/**
+	 * Construct a new Graphical World Object 
+	 * @param node
+	 * @param nodeSize
+	 * @throws GameException
+	 */
 	public GWNode(WorldNode node, int nodeSize) throws GameException {
 		this.node = node;
 		this.nodeSize = nodeSize;

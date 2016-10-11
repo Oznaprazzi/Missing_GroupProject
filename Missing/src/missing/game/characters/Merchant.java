@@ -32,16 +32,28 @@ import missing.helper.GameException;
 import missing.helper.SignalException;
 
 /**
- * The merchant class is a character used for trading items to the players.
+ * The merchant class is a special type of character that is able to trade items to players.
  */
 @SuppressWarnings("serial")
 public class Merchant extends Character {
-
+	/**
+	 * Maps the names to items.
+	 */
 	private HashMap<String, Movable> namesToItems;
+	/**
+	 * Maps the item to their cost 
+	 */
 	private HashMap<Movable, Integer> costs;
-
+	/**
+	 * The Type of Shop.
+	 */
 	private ShopType type;
-
+	/**
+	 * Construct a new Merchant.
+	 * @param worldLocation - where in the world they are
+	 * @param tileLocation - where in the tile they are
+	 * @param type of shop that they operate.
+	 */
 	public Merchant(Point worldLocation, Point tileLocation, ShopType type) {
 		super("Merchant", "You can buy stuff from him.", worldLocation, tileLocation, Direction.SOUTH, Direction.ALL);
 		this.type = type;
@@ -67,7 +79,9 @@ public class Merchant extends Character {
 	}
 
 	/**
-	 * buys item from merchant
+	 * Enables the Player to buy items from the merchant
+	 * @param player - that is buying the item
+	 * @param item - that is being bought.
 	 */
 	public void buyItem(Player player, String item) throws GameException {
 		Movable i = namesToItems.get(item);
@@ -87,7 +101,9 @@ public class Merchant extends Character {
 	}
 
 	/**
-	 * player sells one amount of an item to the merchant
+	 * Enables the player to sell an item to the Merchant.
+	 * @param p the Player that is selling the item
+	 * @param item being sold
 	 */
 	public int sellItem(Player p, Movable item) throws GameException {
 		if (!p.inventoryHas(item)) {

@@ -49,7 +49,13 @@ public class GWorld {
 
 	/** Used for darkness in day night cycles */
 	private int alpha;
-
+	/**
+	 * Construct a new GWorld object.
+	 * @param world
+	 * @param view
+	 * @param padding
+	 * @throws GameException
+	 */
 	public GWorld(World world, View view, Point padding) throws GameException {
 		this.world = world;
 		this.curView = view;
@@ -60,7 +66,11 @@ public class GWorld {
 	}
 
 	// Methods
-
+	/**
+	 * Draws the current world and everything inside of it.
+	 * @param g
+	 * @throws GameException
+	 */
 	public void draw(Graphics g) throws GameException {
 		// Calculate node size relative to the View panel
 		int nodeSize = Math.min(curView.getWidth(), curView.getHeight()) / World.WORLD_WIDTH;
@@ -117,11 +127,17 @@ public class GWorld {
 		g2d.fill(filter);
 
 	}
-
+	/**
+	 * Returns the gwNodes
+	 * @return
+	 */
 	public GWNode[][] gwNodes() {
 		return this.gwNodes;
 	}
-
+	/**
+	 * Sets the current View.
+	 * @param view
+	 */
 	public void setView(View view) {
 		this.curView = view;
 		if (view.getClass() == MapView.class) {
@@ -130,11 +146,17 @@ public class GWorld {
 			this.inMapView = false;
 		}
 	}
-
+	/**
+	 * Sets the player
+	 * @param player
+	 */
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-
+	/**
+	 * Sets the current alpha transparency value.
+	 * @param alpha
+	 */
 	public void setAlpha(int alpha) {
 		this.alpha = alpha;
 		for (int i = 0; i < gwNodes.length; i++) {

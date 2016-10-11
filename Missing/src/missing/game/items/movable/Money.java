@@ -13,12 +13,17 @@ package missing.game.items.movable;
 import java.awt.Point;
 
 /**
- * this class simply holds an integer, which represents the money a player has.
- * We needed to put this into a separate class for xml purposes
- **/
+ * Class that represents a money object. It has a Location within the Game World, because
+ * it can be dropped, and it can be stored for saving and loading for XML purposes.
+ */
 @SuppressWarnings("serial")
 public class Money extends Movable {
-
+	/**
+	 * Construct a new Money object.
+	 * @param worldLocation
+	 * @param tileLocation
+	 * @param amount
+	 */
 	public Money(Point worldLocation, Point tileLocation, int amount) {
 		super("Money", "Used for spending", worldLocation, tileLocation, amount, 1);
 	}
