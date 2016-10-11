@@ -32,16 +32,26 @@ import missing.helper.GameException;
  * This class is responsible for reading and writing XML files.
  */
 public class XMLHandler {
-
+	/**The filename */
 	public static String filename;
-
+	
+	/** 
+	 *Returns a list of items from a file.
+	 * @return list of items.  
+	 */
 	public static List<Item> getItemsFromFile() throws GameException {
 		if (filename == null) {
 			throw new GameException("No file loaded!");
 		}
 		return XMLImporter.getItemsFromFile(filename);
 	}
-
+	/**
+	 * Saves the current state of the game, using a specified <code>Game</code> object and <code>filename</code>
+	 * filename.
+	 * @param game
+	 * @param filename
+	 * @throws GameException
+	 */
 	public static void saveGame(Game game, String filename) throws GameException {
 		if (filename == null) {
 			throw new GameException("Filename must be specified");
