@@ -34,6 +34,7 @@ import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Money;
+import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.movable.Wood;
@@ -288,7 +289,7 @@ public class XMLImporter {
 					Node locNode = elem.getElementsByTagName("location").item(0);
 					Point location = parseLocation(locNode);
 					int amount = Integer.parseInt(elem.getElementsByTagName("amount").item(0).getTextContent());
-					tmp.add(new Wood(worldLocation, location, amount));
+					tmp.add(new Stone(worldLocation, location, amount));
 				}
 			}
 		} catch (XPathExpressionException e) {
