@@ -87,7 +87,6 @@ public class ShopPanel extends JPanel {
 		default:
 			break;
 		}
-		System.out.println(this.orientation);
 		setButtons();
 		this.repaint();
 	}
