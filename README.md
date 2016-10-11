@@ -4,6 +4,11 @@
 
 # Getting Started
 
+## Running the Game
+
+To run the game, you must execute ```java -jar (external xml file name)``` in the command line or add the filename as an argument in your IDE run configurations.  
+The default xml file is called "items.xml" and this xml file should not be modified.
+
 ## Single Player
 Select Play Game -> Host Game -> select 1 player and enter an available port from 1024 to 65535 -> Start Server -> Create Player
 ## Multiplayer
