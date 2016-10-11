@@ -90,7 +90,11 @@ public class PileCanvas extends JPanel implements MouseListener {
 
 	private VControl control;
 	
-	
+	/**
+	 * Construct a new instance of a PileCanvas
+	 * @param pile - the pile to render
+	 * @param control - the VControl instance
+	 */
 	public PileCanvas(Pile pile, VControl control) {
 		this.pile = pile;
 		this.control = control;
@@ -276,7 +280,9 @@ public class PileCanvas extends JPanel implements MouseListener {
 	public Dimension getPreferredSize() {
 		return new Dimension(442, 409);
 	}
-	
+	/**
+	 * Transfers the currently selected item into the players inventory.
+	 */
 	public void transferSelectionToPlayer() {
 		if (selectedItem == null)
 			return;

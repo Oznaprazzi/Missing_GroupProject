@@ -46,7 +46,10 @@ public class DayNightCycle extends TimerTask {
 	private int currentTime;
 	/** Change in alpha per clock tick */
 	private double dAlpha = (double)DARK_LIMIT/(double)((END_LIGHTER-START_LIGHTER))*TIME_INC;
-	
+	/**
+	 * Construct a new instance of a DayAndNightCycle
+	 * @param frame - the current VControl instance.
+	 */
 	public DayNightCycle(VControl frame){
 		this.controller = frame;
 		this.alpha = 0;
