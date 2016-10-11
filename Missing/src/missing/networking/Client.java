@@ -223,8 +223,8 @@ public class Client extends Thread implements KeyListener {
 						Movable selectedItem = null;
 						try {
 							pile = (Pile) game.getObjectInFront(movingPlayer);
-							for (TileObject pileItem : pile.getItems()){
-								if (pileItem.getName().equals(itemName)){
+							for (TileObject pileItem : pile.getItems()) {
+								if (pileItem.getName().equals(itemName)) {
 									selectedItem = (Movable) pileItem;
 									break;
 								}
@@ -238,11 +238,11 @@ public class Client extends Thread implements KeyListener {
 						String to = ((String) input).split(" ")[1];
 						String itemName = ((String) input).split(" ")[2];
 						Player player = game.getAvatars()[movingPlayer];
-						if (to.equals("bag")){
+						if (to.equals("bag")) {
 							Movable movingItem = null;
-							for (Movable pocketItem : player.getPocket().getItems()){
-								System.out.println(pocketItem.getName()+" : "+itemName);
-								if (pocketItem.getName().equals(itemName)){
+							for (Movable pocketItem : player.getPocket().getItems()) {
+								System.out.println(pocketItem.getName() + " : " + itemName);
+								if (pocketItem.getName().equals(itemName)) {
 									movingItem = pocketItem;
 									break;
 								}
@@ -253,10 +253,10 @@ public class Client extends Thread implements KeyListener {
 							} catch (GameException e) {
 								System.out.println("server parse error: transfer to bag");
 							}
-						} else if (to.equals("pocket")){
+						} else if (to.equals("pocket")) {
 							Movable movingItem = null;
-							for (Movable bagItem : player.getBag().getItems()){
-								if (bagItem.getName().equals(itemName)){
+							for (Movable bagItem : player.getBag().getItems()) {
+								if (bagItem.getName().equals(itemName)) {
 									movingItem = bagItem;
 									break;
 								}
@@ -267,8 +267,11 @@ public class Client extends Thread implements KeyListener {
 							} catch (GameException e) {
 								System.out.println("server parse error: transfer to pocket");
 							}
-							
-						} else System.out.println("server parse error: transfer");
+
+						} else
+							System.out.println("server parse error: transfer");
+					} else if (((String) input).contains("drop")) {
+						
 					}
 					try {
 						vControl.updateGGame(game);
@@ -427,16 +430,22 @@ public class Client extends Thread implements KeyListener {
 	}
 
 	public void sendUseItem(String foodType) {
-		out.println("use "+foodType);		
+		out.println("use " + foodType);
 	}
 
 	public void sendTransferTo(String to, Movable item) {
-		out.println("transfer "+to+" "+ item.getName());
-		
+		out.println("transfer " + to + " " + item.getName());
+
 	}
 
 	public void sendPilePickUp(String selectedItem) {
-		out.println("pilepickup "+selectedItem);
-		
+		out.println("pilepickup " + selectedItem);
+
+	}
+
+	public void sendDropItem(Movable item) throws GameException {
+		// first send drop intent
+		out.println("drop" + item.getName());
+		game.placeDroppedItem(item, clientID);
 	}
 }
