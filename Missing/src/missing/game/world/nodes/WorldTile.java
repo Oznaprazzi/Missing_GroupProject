@@ -297,7 +297,6 @@ public class WorldTile implements Serializable {
 			if (player.isDead()) {
 				pile.setPlayer(null);
 			}
-			pile.addItem(player.getMoney());
 			pile.addAllItems(player.getPocket().getItems());
 			pile.addAllItems(player.getBag().getItems());
 			this.object = pile;
