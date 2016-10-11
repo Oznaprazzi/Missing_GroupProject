@@ -72,7 +72,7 @@ public class MenuFactory {
 	public static JLabel createLabel(String text) {
 		JLabel label = new JLabel(text);
 		label.setName(text);
-		Font f = GameAssets.getFont2(30f);
+		Font f = GameAssets.getFont(30f);
 		label.setBorder(new EmptyBorder(0,0,25,0));
 		label.setForeground(TEXT_COLOUR);
 		label.setFont(f);
@@ -117,7 +117,7 @@ public class MenuFactory {
 	public static TextField createTextField(int width) {
 		TextField field = new TextField();
 		field.setPreferredSize(new Dimension(width, TEXT_FIELD_HEIGHT));
-		Font f = GameAssets.getFont(30f);
+		Font f = GameAssets.getFont2(30f);
 		field.setForeground(TEXT_COLOUR);
 		field.setFont(f);
 		return field;
