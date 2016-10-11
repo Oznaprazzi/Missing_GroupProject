@@ -122,7 +122,7 @@ public class Container extends NonMovable {
 	 * @return
 	 * @throws GameException
 	 */
-	public Movable removeItem(Movable item) throws GameException {
+	public Movable removeItem(Movable item)/* throws GameException*/ {
 		// search for the first occurence of the item
 		Movable tmp = findItem(item);
 		if (tmp != null) {
@@ -130,8 +130,9 @@ public class Container extends NonMovable {
 			this.currentSize -= tmp.getAmount();
 			return tmp;
 		}
+		return null;/*
 		// didn't find item if reaches here
-		throw new GameException("Item not found.");
+		throw new GameException("Item not found.");*/
 	}
 
 	/**

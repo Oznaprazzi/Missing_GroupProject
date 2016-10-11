@@ -27,7 +27,7 @@ public class BuyFrame extends JFrame {
 	private BufferedImage backgroundImage = GameAssets.getWindowBackgroundImage();
 
 	private final JButton btnBuy = MenuFactory.createButton2("Buy");
-	private final JButton btnCancel = MenuFactory.createButton2("Exit");
+	private final JButton btnExit = MenuFactory.createButton2("Exit");
 
 	private BuyPanel panel; //the hand canvas
 	
@@ -41,7 +41,7 @@ public class BuyFrame extends JFrame {
 		contentPane = new ImagePanel();
 		setContentPane(contentPane);
 		contentPane.add(btnBuy);
-		contentPane.add(btnCancel);
+		contentPane.add(btnExit);
 		panel = new BuyPanel(player, shop);
 		contentPane.add(panel);
 		addActionListeners();
@@ -66,7 +66,7 @@ public class BuyFrame extends JFrame {
 				e1.printStackTrace();
 			}
 		});
-		btnCancel.addActionListener(e->{
+		btnExit.addActionListener(e->{
 			this.dispose();
 		});
 	}
