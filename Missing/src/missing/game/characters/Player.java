@@ -18,6 +18,8 @@
  *  4 Oct 16			Chris Rabe			created a flag which indicates if the player is inside a pile
  *  5 Oct 16			Chris Rabe			buffed player damage to other players - now takes away 10 health
  *  9 Oct 16			Edward Kelly		added hasMultipleOfItem method
+ *  11 Oct 16			Casey Huang 		created removeFromInventory method to remove item from either bag or pocket
+ *  										when player is selling item
 
  */
 
@@ -151,6 +153,17 @@ public class Player extends Character {
 	public boolean has(Movable item) {
 		return pocket.getItems().contains(item);
 	}
+	
+	/**
+	 * Checks the player's inventory (items in both bag and pocket) for any item. This method should be called
+	 * when the player is selling one of their items.
+	 * 
+	 * @param item
+	 * @return
+	 */
+	public boolean inventoryHas(Movable item){
+		return pocket.getItems().contains(item) || bag.getItems().contains(item);
+	}
 
 	/**
 	 * Checks if the player's pocket has at least a given number of a certain
@@ -211,6 +224,16 @@ public class Player extends Character {
 			throw new GameException("Pocket is empty.");
 		}
 		return pocket.removeItem(item);
+	}
+	
+	public Movable removeFromInventory(Movable item) throws GameException {
+		if (pocket.getItems().isEmpty() && bag.getItems().isEmpty()) {
+			throw new GameException("Inventory is empty.");
+		}
+		if(pocket.removeItem(item) != null || bag.removeItem(item) != null){
+			return item;
+		}
+		return null;
 	}
 
 	/** Adds the specified item into the bag */

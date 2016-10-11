@@ -271,6 +271,9 @@ public class BuyPanel extends JPanel implements MouseListener{
 	public void buyItem(){
 		try {
 			merchant.buyItem(this.player, this.selectedItem.getName());
+			this.selectedItem = null;
+			this.clickIndex = -1;
+			this.clickRect = null;
 			JOptionPane.showMessageDialog(null, this.selectedItem + " has been added to your pocket successfully.");
 		} catch (GameException e) {
 			// TODO Auto-generated catch block

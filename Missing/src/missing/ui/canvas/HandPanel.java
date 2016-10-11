@@ -108,8 +108,6 @@ public class HandPanel extends JPanel implements MouseListener {
 	 * interactions.
 	 * 
 	 * @param player
-	 * @param bag
-	 * @param pocket
 	 */
 	public HandPanel(Player player) {
 		this.player = player;
