@@ -172,8 +172,16 @@ public class Client extends Thread implements KeyListener {
 							game.performAction(movingPlayer);
 							if (!randomItem.equals("NONE")) {
 								// didnt generate random item
-								game.getAvatars()[movingPlayer]
-										.addToPocket(new Food(null, null, Food.FoodType.valueOf(randomItem)));
+								if (randomItem.equals("move")) {
+									movingPlayer = (Integer) in.readObject();
+									direction = (Direction) in.readObject();
+									if (game.validMove(movingPlayer, direction)) {
+										game.movePlayer(movingPlayer, direction);
+									}
+								} else {
+									game.getAvatars()[movingPlayer]
+											.addToPocket(new Food(null, null, Food.FoodType.valueOf(randomItem)));
+								}
 							}
 						} catch (GameException e) {
 							// ignore it
