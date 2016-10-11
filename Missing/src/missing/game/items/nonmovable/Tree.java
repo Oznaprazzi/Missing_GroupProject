@@ -77,6 +77,7 @@ public class Tree extends Source {
 			Food apple = new Food(worldLocation, tileLocation, FoodType.APPLE);
 			apple.setStored(true);
 			p.addToPocket(apple);
+			throw new SignalException("APPLE");
 		}
 	}
 }

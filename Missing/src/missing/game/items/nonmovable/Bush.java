@@ -16,6 +16,7 @@ import missing.game.characters.Player;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 /**
  * Represents a Bush. A Bush is only for aesthetics. Subclass of Foliage
@@ -39,16 +40,19 @@ public class Bush extends Foliage {
 	}
 
 	@Override
-	public void performAction(Player player) throws GameException {
-		if (berry == null) {
+	public void performAction(Player player) throws GameException, SignalException {
+		if(berry == null){
 			throw new GameException("There is no berry in this bush");
 		}
 		int playerChance = (int) (random() * 100);
 		if (playerChance < BERRY_CHANCE) {
 			berry.setStored(true);
 			player.addToPocket(berry);
+
+
 			// replace food
 			berry = new Food(worldLocation, tileLocation, FoodType.BERRY);
+			throw new SignalException("BERRY");
 		}
 
 	}
