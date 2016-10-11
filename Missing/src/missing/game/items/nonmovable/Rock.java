@@ -11,10 +11,6 @@
 package missing.game.items.nonmovable;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
 
 import missing.game.characters.Player;
 import missing.game.items.movable.Stone;
@@ -32,15 +28,6 @@ public class Rock extends Source {
 	public Rock(Point worldLocation, Point tileLocation) {
 		super("Rock", "An extremely hard area.", worldLocation, tileLocation,
 				new Stone(worldLocation, tileLocation, MAX_RESOURCE));
-		timer = new Timer(REFRESH_TIME_MS, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if (resource == null) {
-					int newAmount = MAX_RESOURCE;
-					resource = new Stone(worldLocation, tileLocation, newAmount);
-				}
-			}
-		});
 	}
 
 	@Override
@@ -68,11 +55,8 @@ public class Rock extends Source {
 		resource = new Stone(worldLocation, tileLocation, numStoneTaking);
 		resource.setStored(true);
 		p.addToPocket(resource);
-		this.resource = null;
-		// Create a timer which will update resource after n milliseconds
-		if (!timer.isRunning()) {
-			timer.start();
-		}
-		// Add ores here...
+		// Replace resource
+		int newAmount = 1 + (int) (Math.random() * MAX_RESOURCE);
+		resource = new Stone(worldLocation, tileLocation, newAmount);
 	}
 }
