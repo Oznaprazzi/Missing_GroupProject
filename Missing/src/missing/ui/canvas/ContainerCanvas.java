@@ -74,7 +74,10 @@ public class ContainerCanvas extends Canvas implements MouseListener {
 	private Rectangle clickRect;
 
 	private int clickIndex = -1;
-
+	/**
+	 * Construct a new Container canvas
+	 * @param container
+	 */
 	public ContainerCanvas(Container container) {
 		this.container = container;
 		pileSet = new ArrayList<TileObject>();

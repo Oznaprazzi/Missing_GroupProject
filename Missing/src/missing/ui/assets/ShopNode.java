@@ -19,7 +19,7 @@ import missing.game.items.nonmovable.Shop;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 
 /**
- * This node simply draws
+ * The ShopNode represents the shop in a graphical form.
  */
 public class ShopNode {
 
@@ -27,7 +27,12 @@ public class ShopNode {
 	private Shop shop;
 	private Direction direction;
 	private JPanel parent;
-
+	/**
+	 * Construct a new Instance of the ShopNode
+	 * @param parent - the parent JPanel instance
+	 * @param shop - the shop
+	 * @param direction
+	 */
 	public ShopNode(JPanel parent, Shop shop, Direction direction) {
 		if (img == null) {
 			img = GameAssets.getShopNodeImage(shop.getType(), direction);
@@ -56,7 +61,10 @@ public class ShopNode {
 	}
 
 	// Methods
-
+	/**
+	 * Draws the shop
+	 * @param g
+	 */
 	public void draw(Graphics g) {
 		if (img == null) {
 			g.setColor(Color.BLACK);

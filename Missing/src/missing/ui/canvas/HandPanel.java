@@ -88,7 +88,10 @@ public class HandPanel extends JPanel implements MouseListener {
 	private Player player;
 
 	private VControl control;
-
+	/**
+	 * Construct a new instance of a HandPanel
+	 * @param control - the current Controller.
+	 */
 	public HandPanel(VControl control) {
 		this.control = control;
 		this.player = control.getGGame().getGame().getAvatars()[control.getPlayerID()];

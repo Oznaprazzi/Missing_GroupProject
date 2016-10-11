@@ -20,7 +20,12 @@ import missing.game.characters.Player;
 import missing.game.items.nonmovable.Shop;
 import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.BuyPanel;
-
+/**
+ * Class that represents the frame for buying items. It has facilities to allow for 
+ * a current player to buy items from the Merchant.
+ * @author linus
+ *
+ */
 public class BuyFrame extends JFrame {
 
 	private ImagePanel contentPane;
