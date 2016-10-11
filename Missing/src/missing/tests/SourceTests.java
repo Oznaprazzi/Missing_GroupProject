@@ -390,7 +390,10 @@ public class SourceTests {
 		try {
 			Tool fishingRod = new Tool(worldLocation, tileLocation, ToolType.FISHINGROD);
 			player.addToPocket(fishingRod);
-			fishArea.performAction(player);// player takes dirt from that soil
+			try {
+				fishArea.performAction(player);
+			} catch (SignalException e) {
+			}// player takes dirt from that soil
 		} catch (GameException e) {
 			fail(e.getMessage());
 		}
@@ -417,7 +420,10 @@ public class SourceTests {
 
 		boolean fail = false;
 		try {
-			fishArea.performAction(player);// player takes dirt from that soil
+			try {
+				fishArea.performAction(player);
+			} catch (SignalException e) {
+			}// player takes dirt from that soil
 		} catch (GameException e) {
 			fail = true;
 		}

@@ -4,6 +4,7 @@
  *  
  * 	Date			Author				Changes
  *  10 Oct 16		Casey Huang			created class
+ *  11 Oct 16		Casey Huang			repositioned grid and text
  */
 package missing.ui.panels;
 
@@ -18,7 +19,6 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,21 +34,18 @@ import missing.game.items.movable.Food;
 import missing.game.items.movable.Movable;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
-import missing.game.items.movable.Usable;
 import missing.game.items.movable.Wood;
-import missing.game.items.nonmovable.Bag;
-import missing.game.items.nonmovable.Pocket;
 import missing.game.items.nonmovable.Shop;
 import missing.helper.GameException;
-import missing.ui.controller.VControl;
 
-public class BuyPanel extends JPanel implements MouseListener{
+@SuppressWarnings("serial")
+public class BuyPanel extends JPanel implements MouseListener {
 
 	/** x position of grid. */
 	protected static final int X_OFFSET = 58;
 
 	/** Y position of grid. */
-	private static final int Y_OFFSET = 45;
+	private static final int Y_OFFSET = 120;
 
 	private static final int size = 65;
 
@@ -66,11 +63,11 @@ public class BuyPanel extends JPanel implements MouseListener{
 	private Movable selectedItem;
 	private Rectangle clickRect;
 	private int clickIndex;
-	
+
 	private Player player;
-	
+
 	private Merchant merchant;
-	
+
 	List<Movable> items;
 
 	public BuyPanel(Player player, Shop shop) {
@@ -88,14 +85,14 @@ public class BuyPanel extends JPanel implements MouseListener{
 		Font font = GameAssets.getFont2(30f);
 		g.setFont(font);
 		// g.setColor(Color.BLACK);
-		g.drawString("Items Available", 20, 30);
+		g.drawString("Items Available", 20, 80);
 		/* Firstly - draw the items inside the bag.. */
 		this.drawGrid(g, Y_OFFSET);
 		this.drawItems(g, Y_OFFSET + 7);
 		g.setFont(font);
 		fillMap();
 	}
-	
+
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(442, 439);
@@ -262,19 +259,25 @@ public class BuyPanel extends JPanel implements MouseListener{
 					}
 					return this.items.get(clickIndex);
 				}
-			} 
+			}
 		}
 		return null;
 	}
-		
-		
-	public void buyItem(){
+
+	public void buyItem() {
 		try {
-			merchant.buyItem(this.player, this.selectedItem.getName());
-			JOptionPane.showMessageDialog(null, this.selectedItem + " has been added to your pocket successfully.");
+			if (selectedItem != null) {
+				merchant.buyItem(this.player, this.selectedItem.getName());
+				this.clickIndex = -1;
+				this.clickRect = null;
+				JOptionPane.showMessageDialog(null,
+						this.selectedItem.getName() + " has been added to your pocket successfully.");
+				this.selectedItem = null;
+			} else {
+				JOptionPane.showMessageDialog(null, "Select the item you want to buy.");
+			}
 		} catch (GameException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// Ignore
 		}
 	}
 

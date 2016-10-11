@@ -17,10 +17,6 @@
 package missing.game.items.nonmovable;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
 
 import static java.lang.Math.random;
 
@@ -39,22 +35,12 @@ import missing.helper.SignalException;
  */
 @SuppressWarnings("serial")
 public class Tree extends Source {
-	// TODO Do null check before storing resource inside player's pocket
 
 	private static final int APPLE_CHANCE = 20;
 
 	public Tree(Point worldLocation, Point tileLocation) {
 		super("Tree", "A tall majestic tree.", worldLocation, tileLocation,
 				new Wood(worldLocation, tileLocation, MAX_RESOURCE));
-		timer = new Timer(REFRESH_TIME_MS, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if (resource == null) {
-					int newAmount = 1 + (int) (Math.random() * MAX_RESOURCE);
-					resource = new Wood(worldLocation, tileLocation, newAmount);
-				}
-			}
-		});
 	}
 
 	@Override
@@ -82,12 +68,9 @@ public class Tree extends Source {
 		resource = new Wood(worldLocation, tileLocation, numWoodTaking);
 		resource.setStored(true);
 		p.addToPocket(resource);
-		// Replace resource -- should add timer here
-		this.resource = null;
-		// Create a timer which will update resource after n milliseconds
-		if (!timer.isRunning()) {
-			timer.start();
-		}
+		// Replace resource
+		int newAmount = 1 + (int) (Math.random() * MAX_RESOURCE);
+		resource = new Wood(worldLocation, tileLocation, newAmount);
 		// 50% chance that player will get apples too
 		int playerChance = (int) (random() * 100);
 		if (playerChance < APPLE_CHANCE) {
@@ -96,6 +79,5 @@ public class Tree extends Source {
 			p.addToPocket(apple);
 			throw new SignalException("APPLE");
 		}
-
 	}
 }

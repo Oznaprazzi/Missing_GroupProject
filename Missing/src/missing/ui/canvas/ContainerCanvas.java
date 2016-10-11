@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JPanel;
-
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
@@ -33,10 +31,7 @@ import missing.game.items.movable.Movable;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
-import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Container;
-import missing.game.items.nonmovable.Pocket;
-import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 
@@ -44,6 +39,7 @@ import missing.helper.GameException;
  * Canvas used to display the Pile of Items. If an item of the grid is pressed,
  * the cell is highlighted.
  */
+@SuppressWarnings("serial")
 public class ContainerCanvas extends Canvas implements MouseListener {
 
 	/** Pile of items to display */
@@ -63,28 +59,22 @@ public class ContainerCanvas extends Canvas implements MouseListener {
 	private static final int rows = 5;
 
 	private static final int columns = 5;
-	
-	/*Fields  that determine stroke of the graphics rectangle */
+
+	/* Fields that determine stroke of the graphics rectangle */
 	private final int BOLDED_WIDTH = 3;
-	private final int REG_WIDTH = 1;
-	
 	/**
-	 * Stores all of the grids being drawn. Used to check if a click is inside a rectangle.
+	 * Stores all of the grids being drawn. Used to check if a click is inside a
+	 * rectangle.
 	 */
 	private List<Rectangle> gridRectangle;
 	private Map<Integer, Rectangle> gridMap;
 
 	private Point clickPoint;
-	
-	/**
-	 * Stores the currently clicked on item. If it is null, there is nothing in that cell.
-	 */
-	private  Movable selectedItem;
+
 	private Rectangle clickRect;
-	
+
 	private int clickIndex = -1;
-	
-	
+
 	public ContainerCanvas(Container container) {
 		this.container = container;
 		pileSet = new ArrayList<TileObject>();
@@ -149,7 +139,7 @@ public class ContainerCanvas extends Canvas implements MouseListener {
 					} else if (item instanceof Wood) {
 						g.drawImage(GameAssets.getWoodImage(), X_OFFSET + j * size, y_offset + i * size, null);
 					}
-				}else{
+				} else {
 					throw new GameException("Can only add movable items to the pile canvas!");
 				}
 
@@ -181,14 +171,15 @@ public class ContainerCanvas extends Canvas implements MouseListener {
 				drawCell(g, left, top, size, false);
 			}
 		}
-		
-		if(clickRect != null){
+
+		if (clickRect != null) {
 			drawCell(g, clickRect.x, clickRect.y, size, true);
 		}
 	}
 
 	/**
 	 * Draws a Cell. Has a flag to determine if it is highlighted or not.
+	 * 
 	 * @param g
 	 * @param left
 	 * @param top
@@ -205,13 +196,13 @@ public class ContainerCanvas extends Canvas implements MouseListener {
 			g.drawImage(GameAssets.getItemBackgroundImage(), left, top, size, size, null);
 		}
 	}
-	
-	private void fillMap(){
-		for(int i = 0 ; i < gridRectangle.size(); i++){
+
+	private void fillMap() {
+		for (int i = 0; i < gridRectangle.size(); i++) {
 			gridMap.put(i, gridRectangle.get(i));
 		}
 	}
-	
+
 	/**
 	 * Returns the index of the rectangle ArrayList that is being clicked.
 	 * 
@@ -227,30 +218,7 @@ public class ContainerCanvas extends Canvas implements MouseListener {
 		}
 		return -1;
 	}
-	
-	
-	
-	
-	/**
-	 * Draws a Cell. Has a flag to determine if it is highlighted or not.
-	 * 
-	 * @param left
-	 * @param top
-	 * @param isHighlighted
-	 */
-	private void drawCell(Graphics g, int left, int top, int width, int height, boolean isHighlighted) {
-		Graphics2D gg = (Graphics2D) g;
-		if (isHighlighted) {
-			gg.setStroke(new BasicStroke(BOLDED_WIDTH));
-			gg.setColor(Color.yellow);
-			gg.drawRect(left, top, width, height);
-		} else {
-			gg.setStroke(new BasicStroke(REG_WIDTH));
-			gg.drawRect(left, top, width, height);
-		}
-	}
-	
-	
+
 	/**
 	 * Converts the bag of items into a set - no duplicates to account for count
 	 * of item and to only draw one item.
@@ -271,7 +239,7 @@ public class ContainerCanvas extends Canvas implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		clickIndex = indexofCell(e);
-		//selectedItem = selectClickedItem();
+		// selectedItem = selectClickedItem();
 		System.out.println(this.clickIndex);
 		this.repaint();
 	}
@@ -279,17 +247,21 @@ public class ContainerCanvas extends Canvas implements MouseListener {
 	/*
 	 * EXTRA MOUSE METHODS - NOT BEING USED.
 	 */
-	
-	@Override
-	public void mousePressed(MouseEvent e) {}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {
+	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {
+	}
 
 	@Override
-	public void mouseExited(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
 
 }

@@ -10,6 +10,8 @@
  * 									- change of font size and spacing
  * 7 Oct 16			Casey Huang		Added another createHeading method for showing ClientWaitingView
  * 09 Oct 16		Casey Huang		Added another createLabel2 and createButton2
+ * 11 Oct 16		Casey Huang		Changed colour of button hover
+ * 11 Oct 16 		Casey Huang		Fixed createButton2 hovering bug
  */
 package missing.ui.menustyle;
 
@@ -37,7 +39,7 @@ public class MenuFactory {
 	public static final Color TEXT_COLOUR2 = Color.WHITE;
 	public static final Color TEXT_COLOUR_HIGHLIGHTED = new Color(122, 169, 12);
 	public static final Color TEXT_COLOUR_HIGHLIGHTED2 = new Color(199, 110, 48);
-	public static final Color TEXT_COLOUR_HIGHLIGHTED3 = new Color(250, 85, 177);
+	public static final Color TEXT_COLOUR_HIGHLIGHTED3 = new Color(255,255, 255);
 	
 	public static final Color VIEW_BTN_TEXT_COLOUR = new Color(121, 161, 21);
 	public static final Color VIEW_BTN_BG_COLOUR = new Color(61, 86, 38);
@@ -169,23 +171,19 @@ public class MenuFactory {
 		btn.setBorder(new EmptyBorder(10, 15, 0, 15));
 		btn.addMouseListener(new MouseAdapter() {
 		    public void mouseEntered(MouseEvent evt) {
-		    	btn.setBackground(TEXT_COLOUR_HIGHLIGHTED2);
-		    	btn.setForeground(VIEW_BTN_BG_COLOUR);
+		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED2);
 		    }
 
 		    public void mouseExited(MouseEvent evt) {
-		    	btn.setBackground(VIEW_BTN_BG_COLOUR);
 		    	btn.setForeground(TEXT_COLOUR);
 		    }
 		    
 		    public void mouseReleased(MouseEvent e){
-		    	btn.setBackground(VIEW_BTN_BG_COLOUR);
 		    	btn.setForeground(TEXT_COLOUR);
 		    }
 		    
 		    public void mousePressed(MouseEvent evt){
-		    	btn.setBackground(TEXT_COLOUR_HIGHLIGHTED2);
-		    	btn.setForeground(VIEW_BTN_BG_COLOUR);
+		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED2);
 		    }
 		});
 		return btn;

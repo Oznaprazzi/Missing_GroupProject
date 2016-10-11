@@ -141,12 +141,16 @@ public class GWTile {
 			g.drawImage(GameAssets.getPileOfItemsImage(), x, y, size, size, null);
 		} else if (tile.getObject() instanceof Food) {
 			Food theFood = (Food) tile.getObject();
+			int foodSize = size / 2;
+			int offset = foodSize / 2;
 			if (theFood.getFoodType() == FoodType.APPLE) {
-				g.drawImage(GameAssets.getAppleImage(), x, y, size, size, null);
+				foodSize = size / 4;
+				offset += (foodSize / 2);
+				g.drawImage(GameAssets.getAppleImage(), x + offset, y + offset, foodSize, foodSize, null);
 			} else if (theFood.getFoodType() == FoodType.BERRY) {
-				g.drawImage(GameAssets.getBerriesImage(), x, y, size, size, null);
+				g.drawImage(GameAssets.getBerriesImage(), x + offset, y + offset, foodSize, foodSize, null);
 			} else if (theFood.getFoodType() == FoodType.FISH) {
-				g.drawImage(GameAssets.getFishImage(), x, y, size, size, null);
+				g.drawImage(GameAssets.getFishImage(), x + offset, y + offset, foodSize, foodSize, null);
 			}
 		} else if (tile.getObject() instanceof Soil) {
 			g.drawImage(GameAssets.getSoilImage(), x, y, size, size, null);

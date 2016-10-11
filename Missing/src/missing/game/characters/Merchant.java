@@ -8,12 +8,15 @@
  * 4 oct 16			Jian Wei		created the class, implemented initialiseCosts and buyitem, sellitem
  * 5 Oct 16			Chris Rabe		changed structure of the code so that only buy and sell methods are available
  * 7 Oct 16			Chris Rabe		changed type of merchant to be based on shop type
+ * 11 Oct 16		Casey Huang		fixed sell item bug - looks through bag and pocket as well as just pocket
  */
 package missing.game.characters;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.JOptionPane;
 
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
@@ -46,10 +49,10 @@ public class Merchant extends Character {
 		costs = new HashMap<Movable, Integer>();
 		getCosts();
 	}
-	
-	//Getters
-	
-	public ArrayList<Movable> getItems(){
+
+	// Getters
+
+	public ArrayList<Movable> getItems() {
 		return new ArrayList<Movable>(namesToItems.values());
 	}
 
@@ -69,10 +72,12 @@ public class Merchant extends Character {
 	public void buyItem(Player player, String item) throws GameException {
 		Movable i = namesToItems.get(item);
 		if (i == null) {
+			JOptionPane.showMessageDialog(null, "The merchant does not have this item!");
 			throw new GameException("the merchant doesn't have this item");
 		}
 		int costOfItem = costs.get(i);
 		if (player.getMoney().getAmount() < costOfItem) {
+			JOptionPane.showMessageDialog(null, "You don't have enough money to buy that!");
 			throw new GameException("player doesn't have enough money");
 		}
 		// deduct from play money
@@ -85,18 +90,20 @@ public class Merchant extends Character {
 	 * player sells one amount of an item to the merchant
 	 */
 	public int sellItem(Player p, Movable item) throws GameException {
-		if (!p.has(item)) {
+		if (!p.inventoryHas(item)) {
+			JOptionPane.showMessageDialog(null, "You cannot sell an item you don't have.");
 			throw new GameException("cannot sell item you dont have");
 		}
 		if (!costs.containsKey(item)) {
-			throw new GameException("This merchant does not buy that sort of item!");
+			JOptionPane.showMessageDialog(null, "This particular merchant doesn't buy this type of item!");
+			throw new GameException("This merchant does not buy this type of item");
 		}
 		int sellAmount = (int) (costs.get(findItemInMap(item)) * 0.5);
 		p.setMoney(p.getMoney().getAmount() + sellAmount);
 		// reduces amount of item
 		item.setAmount(item.getAmount() - 1);
 		if (item.getAmount() == 0)
-			p.removeFromPocket(item);
+			p.removeFromInventory(item);
 		return sellAmount;
 
 	}

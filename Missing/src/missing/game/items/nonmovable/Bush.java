@@ -11,10 +11,6 @@ package missing.game.items.nonmovable;
 import static java.lang.Math.random;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
 
 import missing.game.characters.Player;
 import missing.game.items.movable.Food;
@@ -30,8 +26,7 @@ public class Bush extends Foliage {
 
 	private static final int BERRY_CHANCE = 70;
 	private Food berry = new Food(worldLocation, tileLocation, FoodType.BERRY);
-	private Timer timer;
-	private static final int REFRESH_TIME_MS = 10000;
+
 	/**
 	 * Creates a new Bush object at the given locations
 	 * 
@@ -42,14 +37,6 @@ public class Bush extends Foliage {
 	 */
 	public Bush(Point worldLocation, Point tileLocation) {
 		super("Bush", "It's a bush", worldLocation, tileLocation);
-		timer = new Timer(REFRESH_TIME_MS, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if (berry == null) {
-					berry = new Food(worldLocation, tileLocation, FoodType.BERRY);
-				}
-			}
-		});
 	}
 
 	@Override
@@ -61,12 +48,10 @@ public class Bush extends Foliage {
 		if (playerChance < BERRY_CHANCE) {
 			berry.setStored(true);
 			player.addToPocket(berry);
-			this.berry = null;
-			// Create a timer which will update resource after n milliseconds
-			if (!timer.isRunning()) {
-				timer.start();
-			}
 
+
+			// replace food
+			berry = new Food(worldLocation, tileLocation, FoodType.BERRY);
 			throw new SignalException("BERRY");
 		}
 

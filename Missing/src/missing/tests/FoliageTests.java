@@ -22,6 +22,7 @@ import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
 import missing.game.items.nonmovable.Bush;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 public class FoliageTests {
 
@@ -34,7 +35,10 @@ public class FoliageTests {
 		Point tileLocation = new Point(1, 1);
 		Bush bush = new Bush(worldLocation, tileLocation);
 		try{
-			bush.performAction(player);
+			try {
+				bush.performAction(player);
+			} catch (SignalException e) {
+			}
 			if(player.getPocket().getItems().size() == 1){
 				Item item = player.getPocket().getItems().get(0);
 				assert(item instanceof Food);
@@ -55,14 +59,20 @@ public class FoliageTests {
 		Point tileLocation = new Point(1, 1);
 		Bush bush = new Bush(worldLocation, tileLocation);
 		try{
-			bush.performAction(player);
+			try {
+				bush.performAction(player);
+			} catch (SignalException e) {
+			}
 			if(player.getPocket().getItems().size() == 1){
 				Item item = player.getPocket().getItems().get(0);
 				assert(item instanceof Food);
 				assert(((Food) item).getFoodType() == FoodType.BERRY);
 			}
 			TimeUnit.SECONDS.sleep(11);
-			bush.performAction(player);
+			try {
+				bush.performAction(player);
+			} catch (SignalException e) {
+			}
 			if(player.getPocket().getItems().size() == 1 ||player.getPocket().getItems().size() == 2){
 				int last = player.getPocket().getItems().size() - 1;
 				Item item = player.getPocket().getItems().get(last);
@@ -86,14 +96,20 @@ public class FoliageTests {
 		Bush bush = new Bush(worldLocation, tileLocation);
 		boolean exception = false;
 		try{
-			bush.performAction(player);
+			try {
+				bush.performAction(player);
+			} catch (SignalException e) {
+			}
 			if(player.getPocket().getItems().size() == 1){
 				Item item = player.getPocket().getItems().get(0);
 				assert(item instanceof Food);
 				assert(((Food) item).getFoodType() == FoodType.BERRY);
 			}
 			TimeUnit.SECONDS.sleep(2);
-			bush.performAction(player);
+			try {
+				bush.performAction(player);
+			} catch (SignalException e) {
+			}
 		}catch(GameException | InterruptedException  e){
 			exception = true;
 		}

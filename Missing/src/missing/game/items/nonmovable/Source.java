@@ -16,8 +16,6 @@ package missing.game.items.nonmovable;
 
 import java.awt.Point;
 
-import javax.swing.Timer;
-
 import missing.game.characters.Player;
 import missing.game.items.movable.Resource;
 import missing.helper.GameException;
@@ -30,7 +28,6 @@ import missing.helper.SignalException;
 @SuppressWarnings("serial")
 public abstract class Source extends Interactable {
 	protected static final int MAX_RESOURCE = 10;
-	protected static final int REFRESH_TIME_MS = 30000;
 
 	/** Represents the resource which can be collected */
 	protected Resource resource;
@@ -38,8 +35,6 @@ public abstract class Source extends Interactable {
 	public Resource getResource() {
 		return resource;
 	}
-
-	public Timer timer;
 
 	/**
 	 * Creates a new instance of a Source item.

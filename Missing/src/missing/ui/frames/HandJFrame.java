@@ -2,6 +2,7 @@
  * 	Author:
  * 	Casey Huang		300316284
  *  Linus Go		300345571
+ *  Chris Rabe		300334207
  * 
  * 	Date			Author				changes
  * 	26 Sep 16		Casey Huang			created BagFrame class.
@@ -9,6 +10,7 @@
  *  03 Oct 16		Casey Huang			added Pocket parameter.
  *  09 Oct 16		Casey Huang			Updated class and added new inner class to display background image
  *  10 Oct 16		Linus Go			Enabled the HandJFrame to move between bag and pocket.
+ *  11 Oct 16		Chris Rabe			implemented drop logic
  */
 package missing.ui.frames;
 
@@ -22,8 +24,6 @@ import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.items.movable.Movable;
-import missing.game.items.nonmovable.Bag;
-import missing.game.items.nonmovable.Pocket;
 import missing.ui.canvas.HandPanel;
 import missing.ui.controller.VControl;
 import missing.ui.menustyle.MenuFactory;
@@ -47,10 +47,6 @@ public class HandJFrame extends JFrame {
 
 	/** The hand canvas */
 	private HandPanel panel; // the hand canvas
-
-	/* The bag and pocket */
-	private Bag bag;
-	private Pocket pocket;
 
 	private VControl control;
 
@@ -109,8 +105,14 @@ public class HandJFrame extends JFrame {
 			}
 		});
 		btnDrop.addActionListener(e -> {
-			Movable item = panel.getSelectedItem();
+			Movable item = null;
+			try {
+				item = panel.removeSelectedItem();
+			} catch (Exception e1) {
+				control.displayException(e1.getMessage());
+			}
 			if (item != null) {
+				control.sendDropItem(item);
 			}
 		});
 

@@ -24,16 +24,17 @@ import missing.ui.canvas.HandPanel;
 import missing.ui.controller.VControl;
 import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.BuyPanel;
+import missing.ui.panels.SellPanel;
 
 public class SellFrame extends JFrame {
 
 	private ImagePanel contentPane;
 	private BufferedImage backgroundImage = GameAssets.getWindowBackgroundImage();
 
-	private final JButton btnBuy = MenuFactory.createButton2("Buy");
-	private final JButton btnCancel = MenuFactory.createButton2("Exit");
+	private final JButton btnSell = MenuFactory.createButton2("Sell");
+	private final JButton btnExit = MenuFactory.createButton2("Exit");
 
-	private BuyPanel panel; // the hand canvas
+	private SellPanel panel; // the hand canvas
 
 	/**
 	 * Create a Test canvas contained within this window.
@@ -44,10 +45,11 @@ public class SellFrame extends JFrame {
 		// elsewhere
 		contentPane = new ImagePanel();
 		setContentPane(contentPane);
-		contentPane.add(btnBuy);
-		contentPane.add(btnCancel);
-		panel = new BuyPanel(player, shop);
+		contentPane.add(btnSell);
+		contentPane.add(btnExit);
+		panel = new SellPanel(player, shop);
 		contentPane.add(panel);
+		this.setVisible(true);
 		addActionListeners();
 	}
 
@@ -63,14 +65,14 @@ public class SellFrame extends JFrame {
 	 * Sets up the Action Listeners for the buttons.
 	 */
 	private void addActionListeners() {
-		btnBuy.addActionListener(e -> {
+		btnSell.addActionListener(e -> {
 			try {
-				panel.buyItem();
+				panel.sellItem();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		});
-		btnCancel.addActionListener(e -> {
+		btnExit.addActionListener(e -> {
 			this.dispose();
 		});
 	}

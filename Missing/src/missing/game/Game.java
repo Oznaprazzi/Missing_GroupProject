@@ -16,6 +16,8 @@
  *  5 Oct 16			Chris Rabe				created killall method
  *  5 Oct 16			Chris Rabe				implemented killall method
  *  5 Oct 16			Chris Rabe				fixed item not disappearing on pickup
+ *  10 Oct 16			Chris Rabe				added force remove and force enter
+ *  11 Oct 16			Chris Rabe				added drop logic
  */
 
 package missing.game;
@@ -268,6 +270,33 @@ public class Game implements Serializable {
 		tile.convertPlayerToPile(player);
 	}
 
+	/**
+	 * Places the dropped item on the player's feet. The item parameter must be
+	 * stored within the player's pocket for this method to work.
+	 * 
+	 * @param item
+	 * @param id
+	 * @throws GameException
+	 */
+	public void placeDroppedItem(Movable item, int id) throws GameException {
+		Player player = avatars[id];
+		if (player.isInsideGrass()) {
+			player.removeFromPocket(item);
+			throw new GameException("Item was lost in the grass!");
+		}
+		Point wLoc = player.getWorldLocation();
+		Point tLoc = player.getTileLocation();
+		WorldTile tile = world.getWorldNodes()[wLoc.y][wLoc.x].getWorldTiles()[tLoc.y][tLoc.x];
+		// change item position
+		item.setTileLocation(tLoc);
+		item.setWorldLocation(wLoc);
+		// remove from the pocket
+		player.removeFromPocket(item);
+		tile.addPlayerToPile(player);
+		tile.addObjectToPile(item);
+
+	}
+
 	// Helper methods
 
 	/**
@@ -440,6 +469,8 @@ public class Game implements Serializable {
 		} else if (player.isInsideGrass()) {
 			player.setInsideGrass(false);
 			tile.setObject(new TallGrass(oldWLoc, oldTLoc));
+		} else if (tile.getObject() instanceof Movable) {
+			tile.setObject(tile.getObject());
 		} else {
 			tile.setObject(null);
 		}
@@ -452,7 +483,7 @@ public class Game implements Serializable {
 		player.setOrientation(direction);
 		// If there is an item, add the player to the pile
 		if (tile.isOccupied()) {
-			if (tile.getObject() instanceof Pile) {
+			if (tile.getObject() instanceof Pile || tile.getObject() instanceof Movable) {
 				player.setInsidePile(true);
 				tile.addPlayerToPile(player);
 			} else if (tile.getObject() instanceof TallGrass) {

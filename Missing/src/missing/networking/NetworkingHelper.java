@@ -16,6 +16,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 import missing.ui.controller.VControl;
+
 /**
  * Helper class to start server and clients
  *
@@ -23,34 +24,47 @@ import missing.ui.controller.VControl;
 public class NetworkingHelper {
 	/**
 	 * Starts client
-	 * @param addr IP address host is at
-	 * @param port port host is on
-	 * @param isHost whether this client is host or not
-	 * @param vControl vControl for client
+	 * 
+	 * @param addr
+	 *            IP address host is at
+	 * @param port
+	 *            port host is on
+	 * @param isHost
+	 *            whether this client is host or not
+	 * @param vControl
+	 *            vControl for client
 	 * @throws IOException
 	 */
-	public static void runClient(String addr, int port, boolean isHost, VControl vControl, String playerName, int imageNumber) throws IOException {
+	public static void runClient(String addr, int port, boolean isHost, VControl vControl, String playerName,
+			int imageNumber) throws IOException {
 		Socket s = new Socket(addr, port);
-		if (isHost) System.out.println("Connected to server as the host");
-		else System.out.println("You have connected to game at " + addr + " : " + port);
+		if (isHost)
+			System.out.println("Connected to server as the host");
+		else
+			System.out.println("You have connected to game at " + addr + " : " + port);
 		new Client(s, vControl, playerName, imageNumber).start();
 	}
-	
+
 	/**
 	 * Starts server
-	 * @param numClients number of clients to connect
-	 * @param port port server is hosted on
-	 * @param vControl vControl for the host player
+	 * 
+	 * @param numClients
+	 *            number of clients to connect
+	 * @param port
+	 *            port server is hosted on
+	 * @param vControl
+	 *            vControl for the host player
 	 * @throws IOException
 	 */
-	public static void runServer(int numClients, int port, VControl vControl, String playerName, int imageNumber) throws IOException {
+	public static void runServer(int numClients, int port, VControl vControl, String playerName, int imageNumber)
+			throws IOException {
 		// Start listening for players trying to join
 		SocketListener socketListener = new SocketListener(numClients, port);
 		socketListener.start();
 		// Join server by creating a client for this player
 		runClient(getIPAddress(), port, true, vControl, playerName, imageNumber);
 	}
-	
+
 	/**
 	 * Retrieves the IPAddress of the network which the host is connected to. It
 	 * follows the basis of :
@@ -81,13 +95,11 @@ public class NetworkingHelper {
 				while (ee.hasMoreElements()) {
 					InetAddress i = (InetAddress) ee.nextElement();
 					// IP of internet connection is the same as the host name
-//					if (i.getHostName().equals(i.getHostAddress())) {
-						// Only accept private networks
-						if (i.getHostAddress().startsWith("192.168.") || i.getHostAddress().startsWith("10.")
-								|| i.getHostAddress().startsWith("172.16.")) {
-							return i.getHostAddress();
-						}
-//					}
+					// Only accept private networks
+					if (i.getHostAddress().startsWith("192.168.") || i.getHostAddress().startsWith("10.140")
+							|| i.getHostAddress().startsWith("172.16.")) {
+						return i.getHostAddress();
+					}
 				}
 			}
 		} catch (SocketException e) {
