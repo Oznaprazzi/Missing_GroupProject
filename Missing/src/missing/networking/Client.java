@@ -166,23 +166,23 @@ public class Client extends Thread implements KeyListener {
 						// only receive actions from other players
 						// actions for this player handled locally in
 						// handleAction
-						String randomItem = (String) in.readObject();
-						System.out.println("random item: " + randomItem);
+//						String randomItem = (String) in.readObject();
+//						System.out.println("random item: " + randomItem);
 						try {
 							game.performAction(movingPlayer);
-							if (!randomItem.equals("NONE")) {
-								// didnt generate random item
-								if (randomItem.equals("move")) {
-									movingPlayer = (Integer) in.readObject();
-									direction = (Direction) in.readObject();
-									if (game.validMove(movingPlayer, direction)) {
-										game.movePlayer(movingPlayer, direction);
-									}
-								} else {
-									game.getAvatars()[movingPlayer]
-											.addToPocket(new Food(null, null, Food.FoodType.valueOf(randomItem)));
-								}
-							}
+//							if (!randomItem.equals("NONE")) {
+//								// didnt generate random item
+//								if (randomItem.equals("move")) {
+//									movingPlayer = (Integer) in.readObject();
+//									direction = (Direction) in.readObject();
+//									if (game.validMove(movingPlayer, direction)) {
+//										game.movePlayer(movingPlayer, direction);
+//									}
+//								} else {
+//									game.getAvatars()[movingPlayer]
+//											.addToPocket(new Food(null, null, Food.FoodType.valueOf(randomItem)));
+//								}
+//							}
 						} catch (GameException e) {
 							// ignore it
 						} catch (SignalException e1) {
@@ -195,18 +195,18 @@ public class Client extends Thread implements KeyListener {
 								}
 							} else if (e1.getMessage().contains("SHOP")) {
 								game.forceRemovePlayer(movingPlayer);
-							} else if (!e1.getMessage().equals(randomItem)) {
-								System.out.println("Sig exception: " + e1.getMessage());
-								if (randomItem.equals("NONE")) {
-									// random item generated when shouldn't of
-									try {
-										game.getAvatars()[movingPlayer].removeFromPocket(
-												new Food(null, null, Food.FoodType.valueOf(e1.getMessage())));
-									} catch (GameException e) {
-										e.printStackTrace();
-									}
-								}
-							}
+							}// else if (!e1.getMessage().equals(randomItem)) {
+							//	System.out.println("Sig exception: " + e1.getMessage());
+							//	if (randomItem.equals("NONE")) {
+							//		// random item generated when shouldn't of
+							//		try {
+							//			game.getAvatars()[movingPlayer].removeFromPocket(
+							//					new Food(null, null, Food.FoodType.valueOf(e1.getMessage())));
+							//		} catch (GameException e) {
+							//			e.printStackTrace();
+							//		}
+							//	}
+							//}
 						}
 					} else if (input.equals("disconnect")) {
 						// a player disconnected
