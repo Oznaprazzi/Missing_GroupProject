@@ -38,6 +38,9 @@ import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Shop;
 import missing.helper.GameException;
 
+/**
+ * This panel is used to display all the items which the merchant sells.
+ */
 @SuppressWarnings("serial")
 public class BuyPanel extends JPanel implements MouseListener {
 

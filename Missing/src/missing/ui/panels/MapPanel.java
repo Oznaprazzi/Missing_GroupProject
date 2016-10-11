@@ -14,23 +14,27 @@ import javax.swing.JPanel;
 import missing.helper.GameException;
 import missing.ui.assets.GWorld;
 
+/**
+ * Draws the whole map.
+ */
 @SuppressWarnings("serial")
-public class MapPanel extends JPanel{
-	
-	
+public class MapPanel extends JPanel {
+
 	private GWorld gWorld;
-	public MapPanel(GWorld gWorld){
+
+	public MapPanel(GWorld gWorld) {
 		this.gWorld = gWorld;
 	}
-	
+
 	/**
 	 * Updates gWorld to current game
-	 * @param gWorld 
+	 * 
+	 * @param gWorld
 	 */
-	public void updateGWorld(GWorld gWorld){
+	public void updateGWorld(GWorld gWorld) {
 		this.gWorld = gWorld;
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		try {

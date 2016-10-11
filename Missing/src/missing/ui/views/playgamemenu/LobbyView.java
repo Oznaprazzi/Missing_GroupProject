@@ -10,9 +10,7 @@
  */
 package missing.ui.views.playgamemenu;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JLabel;
@@ -24,10 +22,11 @@ import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
 
+/**
+ * Displays the waiting image in the JFrame
+ */
 @SuppressWarnings("serial")
-public class LobbyView extends View{
-	private JPanel playerTablePanel;
-	private JPanel buttonsPanel;
+public class LobbyView extends View {
 	public LobbyView(VControl controller) {
 		super(controller);
 		repaint();
@@ -37,27 +36,23 @@ public class LobbyView extends View{
 	@Override
 	public void initialise() {
 		setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
 		createPlayerTablePanel();
 		createButtonsPanel();
-		
+
 		JLabel title = MenuFactory.createHeading("Lobby");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		
-		
+
 	}
-	
-	private void createPlayerTablePanel(){
-		playerTablePanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		
+
+	private void createPlayerTablePanel() {
+		new JPanel(new GridBagLayout());
+
 	}
-	
-	private void createButtonsPanel(){
-		
+
+	private void createButtonsPanel() {
+
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -66,8 +61,6 @@ public class LobbyView extends View{
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

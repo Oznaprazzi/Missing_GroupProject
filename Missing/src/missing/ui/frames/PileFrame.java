@@ -9,32 +9,15 @@
 package missing.ui.frames;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import missing.datastorage.assetloader.GameAssets;
-import missing.game.items.movable.Dirt;
-import missing.game.items.movable.Food;
-import missing.game.items.movable.Food.FoodType;
-import missing.game.items.movable.Movable;
-import missing.game.items.movable.Stone;
-import missing.game.items.movable.Tool;
-import missing.game.items.movable.Wood;
-import missing.game.items.nonmovable.Bag;
-import missing.game.items.nonmovable.NonMovable;
-import missing.game.items.nonmovable.Pocket;
-import missing.game.items.nonmovable.Tree;
 import missing.game.world.nodes.WorldTile.Pile;
-import missing.game.world.nodes.WorldTile.TileObject;
-import missing.ui.canvas.HandPanel;
 import missing.ui.canvas.PileCanvas;
 import missing.ui.controller.VControl;
 
