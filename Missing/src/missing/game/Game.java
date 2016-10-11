@@ -16,6 +16,8 @@
  *  5 Oct 16			Chris Rabe				created killall method
  *  5 Oct 16			Chris Rabe				implemented killall method
  *  5 Oct 16			Chris Rabe				fixed item not disappearing on pickup
+ *  10 Oct 16			Chris Rabe				added force remove and force enter
+ *  11 Oct 16			Chris Rabe				added drop logic
  */
 
 package missing.game;
