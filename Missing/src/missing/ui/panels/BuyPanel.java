@@ -4,6 +4,7 @@
  *  
  * 	Date			Author				Changes
  *  10 Oct 16		Casey Huang			created class
+ *  11 Oct 16		Casey Huang			repositioned grid and text
  */
 package missing.ui.panels;
 
@@ -48,7 +49,7 @@ public class BuyPanel extends JPanel implements MouseListener{
 	protected static final int X_OFFSET = 58;
 
 	/** Y position of grid. */
-	private static final int Y_OFFSET = 45;
+	private static final int Y_OFFSET = 120;
 
 	private static final int size = 65;
 
@@ -88,7 +89,7 @@ public class BuyPanel extends JPanel implements MouseListener{
 		Font font = GameAssets.getFont2(30f);
 		g.setFont(font);
 		// g.setColor(Color.BLACK);
-		g.drawString("Items Available", 20, 30);
+		g.drawString("Items Available", 20, 80);
 		/* Firstly - draw the items inside the bag.. */
 		this.drawGrid(g, Y_OFFSET);
 		this.drawItems(g, Y_OFFSET + 7);
