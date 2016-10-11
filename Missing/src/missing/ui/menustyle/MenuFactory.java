@@ -11,6 +11,7 @@
  * 7 Oct 16			Casey Huang		Added another createHeading method for showing ClientWaitingView
  * 09 Oct 16		Casey Huang		Added another createLabel2 and createButton2
  * 11 Oct 16		Casey Huang		Changed colour of button hover
+ * 11 Oct 16 		Casey Huang		Fixed createButton2 hovering bug
  */
 package missing.ui.menustyle;
 
@@ -170,7 +171,7 @@ public class MenuFactory {
 		btn.setBorder(new EmptyBorder(10, 15, 0, 15));
 		btn.addMouseListener(new MouseAdapter() {
 		    public void mouseEntered(MouseEvent evt) {
-		    	btn.setBackground(TEXT_COLOUR_HIGHLIGHTED2);
+		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED2);
 		    }
 
 		    public void mouseExited(MouseEvent evt) {
@@ -182,7 +183,7 @@ public class MenuFactory {
 		    }
 		    
 		    public void mousePressed(MouseEvent evt){
-		    	btn.setBackground(TEXT_COLOUR_HIGHLIGHTED2);
+		    	btn.setForeground(TEXT_COLOUR_HIGHLIGHTED2);
 		    }
 		});
 		return btn;
