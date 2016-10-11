@@ -293,7 +293,7 @@ public class PileCanvas extends JPanel implements MouseListener {
 			}
 
 			// send over server
-			control.sendPilePickUp(selectedItem.toString());
+			control.sendPilePickUp(selectedItem.getName());
 			
 			pileSet.remove(selectedItem);
 			selectedItem = null;

@@ -490,6 +490,7 @@ public class Client extends Thread implements KeyListener {
 	}
 
 	public void sendPilePickUp(String selectedItem) {
+		System.out.println(selectedItem);
 		out.println("pilepickup " + selectedItem);
 
 	}
