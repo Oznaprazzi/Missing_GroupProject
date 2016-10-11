@@ -421,7 +421,14 @@ public class VControl extends JFrame {
 
 	public void sendPilePickUp(String selectedItem) {
 		client.sendPilePickUp(selectedItem);
+	}
 
+	public void sendDropItem(Movable item) {
+		try {
+			client.sendDropItem(item);
+		} catch (GameException e) {
+			displayException(e.getMessage());
+		}
 	}
 
 	/** Disconnects client from game */

@@ -367,17 +367,16 @@ public class HandPanel extends JPanel implements MouseListener {
 			if (!bagSet.contains(selectedItem)) {
 				bagSet.add(selectedItem);
 			}
-			
+
 			pocket.removeItem(selectedItem);
 			pocketSet.remove(selectedItem);
-			
+
 			// send over server
 			control.sendTransferTo("bag", selectedItem);
-			
+
 			selectedItem = null;
 			clickIndex = -1;
-		
-		
+
 		}
 		this.repaint();
 	}
@@ -448,6 +447,29 @@ public class HandPanel extends JPanel implements MouseListener {
 			this.revalidate();
 			this.repaint();
 		}
+	}
+
+	/**
+	 * Selected item must be stored within the player's pocket, otherwise it
+	 * throws a game exception.
+	 * 
+	 * @throws GameException
+	 */
+	public Movable removeSelectedItem() throws GameException {
+		if (selectedItem == null) {
+			return null;
+		}
+		if (bagSet.contains(selectedItem)) {
+			throw new GameException("You can only remove from pocket");
+		}
+		Movable item = selectedItem;
+		selectedItem = null;
+		if (pocketSet.contains(item)) {
+			pocketSet.remove(item);
+		}
+		this.revalidate();
+		this.repaint();
+		return item;
 	}
 
 	/*

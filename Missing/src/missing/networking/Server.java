@@ -139,7 +139,8 @@ public class Server extends Thread {
 							instruction = "perform";
 						} else if (input.equals("disconnect")) {
 							// player wants to perform action
-							if (playerID==0)return;
+							if (playerID == 0)
+								return;
 							instruction = "disconnect";
 						} else if (input.contains("craft")) {
 							// player crafted an item
@@ -151,6 +152,8 @@ public class Server extends Thread {
 						} else if (input.contains("transfer")) {
 							instruction = input;
 						} else if (input.contains("pilepickup")) {
+							instruction = input;
+						} else if (input.contains("drop")) {
 							instruction = input;
 						}
 						// send instructions to clients to update game
@@ -198,6 +201,8 @@ public class Server extends Thread {
 				continue;
 			if (action.contains("pilepickup") && playerNum == playerID)
 				continue;
+			if (action.contains("drop") && playerNum == playerID)
+				continue;
 			try {
 				outs[playerNum].reset();
 				outs[playerNum].writeObject(action);
@@ -218,7 +223,9 @@ public class Server extends Thread {
 				}
 			}
 		}
-		if (disconnect) {
+		if (disconnect)
+
+		{
 			sendInstruction("disconnect", disconnectedPlayer, null);
 		}
 	}
