@@ -13,6 +13,13 @@ Once all players have connected to the host, the game will start
 
 # Playing the Game
 
+## Goal of the Game
+
+This game is focused around multiplayer gameplay. The goal of the game is to
+kill everyone in the game until you are the last player alive. You can hide in bushes or shops and eat food to regenerate your health.  
+
+For single player, your goal is to make as much money as you can in the game by trading items in shops.  
+
 ## Controls
 **Moving** - W-A-S-D  
 **Rotate anti-clockwise** - Q  
