@@ -132,7 +132,7 @@ public class Food extends Health {
 
 	@Override
 	public String toString() {
-		return determineSymbol();
+		return name;
 	}
 
 	@Override
@@ -187,22 +187,6 @@ public class Food extends Health {
 			break;
 		default:
 			break;
-		}
-	}
-
-	/**
-	 * Determines the string representation for the food object.
-	 */
-	private String determineSymbol() {
-		switch (foodType) {
-		case APPLE:
-			return "a";
-		case BERRY:
-			return "b";
-		case FISH:
-			return "f";
-		default:
-			return "u"; // unknown
 		}
 	}
 }
