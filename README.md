@@ -18,6 +18,8 @@ Once all players have connected to the host, the game will start
 **Rotate anti-clockwise** - Q  
 **Rotate clockwise** - E  
 **Perform action** - F  
+  
+**Note**: When inside the shop, use Q and E to rotate camera
 
 ## In Game Panel
 
