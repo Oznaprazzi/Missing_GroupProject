@@ -34,7 +34,7 @@ Pushing 'F' in front of the following objects will do the following
 **Tree** - Gives you wood and sometimes apples  
 **Bush** - Gives you berries  
 **Rock** - Gives you stones  
-**Soil** - Gives you dirt
+**Soil** - Gives you dirt  
 **Fishing Area** - Gives you fish  
 **Shop Door** - Enters shop  
 **Other Player** - Damages player  
