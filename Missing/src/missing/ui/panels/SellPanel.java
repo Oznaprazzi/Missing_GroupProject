@@ -35,15 +35,14 @@ import missing.game.items.movable.Food;
 import missing.game.items.movable.Movable;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
-import missing.game.items.movable.Usable;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Pocket;
 import missing.game.items.nonmovable.Shop;
 import missing.helper.GameException;
-import missing.ui.controller.VControl;
 
-public class SellPanel extends JPanel implements MouseListener{	
+@SuppressWarnings("serial")
+public class SellPanel extends JPanel implements MouseListener {
 	/** x position of grid. */
 	protected static final int X_OFFSET = 58;
 
@@ -292,23 +291,23 @@ public class SellPanel extends JPanel implements MouseListener{
 					}
 					return this.inventorySet.get(clickIndex);
 				}
-			} 
+			}
 		}
 		return null;
 	}
 
-
-	public void sellItem() throws GameException{
-		if(selectedItem != null){
+	public void sellItem() throws GameException {
+		if (selectedItem != null) {
 			try {
 				int amount = merchant.sellItem(this.player, this.selectedItem);
 				String nCoins = (amount > 1) ? "coins" : "coin";
 				this.repaint();
 
-				JOptionPane.showMessageDialog(null, this.selectedItem + " has been removed from your inventory successfully. \n"
-						+ amount + " " + nCoins + " has been added to your account.");
+				JOptionPane.showMessageDialog(null,
+						this.selectedItem.getName() + " has been removed from your inventory successfully. \n" + amount + " "
+								+ nCoins + " has been added to your account.");
 
-				if(this.selectedItem.getAmount() == 0){
+				if (this.selectedItem.getAmount() == 0) {
 					inventorySet.remove(this.selectedItem);
 					this.selectedItem = null;
 					this.clickIndex = -1;
@@ -316,10 +315,9 @@ public class SellPanel extends JPanel implements MouseListener{
 				}
 				this.repaint();
 			} catch (GameException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// Ignore
 			}
-		}else{
+		} else {
 			JOptionPane.showMessageDialog(null, "No Item Selected!");
 			throw new GameException("No Item Selected!");
 		}

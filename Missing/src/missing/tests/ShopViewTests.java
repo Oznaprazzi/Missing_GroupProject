@@ -30,6 +30,7 @@ public class ShopViewTests {
 		ShopView view = new ShopView(null);
 		Shop shop = new Shop(null, null, ShopType.FOOD);
 		Shop shop2 = new Shop(null, null, ShopType.RESOURCE);
+		Shop shop3 = new Shop(null,null, ShopType.TOOLS);
 		Player testPlayer = new Player(0, "chris", new Point(0,0), new Point(0,0));
 		
 		Point pt = new Point(0, 0); /*Used to quickly create test objects. */
@@ -62,7 +63,7 @@ public class ShopViewTests {
 		frame.setVisible(true);
 		view.setFocus();
 		try {
-			view.updateDisplay(shop2);
+			view.updateDisplay(shop3);
 			view.revalidate();
 			
 		} catch (GameException e) {

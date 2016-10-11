@@ -49,10 +49,10 @@ public class Merchant extends Character {
 		costs = new HashMap<Movable, Integer>();
 		getCosts();
 	}
-	
-	//Getters
-	
-	public ArrayList<Movable> getItems(){
+
+	// Getters
+
+	public ArrayList<Movable> getItems() {
 		return new ArrayList<Movable>(namesToItems.values());
 	}
 
@@ -77,7 +77,7 @@ public class Merchant extends Character {
 		}
 		int costOfItem = costs.get(i);
 		if (player.getMoney().getAmount() < costOfItem) {
-			JOptionPane.showMessageDialog(null, "You don't have enough money to buy that!/n");
+			JOptionPane.showMessageDialog(null, "You don't have enough money to buy that!");
 			throw new GameException("player doesn't have enough money");
 		}
 		// deduct from play money
@@ -95,8 +95,8 @@ public class Merchant extends Character {
 			throw new GameException("cannot sell item you dont have");
 		}
 		if (!costs.containsKey(item)) {
-			JOptionPane.showMessageDialog(null, "This particular merchant doesn't buy this type of item!s");
-			throw new GameException("This merchant does not buy that sort of item!");
+			JOptionPane.showMessageDialog(null, "This particular merchant doesn't buy this type of item!");
+			throw new GameException("This merchant does not buy this type of item");
 		}
 		int sellAmount = (int) (costs.get(findItemInMap(item)) * 0.5);
 		p.setMoney(p.getMoney().getAmount() + sellAmount);

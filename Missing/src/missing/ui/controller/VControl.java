@@ -487,10 +487,9 @@ public class VControl extends JFrame {
 			displayCredits();
 		});
 	}
-	
+
 	private void displayInstructions() {
-		String instructions = ""
-				+ "In Game Controls:"
+		String instructions = "" + "In Game Controls:"
 				+ "\nPlayer Movement is controlled with W-A-S-D keys (UP-LEFT-DOWN-RIGHT)."
 				+ "\nRotating on the spot is done by pressing Q (turning left) and E (turning right)."
 				+ "\nPerforming an action, such as collecting items or hitting another player, is done by pressing F."
@@ -500,30 +499,26 @@ public class VControl extends JFrame {
 				+ "\n\nLoading a Game:"
 				+ "\nA player can load a previously saved game by going File -> Load from the Main Menu, and selecting their saved"
 				+ "\n.xml file. The player must then host a game and other players can join. When the game starts, all the items"
-				+ "\ndropped by each player from the save, will be in the same location."
-				+"\n\nPlayer Health:"
-				+"\nEvery player has a health bar. You can lose health by taking damage from other players,"
-				+"\nhitting trees, rocks and collecting soil without the correct tool in your pocket."
-				+"\nYou can regain health by eating food."
-				+"\n\nPlayer Death:"
-				+"\nWhen a player loses all their health they die and drop all their items in the world in the form of a pile,"
-				+"\nwhile other players can pick up using F. The dead player enters spectator mode where they can see all"
-				+"\nplayers in the world but are no longer part of the game.";
+				+ "\ndropped by each player from the save, will be in the same location." + "\n\nPlayer Health:"
+				+ "\nEvery player has a health bar. You can lose health by taking damage from other players,"
+				+ "\nhitting trees, rocks and collecting soil without the correct tool in your pocket."
+				+ "\nYou can regain health by eating food." + "\n\nPlayer Death:"
+				+ "\nWhen a player loses all their health they die and drop all their items in the world in the form of a pile,"
+				+ "\nwhile other players can pick up using F. The dead player enters spectator mode where they can see all"
+				+ "\nplayers in the world but are no longer part of the game.";
 		JOptionPane.showMessageDialog(this, instructions, "Game Instructions", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	private void displayCredits(){
-		/**The credit message String */
+	private void displayCredits() {
+		/** The credit message String */
 		String creditMessage = "\"Missing\" was Created for our SWEN 222 Group Project."
 				+ "\nWe worked with 5 people on this game, and spent many hours and days over this project."
-				+ "\nWe hope you enjoyed playing our game."
-				+ "\nThe Team: "
+				+ "\nWe hope you enjoyed playing our game." + "\nThe Team: "
 				+ "\n (1) Linus Go\n (2) Edward Kelly\n (3) Jian Wei Chong\n (4) Christiandel Rabe\n (5) Casey Huang";
-	
+
 		JOptionPane.showMessageDialog(this, creditMessage, "Game Credits", JOptionPane.INFORMATION_MESSAGE);
 	}
-	
-	
+
 	/**
 	 * Helper method. Initializes the JMenu and all of the Items inside.
 	 */
@@ -566,6 +561,9 @@ public class VControl extends JFrame {
 		// JFileChooser choose save location
 		fc = new JFileChooser("Choose save location");
 		fc.setCurrentDirectory(new File("."));
+		if (!isHost) {
+			displayException("You must be the host to be able to save the game!");
+		}
 		while (true) {
 			int rVal = fc.showSaveDialog(this);
 			if (rVal == JFileChooser.APPROVE_OPTION) {
@@ -575,7 +573,6 @@ public class VControl extends JFrame {
 							JOptionPane.WARNING_MESSAGE);
 					continue;
 				}
-				System.out.println(fileName);
 				// create tmpgame in case save fails
 				Game tmpGame = gGame.getGame();
 				tmpGame.killAll();
