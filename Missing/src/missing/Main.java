@@ -10,10 +10,12 @@ package missing;
 
 import missing.datastorage.assetloader.XMLHandler;
 import missing.ui.controller.VControl;
-
+/**
+ * Main class for the game. This class is the entry point for running the game.
+ *
+ */
 public class Main {
 
-	// TODO Note: This is implemented for single player only
 	public static void main(String[] args) {
 		String xmlFile = null;
 

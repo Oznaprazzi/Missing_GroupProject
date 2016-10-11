@@ -15,6 +15,7 @@ import missing.game.items.nonmovable.Shop;
 import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.BuyPanel;
 
+@SuppressWarnings("serial")
 public class BuyFrameTest extends JFrame {
 
 	private ImagePanel contentPane;

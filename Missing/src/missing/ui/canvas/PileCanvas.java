@@ -10,7 +10,6 @@
 package missing.ui.canvas;
 
 import java.awt.BasicStroke;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -37,8 +36,6 @@ import missing.game.items.movable.Movable;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
-import missing.game.items.nonmovable.Bag;
-import missing.game.items.nonmovable.Pocket;
 import missing.game.world.nodes.WorldTile.Pile;
 import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
@@ -48,6 +45,7 @@ import missing.ui.controller.VControl;
  * Canvas used to display the Pile of Items. If an item of the grid is pressed,
  * the cell is highlighted.
  */
+@SuppressWarnings("serial")
 public class PileCanvas extends JPanel implements MouseListener {
 
 	/** Pile of items to display */

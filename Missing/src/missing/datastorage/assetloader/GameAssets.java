@@ -43,7 +43,7 @@ import missing.game.world.nodes.WorldTile.TileObject.Direction;
  * for retrieving those fields.
  */
 public class GameAssets {
-	// Data Storage path
+	/*Specifies the path for the various storage paths and world-file paths */
 
 	private static final String STORAGE_PATH = "/missing/datastorage";
 
@@ -130,13 +130,22 @@ public class GameAssets {
 
 
 	// Getters for File Assets
-
+	
+	/**
+	 * Returns the WorldFile txt file associated with a certain x and y coordinate.
+	 * For example, getWorldFile(1,1) returns 1,1.txt
+	 * @param x - x coordinate
+	 * @param y - y coordinate.
+	 * @return
+	 */
 	public static InputStream getWorldFile(int x, int y) {
 		return GameAssets.class.getResourceAsStream(WORLD_FILE_PATH + x + "," + y + ".txt");
 	}
 
 	// getters for the image assets
-
+	/**
+	 * @return tallGrassImage
+	 */
 	public static BufferedImage getTallGrassImage() {
 		if (tallGrassImage == null) {
 			try {
@@ -147,7 +156,9 @@ public class GameAssets {
 		}
 		return tallGrassImage;
 	}
-
+	/**
+	 * @return foodShopImage
+	 */
 	public static BufferedImage getFoodShopImage() {
 		if (foodShopImage == null) {
 			try {
@@ -158,7 +169,9 @@ public class GameAssets {
 		}
 		return foodShopImage;
 	}
-
+	/**
+	 * @return resourceShopImage
+	 */
 	public static BufferedImage getResourceShopImage() {
 		if (resourceShopImage == null) {
 			try {
@@ -169,7 +182,10 @@ public class GameAssets {
 		}
 		return resourceShopImage;
 	}
-
+	/**
+	 * 
+	 * @return toolsShopImage
+	 */
 	public static BufferedImage getToolsShopImage() {
 		if (toolsShopImage == null) {
 			try {
@@ -180,7 +196,12 @@ public class GameAssets {
 		}
 		return toolsShopImage;
 	}
-
+	/**
+	 * Returns the player image, given the current players index and the direction they are facing.
+	 * @param index - of the player
+	 * @param direction - of the player
+	 * @return - playerImage
+	 */
 	public static BufferedImage getPlayerImage(int index, String direction) {
 		try {
 			playerImage = ImageIO.read(GameAssets.class
@@ -191,7 +212,9 @@ public class GameAssets {
 		}
 		return playerImage;
 	}
-
+	/**
+	 * @return sandImage
+	 */
 	public static BufferedImage getSandImage() {
 		if (sandImage == null) {
 			try {
@@ -202,7 +225,9 @@ public class GameAssets {
 		}
 		return sandImage;
 	}
-
+	/**
+	 * @return tombStoneImage
+	 */
 	public static BufferedImage getTombStoneImage() {
 		if (tombStoneImage == null) {
 			try {
@@ -213,7 +238,10 @@ public class GameAssets {
 		}
 		return tombStoneImage;
 	};
-
+	/**
+	 * 
+	 * @return waterImage
+	 */
 	public static BufferedImage getWaterImage() {
 		if (waterImage == null) {
 			try {
@@ -224,7 +252,9 @@ public class GameAssets {
 		}
 		return waterImage;
 	}
-
+	/**
+	 * @return grassImage
+	 */
 	public static BufferedImage getGrassImage() {
 		if (grassImage == null) {
 			try {
@@ -235,7 +265,10 @@ public class GameAssets {
 		}
 		return grassImage;
 	}
-
+	/**
+	 * 
+	 * @return roadImage
+	 */
 	public static BufferedImage getRoadImage() {
 		if (roadImage == null) {
 			try {
@@ -246,7 +279,10 @@ public class GameAssets {
 		}
 		return roadImage;
 	}
-
+	/**
+	 * 
+	 * @return appleImage
+	 */
 	public static BufferedImage getAppleImage() {
 		if (appleImage == null) {
 			try {
@@ -257,7 +293,10 @@ public class GameAssets {
 		}
 		return appleImage;
 	}
-
+	/**
+	 * 
+	 * @return bushImage
+	 */
 	public static BufferedImage getBushImage() {
 		if (bushImage == null) {
 			try {
@@ -268,7 +307,10 @@ public class GameAssets {
 		}
 		return bushImage;
 	}
-
+	/**
+	 * 
+	 * @return fireplaceImage
+	 */
 	public static BufferedImage getFireplaceImage() {
 		if (fireplaceImage == null) {
 			try {
@@ -279,7 +321,11 @@ public class GameAssets {
 		}
 		return fireplaceImage;
 	}
-
+	/**
+	 * Gets the treeImage associated with this number. 
+	 * @param num - the number of tree wanted.
+	 * @return treeImage
+	 */
 	public static BufferedImage getTreeImage(int num) {
 		String imageNm = "tree" + String.valueOf(num);
 		if (treeImage == null) {
@@ -291,7 +337,10 @@ public class GameAssets {
 		}
 		return treeImage;
 	}
-
+	/**
+	 * 
+	 * @return woodImage
+	 */
 	public static BufferedImage getWoodImage() {
 		if (woodImage == null) {
 			try {
@@ -302,7 +351,10 @@ public class GameAssets {
 		}
 		return woodImage;
 	}
-
+	/**
+	 * 
+	 * @return rockImage
+	 */
 	public static BufferedImage getRockImage() {
 		if (rockImage == null) {
 			try {
@@ -313,7 +365,10 @@ public class GameAssets {
 		}
 		return rockImage;
 	}
-
+	/**
+	 * 
+	 * @return soilImage
+	 */
 	public static BufferedImage getSoilImage() {
 		if (soilImage == null) {
 			try {
@@ -324,7 +379,10 @@ public class GameAssets {
 		}
 		return soilImage;
 	}
-
+	/**
+	 * 
+	 * @return dirtImage
+	 */
 	public static BufferedImage getDirtImage() {
 		if (dirtImage == null) {
 			try {
@@ -335,7 +393,10 @@ public class GameAssets {
 		}
 		return dirtImage;
 	}
-
+	/**
+	 * 
+	 * @return stoneImage
+	 */
 	public static BufferedImage getStoneImage() {
 		if (stoneImage == null) {
 			try {
@@ -346,7 +407,10 @@ public class GameAssets {
 		}
 		return stoneImage;
 	}
-
+	/**
+	 * 
+	 * @return axeImage
+	 */
 	public static BufferedImage getAxeImage() {
 		if (axeImage == null) {
 			try {
@@ -357,7 +421,10 @@ public class GameAssets {
 		}
 		return axeImage;
 	}
-
+	/**
+	 * 
+	 * @return pickaxeImage
+	 */
 	public static BufferedImage getPickaxeImage() {
 		if (pickaxeImage == null) {
 			try {
@@ -368,7 +435,10 @@ public class GameAssets {
 		}
 		return pickaxeImage;
 	}
-
+	/**
+	 * 
+	 * @return shovelImage
+	 */
 	public static BufferedImage getShovelImage() {
 		if (shovelImage == null) {
 			try {
@@ -379,7 +449,10 @@ public class GameAssets {
 		}
 		return shovelImage;
 	}
-
+	/**
+	 * 
+	 * @return fishingRodImage
+	 */
 	public static BufferedImage getFishingRodImage() {
 		if (fishingRodImage == null) {
 			try {
@@ -390,7 +463,10 @@ public class GameAssets {
 		}
 		return fishingRodImage;
 	}
-
+	/**
+	 * 
+	 * @return fishingAreaImage
+	 */
 	public static BufferedImage getFishingAreaImage() {
 		if (fishingAreaImage == null) {
 			try {
@@ -401,7 +477,10 @@ public class GameAssets {
 		}
 		return fishingAreaImage;
 	}
-
+	/**
+	 * 
+	 * @return darkGrassImage
+	 */
 	public static BufferedImage getDarkGrassImage() {
 		if (darkGrassImage == null) {
 			try {
@@ -412,7 +491,10 @@ public class GameAssets {
 		}
 		return darkGrassImage;
 	}
-
+	/**
+	 * 
+	 * @return berriesImage
+	 */
 	public static BufferedImage getBerriesImage() {
 		if (berriesImage == null) {
 			try {
@@ -423,7 +505,10 @@ public class GameAssets {
 		}
 		return berriesImage;
 	}
-
+	/**
+	 * 
+	 * @return fishImage
+	 */
 	public static BufferedImage getFishImage() {
 		if (fishImage == null) {
 			try {
@@ -434,7 +519,9 @@ public class GameAssets {
 		}
 		return fishImage;
 	}
-
+	/**
+	 * @return windowBackgroundImage
+	 */
 	public static BufferedImage getWindowBackgroundImage() {
 		if (windowBackgroundImage == null) {
 			try {
@@ -446,7 +533,10 @@ public class GameAssets {
 		}
 		return windowBackgroundImage;
 	}
-
+	/**
+	 * 
+	 * @return craftingBackgroundImage
+	 */
 	public static BufferedImage getCraftingBackgroundImage() {
 		if (craftingBackgroundImage == null) {
 			try {
@@ -458,7 +548,10 @@ public class GameAssets {
 		}
 		return craftingBackgroundImage;
 	}
-
+	/**
+	 * 
+	 * @return pileofItemsImage
+	 */
 	public static BufferedImage getPileOfItemsImage() {
 		if (pileOfItemsImage == null) {
 			try {
@@ -469,7 +562,10 @@ public class GameAssets {
 		}
 		return pileOfItemsImage;
 	}
-
+	/**
+	 * 
+	 * @return logoImage
+	 */
 	public static BufferedImage getLogoImage() {
 		if (logoImage == null) {
 			try {
@@ -480,7 +576,10 @@ public class GameAssets {
 		}
 		return logoImage;
 	}
-
+	/**
+	 * 
+	 * @return splashBackgroundImage
+	 */
 	public static BufferedImage getSplashBackgroundImage() {
 		if (splashBackgroundImage == null) {
 			try {
@@ -492,7 +591,10 @@ public class GameAssets {
 		}
 		return splashBackgroundImage;
 	}
-
+	/**
+	 * 
+	 * @return missingLogoImage
+	 */
 	public static BufferedImage getMissingLogoImage() {
 		if (missingLogoImage == null) {
 			try {
@@ -503,7 +605,10 @@ public class GameAssets {
 		}
 		return missingLogoImage;
 	}
-
+	/**
+	 * 
+	 * @return itemBackgroundImage
+	 */
 	public static BufferedImage getItemBackgroundImage() {
 		if (itemBackgroundImage == null) {
 			try {
@@ -515,7 +620,10 @@ public class GameAssets {
 		}
 		return itemBackgroundImage;
 	}
-
+	/**
+	 * 
+	 * @return serverBackgroundImage
+	 */
 	public static Image getServerBackgroundImage() {
 		if (serverBackgroundImage == null) {
 			serverBackgroundImage = new ImageIcon(
@@ -523,7 +631,9 @@ public class GameAssets {
 		}
 		return serverBackgroundImage;
 	}
-
+	/**
+	 * @return buttonImage
+	 */
 	public static ImageIcon getButtonImage() {
 		if (buttonImage == null) {
 			try {
@@ -535,7 +645,11 @@ public class GameAssets {
 		}
 		return buttonImage;
 	}
-
+	/**
+	 * Returns the_dark.ttf as a font object, with a specified size.
+	 * @param size - of the font
+	 * @return the_dark font
+	 */
 	public static Font getFont(float size) {
 		try {
 			customFont = Font.createFont(Font.TRUETYPE_FONT,
@@ -548,7 +662,11 @@ public class GameAssets {
 		}
 		return customFont.deriveFont(size);
 	}
-
+	/**
+	 * Returns ParmaPetit_Normal.ttf as a font object, with a specified size.
+	 * @param size - of the font
+	 * @return ParmaPetit_Normal font
+	 */
 	public static Font getFont2(float size) {
 		try {
 			customFont2 = Font.createFont(Font.TRUETYPE_FONT,
@@ -561,7 +679,11 @@ public class GameAssets {
 		}
 		return customFont2.deriveFont(size);
 	}
-
+	/**
+	 * Returns Drifttype.ttf as a font object, with a specified size.
+	 * @param size - of the font
+	 * @return Drifttype font
+	 */
 	public static Font getFont3(float size) {
 		try {
 			customFont2 = Font.createFont(Font.TRUETYPE_FONT,
@@ -574,7 +696,12 @@ public class GameAssets {
 		}
 		return customFont2.deriveFont(size);
 	}
-
+	/**
+	 * Returns the correct ShopNodeImage given the ShopType and the current Direction.
+	 * @param type
+	 * @param direction
+	 * @return
+	 */
 	public static BufferedImage getShopNodeImage(ShopType type, Direction direction) {
 		try {
 			return ImageIO.read(GameAssets.class

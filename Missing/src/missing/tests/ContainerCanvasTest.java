@@ -11,8 +11,6 @@ package missing.tests;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,11 +23,8 @@ import missing.game.items.movable.Movable;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Container;
-import missing.game.world.nodes.WorldTile.Pile;
-import missing.game.world.nodes.WorldTile.TileObject;
 import missing.helper.GameException;
 import missing.ui.canvas.ContainerCanvas;
-import missing.ui.canvas.PileCanvas;
 
 /**
  * This class tests the Container functionality and ensures that it draws it correctly.

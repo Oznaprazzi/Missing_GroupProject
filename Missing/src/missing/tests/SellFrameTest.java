@@ -11,8 +11,6 @@ import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
-import missing.game.items.Item;
-import missing.game.items.movable.Food;
 import missing.game.items.movable.Movable;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Tool.ToolType;
@@ -21,20 +19,20 @@ import missing.game.items.nonmovable.Shop;
 import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.SellPanel;
 
+@SuppressWarnings("serial")
 public class SellFrameTest extends JFrame {
 
 	private ImagePanel contentPane;
 	private BufferedImage backgroundImage = GameAssets.getWindowBackgroundImage();
-	
-	private static Point pt = new Point(0, 0); /*Used to quickly create test objects. */
+
+	private static Point pt = new Point(0,
+			0); /* Used to quickly create test objects. */
 
 	private final JButton btnSell = MenuFactory.createButton2("Sell");
 	private final JButton btnExit = MenuFactory.createButton2("Exit");
 
-	private SellPanel panel; //the hand canvas
-	
-	private Player player;
-	
+	private SellPanel panel; // the hand canvas
+
 	/**
 	 * Launch the application.
 	 */
@@ -57,7 +55,7 @@ public class SellFrameTest extends JFrame {
 			}
 		});
 	}
-	
+
 	/**
 	 * Create a Test canvas contained within this window.
 	 */
@@ -71,33 +69,31 @@ public class SellFrameTest extends JFrame {
 		contentPane.add(btnExit);
 		panel = new SellPanel(player, shop);
 		contentPane.add(panel);
-		this.player = player;
 		addActionListeners();
 	}
-	
+
 	private class ImagePanel extends JPanel {
-	    @Override
-	    protected void paintComponent(Graphics g) {
-	        super.paintComponent(g);
-	        g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
-	    }
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
+		}
 	}
 
 	/**
 	 * Sets up the Action Listeners for the buttons.
 	 */
 	private void addActionListeners() {
-		btnSell.addActionListener(e->{
+		btnSell.addActionListener(e -> {
 			try {
 				panel.sellItem();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		});
-		btnExit.addActionListener(e->{
+		btnExit.addActionListener(e -> {
 			this.dispose();
 		});
 	}
-	
-}
 
+}

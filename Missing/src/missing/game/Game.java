@@ -16,6 +16,8 @@
  *  5 Oct 16			Chris Rabe				created killall method
  *  5 Oct 16			Chris Rabe				implemented killall method
  *  5 Oct 16			Chris Rabe				fixed item not disappearing on pickup
+ *  10 Oct 16			Chris Rabe				added force remove and force enter
+ *  11 Oct 16			Chris Rabe				added drop logic
  */
 
 package missing.game;
@@ -278,6 +280,10 @@ public class Game implements Serializable {
 	 */
 	public void placeDroppedItem(Movable item, int id) throws GameException {
 		Player player = avatars[id];
+		if (player.isInsideGrass()) {
+			player.removeFromPocket(item);
+			throw new GameException("Item was lost in the grass!");
+		}
 		Point wLoc = player.getWorldLocation();
 		Point tLoc = player.getTileLocation();
 		WorldTile tile = world.getWorldNodes()[wLoc.y][wLoc.x].getWorldTiles()[tLoc.y][tLoc.x];
