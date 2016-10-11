@@ -54,7 +54,12 @@ import missing.helper.GameException;
  * This class encapsulates all the parsing and loading logic.
  */
 public class XMLImporter {
-
+	/**
+	 * Analyses a given xml file, and returns a List of Items.
+	 * @param filename of the xml file
+	 * @return List of items
+	 * @throws GameException
+	 */
 	public static List<Item> getItemsFromFile(String filename) throws GameException {
 		System.out.println("filename " + filename);
 		List<Item> tmp = new ArrayList<Item>();
