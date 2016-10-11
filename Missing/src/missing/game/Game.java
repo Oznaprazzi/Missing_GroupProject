@@ -278,6 +278,10 @@ public class Game implements Serializable {
 	 */
 	public void placeDroppedItem(Movable item, int id) throws GameException {
 		Player player = avatars[id];
+		if (player.isInsideGrass()) {
+			player.removeFromPocket(item);
+			throw new GameException("Item was lost in the grass!");
+		}
 		Point wLoc = player.getWorldLocation();
 		Point tLoc = player.getTileLocation();
 		WorldTile tile = world.getWorldNodes()[wLoc.y][wLoc.x].getWorldTiles()[tLoc.y][tLoc.x];
