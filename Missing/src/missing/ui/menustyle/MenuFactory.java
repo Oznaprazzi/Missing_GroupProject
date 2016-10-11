@@ -72,7 +72,7 @@ public class MenuFactory {
 	public static JLabel createLabel(String text) {
 		JLabel label = new JLabel(text);
 		label.setName(text);
-		Font f = GameAssets.getFont(30f);
+		Font f = GameAssets.getFont2(30f);
 		label.setBorder(new EmptyBorder(0,0,25,0));
 		label.setForeground(TEXT_COLOUR);
 		label.setFont(f);
