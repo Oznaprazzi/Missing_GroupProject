@@ -49,6 +49,7 @@ public class SellFrame extends JFrame {
 		contentPane.add(btnExit);
 		panel = new SellPanel(player, shop);
 		contentPane.add(panel);
+		this.setVisible(true);
 		addActionListeners();
 	}
 
