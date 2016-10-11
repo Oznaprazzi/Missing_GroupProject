@@ -12,14 +12,11 @@
 package missing.game.items.nonmovable;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
 
 import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Tool;
+import missing.game.items.movable.Wood;
 import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
 import missing.helper.SignalException;
@@ -32,15 +29,6 @@ public class Soil extends Source {
 
 	public Soil(Point worldLocation, Point tileLocation) {
 		super("Soil", "It is soil", worldLocation, tileLocation, new Dirt(worldLocation, tileLocation, MAX_RESOURCE));
-		timer = new Timer(REFRESH_TIME_MS, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if (resource == null) {
-					int newAmount = MAX_RESOURCE;
-					resource = new Dirt(worldLocation, tileLocation, newAmount);
-				}
-			}
-		});
 	}
 
 	@Override
@@ -67,11 +55,8 @@ public class Soil extends Source {
 		resource = new Dirt(worldLocation, tileLocation, numDirtTaking);
 		resource.setStored(true);
 		p.addToPocket(resource);
-		// Replace resource -- should add timer here
-		this.resource = null;
-		// Create a timer which will update resource after n milliseconds
-		if (!timer.isRunning()) {
-			timer.start();
-		}
+		// Replace resource
+		int newAmount = 1 + (int) (Math.random() * MAX_RESOURCE);
+		resource = new Wood(worldLocation, tileLocation, newAmount);
 	}
 }
