@@ -315,15 +315,14 @@ public class SellPanel extends JPanel implements MouseListener{
 					this.clickRect = null;
 				}
 				this.repaint();
-
-
 			} catch (GameException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else{
+			JOptionPane.showMessageDialog(null, "No Item Selected!");
+			throw new GameException("No Item Selected!");
 		}
-		JOptionPane.showMessageDialog(null, "No Item Selected!");
-		throw new GameException("No Item Selected!");
 	}
 
 	/*

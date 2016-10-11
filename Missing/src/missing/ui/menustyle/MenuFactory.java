@@ -171,22 +171,18 @@ public class MenuFactory {
 		btn.addMouseListener(new MouseAdapter() {
 		    public void mouseEntered(MouseEvent evt) {
 		    	btn.setBackground(TEXT_COLOUR_HIGHLIGHTED2);
-		    	btn.setForeground(VIEW_BTN_BG_COLOUR);
 		    }
 
 		    public void mouseExited(MouseEvent evt) {
-		    	btn.setBackground(VIEW_BTN_BG_COLOUR);
 		    	btn.setForeground(TEXT_COLOUR);
 		    }
 		    
 		    public void mouseReleased(MouseEvent e){
-		    	btn.setBackground(VIEW_BTN_BG_COLOUR);
 		    	btn.setForeground(TEXT_COLOUR);
 		    }
 		    
 		    public void mousePressed(MouseEvent evt){
 		    	btn.setBackground(TEXT_COLOUR_HIGHLIGHTED2);
-		    	btn.setForeground(VIEW_BTN_BG_COLOUR);
 		    }
 		});
 		return btn;
