@@ -27,7 +27,12 @@ public class GGame {
 
 	private GWorld gworld;
 	private Game game;
-
+	/**
+	 * Construct a new GGame object
+	 * @param game - the current Game
+	 * @param theView - the current View.
+	 * @throws GameException
+	 */
 	public GGame(Game game, View theView) throws GameException {
 		this.game = game;
 		gworld = new GWorld(game.getWorld(), theView, new Point(0, 0));

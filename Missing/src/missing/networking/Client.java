@@ -167,12 +167,13 @@ public class Client extends Thread implements KeyListener {
 						// actions for this player handled locally in
 						// handleAction
 						String randomItem = (String) in.readObject();
-						System.out.println("random item: "+randomItem);
+						System.out.println("random item: " + randomItem);
 						try {
 							game.performAction(movingPlayer);
-							if (!randomItem.equals("NONE")){
+							if (!randomItem.equals("NONE")) {
 								// didnt generate random item
-								game.getAvatars()[movingPlayer].addToPocket(new Food(null, null, Food.FoodType.valueOf(randomItem)));
+								game.getAvatars()[movingPlayer]
+										.addToPocket(new Food(null, null, Food.FoodType.valueOf(randomItem)));
 							}
 						} catch (GameException e) {
 							// ignore it
@@ -186,17 +187,18 @@ public class Client extends Thread implements KeyListener {
 								}
 							} else if (e1.getMessage().contains("SHOP")) {
 								game.forceRemovePlayer(movingPlayer);
-							} else if (!e1.getMessage().equals(randomItem)){
-								System.out.println("Sig exception: "+e1.getMessage());
-								if (randomItem.equals("NONE")){
+							} else if (!e1.getMessage().equals(randomItem)) {
+								System.out.println("Sig exception: " + e1.getMessage());
+								if (randomItem.equals("NONE")) {
 									// random item generated when shouldn't of
 									try {
-										game.getAvatars()[movingPlayer].removeFromPocket(new Food(null, null, Food.FoodType.valueOf(e1.getMessage())));
+										game.getAvatars()[movingPlayer].removeFromPocket(
+												new Food(null, null, Food.FoodType.valueOf(e1.getMessage())));
 									} catch (GameException e) {
 										e.printStackTrace();
 									}
 								}
-							} 
+							}
 						}
 					} else if (input.equals("disconnect")) {
 						// a player disconnected
@@ -225,12 +227,13 @@ public class Client extends Thread implements KeyListener {
 						try {
 							food.use(game.getAvatars()[movingPlayer]);
 						} catch (GameException e) {
-							if (e.getMessage().equals("Pocket is empty.")){
-								// this client version of player doesnt have the random item eg apple
-							} else if(e.getMessage().equals("Item not found.")){
-								// this client version of player doesnt have the random item eg apple								
-							}
-							else{
+							if (e.getMessage().equals("Pocket is empty.")) {
+								// this client version of player doesnt have the
+								// random item eg apple
+							} else if (e.getMessage().equals("Item not found.")) {
+								// this client version of player doesnt have the
+								// random item eg apple
+							} else {
 								System.out.println("Server parse error: use");
 							}
 						}
@@ -240,9 +243,9 @@ public class Client extends Thread implements KeyListener {
 						Movable selectedItem = null;
 						try {
 							pile = (Pile) game.getObjectInFront(movingPlayer);
-							System.out.println("item name: "+itemName);
-							for (TileObject pileItem : pile.getItems()){
-								if (pileItem.getName().equals(itemName)){
+							System.out.println("item name: " + itemName);
+							for (TileObject pileItem : pile.getItems()) {
+								if (pileItem.getName().equals(itemName)) {
 									selectedItem = (Movable) pileItem;
 									break;
 								}
@@ -255,49 +258,54 @@ public class Client extends Thread implements KeyListener {
 					} else if (((String) input).contains("transfer")) {
 						String to = ((String) input).split(" ")[1];
 						String itemName = ((String) input).split(" ")[2];
-//						int amount = Integer.parseInt(((String) input).split(" ")[3]);
+						// int amount = Integer.parseInt(((String)
+						// input).split(" ")[3]);
 						Player player = game.getAvatars()[movingPlayer];
 						if (to.equals("bag")) {
 							Movable movingItem = null;
-							for (Movable pocketItem : player.getPocket().getItems()){
-								System.out.println(pocketItem.getName()+" pocket: "+itemName);
-								if (pocketItem.getName().equals(itemName)){
+							for (Movable pocketItem : player.getPocket().getItems()) {
+								System.out.println(pocketItem.getName() + " pocket: " + itemName);
+								if (pocketItem.getName().equals(itemName)) {
 									movingItem = pocketItem;
 									break;
 								}
 							}
-//							if (movingItem == null){
-//								// this client version of player doesn't have food item
-//								try {
-//									player.addToBag(new Food(null, null, FoodType.valueOf(itemName),amount));
-//								} catch (GameException e) {
-//									e.printStackTrace();
-//								}
-//							} 
+							// if (movingItem == null){
+							// // this client version of player doesn't have
+							// food item
+							// try {
+							// player.addToBag(new Food(null, null,
+							// FoodType.valueOf(itemName),amount));
+							// } catch (GameException e) {
+							// e.printStackTrace();
+							// }
+							// }
 							try {
 								player.removeFromPocket(movingItem);
 								player.addToBag(movingItem);
 							} catch (GameException e) {
 								e.printStackTrace();
 							}
-							
-						} else if (to.equals("pocket")){
+
+						} else if (to.equals("pocket")) {
 							Movable movingItem = null;
-							for (Movable bagItem : player.getBag().getItems()){
-								System.out.println(bagItem.getName()+" bag: "+itemName);
-								if (bagItem.getName().equals(itemName)){
+							for (Movable bagItem : player.getBag().getItems()) {
+								System.out.println(bagItem.getName() + " bag: " + itemName);
+								if (bagItem.getName().equals(itemName)) {
 									movingItem = bagItem;
 									break;
 								}
 							}
-//							if (movingItem == null){
-//								// this client version of player doesn't have food item
-//								try {
-//									player.addToPocket(new Food(null, null, FoodType.valueOf(itemName),amount));
-//								} catch (GameException e) {
-//									e.printStackTrace();
-//								}
-//							} 
+							// if (movingItem == null){
+							// // this client version of player doesn't have
+							// food item
+							// try {
+							// player.addToPocket(new Food(null, null,
+							// FoodType.valueOf(itemName),amount));
+							// } catch (GameException e) {
+							// e.printStackTrace();
+							// }
+							// }
 							try {
 								player.getBag().removeItem(movingItem);
 								player.addToPocket(movingItem);
@@ -308,7 +316,21 @@ public class Client extends Thread implements KeyListener {
 						} else
 							System.out.println("server parse error: transfer");
 					} else if (((String) input).contains("drop")) {
-						
+						String itemName = ((String) input).split(" ")[1];
+						Player player = game.getAvatars()[movingPlayer];
+						Movable movingItem = null;
+						for (Movable pocketItem : player.getPocket().getItems()) {
+							System.out.println(pocketItem.getName() + " pocket: " + itemName);
+							if (pocketItem.getName().equals(itemName)) {
+								movingItem = pocketItem;
+								break;
+							}
+						}
+						try {
+							game.placeDroppedItem(movingItem, movingPlayer);
+						} catch (GameException e) {
+							// Ignore
+						}
 					}
 					try {
 						vControl.updateGGame(game);
@@ -394,7 +416,7 @@ public class Client extends Thread implements KeyListener {
 		} catch (SignalException | GameException e) {
 			if (e.getClass() == SignalException.class) {
 				System.out.println(e.getMessage());
-				if (e.getMessage().equals("FISH")||e.getMessage().equals("APPLE")||e.getMessage().equals("BERRY")){
+				if (e.getMessage().equals("FISH") || e.getMessage().equals("APPLE") || e.getMessage().equals("BERRY")) {
 					out.println("F");
 					out.println(e.getMessage());
 					try {
@@ -497,7 +519,7 @@ public class Client extends Thread implements KeyListener {
 
 	public void sendDropItem(Movable item) throws GameException {
 		// first send drop intent
-		out.println("drop" + item.getName());
+		out.println("drop " + item.getName());
 		game.placeDroppedItem(item, clientID);
 	}
 }

@@ -19,9 +19,7 @@ import missing.game.world.nodes.WorldTile.TileObject;
  */
 public abstract class Character implements TileObject, Serializable {
 
-	/**
-	 * 
-	 */
+	
 	protected static final long serialVersionUID = 1166932944531822141L;
 	private String name;
 	private String description;
@@ -30,7 +28,16 @@ public abstract class Character implements TileObject, Serializable {
 
 	private Direction orientation;
 	private Direction approach;
-
+	/**
+	 * Construct a new Character object.
+	 * @param name of the character
+	 * @param description of the character
+	 * @param worldLocation of the character
+	 * @param tileLocation of the character
+	 * @param orientation of the character
+	 * @param approach - to check if the character is facing the correct way when performing
+	 * an action.
+	 */
 	public Character(String name, String description, Point worldLocation, Point tileLocation, Direction orientation,
 			Direction approach) {
 		this.name = name;

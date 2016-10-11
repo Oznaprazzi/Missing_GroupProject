@@ -54,7 +54,14 @@ public class Player extends Character {
 	private int id; // client ID
 	private int imageID; // sprite ID
 	private Money money;
-
+	
+	/**
+	 * Construct a new Player.
+	 * @param id of the Player
+	 * @param name of the Player
+	 * @param worldLocation
+	 * @param tileLocation
+	 */
 	public Player(int id, String name, Point worldLocation, Point tileLocation) {
 		super(name, String.format("%s's avatar.", name), worldLocation, tileLocation, Direction.SOUTH, Direction.ALL);
 		this.health = 100;
@@ -225,7 +232,13 @@ public class Player extends Character {
 		}
 		return pocket.removeItem(item);
 	}
-	
+	/**
+	 * Searches both the players bag and pocket for this specific item, and returns it
+	 * if it is present. If the item is not present, it returns a null item.
+	 * @param item
+	 * @return item that was removed.
+	 * @throws GameException
+	 */
 	public Movable removeFromInventory(Movable item) throws GameException {
 		if (pocket.getItems().isEmpty() && bag.getItems().isEmpty()) {
 			throw new GameException("Inventory is empty.");
@@ -236,7 +249,10 @@ public class Player extends Character {
 		return null;
 	}
 
-	/** Adds the specified item into the bag */
+	/** 
+	 * Adds the specified item into the bag
+	 * @param item to add 
+	 */
 	public void addToBag(Movable item) throws GameException {
 		bag.addItem(item);
 	}
@@ -294,7 +310,7 @@ public class Player extends Character {
 	 * This method grabs the first Food object inside the player's pocket. If
 	 * the player does not have any food, it returns null.
 	 * 
-	 * @return
+	 * @return Food 
 	 */
 	public Food getFood() {
 		for (Movable i : pocket.getItems()) {
@@ -308,6 +324,7 @@ public class Player extends Character {
 	/**
 	 * This method throws a SignalException which means that a trade must be
 	 * initiated between the other player and this player.
+	 * @param player taht is being acted on.
 	 */
 	@Override
 	public void performAction(Player player) throws GameException, SignalException {

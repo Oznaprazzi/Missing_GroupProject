@@ -39,7 +39,12 @@ public class Tool extends Craftable {
 	/** Number of times tool can be used before i breaks */
 	private int durability;
 	private ToolType type;
-
+	/**
+	 * Construct a new Tool Object.
+	 * @param worldLocation
+	 * @param tileLocation
+	 * @param type
+	 */
 	public Tool(Point worldLocation, Point tileLocation, ToolType type) {
 		super(worldLocation, tileLocation);
 		this.durability = MAX_DURABILITY;
@@ -47,12 +52,25 @@ public class Tool extends Craftable {
 		setIngredients(type);
 		this.type = type;
 	}
-
+	/**
+	 * Construct a new Tool Object with a specified preset durability.
+	 * @param worldLocation
+	 * @param tileLocation
+	 * @param type
+	 * @param durability
+	 */
 	public Tool(Point worldLocation, Point tileLocation, ToolType type, int durability) {
 		this(worldLocation, tileLocation, type);
 		this.durability = durability;
 	}
-
+	/**
+	 * Construct a new Tool Object with a specified preset durability and abmount.
+	 * @param worldLocation
+	 * @param tileLocation
+	 * @param type
+	 * @param durability
+	 * @param amount
+	 */
 	public Tool(Point worldLocation, Point tileLocation, ToolType type, int durability, int amount) {
 		this(worldLocation, tileLocation, type, durability);
 		super.setAmount(amount);

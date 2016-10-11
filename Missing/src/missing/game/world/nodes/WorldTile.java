@@ -101,12 +101,13 @@ public class WorldTile implements Serializable {
 
 		private TileObject player;
 		private List<TileObject> items;
+		private boolean bush;
 
 		public Pile(TileObject object) {
 			super("Pile", "A pile of objects", object.getWorldLocation(), object.getTileLocation());
 			items = new ArrayList<TileObject>();
 			if (object instanceof Player) {
-				Player p = (Player)object;
+				Player p = (Player) object;
 				p.setInsidePile(true);
 				this.player = p;
 			} else {
@@ -131,6 +132,14 @@ public class WorldTile implements Serializable {
 		}
 
 		// Methods
+
+		public boolean isBush() {
+			return bush;
+		}
+
+		public void setBush(boolean bush) {
+			this.bush = bush;
+		}
 
 		public boolean hasPlayer() {
 			return player != null;
@@ -243,7 +252,11 @@ public class WorldTile implements Serializable {
 			pile.setPlayer(null);
 			// now check if we can revert the pile to an object only
 			if (pile.getItems().isEmpty()) {
-				this.object = null;
+				if (pile.isBush()) {
+					this.object = new TallGrass(pile.getWorldLocation(), pile.getTileLocation());
+				} else {
+					this.object = null;
+				}
 			} else if (pile.getItems().size() == 1) {
 				this.object = pile.getItems().get(0);
 			} else {
@@ -294,6 +307,9 @@ public class WorldTile implements Serializable {
 		// Sanity check - must have pile
 		if (object instanceof Pile) {
 			Pile pile = (Pile) object;
+			if (player.isInsideGrass()) {
+				pile.setBush(true);
+			}
 			if (player.isDead()) {
 				pile.setPlayer(null);
 			}
