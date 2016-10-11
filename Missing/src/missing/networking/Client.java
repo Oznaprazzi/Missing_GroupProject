@@ -208,7 +208,14 @@ public class Client extends Thread implements KeyListener {
 						try {
 							food.use(game.getAvatars()[movingPlayer]);
 						} catch (GameException e) {
-							e.printStackTrace();
+							if (e.getMessage().equals("Pocket is empty.")){
+								// this client version of player doesnt have the random item eg apple
+							} else if(e.getMessage().equals("Item not found.")){
+								// this client version of player doesnt have the random item eg apple								
+							}
+							else{
+								System.out.println("Server parse error: use");
+							}
 						}
 					} else if (((String) input).contains("pilepickup")) {
 						String itemName = ((String) input).split(" ")[1];
