@@ -137,6 +137,9 @@ public class Server extends Thread {
 						} else if (input.equals("F")) {
 							// player wants to perform action
 							instruction = "perform";
+						} else if (input.equals("FISH")||input.equals("APPLE")||input.equals("BERRY")||input.equals("NONE")) {
+							// player got fish, apple, berry, or none
+							instruction = input;
 						} else if (input.equals("disconnect")) {
 							// player wants to perform action
 							if (playerID==0)return;
@@ -185,6 +188,8 @@ public class Server extends Thread {
 				continue; // disconnected player
 			// action already performed in client
 			if (action.equals("perform") && playerNum == playerID)
+				continue;
+			if ((action.equals("FISH")||action.equals("BERRY")||action.equals("APPLE")||action.equals("NONE"))&& playerNum == playerID)
 				continue;
 			if (action.equals("disconnect") && playerNum == playerID)
 				continue;

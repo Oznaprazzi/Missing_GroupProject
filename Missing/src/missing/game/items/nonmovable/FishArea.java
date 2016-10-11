@@ -20,6 +20,7 @@ import missing.game.items.movable.Tool;
 import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Tool.ToolType;
 import missing.helper.GameException;
+import missing.helper.SignalException;
 
 @SuppressWarnings("serial")
 public class FishArea extends Source{
@@ -30,7 +31,7 @@ public class FishArea extends Source{
 	}
 
 	@Override
-	public void performAction(Player p) throws GameException {
+	public void performAction(Player p) throws GameException, SignalException {
 		Tool fishingRod = p.getTool(ToolType.FISHINGROD);
 		if (fishingRod == null){
 			throw new GameException("You must have a fishing rod to fish");
@@ -43,6 +44,7 @@ public class FishArea extends Source{
 			Food fish = new Food(worldLocation, tileLocation, FoodType.FISH);
 			fish.setStored(true);
 			p.addToPocket(fish);
+			throw new SignalException("FISH");
 		}
 	}
 
