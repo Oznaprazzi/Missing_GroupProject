@@ -11,18 +11,17 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import missing.ui.canvas.CraftingCanvas;
-import missing.ui.canvas.PileCanvas;
 import missing.ui.controller.VControl;
+
 /** Displays Crafting window */
 @SuppressWarnings("serial")
-public class CraftingFrame extends JFrame{
+public class CraftingFrame extends JFrame {
 	private JPanel contentPane;
 	public CraftingCanvas canvas;
-	
-	public CraftingFrame(VControl controller){
+
+	public CraftingFrame(VControl controller) {
 		super("Crafting");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -33,6 +32,6 @@ public class CraftingFrame extends JFrame{
 		setContentPane(contentPane);
 		canvas = new CraftingCanvas(controller, this);
 		contentPane.add(canvas, BorderLayout.CENTER);
-		
+
 	}
 }

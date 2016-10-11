@@ -18,7 +18,6 @@ package missing.ui.menustyle;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -106,7 +105,7 @@ public class MenuFactory {
 		tf.setForeground(Color.white);
 		/*Set the font size to orginal font size times 1.5 */
 		tf.setFont(GameAssets.getFont2((float) (tf.getFont().getSize() * 1.5)));
-		tf.setHorizontalAlignment(tf.CENTER);
+		tf.setHorizontalAlignment(JTextField.CENTER);
 		tf.setFocusable(false);
 		tf.setEditable(false);
 		return tf;

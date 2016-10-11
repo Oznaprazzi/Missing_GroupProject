@@ -36,21 +36,23 @@ import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
 
+/**
+ * Displays the player selection view in the VControl
+ */
 @SuppressWarnings("serial")
-public class CreatePlayerView extends View{
-	/*Dimensions for the Game Panels width and height */
+public class CreatePlayerView extends View {
+	/* Dimensions for the Game Panels width and height */
 	private final int panelWd = 800;
 	private final int panelHt = 600;
-	
+
 	private List<Image> imgList;
 
 	private int imgIndex = 0;
 
-	/*Image rectangle dimensions*/
+	/* Image rectangle dimensions */
 	private final int RECT_SIZE = 250;
 	private final int RECT_LEFT = 375;
 	private final int RECT_TOP = 0;
-	
 
 	private TextField textField;
 	private JPanel imgPanel;
@@ -58,11 +60,11 @@ public class CreatePlayerView extends View{
 	private JButton btnNext;
 	private JButton btnCreatePlayer;
 
-	/*Stores the playerName and the image Number chosen */
+	/* Stores the playerName and the image Number chosen */
 	private String playerName;
 	private int imageNumber;
 
-	/*Swing components for this window */
+	/* Swing components for this window */
 	public CreatePlayerView(VControl controller) {
 		super(controller);
 		initialise();
@@ -70,17 +72,19 @@ public class CreatePlayerView extends View{
 		repaint();
 		controller.pack();
 	}
-	private void initialiseList(){
+
+	private void initialiseList() {
 		imgList = new LinkedList<Image>();
 
-		for(int i = 0; i <= 5; ++i){
+		for (int i = 0; i <= 5; ++i) {
 			imgList.add(GameAssets.getPlayerImage(i, "south"));
 		}
 
 	}
+
 	@Override
 	public void initialise() {
-	
+
 		setSize(panelWd, panelHt);
 		setBackground(Color.black);
 		GridBagLayout gbl_panel = new GridBagLayout();
@@ -88,7 +92,8 @@ public class CreatePlayerView extends View{
 		gbl_panel.columnWidths = new int[] { 89, 0 };
 		gbl_panel.rowHeights = new int[] { 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_panel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+				Double.MIN_VALUE };
 		setLayout(gbl_panel);
 
 		JLabel lblCurrentPlayer = MenuFactory.createLabel2("Select Character");
@@ -99,18 +104,18 @@ public class CreatePlayerView extends View{
 		add(lblCurrentPlayer, gbc_lblCurrentPlayer);
 
 		initialiseList();
-		imgPanel = new JPanel(){
+		imgPanel = new JPanel() {
 			@Override
-			public void paint(Graphics g){
+			public void paint(Graphics g) {
 				super.paint(g);
 			}
-			
+
 			@Override
-			public void paintComponent(Graphics g){
+			public void paintComponent(Graphics g) {
 				drawImage(g);
 			}
 		};
-		
+
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
@@ -167,20 +172,23 @@ public class CreatePlayerView extends View{
 		gbc_layeredPane.gridx = 0;
 		gbc_layeredPane.gridy = 13;
 		add(layeredPane, gbc_layeredPane);
-		
+
 	}
+
 	/**
-	 * Private method to allow you to draw stuff onto the current graphics context.
+	 * Private method to allow you to draw stuff onto the current graphics
+	 * context.
+	 * 
 	 * @param g
 	 */
-	private void drawImage(Graphics g){
-		g.drawImage(imgList.get(imgIndex), RECT_LEFT, RECT_TOP, RECT_SIZE,RECT_SIZE, null);	
+	private void drawImage(Graphics g) {
+		g.drawImage(imgList.get(imgIndex), RECT_LEFT, RECT_TOP, RECT_SIZE, RECT_SIZE, null);
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+
 		g.drawImage(GameAssets.getSplashBackgroundImage(), 0, 0, null);
 	}
 
@@ -189,10 +197,10 @@ public class CreatePlayerView extends View{
 	 */
 	private void setupActionListeners() {
 
-		btnBack.addActionListener(e->{
-			if(imgIndex == 0){
+		btnBack.addActionListener(e -> {
+			if (imgIndex == 0) {
 				imgIndex = 5;
-			}else{
+			} else {
 				imgIndex--;
 			}
 			drawImage(imgPanel.getGraphics());
@@ -200,10 +208,10 @@ public class CreatePlayerView extends View{
 			repaint();
 		});
 
-		btnNext.addActionListener(e->{
-			if(imgIndex == imgList.size()-1){
+		btnNext.addActionListener(e -> {
+			if (imgIndex == imgList.size() - 1) {
 				imgIndex = 0;
-			}else{
+			} else {
 				imgIndex++;
 			}
 			drawImage(imgPanel.getGraphics());
@@ -211,68 +219,66 @@ public class CreatePlayerView extends View{
 			repaint();
 		});
 
-		btnCreatePlayer.addActionListener(e->{
-			//SANITY check: does the textField have numbers or is empty?
-			if(textField.getText().isEmpty() || textField.getText().matches(".*\\d+.*"))
+		btnCreatePlayer.addActionListener(e -> {
+			// SANITY check: does the textField have numbers or is empty?
+			if (textField.getText().isEmpty() || textField.getText().matches(".*\\d+.*"))
 				JOptionPane.showMessageDialog(null, "Please give your character a VALID name first!");
-			else{
+			else {
 				playerName = textField.getText();
 				imageNumber = imgIndex;
 				int numPlayers;
 				int port;
 				String IPAddress;
-				if (controller.isHost()){
+				if (controller.isHost()) {
 					numPlayers = ((HostGameView) (controller.getView(controller.getHostGameView()))).getNumPlayers();
 					port = ((HostGameView) (controller.getView(controller.getHostGameView()))).getPort();
 					// Valid numPlayers and port have been entered
 					try {
-						//Start server
+						// Start server
 						NetworkingHelper.runServer(numPlayers, port, controller, playerName, imageNumber);
 						controller.changeView(controller.getClientWaitingView());
 					} catch (IOException | IllegalArgumentException e1) {
-						JOptionPane.showMessageDialog(this, "Could not connect to server at " + NetworkingHelper.getIPAddress() + " : " +port);
+						JOptionPane.showMessageDialog(this,
+								"Could not connect to server at " + NetworkingHelper.getIPAddress() + " : " + port);
 						controller.changeView(controller.getPlayGameView());
 					}
 				} else {
-					IPAddress = ((JoinGameView)(controller.getView(controller.getJoinGameView()))).getIP();
+					IPAddress = ((JoinGameView) (controller.getView(controller.getJoinGameView()))).getIP();
 					port = ((JoinGameView) (controller.getView(controller.getJoinGameView()))).getPort();
 					try {
 						NetworkingHelper.runClient(IPAddress, port, false, controller, playerName, imageNumber);
 						controller.changeView(controller.getClientWaitingView());
 					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(this, "Could not connect to server at " + IPAddress + " : " +port);
+						JOptionPane.showMessageDialog(this,
+								"Could not connect to server at " + IPAddress + " : " + port);
 						controller.changeView(controller.getPlayGameView());
 					}
 				}
-			
+
 			}
 		});
 	}
-	
-	
-	
-	
+
 	/**
 	 * Returns the Player Name that the player has chosen.
+	 * 
 	 * @return
 	 */
-	public String getPlayerName(){
+	public String getPlayerName() {
 		return this.playerName;
 	}
 
 	/**
 	 * Returns the imageIndex of the players chosen image.
+	 * 
 	 * @return int - imageNumber
 	 */
-	public int getImageIndex(){
+	public int getImageIndex() {
 		return this.imageNumber;
 	}
 
-
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

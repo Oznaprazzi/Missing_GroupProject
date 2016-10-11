@@ -28,18 +28,19 @@ import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
 
+/**
+ * Shows the main menu of the game.
+ */
 @SuppressWarnings("serial")
-public class MenuView extends View{
+public class MenuView extends View {
 
 	private List<JButton> jButtonList = new ArrayList<>();
 
-	/**The credit message String */
+	/** The credit message String */
 	private String creditMessage = "\"Missing\" was Created for our SWEN 222 Group Project, and was intended to be an Adventure Game."
 			+ "\nWe had to work with 5 people on this game, and spent many hours and days over this project."
 			+ "\nThe Team: "
 			+ "\n (1) Linus Go\n (2) Edward Kelly\n (3) Jian Wei Chong\n (4) Christiandel Rabe\n (5) Casey Huang";
-
-
 
 	private JPanel buttonPanel;
 
@@ -57,25 +58,25 @@ public class MenuView extends View{
 		c.gridy = 0;
 		c.anchor = GridBagConstraints.CENTER;
 		JLabel title = MenuFactory.createHeading("Missing");
-		add(title,c);
+		add(title, c);
 
 		c.gridy = 1;
-		JLabel label = MenuFactory.createLabel2("Game Menu"); 
-		add(label,c);
+		JLabel label = MenuFactory.createLabel2("Game Menu");
+		add(label, c);
 
 		createButtons();
 
 		c.weighty = 2;
 		c.anchor = GridBagConstraints.NORTH;
 		c.gridy = 2;
-		add(buttonPanel,c);
+		add(buttonPanel, c);
 	}
 
 	/**
 	 * Creates button panel
 	 */
-	private void createButtons(){
-		GridLayout layout = new GridLayout(3,0);
+	private void createButtons() {
+		GridLayout layout = new GridLayout(3, 0);
 		layout.setVgap(20);
 		buttonPanel = new JPanel(layout);
 		buttonPanel.setOpaque(false);
@@ -83,7 +84,8 @@ public class MenuView extends View{
 		JButton btnHostGame = MenuFactory.createButton("Play Game");
 		jButtonList.add(btnHostGame);
 		btnHostGame.addActionListener(e -> {
-			controller.changeView(controller.getPlayGameView()); // change to main Menu
+			controller.changeView(controller.getPlayGameView()); // change to
+																	// main Menu
 		});
 
 		JButton btnJoinGame = MenuFactory.createButton("About \"Missing\"");
@@ -98,11 +100,12 @@ public class MenuView extends View{
 			int option = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Exit Confirmation",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-			if(option == 0) System.exit(0);
+			if (option == 0)
+				System.exit(0);
 			return;
 		});
 
-		for(JButton j : jButtonList){
+		for (JButton j : jButtonList) {
 			j.setFocusable(false);
 			buttonPanel.add(j);
 		}
@@ -117,7 +120,5 @@ public class MenuView extends View{
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-
 	}
 }
