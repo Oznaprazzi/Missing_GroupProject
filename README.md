@@ -4,6 +4,11 @@
 
 # Getting Started
 
+## Running the Game
+
+To run the game, you must execute ```java -jar (external xml file name)``` in the command line or add the filename as an argument in your IDE run configurations.  
+The default xml file is called "items.xml" and this xml file should not be modified.
+
 ## Single Player
 Select Play Game -> Host Game -> select 1 player and enter an available port from 1024 to 65535 -> Start Server -> Create Player
 ## Multiplayer
@@ -13,11 +18,20 @@ Once all players have connected to the host, the game will start
 
 # Playing the Game
 
+## Goal of the Game
+
+This game is focused around multiplayer gameplay. The goal of the game is to
+kill everyone in the game until you are the last player alive. You can hide in bushes or shops and eat food to regenerate your health.  
+
+For single player, your goal is to make as much money as you can in the game by trading items in shops.  
+
 ## Controls
 **Moving** - W-A-S-D  
 **Rotate anti-clockwise** - Q  
 **Rotate clockwise** - E  
 **Perform action** - F  
+  
+**Note**: When inside the shop, use Q and E to rotate camera
 
 ## In Game Panel
 
