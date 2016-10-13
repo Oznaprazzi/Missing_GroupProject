@@ -291,7 +291,7 @@ public class BuyPanel extends JPanel implements MouseListener {
 	/*
 	 * END OF HELPER METHODS..
 	 */
-
+	
 	@Override
 	public void mouseEntered(MouseEvent e) {
 	}

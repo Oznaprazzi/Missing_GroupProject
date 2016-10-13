@@ -105,7 +105,7 @@ public class Merchant extends Character {
 		}
 		// deduct from play money
 		player.setMoney(player.getMoney().getAmount() - costOfItem);
-		Movable playerItem = i;
+		Movable playerItem = createItem(i);
 		try {
 			player.addToInventory(playerItem);
 		} catch (GameException e) {
@@ -137,7 +137,7 @@ public class Merchant extends Character {
 		int reduction = 1;
 		// reduces amount of item
 		int newAmount = item.getAmount() - reduction;
-		if (newAmount == 0) {
+		if (newAmount <= 0) {
 			p.removeFromInventory(item);
 		} else {
 			p.reduceItemAmount(item, reduction);
@@ -147,7 +147,36 @@ public class Merchant extends Character {
 	}
 
 	// Helper methods
-
+	
+	private Movable createItem(Movable m) {
+		int newAmt = m.getAmount();
+		Point wLoc = m.getWorldLocation();
+		Point tLoc = m.getTileLocation();
+		switch (m.getName()) {
+		case "Wood":
+			return new Wood(wLoc, tLoc, newAmt);
+		case "Stone":
+			return new Stone(wLoc, tLoc, newAmt);
+		case "Dirt":
+			return new Dirt(wLoc, tLoc, newAmt);
+		case "Axe":
+			return new Tool(wLoc, tLoc, ToolType.AXE, newAmt);
+		case "Fishing Rod":
+			return new Tool(wLoc, tLoc, ToolType.FISHINGROD, newAmt);
+		case "Shovel":
+			return new Tool(wLoc, tLoc, ToolType.SHOVEL, newAmt);
+		case "Pickaxe":
+			return new Tool(wLoc, tLoc, ToolType.PICKAXE, newAmt);
+		case "Apple":
+			return new Food(wLoc, tLoc, FoodType.APPLE, newAmt);
+		case "Berry":
+			return new Food(wLoc, tLoc, FoodType.BERRY, newAmt);
+		case "Fish":
+			return new Food(wLoc, tLoc, FoodType.FISH, newAmt);
+		}
+		return null;
+	}
+	
 	private Movable findItemInMap(Movable item) {
 		for (Movable key : costs.keySet()) {
 			if (item.getClass() == key.getClass()) {

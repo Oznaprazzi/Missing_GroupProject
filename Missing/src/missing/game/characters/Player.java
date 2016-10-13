@@ -388,6 +388,9 @@ public class Player extends Character {
 			if (b.getName().equals(item.getName())) {
 				b.setAmount(b.getAmount() - i);
 				bag.setCurrentSize(bag.getCurrentSize() - i);
+				if (b.getAmount()<=0){
+					bag.removeItem(b);
+				}
 				return;
 			}
 		}
@@ -395,6 +398,9 @@ public class Player extends Character {
 			if (p.getName().equals(item.getName())) {
 				p.setAmount(p.getAmount() - i);
 				pocket.setCurrentSize(pocket.getCurrentSize() - i);
+				if (p.getAmount()<=0){
+					pocket.removeItem(p);
+				}
 				return;
 			}
 		}
