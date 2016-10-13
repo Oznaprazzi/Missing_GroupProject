@@ -384,6 +384,7 @@ public class HandPanel extends JPanel implements MouseListener {
 
 			selectedItem = null;
 			clickIndex = -1;
+			clickRect = null;
 
 		}
 		this.repaint();
@@ -415,6 +416,7 @@ public class HandPanel extends JPanel implements MouseListener {
 
 			selectedItem = null;
 			clickIndex = -1;
+			clickRect = null;
 		} else if (clickIndex >= 10 && clickIndex <= 19) {
 			// can't transfer to yourself - leave.
 			return;
