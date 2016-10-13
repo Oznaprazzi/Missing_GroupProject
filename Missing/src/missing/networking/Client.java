@@ -322,7 +322,6 @@ public class Client extends Thread implements KeyListener {
 					} else if (((String) input).contains("drop")) {
 						String itemName = ((String) input).split(" ")[1];
 						Player player = game.getAvatars()[movingPlayer];
-						System.out.println("drop item name: "+itemName);
 						Movable movingItem = null;
 						for (Movable pocketItem : player.getPocket().getItems()) {
 							if (pocketItem.toString().equals(itemName)) {
@@ -338,11 +337,6 @@ public class Client extends Thread implements KeyListener {
 					}
 					try {
 						vControl.updateGGame(game);
-						System.out.println("receiver======");
-						for (Movable item : game.getAvatars()[movingPlayer].getPocket().getItems()){
-							System.out.println("receiver item :"+item.getName()+" "+item.getAmount());
-						}
-						System.out.println("===========");
 					} catch (GameException e) {
 					}
 					vControl.repaint();
@@ -416,22 +410,12 @@ public class Client extends Thread implements KeyListener {
 		try {
 			game.performAction(clientID);
 			out.println("perform NONE");
-			System.out.println("sender======");
-			for (Movable item : game.getAvatars()[clientID].getPocket().getItems()){
-				System.out.println("sender item :"+item.getName()+" "+item.getAmount());
-			}
-			System.out.println("===========");
 			vControl.updateGGame(game);
 			vControl.repaint();
 		} catch (SignalException | GameException e) {
 			if (e.getClass() == SignalException.class) {
 				if (e.getMessage().equals("FISH") || e.getMessage().equals("APPLE") || e.getMessage().equals("BERRY")) {
 					out.println("perform "+e.getMessage());
-					System.out.println("sender======");
-					for (Movable item : game.getAvatars()[clientID].getPocket().getItems()){
-						System.out.println("sender item :"+item.getName()+" "+item.getAmount());
-					}
-					System.out.println("===========");
 					try {
 						vControl.updateGGame(game);
 					} catch (GameException e1) {
@@ -496,11 +480,6 @@ public class Client extends Thread implements KeyListener {
 	private void update(){
 		try {
 			vControl.updateGGame(game);
-			System.out.println("sender======");
-			for (Movable item : game.getAvatars()[clientID].getPocket().getItems()){
-				System.out.println("sender item :"+item.getName()+" "+item.getAmount());
-			}
-			System.out.println("===========");
 			
 		} catch (GameException e) {
 		}
@@ -516,7 +495,6 @@ public class Client extends Thread implements KeyListener {
 	}
 
 	public void sendCraftedItem(String item) {
-		System.out.println("craft type: "+item);
 		out.println("craft " + item);
 		update();
 	}
