@@ -331,7 +331,7 @@ public class SellPanel extends JPanel implements MouseListener {
 				}
 				this.repaint();
 			} catch (GameException e) {
-				// Ignore
+				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "No Item Selected!");

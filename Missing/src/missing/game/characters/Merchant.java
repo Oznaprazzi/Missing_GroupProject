@@ -95,13 +95,11 @@ public class Merchant extends Character {
 	public void buyItem(Player player, String item) throws GameException {
 		Movable i = namesToItems.get(item);
 		if (i == null) {
-			JOptionPane.showMessageDialog(null, "The merchant does not have this item!");
-			throw new GameException("the merchant doesn't have this item");
+			throw new GameException("The merchant does not have this item!");
 		}
 		int costOfItem = costs.get(i);
 		if (player.getMoney().getAmount() < costOfItem) {
-			JOptionPane.showMessageDialog(null, "You don't have enough money to buy that!");
-			throw new GameException("player doesn't have enough money");
+			throw new GameException("You don't have enough money to buy that!");
 		}
 		// deduct from play money
 		player.setMoney(player.getMoney().getAmount() - costOfItem);
@@ -125,12 +123,10 @@ public class Merchant extends Character {
 	 */
 	public int sellItem(Player p, Movable item) throws GameException {
 		if (!p.inventoryHas(item)) {
-			JOptionPane.showMessageDialog(null, "You cannot sell an item you don't have.");
-			throw new GameException("cannot sell item you dont have");
+			throw new GameException("You cannot sell an item you don't have.");
 		}
 		if (!costs.containsKey(item)) {
-			JOptionPane.showMessageDialog(null, "This particular merchant doesn't buy this type of item!");
-			throw new GameException("This merchant does not buy this type of item");
+			throw new GameException("This particular merchant doesn't buy this type of item!");
 		}
 		int sellAmount = (int) (costs.get(findItemInMap(item)) * 0.5);
 		p.setMoney(p.getMoney().getAmount() + sellAmount);
