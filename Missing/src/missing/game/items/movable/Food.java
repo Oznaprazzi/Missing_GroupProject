@@ -43,9 +43,10 @@ public class Food extends Health {
 	private FoodType foodType;
 
 	private boolean cooked;
-	
+
 	/**
 	 * Construct a new Food object.
+	 * 
 	 * @param worldLocation
 	 * @param tileLocation
 	 * @param type
@@ -57,8 +58,10 @@ public class Food extends Health {
 		this.foodType = type;
 		setInfo();
 	}
+
 	/**
 	 * Construct a new Food object with a specified amount.
+	 * 
 	 * @param worldLocation
 	 * @param tileLocation
 	 * @param type
@@ -91,7 +94,7 @@ public class Food extends Health {
 	 * Returns the regenAmount that the certain food can give.
 	 */
 	protected int getRegenAmount() {
-		//If the food item is cooked, then it increases the regenAmount by 10%.
+		// If the food item is cooked, then it increases the regenAmount by 10%.
 		if (cooked) {
 			return (int) (regenAmount * 0.1) + regenAmount;
 		}
@@ -123,7 +126,9 @@ public class Food extends Health {
 				player.removeFromPocket(this);
 			} else {
 				// decrease current size
+				System.out.println("Amount: " + this.getAmount());
 				player.getPocket().setCurrentSize(player.getPocket().getCurrentSize() - 1);
+				System.out.println("Pocket Size: " + player.getPocket().getCurrentSize());
 			}
 		}
 	}
