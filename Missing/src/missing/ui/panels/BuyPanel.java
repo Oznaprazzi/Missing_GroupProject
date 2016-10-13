@@ -284,7 +284,7 @@ public class BuyPanel extends JPanel implements MouseListener {
 				JOptionPane.showMessageDialog(null, "Select the item you want to buy.");
 			}
 		} catch (GameException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			// do nothing
 		}
 	}
 

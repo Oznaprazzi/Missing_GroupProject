@@ -136,8 +136,8 @@ public class Merchant extends Character {
 		p.setMoney(p.getMoney().getAmount() + sellAmount);
 		int reduction = 1;
 		// reduces amount of item
-		item.setAmount(item.getAmount() - reduction);
-		if (item.getAmount() == 0) {
+		int newAmount = item.getAmount() - reduction;
+		if (newAmount == 0) {
 			p.removeFromInventory(item);
 		} else {
 			p.reduceItemAmount(item, reduction);

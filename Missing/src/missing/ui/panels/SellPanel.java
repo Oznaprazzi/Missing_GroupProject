@@ -316,6 +316,7 @@ public class SellPanel extends JPanel implements MouseListener {
 				int amount = merchant.sellItem(this.player, this.selectedItem);
 				controller.sendSell(this.selectedItem.toString(), this.merchant.getType().toString());
 				String nCoins = (amount > 1) ? "coins" : "coin";
+				this.selectedItem.setAmount(this.selectedItem.getAmount()-1);
 				this.repaint();
 
 				JOptionPane.showMessageDialog(null,
