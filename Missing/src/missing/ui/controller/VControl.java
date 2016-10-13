@@ -430,6 +430,13 @@ public class VControl extends JFrame {
 			displayException(e.getMessage());
 		}
 	}
+	public void sendSell(String itemName, String shopType) {
+		client.sendSell(itemName, shopType);
+	}
+
+	public void sendBuy(String itemName, String shopType) {
+		client.sendBuy(itemName, shopType);
+	}
 
 	/** Disconnects client from game */
 	public void disconnectClient() {
@@ -632,4 +639,6 @@ public class VControl extends JFrame {
 		XMLHandler.filename = xmlFile;
 		JOptionPane.showMessageDialog(null, "The XML file " + xmlFile + " has been loaded.");
 	}
+
+	
 }

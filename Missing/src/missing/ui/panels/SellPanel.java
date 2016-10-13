@@ -40,6 +40,7 @@ import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Pocket;
 import missing.game.items.nonmovable.Shop;
 import missing.helper.GameException;
+import missing.ui.controller.VControl;
 
 @SuppressWarnings("serial")
 public class SellPanel extends JPanel implements MouseListener {
@@ -79,8 +80,11 @@ public class SellPanel extends JPanel implements MouseListener {
 
 	private Merchant merchant;
 
-	public SellPanel(Player player, Shop shop) {
+	private VControl controller;
+
+	public SellPanel(Player player, Shop shop, VControl controller) {
 		this.player = player;
+		this.controller = controller;
 		this.bag = player.getBag();
 		this.pocket = player.getPocket();
 		inventorySet = new ArrayList<>();
@@ -300,6 +304,7 @@ public class SellPanel extends JPanel implements MouseListener {
 		if (selectedItem != null) {
 			try {
 				int amount = merchant.sellItem(this.player, this.selectedItem);
+				controller.sendSell(this.selectedItem.toString(), this.merchant.getType().toString());
 				String nCoins = (amount > 1) ? "coins" : "coin";
 				this.repaint();
 

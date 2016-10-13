@@ -24,6 +24,7 @@ import missing.game.items.nonmovable.Shop;
 import missing.game.world.nodes.WorldTile.TileObject.Direction;
 import missing.helper.GameException;
 import missing.ui.assets.ShopNode;
+import missing.ui.controller.VControl;
 import missing.ui.frames.BuyFrame;
 import missing.ui.frames.SellFrame;
 import missing.ui.menustyle.MenuFactory;
@@ -54,10 +55,13 @@ public class ShopPanel extends JPanel {
 	
 	private BuyFrame bF;
 	private SellFrame sF;
+	
+	private VControl controller;
 
-	public ShopPanel(ShopView parent, Shop shop) {
+	public ShopPanel(ShopView parent, Shop shop, VControl controller) {
 		this.parent = parent;
 		this.shop = shop;
+		this.controller = controller;
 		this.orientation = Direction.NORTH;
 		this.node = initialiseNodes(shop, orientation);
 		this.btnPanel = new JPanel();
@@ -254,12 +258,12 @@ public class ShopPanel extends JPanel {
 
 		if(btnBuy != null && btnSell != null){
 			btnBuy.addActionListener(e -> {
-				 bF = new BuyFrame(currentPlayer, shop);
+				 bF = new BuyFrame(currentPlayer, shop, controller);
 				 parent.requestFocus();
 			});
 
 			btnSell.addActionListener(e -> {
-				sF = new SellFrame(currentPlayer, shop);
+				sF = new SellFrame(currentPlayer, shop, controller);
 				parent.requestFocus();
 			});
 		}
