@@ -302,8 +302,6 @@ public class Client extends Thread implements KeyListener {
 					} else if (((String) input).contains("transfer")) {
 						String to = ((String) input).split(" ")[1];
 						String itemName = ((String) input).split(" ")[2];
-						// int amount = Integer.parseInt(((String)
-						// input).split(" ")[3]);
 						Player player = game.getAvatars()[movingPlayer];
 						if (to.equals("bag")) {
 							Movable movingItem = null;
@@ -360,10 +358,10 @@ public class Client extends Thread implements KeyListener {
 						vControl.updateGGame(game);
 						System.out.println("updated items ========");
 						for (Movable item : game.getAvatars()[movingPlayer].getPocket().getItems()){
-							System.out.println("pocket item: "+item.getName()+" "+item.getAmount());
+							System.out.println("received pocket item: "+item.getName()+" "+item.getAmount());
 						}
 						for (Movable item : game.getAvatars()[movingPlayer].getBag().getItems()){
-							System.out.println("bag item: "+item.getName()+" "+item.getAmount());
+							System.out.println("received bag item: "+item.getName()+" "+item.getAmount());
 						}
 						System.out.println("========");
 					} catch (GameException e) {
@@ -526,6 +524,16 @@ public class Client extends Thread implements KeyListener {
 			e.printStackTrace();
 		}
 	}
+	
+	private void update(){
+		try {
+			vControl.updateGGame(game);
+		} catch (GameException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		vControl.repaint();
+	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
@@ -537,25 +545,30 @@ public class Client extends Thread implements KeyListener {
 
 	public void sendCraftedItem(String item) {
 		out.println("craft " + item);
+		update();
 	}
 
 	public void sendExitSignal(int id) {
 		game.forceEnterPlayer(id);
 		out.println("exit " + id);
+		update();
 	}
 
 	public void sendUseItem(String foodType) {
 		out.println("use " + foodType);
+		update();
 	}
 
 	public void sendTransferTo(String to, Movable item) {
 		out.println("transfer " + to + " " + item.getName());
+		update();
 
 	}
 
 	public void sendPilePickUp(String selectedItem) {
 		System.out.println(selectedItem);
 		out.println("pilepickup " + selectedItem);
+		update();
 
 	}
 
@@ -563,14 +576,17 @@ public class Client extends Thread implements KeyListener {
 		// first send drop intent
 		out.println("drop " + item.getName());
 		game.placeDroppedItem(item, clientID);
+		update();
 	}
 
 	public void sendSell(String itemName, String shopType) {
 		out.println("sell "+itemName+" "+shopType);
+		update();
 		
 	}
 
 	public void sendBuy(String itemName, String shopType) {
 		out.println("buy "+itemName+" "+shopType);
+		update();
 	}
 }

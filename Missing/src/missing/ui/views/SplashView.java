@@ -12,8 +12,6 @@
 package missing.ui.views;
 
 import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -26,8 +24,12 @@ import missing.datastorage.assetloader.GameAssets;
 import missing.ui.controller.VControl;
 import missing.ui.controller.VControl.View;
 
+/**
+ * Displays the animated splash screen. This view is created for testing if the
+ * vcontrol can swap views.
+ */
 @SuppressWarnings("serial")
-public class SplashView extends View implements ActionListener{
+public class SplashView extends View implements ActionListener {
 	private Timer timer = new Timer(100, this);
 	private long end = System.currentTimeMillis() + 1500;
 	private float alpha = 1f;
@@ -47,7 +49,7 @@ public class SplashView extends View implements ActionListener{
 			e.printStackTrace();
 		}
 		controller.changeView(controller.getMenuView()); // change to main Menu
-		
+
 	}
 
 	@Override
@@ -68,12 +70,13 @@ public class SplashView extends View implements ActionListener{
 		Graphics2D g2d = (Graphics2D) g;
 
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-		g2d.drawImage(image, (this.getWidth()/2)-image.getWidth()/2, this.getHeight()/2 - image.getHeight()/2, null);
+		g2d.drawImage(image, (this.getWidth() / 2) - image.getWidth() / 2, this.getHeight() / 2 - image.getHeight() / 2,
+				null);
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (System.currentTimeMillis() > end) {
-			if(image.equals(GameAssets.getLogoImage())){
+			if (image.equals(GameAssets.getLogoImage())) {
 				alpha += -0.05f;
 				if (alpha <= 0) {
 					alpha = 0;
@@ -81,10 +84,10 @@ public class SplashView extends View implements ActionListener{
 					image = GameAssets.getMissingLogoImage();
 				}
 			}
-			if(image.equals(GameAssets.getMissingLogoImage())){
-				if(alpha >= 0 && alpha < 1){
+			if (image.equals(GameAssets.getMissingLogoImage())) {
+				if (alpha >= 0 && alpha < 1) {
 					alpha += 0.05f;
-					if(alpha >= 1){
+					if (alpha >= 1) {
 						alpha = 1;
 					}
 				}
@@ -95,7 +98,5 @@ public class SplashView extends View implements ActionListener{
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-
 	}
 }

@@ -65,32 +65,39 @@ public class PileCanvas extends JPanel implements MouseListener {
 	private static final int rows = 2;
 
 	private static final int columns = 5;
-	
-	/*Fields that determine stroke of the graphics rectangle */
+
+	/* Fields that determine stroke of the graphics rectangle */
 	private final int BOLDED_WIDTH = 5;
-	private final int REG_WIDTH = 1;
-	
 	private BufferedImage windowBg = GameAssets.getWindowBackgroundImage();
-	
+
 	/**
-	 * Stores all of the grids being drawn. Used to check if a click is inside a rectangle.
+	 * Stores all of the grids being drawn. Used to check if a click is inside a
+	 * rectangle.
 	 */
 	private List<Rectangle> gridRectangle;
 	private Map<Integer, Rectangle> gridMap;
 
 	private Point clickPoint;
-	
+
 	/**
-	 * Stores the currently clicked on item. If it is null, there is nothing in that cell.
+	 * Stores the currently clicked on item. If it is null, there is nothing in
+	 * that cell.
 	 */
-	private  TileObject selectedItem;
+	private TileObject selectedItem;
 	private Rectangle clickRect;
-	
+
 	private int clickIndex = -1;
 
 	private VControl control;
-	
-	
+
+	/**
+	 * Construct a new instance of a PileCanvas
+	 * 
+	 * @param pile
+	 *            - the pile to render
+	 * @param control
+	 *            - the VControl instance
+	 */
 	public PileCanvas(Pile pile, VControl control) {
 		this.pile = pile;
 		this.control = control;
@@ -158,7 +165,7 @@ public class PileCanvas extends JPanel implements MouseListener {
 					} else if (item instanceof Wood) {
 						g.drawImage(GameAssets.getWoodImage(), X_OFFSET + j * size, y_offset + i * size, null);
 					}
-				}else{
+				} else {
 					throw new GameException("Can only add movable items to the pile canvas!");
 				}
 
@@ -190,14 +197,15 @@ public class PileCanvas extends JPanel implements MouseListener {
 				drawCell(g, left, top, size, false);
 			}
 		}
-		
-		if(clickRect != null){
+
+		if (clickRect != null) {
 			drawCell(g, clickRect.x, clickRect.y, size, true);
 		}
 	}
 
 	/**
 	 * Draws a Cell. Has a flag to determine if it is highlighted or not.
+	 * 
 	 * @param g
 	 * @param left
 	 * @param top
@@ -214,13 +222,13 @@ public class PileCanvas extends JPanel implements MouseListener {
 			g.drawImage(GameAssets.getItemBackgroundImage(), left, top, size, size, null);
 		}
 	}
-	
-	private void fillMap(){
-		for(int i = 0 ; i < gridRectangle.size(); i++){
+
+	private void fillMap() {
+		for (int i = 0; i < gridRectangle.size(); i++) {
 			gridMap.put(i, gridRectangle.get(i));
 		}
 	}
-	
+
 	/**
 	 * Returns the index of the rectangle ArrayList that is being clicked.
 	 * 
@@ -236,30 +244,7 @@ public class PileCanvas extends JPanel implements MouseListener {
 		}
 		return -1;
 	}
-	
-	
-	
-	
-	/**
-	 * Draws a Cell. Has a flag to determine if it is highlighted or not.
-	 * 
-	 * @param left
-	 * @param top
-	 * @param isHighlighted
-	 */
-	private void drawCell(Graphics g, int left, int top, int width, int height, boolean isHighlighted) {
-		Graphics2D gg = (Graphics2D) g;
-		if (isHighlighted) {
-			gg.setStroke(new BasicStroke(BOLDED_WIDTH));
-			gg.setColor(Color.yellow);
-			gg.drawRect(left, top, width, height);
-		} else {
-			gg.setStroke(new BasicStroke(REG_WIDTH));
-			gg.drawRect(left, top, width, height);
-		}
-	}
-	
-	
+
 	/**
 	 * Converts the bag of items into a set - no duplicates to account for count
 	 * of item and to only draw one item.
@@ -276,17 +261,21 @@ public class PileCanvas extends JPanel implements MouseListener {
 	public Dimension getPreferredSize() {
 		return new Dimension(442, 409);
 	}
-	
+
+	/**
+	 * Transfers the currently selected item into the players inventory.
+	 */
 	public void transferSelectionToPlayer() {
 		if (selectedItem == null)
 			return;
 		if (clickIndex >= 0 && clickIndex <= 9) {
 			Player player = control.getGGame().getGame().getAvatars()[control.getPlayerID()];
-			if (selectedItem instanceof Movable){
+			if (selectedItem instanceof Movable) {
 				try {
 					player.addToPocket((Movable) selectedItem);
 				} catch (GameException e) {
-					JOptionPane.showMessageDialog(this, "No room in pocket for item", "Cannot Pick up Item", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(this, "No room in pocket for item", "Cannot Pick up Item",
+							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 				pile.getItems().remove(selectedItem);
@@ -294,13 +283,13 @@ public class PileCanvas extends JPanel implements MouseListener {
 
 			// send over server
 			control.sendPilePickUp(selectedItem.getName());
-			
+
 			pileSet.remove(selectedItem);
 			selectedItem = null;
 			clickIndex = -1;
 		}
 		this.repaint();
-		
+
 	}
 
 	@Override
@@ -311,7 +300,7 @@ public class PileCanvas extends JPanel implements MouseListener {
 		System.out.println(this.clickIndex);
 		this.repaint();
 	}
-	
+
 	private TileObject selectClickedItem() {
 		if (clickIndex != -1) {
 			if (clickIndex >= 0 && clickIndex <= 9) {
@@ -320,28 +309,29 @@ public class PileCanvas extends JPanel implements MouseListener {
 						return this.pileSet.get(clickIndex);
 					}
 				}
-			} 
+			}
 		}
 		return null;
 	}
-	
+
 	/*
 	 * EXTRA MOUSE METHODS - NOT BEING USED.
 	 */
-	
-	
 
 	@Override
-	public void mousePressed(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {
+	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {
+	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {
+	}
 
 	@Override
-	public void mouseExited(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {
+	}
 
-	
 }

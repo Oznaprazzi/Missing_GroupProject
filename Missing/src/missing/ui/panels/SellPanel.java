@@ -42,6 +42,10 @@ import missing.game.items.nonmovable.Shop;
 import missing.helper.GameException;
 import missing.ui.controller.VControl;
 
+/**
+ * This panel is used to display the items of the player which could be sold to
+ * the merchant.
+ */
 @SuppressWarnings("serial")
 public class SellPanel extends JPanel implements MouseListener {
 	/** x position of grid. */
@@ -309,8 +313,8 @@ public class SellPanel extends JPanel implements MouseListener {
 				this.repaint();
 
 				JOptionPane.showMessageDialog(null,
-						this.selectedItem.getName() + " has been removed from your inventory successfully. \n" + amount + " "
-								+ nCoins + " has been added to your account.");
+						this.selectedItem.getName() + " has been removed from your inventory successfully. \n" + amount
+								+ " " + nCoins + " has been added to your account.");
 
 				if (this.selectedItem.getAmount() == 0) {
 					inventorySet.remove(this.selectedItem);

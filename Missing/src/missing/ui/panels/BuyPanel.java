@@ -39,6 +39,9 @@ import missing.game.items.nonmovable.Shop;
 import missing.helper.GameException;
 import missing.ui.controller.VControl;
 
+/**
+ * This panel is used to display all the items which the merchant sells.
+ */
 @SuppressWarnings("serial")
 public class BuyPanel extends JPanel implements MouseListener {
 
@@ -281,7 +284,7 @@ public class BuyPanel extends JPanel implements MouseListener {
 				JOptionPane.showMessageDialog(null, "Select the item you want to buy.");
 			}
 		} catch (GameException e) {
-			// Ignore
+			e.printStackTrace();
 		}
 	}
 

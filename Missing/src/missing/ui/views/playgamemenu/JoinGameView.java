@@ -13,7 +13,6 @@
  */
 package missing.ui.views.playgamemenu;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -189,7 +188,5 @@ public class JoinGameView extends View{
 	
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-		
 	}
 }

@@ -27,7 +27,12 @@ import missing.game.items.movable.Movable;
 import missing.ui.canvas.HandPanel;
 import missing.ui.controller.VControl;
 import missing.ui.menustyle.MenuFactory;
-
+/**
+ * Window that represents the current players inventory.
+ * Holds buttons to transfer between the players pocket and bag.
+ *  
+ *
+ */
 @SuppressWarnings("serial")
 public class HandJFrame extends JFrame {
 	/* Height and Width of this JFrame */

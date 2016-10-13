@@ -30,6 +30,7 @@ import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
+import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bush;
 import missing.game.items.nonmovable.Fireplace;
@@ -171,6 +172,27 @@ public class GWTile {
 			}
 		} else if (tile.getObject() instanceof TallGrass) {
 			g.drawImage(GameAssets.getTallGrassImage(), x, y, size, size, null);
+		} else if (tile.getObject() instanceof Tool) {
+			Tool tool = (Tool) tile.getObject();
+			int toolSize = size / 2;
+			int offset = toolSize / 2;
+			switch (tool.getType()) {
+			case AXE:
+				g.drawImage(GameAssets.getAxeImage(), x + offset, y + offset, toolSize, toolSize, null);
+				break;
+			case FISHINGROD:
+				g.drawImage(GameAssets.getFishingRodImage(), x + offset, y + offset, toolSize, toolSize, null);
+				break;
+			case PICKAXE:
+				g.drawImage(GameAssets.getPickaxeImage(), x + offset, y + offset, toolSize, toolSize, null);
+				break;
+			case SHOVEL:
+				g.drawImage(GameAssets.getShovelImage(), x + offset, y + offset, toolSize, toolSize, null);
+				break;
+			default:
+				break;
+
+			}
 		}
 	}
 

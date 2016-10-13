@@ -25,6 +25,9 @@ import missing.ui.controller.VControl.View;
 import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.MapPanel;
 
+/**
+ * Displays the whole map of the game.
+ */
 @SuppressWarnings("serial")
 public class MapView extends View {
 	/** If spectator, player can see all players and only has an exit button */
@@ -34,6 +37,7 @@ public class MapView extends View {
 	private JPanel mapButtonsPanel;
 	private JPanel topPanel;
 	private JLabel title;
+
 	public MapView(VControl controller) {
 		super(controller);
 		isSpectator = false;
@@ -47,14 +51,14 @@ public class MapView extends View {
 		createMapViewButtons();
 		createTopPanel();
 		mapPanel = new MapPanel(controller.getGGame().getGWorld());
-//		mapPanel.setPreferredSize(this.getPreferredSize());
+		// mapPanel.setPreferredSize(this.getPreferredSize());
 		add(mapPanel, BorderLayout.CENTER);
 		add(mapButtonsPanel, BorderLayout.EAST);
 		add(topPanel, BorderLayout.NORTH);
 		controller.pack();
 	}
-	
-	private void createTopPanel(){
+
+	private void createTopPanel() {
 		topPanel = new JPanel();
 		topPanel.setOpaque(false);
 		title = new JLabel("World Map");
@@ -62,51 +66,53 @@ public class MapView extends View {
 		title.setForeground(Color.WHITE);
 		topPanel.add(title);
 	}
-	
-	private void createSpectatorButtonsPanel(){
+
+	private void createSpectatorButtonsPanel() {
 		spectatorButtonsPanel = new JPanel();
 		spectatorButtonsPanel.setOpaque(false);
-		
+
 		JButton exitBtn = MenuFactory.createButton3("Main Menu");
-		exitBtn.addActionListener(e->{
+		exitBtn.addActionListener(e -> {
 			controller.disconnectClient();
 		});
 		spectatorButtonsPanel.add(exitBtn);
 	}
 
-	
-	private void createMapViewButtons(){
+	private void createMapViewButtons() {
 		mapButtonsPanel = new JPanel();
 		mapButtonsPanel.setOpaque(false);
-		
+
 		JButton backBtn = MenuFactory.createButton3("Back");
-		backBtn.addActionListener(e->{
+		backBtn.addActionListener(e -> {
 			controller.requestFocus();
 			controller.changeView(controller.getGameView());
 		});
-		mapButtonsPanel .add(backBtn);
+		mapButtonsPanel.add(backBtn);
 	}
+
 	/**
 	 * Updates the MapPanel with the GWorld for the updated game
-	 * @param controller updated controller
+	 * 
+	 * @param controller
+	 *            updated controller
 	 */
-	public void updateMapPanel(VControl controller){
+	public void updateMapPanel(VControl controller) {
 		this.controller = controller;
 		mapPanel.updateGWorld(controller.getGGame().getGWorld());
 	}
-	
-	public void setSpectator(boolean isSpectator){
+
+	public void setSpectator(boolean isSpectator) {
 		this.isSpectator = isSpectator;
 		this.remove(mapButtonsPanel);
 		this.add(spectatorButtonsPanel, BorderLayout.EAST);
 		this.title.setText("Spectator Mode");
-		
+
 	}
-	
-	public boolean isSpectator(){
+
+	public boolean isSpectator() {
 		return isSpectator;
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

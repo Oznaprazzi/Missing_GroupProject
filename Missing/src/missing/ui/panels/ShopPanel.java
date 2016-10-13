@@ -49,12 +49,7 @@ public class ShopPanel extends JPanel {
 
 	private JPanel btnPanel;
 
-	private JPanel buyPanel;
-
 	private Player currentPlayer;
-	
-	private BuyFrame bF;
-	private SellFrame sF;
 	
 	private VControl controller;
 
@@ -253,27 +248,27 @@ public class ShopPanel extends JPanel {
 		addActionListeners();
 	}
 
-	private void addActionListeners(){
+	private void addActionListeners() {
 		currentPlayer = parent.getPlayer();
 
-		if(btnBuy != null && btnSell != null){
+		if (btnBuy != null && btnSell != null) {
 			btnBuy.addActionListener(e -> {
-				 bF = new BuyFrame(currentPlayer, shop, controller);
+				 new BuyFrame(currentPlayer, shop, controller);
 				 parent.requestFocus();
 			});
 
 			btnSell.addActionListener(e -> {
-				sF = new SellFrame(currentPlayer, shop, controller);
+				new SellFrame(currentPlayer, shop, controller);
 				parent.requestFocus();
 			});
 		}
 
-		if(btnExit != null){
+		if (btnExit != null) {
 			btnExit.addActionListener(e -> {
 				parent.sendExitSignal();
 				parent.requestFocus();
 			});
 		}
-		
+
 	}
 }

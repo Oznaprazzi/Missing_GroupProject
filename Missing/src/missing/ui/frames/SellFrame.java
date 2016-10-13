@@ -16,16 +16,15 @@ import javax.swing.JPanel;
 
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
-import missing.game.items.movable.Movable;
-import missing.game.items.nonmovable.Bag;
-import missing.game.items.nonmovable.Pocket;
 import missing.game.items.nonmovable.Shop;
-import missing.ui.canvas.HandPanel;
 import missing.ui.controller.VControl;
 import missing.ui.menustyle.MenuFactory;
-import missing.ui.panels.BuyPanel;
 import missing.ui.panels.SellPanel;
 
+/**
+ * This frame stores the sell panel.
+ */
+@SuppressWarnings("serial")
 public class SellFrame extends JFrame {
 
 	private ImagePanel contentPane;

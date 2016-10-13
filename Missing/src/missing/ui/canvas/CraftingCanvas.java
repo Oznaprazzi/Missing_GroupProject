@@ -49,7 +49,7 @@ import missing.helper.GameException;
 import missing.ui.controller.VControl;
 import missing.ui.frames.CraftingFrame;
 import missing.ui.frames.HandJFrame;
-/** JPanel for displaying crafting window. */
+/** This is the JPanel for displaying the crafting window. */
 @SuppressWarnings("serial")
 public class CraftingCanvas extends JPanel implements MouseListener{
 	
@@ -61,7 +61,11 @@ public class CraftingCanvas extends JPanel implements MouseListener{
 	private Player player;
 	private JLabel selected;
 	private CraftingFrame frame;
-	
+	/**
+	 * Construct a new Instance of a CraftingCanvas
+	 * @param controller - the VControl instance
+	 * @param frame - the CraftingFrame
+	 */
 	public CraftingCanvas(VControl controller, CraftingFrame frame){
 		this.controller = controller;
 		this.frame = frame;
