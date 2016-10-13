@@ -139,7 +139,7 @@ public class Food extends Health {
 
 	@Override
 	public String toString() {
-		return name;
+		return foodType.toString();
 	}
 
 	@Override

@@ -39,8 +39,10 @@ public class Tool extends Craftable {
 	/** Number of times tool can be used before i breaks */
 	private int durability;
 	private ToolType type;
+
 	/**
 	 * Construct a new Tool Object.
+	 * 
 	 * @param worldLocation
 	 * @param tileLocation
 	 * @param type
@@ -52,8 +54,10 @@ public class Tool extends Craftable {
 		setIngredients(type);
 		this.type = type;
 	}
+
 	/**
 	 * Construct a new Tool Object with a specified preset durability.
+	 * 
 	 * @param worldLocation
 	 * @param tileLocation
 	 * @param type
@@ -63,8 +67,11 @@ public class Tool extends Craftable {
 		this(worldLocation, tileLocation, type);
 		this.durability = durability;
 	}
+
 	/**
-	 * Construct a new Tool Object with a specified preset durability and abmount.
+	 * Construct a new Tool Object with a specified preset durability and
+	 * abmount.
+	 * 
 	 * @param worldLocation
 	 * @param tileLocation
 	 * @param type
@@ -171,5 +178,10 @@ public class Tool extends Craftable {
 	 */
 	@Override
 	public void use(Player player) throws GameException {
+	}
+
+	@Override
+	public String toString() {
+		return type.toString();
 	}
 }

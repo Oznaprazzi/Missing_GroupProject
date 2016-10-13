@@ -274,7 +274,7 @@ public class BuyPanel extends JPanel implements MouseListener {
 		try {
 			if (selectedItem != null) {
 				merchant.buyItem(this.player, this.selectedItem.getName());
-				controller.sendBuy(this.selectedItem.getName(), merchant.getType().toString());
+				controller.sendBuy(this.selectedItem.toString(), merchant.getType().toString());
 				this.clickIndex = -1;
 				this.clickRect = null;
 				JOptionPane.showMessageDialog(null,
