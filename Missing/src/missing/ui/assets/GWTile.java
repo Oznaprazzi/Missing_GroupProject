@@ -30,6 +30,7 @@ import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
+import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Bush;
@@ -193,6 +194,8 @@ public class GWTile {
 				break;
 
 			}
+		} else if (tile.getObject() instanceof Stone) {
+			g.drawImage(GameAssets.getStoneImage(), x, y, size, size, null);
 		}
 	}
 

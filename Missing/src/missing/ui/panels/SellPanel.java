@@ -32,10 +32,12 @@ import missing.game.characters.Merchant;
 import missing.game.characters.Player;
 import missing.game.items.movable.Dirt;
 import missing.game.items.movable.Food;
+import missing.game.items.movable.Food.FoodType;
 import missing.game.items.movable.Movable;
 import missing.game.items.movable.Stone;
 import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
+import missing.game.items.movable.Tool.ToolType;
 import missing.game.items.nonmovable.Bag;
 import missing.game.items.nonmovable.Pocket;
 import missing.game.items.nonmovable.Shop;
@@ -144,13 +146,17 @@ public class SellPanel extends JPanel implements MouseListener {
 	private void convertListToSet() {
 		for (Movable m : bag.getItems()) {
 			if (!inventorySet.contains(m)) {
-				inventorySet.add(m);
+				// create new reference to the item
+				inventorySet.add(createCombinedItem(m, new Wood(null, null, 0)));
 			}
 		}
 
 		for (Movable m : pocket.getItems()) {
 			if (!inventorySet.contains(m)) {
-				inventorySet.add(m);
+				// create new reference to the item
+				inventorySet.add(createCombinedItem(m, new Wood(null, null, 0)));
+			} else {
+				increaseAmount(m);
 			}
 		}
 	}
@@ -327,9 +333,55 @@ public class SellPanel extends JPanel implements MouseListener {
 		}
 	}
 
+	/**
+	 * Finds the movable item 'm' in the inventory set and adds the amount
+	 * inside it.
+	 * 
+	 * @param m
+	 */
+	private void increaseAmount(Movable m) {
+		for (int i = 0; i < inventorySet.size(); i++) {
+			Movable tmp = inventorySet.get(i);
+			if (tmp.getName().equals(m.getName())) {
+				inventorySet.remove(i);
+				Movable item = createCombinedItem(m, tmp);
+				inventorySet.add(item);
+			}
+		}
+	}
+
 	/*
 	 * END OF HELPER METHODS..
 	 */
+
+	private Movable createCombinedItem(Movable m, Movable tmp) {
+		int newAmt = m.getAmount() + tmp.getAmount();
+		Point wLoc = m.getWorldLocation();
+		Point tLoc = m.getTileLocation();
+		switch (m.getName()) {
+		case "Wood":
+			return new Wood(wLoc, tLoc, newAmt);
+		case "Stone":
+			return new Stone(wLoc, tLoc, newAmt);
+		case "Dirt":
+			return new Dirt(wLoc, tLoc, newAmt);
+		case "Axe":
+			return new Tool(wLoc, tLoc, ToolType.AXE, newAmt);
+		case "Fishing Rod":
+			return new Tool(wLoc, tLoc, ToolType.FISHINGROD, newAmt);
+		case "Shovel":
+			return new Tool(wLoc, tLoc, ToolType.SHOVEL, newAmt);
+		case "Pickaxe":
+			return new Tool(wLoc, tLoc, ToolType.PICKAXE, newAmt);
+		case "Apple":
+			return new Food(wLoc, tLoc, FoodType.APPLE, newAmt);
+		case "Berry":
+			return new Food(wLoc, tLoc, FoodType.BERRY, newAmt);
+		case "Fish":
+			return new Food(wLoc, tLoc, FoodType.FISH, newAmt);
+		}
+		return null;
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {

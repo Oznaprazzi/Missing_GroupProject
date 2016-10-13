@@ -120,9 +120,8 @@ public class Container extends NonMovable {
 	 * 
 	 * @param index
 	 * @return
-	 * @throws GameException
 	 */
-	public Movable removeItem(Movable item)/* throws GameException */ {
+	public Movable removeItem(Movable item){
 		// search for the first occurence of the item
 		Movable tmp = findItem(item);
 		if (tmp != null) {

@@ -88,9 +88,12 @@ public class HandPanel extends JPanel implements MouseListener {
 	private Player player;
 
 	private VControl control;
+
 	/**
 	 * Construct a new instance of a HandPanel
-	 * @param control - the current Controller.
+	 * 
+	 * @param control
+	 *            - the current Controller.
 	 */
 	public HandPanel(VControl control) {
 		this.control = control;
@@ -152,13 +155,17 @@ public class HandPanel extends JPanel implements MouseListener {
 	 */
 	private void convertListToSet() {
 		for (Movable m : bag.getItems()) {
-			if (!bagSet.contains(m)) {
+			if (m.getAmount() == 0) {
+				bag.removeItem(m);
+			} else if (!bagSet.contains(m)) {
 				bagSet.add(m);
 			}
 		}
 
 		for (Movable m : pocket.getItems()) {
-			if (!pocketSet.contains(m)) {
+			if (m.getAmount() == 0) {
+
+			} else if (!pocketSet.contains(m)) {
 				pocketSet.add(m);
 			}
 		}
