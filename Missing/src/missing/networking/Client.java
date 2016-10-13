@@ -193,7 +193,7 @@ public class Client extends Thread implements KeyListener {
 								if (randomItem.equals("NONE")) {
 									// random item generated when shouldn't of
 									try {
-										game.getAvatars()[movingPlayer].removeFromPocket(
+										game.getAvatars()[movingPlayer].removeGivenAmountFromPocket(
 												new Food(null, null, Food.FoodType.valueOf(e1.getMessage())));
 									} catch (GameException e) {
 										e.printStackTrace();
@@ -528,6 +528,16 @@ public class Client extends Thread implements KeyListener {
 	private void update(){
 		try {
 			vControl.updateGGame(game);
+			System.out.println("pocket size: "+game.getAvatars()[clientID].getPocket().getCurrentSize());
+			System.out.println("--------");
+			for (Movable item : game.getAvatars()[clientID].getPocket().getItems()){
+				System.out.println("local pocket item: "+item.getName()+" "+item.getAmount());
+			}
+			for (Movable item : game.getAvatars()[clientID].getBag().getItems()){
+				System.out.println("local bag item: "+item.getName()+" "+item.getAmount());
+			}
+			System.out.println("---------");
+			
 		} catch (GameException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -136,6 +136,32 @@ public class Container extends NonMovable {
 		}
 		return null;
 	}
+	/**
+	 * Removes the item from the container at the specified index. When calling
+	 * this method, the index MUST match the item which the player wants.
+	 * 
+	 * @param index
+	 * @return
+	 * @throws GameException
+	 */
+	public Movable removeGivenAmountOfItem(Movable removing)/* throws GameException */ {
+		// search for the first occurence of the item
+		Movable holding = findItem(removing);
+		if (holding != null) {
+			if (holding.getAmount() > removing.getAmount()){
+				holding.setAmount(holding.getAmount()-removing.getAmount());
+				this.currentSize -= removing.getAmount();
+			} else {
+				items.remove(holding);
+				if (holding.getAmount() == 0) {
+					this.currentSize--;
+				} else {
+					this.currentSize -= holding.getAmount();
+				}
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * This method returns the first occurence of the item passed in the method.

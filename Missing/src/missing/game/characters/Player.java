@@ -233,6 +233,22 @@ public class Player extends Character {
 		return pocket.removeItem(item);
 	}
 	/**
+	 * Removes the first occurence of the passed item within the player's
+	 * pocket. Removes the amount of the given item instead of all the items
+	 * of that type in the pocket. Used for use item in client when food
+	 * item is incorrectly produced
+	 * 
+	 * @param item
+	 * @return
+	 * @throws GameException
+	 */
+	public Movable removeGivenAmountFromPocket(Movable item) throws GameException {
+		if (pocket.getItems().isEmpty()) {
+			throw new GameException("Pocket is empty.");
+		}
+		return pocket.removeGivenAmountOfItem(item);
+	}
+	/**
 	 * Searches both the players bag and pocket for this specific item, and returns it
 	 * if it is present. If the item is not present, it returns a null item.
 	 * @param item
