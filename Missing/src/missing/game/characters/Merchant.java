@@ -32,7 +32,8 @@ import missing.helper.GameException;
 import missing.helper.SignalException;
 
 /**
- * The merchant class is a special type of character that is able to trade items to players.
+ * The merchant class is a special type of character that is able to trade items
+ * to players.
  */
 @SuppressWarnings("serial")
 public class Merchant extends Character {
@@ -41,18 +42,23 @@ public class Merchant extends Character {
 	 */
 	private HashMap<String, Movable> namesToItems;
 	/**
-	 * Maps the item to their cost 
+	 * Maps the item to their cost
 	 */
 	private HashMap<Movable, Integer> costs;
 	/**
 	 * The Type of Shop.
 	 */
 	private ShopType type;
+
 	/**
 	 * Construct a new Merchant.
-	 * @param worldLocation - where in the world they are
-	 * @param tileLocation - where in the tile they are
-	 * @param type of shop that they operate.
+	 * 
+	 * @param worldLocation
+	 *            - where in the world they are
+	 * @param tileLocation
+	 *            - where in the tile they are
+	 * @param type
+	 *            of shop that they operate.
 	 */
 	public Merchant(Point worldLocation, Point tileLocation, ShopType type) {
 		super("Merchant", "You can buy stuff from him.", worldLocation, tileLocation, Direction.SOUTH, Direction.ALL);
@@ -80,8 +86,11 @@ public class Merchant extends Character {
 
 	/**
 	 * Enables the Player to buy items from the merchant
-	 * @param player - that is buying the item
-	 * @param item - that is being bought.
+	 * 
+	 * @param player
+	 *            - that is buying the item
+	 * @param item
+	 *            - that is being bought.
 	 */
 	public void buyItem(Player player, String item) throws GameException {
 		Movable i = namesToItems.get(item);
@@ -97,13 +106,22 @@ public class Merchant extends Character {
 		// deduct from play money
 		player.setMoney(player.getMoney().getAmount() - costOfItem);
 		Movable playerItem = i;
-		player.addToPocket(playerItem);
+		try {
+			player.addToInventory(playerItem);
+		} catch (GameException e) {
+			// could not fit
+			player.setMoney(player.getMoney().getAmount() + costOfItem);
+			throw new GameException(e.getMessage());
+		}
 	}
 
 	/**
 	 * Enables the player to sell an item to the Merchant.
-	 * @param p the Player that is selling the item
-	 * @param item being sold
+	 * 
+	 * @param p
+	 *            the Player that is selling the item
+	 * @param item
+	 *            being sold
 	 */
 	public int sellItem(Player p, Movable item) throws GameException {
 		if (!p.inventoryHas(item)) {
@@ -116,10 +134,14 @@ public class Merchant extends Character {
 		}
 		int sellAmount = (int) (costs.get(findItemInMap(item)) * 0.5);
 		p.setMoney(p.getMoney().getAmount() + sellAmount);
+		int reduction = 1;
 		// reduces amount of item
-		item.setAmount(item.getAmount() - 1);
-		if (item.getAmount() == 0)
+		item.setAmount(item.getAmount() - reduction);
+		if (item.getAmount() == 0) {
 			p.removeFromInventory(item);
+		} else {
+			p.reduceItemAmount(item, reduction);
+		}
 		return sellAmount;
 
 	}
@@ -161,10 +183,10 @@ public class Merchant extends Character {
 	 * </pre>
 	 */
 	private void getToolPrices() {
-		Tool axe = new Tool(null, null, ToolType.AXE);
-		Tool pickaxe = new Tool(null, null, ToolType.PICKAXE);
-		Tool rod = new Tool(null, null, ToolType.FISHINGROD);
-		Tool shovel = new Tool(null, null, ToolType.SHOVEL);
+		Tool axe = new Tool(null, null, ToolType.AXE, 1);
+		Tool pickaxe = new Tool(null, null, ToolType.PICKAXE, 1);
+		Tool rod = new Tool(null, null, ToolType.FISHINGROD, 1);
+		Tool shovel = new Tool(null, null, ToolType.SHOVEL, 1);
 		// put those items into the map
 		namesToItems.put(axe.getName(), axe);
 		namesToItems.put(pickaxe.getName(), pickaxe);
@@ -188,9 +210,9 @@ public class Merchant extends Character {
 	 * 
 	 */
 	private void getFoodPrices() {
-		Food apple = new Food(null, null, FoodType.APPLE);
-		Food berry = new Food(null, null, FoodType.BERRY);
-		Food fish = new Food(null, null, FoodType.FISH);
+		Food apple = new Food(null, null, FoodType.APPLE, 1);
+		Food berry = new Food(null, null, FoodType.BERRY, 1);
+		Food fish = new Food(null, null, FoodType.FISH, 1);
 		// put those items into the map
 		namesToItems.put(apple.getName(), apple);
 		namesToItems.put(berry.getName(), berry);

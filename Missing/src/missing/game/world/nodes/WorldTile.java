@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import missing.game.characters.Player;
+import missing.game.items.movable.Movable;
 import missing.game.items.nonmovable.FishArea;
 import missing.game.items.nonmovable.NonMovable;
 import missing.game.items.nonmovable.TallGrass;
@@ -155,6 +156,14 @@ public class WorldTile implements Serializable {
 
 		/** Adds the item to the pile of items */
 		public void addItem(TileObject item) {
+			for (TileObject i : items) {
+				if (i.getName().equals(item.getName())) {
+					if (i instanceof Movable) {
+						((Movable) i).setAmount(((Movable) i).getAmount() + ((Movable) item).getAmount());
+						return;
+					}
+				}
+			}
 			items.add(item);
 		}
 

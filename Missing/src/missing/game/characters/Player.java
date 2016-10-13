@@ -54,11 +54,14 @@ public class Player extends Character {
 	private int id; // client ID
 	private int imageID; // sprite ID
 	private Money money;
-	
+
 	/**
 	 * Construct a new Player.
-	 * @param id of the Player
-	 * @param name of the Player
+	 * 
+	 * @param id
+	 *            of the Player
+	 * @param name
+	 *            of the Player
 	 * @param worldLocation
 	 * @param tileLocation
 	 */
@@ -160,15 +163,16 @@ public class Player extends Character {
 	public boolean has(Movable item) {
 		return pocket.getItems().contains(item);
 	}
-	
+
 	/**
-	 * Checks the player's inventory (items in both bag and pocket) for any item. This method should be called
-	 * when the player is selling one of their items.
+	 * Checks the player's inventory (items in both bag and pocket) for any
+	 * item. This method should be called when the player is selling one of
+	 * their items.
 	 * 
 	 * @param item
 	 * @return
 	 */
-	public boolean inventoryHas(Movable item){
+	public boolean inventoryHas(Movable item) {
 		return pocket.getItems().contains(item) || bag.getItems().contains(item);
 	}
 
@@ -232,6 +236,7 @@ public class Player extends Character {
 		}
 		return pocket.removeItem(item);
 	}
+
 	/**
 	 * Removes the first occurence of the passed item within the player's
 	 * pocket. Removes the amount of the given item instead of all the items
@@ -249,8 +254,10 @@ public class Player extends Character {
 		return pocket.removeGivenAmountOfItem(item);
 	}
 	/**
-	 * Searches both the players bag and pocket for this specific item, and returns it
-	 * if it is present. If the item is not present, it returns a null item.
+	 * Searches both the players bag and pocket for this specific item, and
+	 * returns it if it is present. If the item is not present, it returns a
+	 * null item.
+	 * 
 	 * @param item
 	 * @return item that was removed.
 	 * @throws GameException
@@ -259,15 +266,32 @@ public class Player extends Character {
 		if (pocket.getItems().isEmpty() && bag.getItems().isEmpty()) {
 			throw new GameException("Inventory is empty.");
 		}
-		if(pocket.removeItem(item) != null || bag.removeItem(item) != null){
+		if (bag.removeItem(item) != null || pocket.removeItem(item) != null) {
 			return item;
 		}
 		return null;
 	}
 
-	/** 
+	/**
+	 * Adds the item to the pocket first, if that fails, it adds it to the bag.
+	 * If that fails too, it throws an exception.
+	 * 
+	 * @param item
+	 * @throws GameException
+	 */
+	public void addToInventory(Movable item) throws GameException {
+		try {
+			this.addToPocket(item);
+		} catch (GameException e) {
+			this.addToBag(item);
+		}
+	}
+
+	/**
 	 * Adds the specified item into the bag
-	 * @param item to add 
+	 * 
+	 * @param item
+	 *            to add
 	 */
 	public void addToBag(Movable item) throws GameException {
 		bag.addItem(item);
@@ -326,7 +350,7 @@ public class Player extends Character {
 	 * This method grabs the first Food object inside the player's pocket. If
 	 * the player does not have any food, it returns null.
 	 * 
-	 * @return Food 
+	 * @return Food
 	 */
 	public Food getFood() {
 		for (Movable i : pocket.getItems()) {
@@ -340,7 +364,9 @@ public class Player extends Character {
 	/**
 	 * This method throws a SignalException which means that a trade must be
 	 * initiated between the other player and this player.
-	 * @param player taht is being acted on.
+	 * 
+	 * @param player
+	 *            taht is being acted on.
 	 */
 	@Override
 	public void performAction(Player player) throws GameException, SignalException {
@@ -351,4 +377,26 @@ public class Player extends Character {
 		}
 	}
 
+	/**
+	 * Reduces the amount of the item in the player's inventory.
+	 * 
+	 * @param item
+	 * @param i
+	 */
+	public void reduceItemAmount(Movable item, int i) {
+		for (Movable b : bag.getItems()) {
+			if (b.getName().equals(item.getName())) {
+				b.setAmount(b.getAmount() - i);
+				bag.setCurrentSize(bag.getCurrentSize() - i);
+				return;
+			}
+		}
+		for (Movable p : pocket.getItems()) {
+			if (p.getName().equals(item.getName())) {
+				p.setAmount(p.getAmount() - i);
+				pocket.setCurrentSize(pocket.getCurrentSize() - i);
+				return;
+			}
+		}
+	}
 }

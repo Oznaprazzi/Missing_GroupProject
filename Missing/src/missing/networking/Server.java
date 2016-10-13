@@ -91,7 +91,6 @@ public class Server extends Thread {
 			try {
 				setUpGame();
 			} catch (GameException e) {
-				e.printStackTrace();
 			}
 
 			// Send initial game state
@@ -164,21 +163,16 @@ public class Server extends Thread {
 						this.sendInstruction(instruction, playerID, direction);
 					}
 				} catch (IOException e) {
-					// TODO implement disconnects properly
-					e.printStackTrace();
 				}
 			}
 
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
 		} finally {
 			try {
 				for (Socket s : socket) {
 					if (s!=null)s.close();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 		System.out.println("Server stopped");
@@ -227,7 +221,6 @@ public class Server extends Thread {
 					disconnectedPlayer = playerNum;
 					disconnect = true;
 				} else {
-					e.printStackTrace();
 				}
 			}
 		}

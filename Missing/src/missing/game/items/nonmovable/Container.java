@@ -120,9 +120,8 @@ public class Container extends NonMovable {
 	 * 
 	 * @param index
 	 * @return
-	 * @throws GameException
 	 */
-	public Movable removeItem(Movable item)/* throws GameException */ {
+	public Movable removeItem(Movable item){
 		// search for the first occurence of the item
 		Movable tmp = findItem(item);
 		if (tmp != null) {
@@ -137,10 +136,9 @@ public class Container extends NonMovable {
 		return null;
 	}
 	/**
-	 * Removes the item from the container at the specified index. When calling
-	 * this method, the index MUST match the item which the player wants.
+	 * Removes given item from container with the amount of given item
 	 * 
-	 * @param index
+	 * @param removing
 	 * @return
 	 * @throws GameException
 	 */

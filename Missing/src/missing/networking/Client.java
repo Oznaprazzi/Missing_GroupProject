@@ -124,7 +124,6 @@ public class Client extends Thread implements KeyListener {
 				vControl.requestFocusInWindow();
 
 			} catch (GameException e) {
-				e.printStackTrace();
 			}
 
 			// listen for updates from server
@@ -169,7 +168,6 @@ public class Client extends Thread implements KeyListener {
 						// actions for this player handled locally in
 						// handleAction
 						String randomItem = ((String)input).split(" ")[1];
-						System.out.println("random item: " + randomItem);
 						try {
 							game.performAction(movingPlayer);
 							if (!randomItem.equals("NONE")) {
@@ -189,14 +187,12 @@ public class Client extends Thread implements KeyListener {
 							} else if (e1.getMessage().contains("SHOP")) {
 								game.forceRemovePlayer(movingPlayer);
 							} else if (!e1.getMessage().equals(randomItem)) {
-								System.out.println("Sig exception: " + e1.getMessage());
 								if (randomItem.equals("NONE")) {
 									// random item generated when shouldn't of
 									try {
 										game.getAvatars()[movingPlayer].removeGivenAmountFromPocket(
 												new Food(null, null, Food.FoodType.valueOf(e1.getMessage())));
 									} catch (GameException e) {
-										e.printStackTrace();
 									}
 								}
 							}
@@ -218,7 +214,6 @@ public class Client extends Thread implements KeyListener {
 						} catch (GameException e) {
 							// already handled by player crafting item
 						}
-						System.out.println(game.getAvatars()[movingPlayer].getPocket().getItems().toString());
 					} else if (((String) input).contains("exit")) {
 						int id = Integer.valueOf(((String) input).split(" ")[1]);
 						game.forceEnterPlayer(id);
@@ -242,10 +237,7 @@ public class Client extends Thread implements KeyListener {
 							} else if (e.getMessage().equals("Item not found.")) {
 								// this client version of player doesnt have the
 								// random item eg apple
-							} else {
-								System.out.println("Server parse error: use");
-							}
-							e.printStackTrace();
+							} 
 						}
 					} else if (((String) input).contains("sell")) {
 						String itemName = ((String) input).split(" ")[1];
@@ -267,7 +259,6 @@ public class Client extends Thread implements KeyListener {
 						try {
 							new Merchant(null,null,ShopType.valueOf(shopType)).sellItem(player, selling);
 						} catch (GameException e) {
-							e.printStackTrace();
 						}
 						
 					} else if (((String) input).contains("buy")) {
@@ -277,7 +268,6 @@ public class Client extends Thread implements KeyListener {
 						try {
 							new Merchant(null,null,ShopType.valueOf(shopType)).buyItem(player, itemName);
 						} catch (GameException e) {
-							e.printStackTrace();
 						}
 						
 					} else if (((String) input).contains("pilepickup")) {
@@ -286,7 +276,6 @@ public class Client extends Thread implements KeyListener {
 						Movable selectedItem = null;
 						try {
 							pile = (Pile) game.getObjectInFront(movingPlayer);
-							System.out.println("item name: " + itemName);
 							for (TileObject pileItem : pile.getItems()) {
 								if (pileItem.getName().equals(itemName)) {
 									selectedItem = (Movable) pileItem;
@@ -295,8 +284,6 @@ public class Client extends Thread implements KeyListener {
 							}
 							game.getAvatars()[movingPlayer].addToPocket(selectedItem);
 						} catch (GameException e) {
-							System.out.println("server parse error: pilepickup");
-							e.printStackTrace();
 						}
 						pile.getItems().remove(selectedItem);
 					} else if (((String) input).contains("transfer")) {
@@ -306,7 +293,6 @@ public class Client extends Thread implements KeyListener {
 						if (to.equals("bag")) {
 							Movable movingItem = null;
 							for (Movable pocketItem : player.getPocket().getItems()) {
-								System.out.println(pocketItem.getName() + " pocket: " + itemName);
 								if (pocketItem.getName().equals(itemName)) {
 									movingItem = pocketItem;
 									break;
@@ -316,13 +302,11 @@ public class Client extends Thread implements KeyListener {
 								player.removeFromPocket(movingItem);
 								player.addToBag(movingItem);
 							} catch (GameException e) {
-								e.printStackTrace();
 							}
 
 						} else if (to.equals("pocket")) {
 							Movable movingItem = null;
 							for (Movable bagItem : player.getBag().getItems()) {
-								System.out.println(bagItem.getName() + " bag: " + itemName);
 								if (bagItem.getName().equals(itemName)) {
 									movingItem = bagItem;
 									break;
@@ -332,17 +316,14 @@ public class Client extends Thread implements KeyListener {
 								player.getBag().removeItem(movingItem);
 								player.addToPocket(movingItem);
 							} catch (GameException e) {
-								e.printStackTrace();
 							}
 
-						} else
-							System.out.println("server parse error: transfer");
+						}
 					} else if (((String) input).contains("drop")) {
 						String itemName = ((String) input).split(" ")[1];
 						Player player = game.getAvatars()[movingPlayer];
 						Movable movingItem = null;
 						for (Movable pocketItem : player.getPocket().getItems()) {
-							System.out.println(pocketItem.getName() + " pocket: " + itemName);
 							if (pocketItem.getName().equals(itemName)) {
 								movingItem = pocketItem;
 								break;
@@ -356,16 +337,7 @@ public class Client extends Thread implements KeyListener {
 					}
 					try {
 						vControl.updateGGame(game);
-						System.out.println("updated items ========");
-						for (Movable item : game.getAvatars()[movingPlayer].getPocket().getItems()){
-							System.out.println("received pocket item: "+item.getName()+" "+item.getAmount());
-						}
-						for (Movable item : game.getAvatars()[movingPlayer].getBag().getItems()){
-							System.out.println("received bag item: "+item.getName()+" "+item.getAmount());
-						}
-						System.out.println("========");
 					} catch (GameException e) {
-						e.printStackTrace();
 					}
 					vControl.repaint();
 					if (playerDied) {
@@ -383,13 +355,11 @@ public class Client extends Thread implements KeyListener {
 				vControl.dispose();
 				new VControl();
 			} else {
-				e.printStackTrace();
 			}
 		} finally {
 			try {
 				socket.close();
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -441,30 +411,13 @@ public class Client extends Thread implements KeyListener {
 			game.performAction(clientID);
 			out.println("perform NONE");
 			vControl.updateGGame(game);
-			System.out.println("sent no random------");
-			for (Movable item : game.getAvatars()[clientID].getPocket().getItems()){
-				System.out.println("sender pocket item: "+item.getName()+" "+item.getAmount());
-			}
-			for (Movable item : game.getAvatars()[clientID].getBag().getItems()){
-				System.out.println("sender bag item: "+item.getName()+" "+item.getAmount());
-			}
-			System.out.println("---------");
 			vControl.repaint();
 		} catch (SignalException | GameException e) {
 			if (e.getClass() == SignalException.class) {
-				System.out.println(e.getMessage());
 				if (e.getMessage().equals("FISH") || e.getMessage().equals("APPLE") || e.getMessage().equals("BERRY")) {
 					out.println("perform "+e.getMessage());
 					try {
 						vControl.updateGGame(game);
-						System.out.println("sent random--------");
-						for (Movable item : game.getAvatars()[clientID].getPocket().getItems()){
-							System.out.println("sender pocket item: "+item.getName()+" "+item.getAmount());
-						}
-						for (Movable item : game.getAvatars()[clientID].getBag().getItems()){
-							System.out.println("sender bag item: "+item.getName()+" "+item.getAmount());
-						}
-						System.out.println("---------");
 					} catch (GameException e1) {
 						vControl.displayException(e1.getMessage());
 					}
@@ -521,26 +474,14 @@ public class Client extends Thread implements KeyListener {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 	
 	private void update(){
 		try {
 			vControl.updateGGame(game);
-			System.out.println("pocket size: "+game.getAvatars()[clientID].getPocket().getCurrentSize());
-			System.out.println("--------");
-			for (Movable item : game.getAvatars()[clientID].getPocket().getItems()){
-				System.out.println("local pocket item: "+item.getName()+" "+item.getAmount());
-			}
-			for (Movable item : game.getAvatars()[clientID].getBag().getItems()){
-				System.out.println("local bag item: "+item.getName()+" "+item.getAmount());
-			}
-			System.out.println("---------");
 			
 		} catch (GameException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		vControl.repaint();
 	}
@@ -576,7 +517,6 @@ public class Client extends Thread implements KeyListener {
 	}
 
 	public void sendPilePickUp(String selectedItem) {
-		System.out.println(selectedItem);
 		out.println("pilepickup " + selectedItem);
 		update();
 
