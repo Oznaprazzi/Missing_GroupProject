@@ -134,13 +134,10 @@ public class Server extends Thread {
 							// player wants to turn to WEST
 							instruction = "turn";
 							direction = Direction.WEST;
-						} else if (input.equals("F")) {
+						} else if (input.contains("perform")) {
 							// player wants to perform action
-							instruction = "perform";
-						} else if (input.equals("FISH")||input.equals("APPLE")||input.equals("BERRY")||input.equals("NONE")) {
-							// player got fish, apple, berry, or none
 							instruction = input;
-						} else if (input.equals("disconnect")) {
+						}  else if (input.equals("disconnect")) {
 							// player wants to perform action
 							if (playerID == 0)
 								return;
@@ -158,6 +155,10 @@ public class Server extends Thread {
 							instruction = input;
 						} else if (input.contains("drop")) {
 							instruction = input;
+						} else if (input.contains("sell")) {
+							instruction = input;
+						} else if (input.contains("buy")) {
+							instruction = input;
 						}
 						// send instructions to clients to update game
 						this.sendInstruction(instruction, playerID, direction);
@@ -174,7 +175,7 @@ public class Server extends Thread {
 		} finally {
 			try {
 				for (Socket s : socket) {
-					s.close();
+					if (s!=null)s.close();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -190,9 +191,7 @@ public class Server extends Thread {
 			if (outs[playerNum] == null)
 				continue; // disconnected player
 			// action already performed in client
-			if (action.equals("perform") && playerNum == playerID)
-				continue;
-			if ((action.equals("FISH")||action.equals("BERRY")||action.equals("APPLE")||action.equals("NONE"))&& playerNum == playerID)
+			if (action.contains("perform") && playerNum == playerID)
 				continue;
 			if (action.equals("disconnect") && playerNum == playerID)
 				continue;
@@ -207,6 +206,10 @@ public class Server extends Thread {
 			if (action.contains("pilepickup") && playerNum == playerID)
 				continue;
 			if (action.contains("drop") && playerNum == playerID)
+				continue;
+			if (action.contains("sell") && playerNum == playerID)
+				continue;
+			if (action.contains("buy") && playerNum == playerID)
 				continue;
 			try {
 				outs[playerNum].reset();

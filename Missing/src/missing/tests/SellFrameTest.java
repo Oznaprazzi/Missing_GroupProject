@@ -67,7 +67,7 @@ public class SellFrameTest extends JFrame {
 		setContentPane(contentPane);
 		contentPane.add(btnSell);
 		contentPane.add(btnExit);
-		panel = new SellPanel(player, shop);
+		panel = new SellPanel(player, shop, null);
 		contentPane.add(panel);
 		addActionListeners();
 	}

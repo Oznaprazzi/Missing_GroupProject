@@ -61,7 +61,7 @@ public class BuyFrameTest extends JFrame {
 		setContentPane(contentPane);
 		contentPane.add(btnBuy);
 		contentPane.add(btnCancel);
-		panel = new BuyPanel(player, shop);
+		panel = new BuyPanel(player, shop, null);
 		contentPane.add(panel);
 		this.player = player;
 		addActionListeners();

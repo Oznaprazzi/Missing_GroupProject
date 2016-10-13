@@ -37,6 +37,7 @@ import missing.game.items.movable.Tool;
 import missing.game.items.movable.Wood;
 import missing.game.items.nonmovable.Shop;
 import missing.helper.GameException;
+import missing.ui.controller.VControl;
 
 /**
  * This panel is used to display all the items which the merchant sells.
@@ -66,15 +67,17 @@ public class BuyPanel extends JPanel implements MouseListener {
 	private Movable selectedItem;
 	private Rectangle clickRect;
 	private int clickIndex;
-
+	
+	private VControl controller;
 	private Player player;
 
 	private Merchant merchant;
 
 	List<Movable> items;
 
-	public BuyPanel(Player player, Shop shop) {
+	public BuyPanel(Player player, Shop shop, VControl controller) {
 		this.player = player;
+		this.controller = controller;
 		gridRectangle = new ArrayList<>();
 		gridMap = new HashMap<>();
 		addMouseListener(this);
@@ -271,6 +274,7 @@ public class BuyPanel extends JPanel implements MouseListener {
 		try {
 			if (selectedItem != null) {
 				merchant.buyItem(this.player, this.selectedItem.getName());
+				controller.sendBuy(this.selectedItem.getName(), merchant.getType().toString());
 				this.clickIndex = -1;
 				this.clickRect = null;
 				JOptionPane.showMessageDialog(null,
@@ -280,7 +284,7 @@ public class BuyPanel extends JPanel implements MouseListener {
 				JOptionPane.showMessageDialog(null, "Select the item you want to buy.");
 			}
 		} catch (GameException e) {
-			// Ignore
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
 

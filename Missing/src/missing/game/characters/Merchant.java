@@ -245,4 +245,8 @@ public class Merchant extends Character {
 		costs.put(stone, 30);
 		costs.put(dirt, 40);
 	}
+	
+	public ShopType getType(){
+		return this.type;
+	}
 }

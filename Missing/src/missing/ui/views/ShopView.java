@@ -117,13 +117,13 @@ public class ShopView extends View implements KeyListener {
 	private ShopPanel initialisePanel(Shop shop) throws GameException {
 		switch (shop.getType()) {
 		case FOOD:
-			FOOD_PANEL = new ShopPanel(this, shop);
+			FOOD_PANEL = new ShopPanel(this, shop, controller);
 			return FOOD_PANEL;
 		case RESOURCE:
-			RESOURCE_PANEL = new ShopPanel(this, shop);
+			RESOURCE_PANEL = new ShopPanel(this, shop, controller);
 			return RESOURCE_PANEL;
 		case TOOLS:
-			TOOLS_PANEL = new ShopPanel(this, shop);
+			TOOLS_PANEL = new ShopPanel(this, shop, controller);
 			return TOOLS_PANEL;
 		default:
 			throw new GameException("Invalid display");

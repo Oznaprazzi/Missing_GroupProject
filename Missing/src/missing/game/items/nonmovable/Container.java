@@ -144,6 +144,7 @@ public class Container extends NonMovable {
 	 * @return
 	 */
 	private Movable findItem(Movable item) {
+		System.out.println("Find item "+ item.getName());
 		for (Movable m : items) {
 			if (item.getName().equals(m.getName())) {
 				return m;

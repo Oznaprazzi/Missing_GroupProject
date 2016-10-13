@@ -27,8 +27,10 @@ import java.net.Socket;
 import java.net.SocketException;
 
 import missing.game.Game;
+import missing.game.characters.Merchant;
 import missing.game.characters.Player;
 import missing.game.items.nonmovable.Shop;
+import missing.game.items.nonmovable.Shop.ShopType;
 import missing.game.items.movable.Craftable;
 import missing.game.items.movable.Food;
 import missing.game.items.movable.Food.FoodType;
@@ -162,32 +164,23 @@ public class Client extends Thread implements KeyListener {
 								vControl.displayException(e.getMessage());
 							}
 						}
-					} else if (input.equals("perform")) {
+					} else if (((String)input).contains("perform")) {
 						// only receive actions from other players
 						// actions for this player handled locally in
 						// handleAction
-//						String randomItem = (String) in.readObject();
-//						System.out.println("random item: " + randomItem);
+						String randomItem = ((String)input).split(" ")[1];
+						System.out.println("random item: " + randomItem);
 						try {
 							game.performAction(movingPlayer);
-//							if (!randomItem.equals("NONE")) {
-//								// didnt generate random item
-//								if (randomItem.equals("move")) {
-//									movingPlayer = (Integer) in.readObject();
-//									direction = (Direction) in.readObject();
-//									if (game.validMove(movingPlayer, direction)) {
-//										game.movePlayer(movingPlayer, direction);
-//									}
-//								} else {
-//									game.getAvatars()[movingPlayer]
-//											.addToPocket(new Food(null, null, Food.FoodType.valueOf(randomItem)));
-//								}
-//							}
+							if (!randomItem.equals("NONE")) {
+								// didnt generate random item
+								game.getAvatars()[movingPlayer]
+										.addToPocket(new Food(null, null, Food.FoodType.valueOf(randomItem)));
+							}
 						} catch (GameException e) {
 							// ignore it
 						} catch (SignalException e1) {
 							if (e1.getMessage().contains("DEAD")) {
-								System.out.println("received dead");
 								String[] msg = e1.getMessage().split(" ");
 								int id = Integer.parseInt(msg[1]);
 								if (clientID == id) {
@@ -195,18 +188,18 @@ public class Client extends Thread implements KeyListener {
 								}
 							} else if (e1.getMessage().contains("SHOP")) {
 								game.forceRemovePlayer(movingPlayer);
-							}// else if (!e1.getMessage().equals(randomItem)) {
-							//	System.out.println("Sig exception: " + e1.getMessage());
-							//	if (randomItem.equals("NONE")) {
-							//		// random item generated when shouldn't of
-							//		try {
-							//			game.getAvatars()[movingPlayer].removeFromPocket(
-							//					new Food(null, null, Food.FoodType.valueOf(e1.getMessage())));
-							//		} catch (GameException e) {
-							//			e.printStackTrace();
-							//		}
-							//	}
-							//}
+							} else if (!e1.getMessage().equals(randomItem)) {
+								System.out.println("Sig exception: " + e1.getMessage());
+								if (randomItem.equals("NONE")) {
+									// random item generated when shouldn't of
+									try {
+										game.getAvatars()[movingPlayer].removeFromPocket(
+												new Food(null, null, Food.FoodType.valueOf(e1.getMessage())));
+									} catch (GameException e) {
+										e.printStackTrace();
+									}
+								}
+							}
 						}
 					} else if (input.equals("disconnect")) {
 						// a player disconnected
@@ -231,7 +224,15 @@ public class Client extends Thread implements KeyListener {
 						game.forceEnterPlayer(id);
 					} else if (((String) input).contains("use")) {
 						String foodType = ((String) input).split(" ")[1];
-						Food food = new Food(null, null, FoodType.valueOf(foodType));
+						Food food = null;
+						Player player = game.getAvatars()[movingPlayer];
+						for (Movable item : player.getPocket().getItems()){
+							if (item instanceof Food){
+								if (((Food)item).getFoodType().toString().equals(foodType)){
+									food = (Food) item;
+								}
+							}
+						}
 						try {
 							food.use(game.getAvatars()[movingPlayer]);
 						} catch (GameException e) {
@@ -244,7 +245,41 @@ public class Client extends Thread implements KeyListener {
 							} else {
 								System.out.println("Server parse error: use");
 							}
+							e.printStackTrace();
 						}
+					} else if (((String) input).contains("sell")) {
+						String itemName = ((String) input).split(" ")[1];
+						String shopType = ((String) input).split(" ")[2];
+						Player player = game.getAvatars()[movingPlayer];
+						Movable selling = null;
+						for (Movable item : player.getPocket().getItems()){
+							if (itemName.equals(item.getName())){
+								selling = item;
+							}
+						}
+						if (selling == null){
+							for (Movable item : player.getBag().getItems()){
+								if (itemName.equals(item.getName())){
+									selling = item;
+								}
+							}
+						}
+						try {
+							new Merchant(null,null,ShopType.valueOf(shopType)).sellItem(player, selling);
+						} catch (GameException e) {
+							e.printStackTrace();
+						}
+						
+					} else if (((String) input).contains("buy")) {
+						String itemName = ((String) input).split(" ")[1];
+						String shopType = ((String) input).split(" ")[2];
+						Player player = game.getAvatars()[movingPlayer];
+						try {
+							new Merchant(null,null,ShopType.valueOf(shopType)).buyItem(player, itemName);
+						} catch (GameException e) {
+							e.printStackTrace();
+						}
+						
 					} else if (((String) input).contains("pilepickup")) {
 						String itemName = ((String) input).split(" ")[1];
 						Pile pile = null;
@@ -261,13 +296,12 @@ public class Client extends Thread implements KeyListener {
 							game.getAvatars()[movingPlayer].addToPocket(selectedItem);
 						} catch (GameException e) {
 							System.out.println("server parse error: pilepickup");
+							e.printStackTrace();
 						}
 						pile.getItems().remove(selectedItem);
 					} else if (((String) input).contains("transfer")) {
 						String to = ((String) input).split(" ")[1];
 						String itemName = ((String) input).split(" ")[2];
-						// int amount = Integer.parseInt(((String)
-						// input).split(" ")[3]);
 						Player player = game.getAvatars()[movingPlayer];
 						if (to.equals("bag")) {
 							Movable movingItem = null;
@@ -278,16 +312,6 @@ public class Client extends Thread implements KeyListener {
 									break;
 								}
 							}
-							// if (movingItem == null){
-							// // this client version of player doesn't have
-							// food item
-							// try {
-							// player.addToBag(new Food(null, null,
-							// FoodType.valueOf(itemName),amount));
-							// } catch (GameException e) {
-							// e.printStackTrace();
-							// }
-							// }
 							try {
 								player.removeFromPocket(movingItem);
 								player.addToBag(movingItem);
@@ -304,16 +328,6 @@ public class Client extends Thread implements KeyListener {
 									break;
 								}
 							}
-							// if (movingItem == null){
-							// // this client version of player doesn't have
-							// food item
-							// try {
-							// player.addToPocket(new Food(null, null,
-							// FoodType.valueOf(itemName),amount));
-							// } catch (GameException e) {
-							// e.printStackTrace();
-							// }
-							// }
 							try {
 								player.getBag().removeItem(movingItem);
 								player.addToPocket(movingItem);
@@ -342,6 +356,14 @@ public class Client extends Thread implements KeyListener {
 					}
 					try {
 						vControl.updateGGame(game);
+						System.out.println("updated items ========");
+						for (Movable item : game.getAvatars()[movingPlayer].getPocket().getItems()){
+							System.out.println("received pocket item: "+item.getName()+" "+item.getAmount());
+						}
+						for (Movable item : game.getAvatars()[movingPlayer].getBag().getItems()){
+							System.out.println("received bag item: "+item.getName()+" "+item.getAmount());
+						}
+						System.out.println("========");
 					} catch (GameException e) {
 						e.printStackTrace();
 					}
@@ -417,18 +439,32 @@ public class Client extends Thread implements KeyListener {
 	public void handleAction() {
 		try {
 			game.performAction(clientID);
-			out.println("F");
-			out.println("NONE");
+			out.println("perform NONE");
 			vControl.updateGGame(game);
+			System.out.println("sent no random------");
+			for (Movable item : game.getAvatars()[clientID].getPocket().getItems()){
+				System.out.println("sender pocket item: "+item.getName()+" "+item.getAmount());
+			}
+			for (Movable item : game.getAvatars()[clientID].getBag().getItems()){
+				System.out.println("sender bag item: "+item.getName()+" "+item.getAmount());
+			}
+			System.out.println("---------");
 			vControl.repaint();
 		} catch (SignalException | GameException e) {
 			if (e.getClass() == SignalException.class) {
 				System.out.println(e.getMessage());
 				if (e.getMessage().equals("FISH") || e.getMessage().equals("APPLE") || e.getMessage().equals("BERRY")) {
-					out.println("F");
-					out.println(e.getMessage());
+					out.println("perform "+e.getMessage());
 					try {
 						vControl.updateGGame(game);
+						System.out.println("sent random--------");
+						for (Movable item : game.getAvatars()[clientID].getPocket().getItems()){
+							System.out.println("sender pocket item: "+item.getName()+" "+item.getAmount());
+						}
+						for (Movable item : game.getAvatars()[clientID].getBag().getItems()){
+							System.out.println("sender bag item: "+item.getName()+" "+item.getAmount());
+						}
+						System.out.println("---------");
 					} catch (GameException e1) {
 						vControl.displayException(e1.getMessage());
 					}
@@ -438,11 +474,9 @@ public class Client extends Thread implements KeyListener {
 				} else if (e.getMessage().equals("PILE")) {
 					vControl.displayPileItems();
 				} else if (e.getMessage().contains("DEAD")) {
-					System.out.println("sent dead");
 					String[] msg = e.getMessage().split(" ");
 					int id = Integer.parseInt(msg[1]);
-					out.println("F");
-					out.println("NONE");
+					out.println("perform NONE");
 					try {
 						vControl.updateGGame(game);
 					} catch (GameException e1) {
@@ -454,8 +488,7 @@ public class Client extends Thread implements KeyListener {
 						vControl.displayDead();
 					}
 				} else if (e.getMessage().contains("SHOP")) {
-					out.println("F");
-					out.println("NONE");
+					out.println("perform NONE");
 					try {
 						// first grab the shop in front of the player
 						Shop shop = (Shop) game.getObjectInFront(clientID);
@@ -472,8 +505,7 @@ public class Client extends Thread implements KeyListener {
 				}
 			} else if (e.getClass() == GameException.class) {
 				vControl.displayException(e.getMessage());
-				out.println("F");
-				out.println("NONE");
+				out.println("perform NONE");
 			}
 		}
 	}
@@ -492,6 +524,16 @@ public class Client extends Thread implements KeyListener {
 			e.printStackTrace();
 		}
 	}
+	
+	private void update(){
+		try {
+			vControl.updateGGame(game);
+		} catch (GameException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		vControl.repaint();
+	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
@@ -503,25 +545,30 @@ public class Client extends Thread implements KeyListener {
 
 	public void sendCraftedItem(String item) {
 		out.println("craft " + item);
+		update();
 	}
 
 	public void sendExitSignal(int id) {
 		game.forceEnterPlayer(id);
 		out.println("exit " + id);
+		update();
 	}
 
 	public void sendUseItem(String foodType) {
 		out.println("use " + foodType);
+		update();
 	}
 
 	public void sendTransferTo(String to, Movable item) {
 		out.println("transfer " + to + " " + item.getName());
+		update();
 
 	}
 
 	public void sendPilePickUp(String selectedItem) {
 		System.out.println(selectedItem);
 		out.println("pilepickup " + selectedItem);
+		update();
 
 	}
 
@@ -529,5 +576,17 @@ public class Client extends Thread implements KeyListener {
 		// first send drop intent
 		out.println("drop " + item.getName());
 		game.placeDroppedItem(item, clientID);
+		update();
+	}
+
+	public void sendSell(String itemName, String shopType) {
+		out.println("sell "+itemName+" "+shopType);
+		update();
+		
+	}
+
+	public void sendBuy(String itemName, String shopType) {
+		out.println("buy "+itemName+" "+shopType);
+		update();
 	}
 }

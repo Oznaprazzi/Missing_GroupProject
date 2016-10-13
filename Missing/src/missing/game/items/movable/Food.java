@@ -121,6 +121,7 @@ public class Food extends Health {
 			}
 			player.setHealth(newHealth);
 			// decrease the amount
+			System.out.println(this.getName() + " amount "+this.getAmount());
 			this.setAmount(this.getAmount() - 1);
 			if (this.getAmount() <= 0) {
 				player.removeFromPocket(this);
@@ -130,6 +131,7 @@ public class Food extends Health {
 				player.getPocket().setCurrentSize(player.getPocket().getCurrentSize() - 1);
 				System.out.println("Pocket Size: " + player.getPocket().getCurrentSize());
 			}
+			System.out.println(this.getName() + " new amount "+this.getAmount());
 		}
 	}
 

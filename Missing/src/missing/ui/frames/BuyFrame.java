@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import missing.datastorage.assetloader.GameAssets;
 import missing.game.characters.Player;
 import missing.game.items.nonmovable.Shop;
+import missing.ui.controller.VControl;
 import missing.ui.menustyle.MenuFactory;
 import missing.ui.panels.BuyPanel;
 /**
@@ -35,11 +36,12 @@ public class BuyFrame extends JFrame {
 	private final JButton btnExit = MenuFactory.createButton2("Exit");
 
 	private BuyPanel panel; //the hand canvas
-	
+	private VControl controller;
 	/**
 	 * Create a Test canvas contained within this window.
 	 */
-	public BuyFrame(Player player, Shop shop) {
+	public BuyFrame(Player player, Shop shop, VControl controller) {
+		this.controller = controller;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(backgroundImage.getWidth(), backgroundImage.getHeight());
 		// elsewhere
@@ -47,7 +49,7 @@ public class BuyFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.add(btnBuy);
 		contentPane.add(btnExit);
-		panel = new BuyPanel(player, shop);
+		panel = new BuyPanel(player, shop, controller);
 		contentPane.add(panel);
 		this.setVisible(true);
 		addActionListeners();
